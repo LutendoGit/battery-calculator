@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Battery Calculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+      
+      body {
+        background: var(--primary-gradient);
+        min-height: 100vh;
+        padding: 40px 20px !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      
+      .container {
+        max-width: 1000px;
+      }
+      
+      h1 {
+        color: white;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        margin-bottom: 30px !important;
+      }
+      
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      }
+      
+      .card-title {
+        color: #667eea;
+        font-weight: 600;
+        font-size: 1.3rem;
+      }
+      
+      .form-group label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+      
+      .form-control {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px 15px;
+        transition: border-color 0.3s ease;
+      }
+      
+      .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+      }
+      
+      .btn-primary {
+        background: var(--primary-gradient);
+        border: none;
+        border-radius: 8px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      
+      .btn-primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+      }
+      
+      .alert {
+        border-radius: 10px;
+        border: none;
+        margin-bottom: 20px;
+      }
+      
+      .alert-danger {
+        background: #fee;
+        color: #c33;
+      }
+      
+      .alert-success {
+        background: #efe;
+        color: #3c3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mb-4">Battery Design Calculator </h1>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{category}}">{{message}}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Pack Design</h5>
+              <form method="post">
+                <input type="hidden" name="form_type" value="pack">
+                <div class="form-group">
+                  <label>Cell Voltage (V)</label>
+                  <input class="form-control" name="cell_voltage" placeholder="e.g. 3.2">
+                </div>
+                <div class="form-group">
+                  <label>Cell Capacity (Ah)</label>
+                  <input class="form-control" name="cell_capacity" placeholder="e.g. 100">
+                </div>
+                <div class="form-group">
+                  <label>Total Number of Cells</label>
+                  <input class="form-control" name="num_cells" placeholder="e.g. 4">
+                </div>
+                <div class="form-group">
+                  <label>Connection Type</label>
+                  <select class="form-control" name="connection_type">
+                    <option>Series</option>
+                    <option>Parallel</option>
+                    <option>Series-Parallel</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Series Cells (for S-P)</label>
+                    <input class="form-control" name="series_cells">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Parallel Cells (for S-P)</label>
+                    <input class="form-control" name="parallel_cells">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>C-rate (for max power)</label>
+                  <input class="form-control" name="c_rate" placeholder="e.g. 5">
+                </div>
+                <div class="form-group">
+                  <label>Cell Internal Resistance (mΩ)</label>
+                  <input class="form-control" name="cell_ir" placeholder="e.g. 50">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Chemistry</label>
+                    <select class="form-control" name="chemistry">
+                      <option>LiFePO4</option>
+                      <option>Li-ion</option>
+                      <option>Lead Acid</option>
+                      <option>NiMH</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>DOD (%)</label>
+                    <select class="form-control" name="dod">
+                      <option>100</option>
+                      <option selected>80</option>
+                      <option>60</option>
+                      <option>40</option>
+                      <option>20</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Calculate Pack</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Bank / Module Design</h5>
+              <form method="post">
+                <input type="hidden" name="form_type" value="bank">
+                <div class="form-group">
+                  <label>Target Energy (kWh)</label>
+                  <input class="form-control" name="energy" placeholder="e.g. 20">
+                </div>
+                <div class="form-group">
+                  <label>Module Capacity (kWh)</label>
+                  <input class="form-control" name="module_capacity" placeholder="e.g. 5">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Chemistry</label>
+                    <select class="form-control" name="bank_chemistry">
+                      <option>LiFePO4</option>
+                      <option>Li-ion</option>
+                      <option>Lead Acid</option>
+                      <option>NiMH</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>DOD (%)</label>
+                    <select class="form-control" name="bank_dod">
+                      <option>100</option>
+                      <option>80</option>
+                      <option>60</option>
+                      <option>40</option>
+                      <option>20</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Calculate Bank</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

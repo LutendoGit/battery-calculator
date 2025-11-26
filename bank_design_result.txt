@@ -1,0 +1,2 @@
+Chemistry: LiFePO4
+you need 14 modules in parallel 
