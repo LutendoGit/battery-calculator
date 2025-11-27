@@ -1,0 +1,41 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy to Render
+        run: |
+          curl -X POST "https://api.render.com/v1/services" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "type": "web_service",
+              "name": "battery-calculator",
+              "ownerId": "'"$(curl -s -H 'Authorization: Bearer ${{ secrets.RENDER_API_KEY }}' https://api.render.com/v1/owners | jq -r '.owners[0].id')"'",
+              "repo": "https://github.com/LutendoGit/battery-calculator.git",
+              "branch": "main",
+              "buildCommand": "pip install -r requirements.txt",
+              "startCommand": "gunicorn app:app",
+              "envVars": [
+                {
+                  "key": "SECRET_KEY",
+                  "value": "'"$(openssl rand -base64 32)"'"
+                }
+              ]
+            }'
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+
+      - name: Wait for deployment
+        run: sleep 30
+
+      - name: Notify deployment
+        run: echo "Deployment triggered. Check Render dashboard at https://dashboard.render.com"
