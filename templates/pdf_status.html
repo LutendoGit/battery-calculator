@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PDF Status</title>
+  </head>
+  <body>
+    <h1>PDF Status</h1>
+    {% if status == 'not_found' %}
+      <p>Job not found.</p>
+    {% elif status == 'working' %}
+      <p>Your PDF is being generated. Refresh this page to check status.</p>
+    {% elif status == 'ready' %}
+      <p>Your PDF is ready. <a href="{{ url }}">Download</a></p>
+    {% endif %}
+  </body>
+</html>
