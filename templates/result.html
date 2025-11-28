@@ -102,15 +102,60 @@
           <pre style="white-space: pre-wrap;">{{ result['summary_text'] }}</pre>
           <hr>
           <div class="btn-group-result">
-            <a class="btn btn-success" href="{{ url_for('export_pdf') }}">
+            <button id="exportPdfBtn" class="btn btn-success">
               <i class="fas fa-file-pdf"></i> Export as PDF
-            </a>
+            </button>
             <a class="btn btn-secondary" href="{{ url_for('index') }}">
               <i class="fas fa-arrow-left"></i> Back to Calculator
             </a>
           </div>
+          <div id="pdfStatus" style="margin-top:12px; display:none;">
+            <small id="pdfMessage">Preparing PDF…</small>
+          </div>
         </div>
       </div>
     </div>
+    <script>
+      async function pollStatus(jobId) {
+        const statusEl = document.getElementById('pdfMessage');
+        try {
+          const res = await fetch(`/pdf-status/${jobId}`);
+          const text = await res.text();
+          // page is rendered server-side and will include download link when ready
+          if (res.ok) {
+            // replace the body with returned HTML to show status/download link
+            document.open();
+            document.write(text);
+            document.close();
+          } else {
+            statusEl.textContent = 'Error checking status';
+          }
+        } catch (err) {
+          statusEl.textContent = 'Network error while checking PDF status';
+        }
+      }
+
+      document.getElementById('exportPdfBtn').addEventListener('click', async function (e) {
+        e.preventDefault();
+        const statusWrap = document.getElementById('pdfStatus');
+        statusWrap.style.display = 'block';
+        const msg = document.getElementById('pdfMessage');
+        msg.textContent = 'Submitting PDF job…';
+        try {
+          // POST to export endpoint (which now enqueues and redirects)
+          const resp = await fetch("{{ url_for("export_pdf") }}", { method: 'POST', redirect: 'follow' });
+          if (resp.redirected) {
+            // navigate to the redirected status page
+            window.location = resp.url;
+            return;
+          }
+          const text = await resp.text();
+          msg.textContent = 'Unexpected response';
+          console.log(text);
+        } catch (err) {
+          msg.textContent = 'Failed to submit PDF job';
+        }
+      });
+    </script>
   </body>
 </html>

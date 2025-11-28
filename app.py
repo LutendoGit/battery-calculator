@@ -6,6 +6,7 @@ import uuid
 import tempfile
 import os
 from concurrent.futures import ProcessPoolExecutor
+import threading
 from datetime import datetime
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
@@ -22,6 +23,41 @@ last_result = {'text': '', 'title': '', 'chemistry': 'LiFePO4', 'dod': '80'}
 # Background PDF executor and job store
 executor = ProcessPoolExecutor(max_workers=2)
 pdf_jobs = {}  # job_id -> {'future': Future, 'path': str}
+
+
+# Cleanup thread: remove temp PDF files older than X seconds
+def cleanup_temp_files(interval_seconds=1800, max_age_seconds=3600):
+    def _cleanup():
+        while True:
+            try:
+                now = datetime.now().timestamp()
+                for job_id, info in list(pdf_jobs.items()):
+                    path = info.get('path')
+                    # remove files older than max_age
+                    if path and os.path.exists(path):
+                        mtime = os.path.getmtime(path)
+                        if now - mtime > max_age_seconds:
+                            try:
+                                os.remove(path)
+                            except Exception:
+                                pass
+                            # also remove job entry
+                            try:
+                                del pdf_jobs[job_id]
+                            except Exception:
+                                pass
+                # sleep
+            except Exception:
+                pass
+            try:
+                threading.Event().wait(interval_seconds)
+            except Exception:
+                break
+
+
+# start cleanup thread as daemon
+cleanup_thread = threading.Thread(target=cleanup_temp_files, args=(1800, 3600), daemon=True)
+cleanup_thread.start()
 
 
 def build_pdf_to_file(result_text, title, chemistry, dod, out_path):
