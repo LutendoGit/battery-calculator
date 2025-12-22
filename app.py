@@ -241,29 +241,24 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/export-pdf')
+@app.route('/export-pdf',methods = ['POST'])
 def export_pdf():
-    """Start background PDF job and redirect to status page."""
-    result_text = last_result['text']
-    title = last_result['title']
-    chemistry = last_result['chemistry']
-    dod = last_result['dod']
+     result_text = last_result['text']
+     title = last_result['title']
+     chemistry = last_result['chemistry']
+     dod = last_result['dod']
 
-    if not result_text.strip():
-        flash('No result to export. Please calculate first.', 'danger')
-        return redirect(url_for('index'))
+     if not result_text.strip():
+        return jsonify({"error": "No result to export"}), 400
+     tmp = tempfile.NamedTemporaryFile(prefix='battery_pdf_', suffix='.pdf', delete=False)
+     tmp_path = tmp.name
+     tmp.close()
 
-    # create temp file path
-    tmp = tempfile.NamedTemporaryFile(prefix='battery_pdf_', suffix='.pdf', delete=False)
-    tmp_path = tmp.name
-    tmp.close()
+     job_id = str(uuid.uuid4())
+     future = executor.submit(build_pdf_to_file, result_text, title, chemistry, dod, tmp_path)
+     pdf_jobs[job_id] = {'future': future, 'path': tmp_path}
 
-    job_id = str(uuid.uuid4())
-    future = executor.submit(build_pdf_to_file, result_text, title, chemistry, dod, tmp_path)
-    pdf_jobs[job_id] = {'future': future, 'path': tmp_path}
-
-    # Redirect to status page which the UI can poll
-    return redirect(url_for('pdf_status_page', job_id=job_id))
+     return jsonify({"job_id": job_id})
 
 
 @app.route('/pdf-status/<job_id>')
@@ -273,9 +268,26 @@ def pdf_status_page(job_id):
         return render_template('pdf_status.html', job_id=job_id, status='not_found')
     future = job['future']
     if future.done():
+        if future.exception():                
+           return render_template('pdf_status.html', job_id=job_id, status='error', message=str(future.exception()))
         return render_template('pdf_status.html', job_id=job_id, status='ready', url=url_for('download_pdf', job_id=job_id))
     else:
         return render_template('pdf_status.html', job_id=job_id, status='working')
+
+
+@app.route('/pdf-status-api/<job_id>')
+def pdf_status_api(job_id):
+    """Return JSON status for a PDF job. Used by client-side polling."""
+    job = pdf_jobs.get(job_id)
+    if not job:
+        return jsonify({'status': 'not_found'}), 404
+    future = job['future']
+    if future.done():
+        if future.exception():
+            return jsonify({'status': 'error', 'message': str(future.exception())})
+        return jsonify({'status': 'ready', 'download_url': url_for('download_pdf', job_id=job_id, _external=True)})
+    else:
+        return jsonify({'status': 'working'})
 
 
 @app.route('/download/<job_id>')
@@ -296,5 +308,18 @@ def download_pdf(job_id):
     return send_file(path, mimetype='application/pdf', as_attachment=True, download_name=os.path.basename(path))
 
 
+@app.route('/pdf-status-json/<job_id>')
+def pdf_status_json(job_id):
+    """Return JSON status for a PDF job so clients can poll asynchronously."""
+    job = pdf_jobs.get(job_id)
+    if not job:
+        return jsonify({'status': 'not_found'}), 404
+    future = job['future']
+    if future.done():
+        # return external download URL
+        download_url = url_for('download_pdf', job_id=job_id, _external=True)
+        return jsonify({'status': 'ready', 'download_url': download_url})
+    else:
+        return jsonify({'status': 'working'})
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,17 +1,64 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>PDF Status</title>
-  </head>
-  <body>
-    <h1>PDF Status</h1>
-    {% if status == 'not_found' %}
-      <p>Job not found.</p>
-    {% elif status == 'working' %}
-      <p>Your PDF is being generated. Refresh this page to check status.</p>
-    {% elif status == 'ready' %}
-      <p>Your PDF is ready. <a href="{{ url }}">Download</a></p>
-    {% endif %}
-  </body>
-</html>
+  <!doctype html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>PDF Status</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    </head>
+    <body class="p-4">
+      <div class="container">
+        <h1 class="mb-3">PDF Status</h1>
+        <div id="statusCard" class="card">
+          <div class="card-body">
+            <p id="statusMessage">Checking status…</p>
+            <div id="downloadArea" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const jobId = "{{ job_id }}";
+        const statusMessage = document.getElementById('statusMessage');
+        const downloadArea = document.getElementById('downloadArea');
+
+        async function checkStatus() {
+          try {
+            const res = await fetch(`/pdf-status-json/${jobId}`);
+            if (res.status === 404) {
+              statusMessage.textContent = 'Job not found.';
+              return;
+            }
+            const data = await res.json();
+            if (data.status === 'working') {
+              statusMessage.textContent = 'Your PDF is being generated. This page will update automatically.';
+              setTimeout(checkStatus, 2000);
+            } else if (data.status === 'ready') {
+              statusMessage.textContent = 'Your PDF is ready.';
+              downloadArea.style.display = 'block';
+              const a = document.createElement('a');
+              a.href = data.download_url;
+              a.textContent = 'Download PDF';
+              a.className = 'btn btn-primary';
+              downloadArea.appendChild(a);
+              // auto-download
+              setTimeout(() => { window.location = data.download_url; }, 500);
+            } else if (data.status === 'error') {
+              statusMessage.textContent = 'An error occurred: ' + (data.message || 'unknown');
+            } else {
+              statusMessage.textContent = 'Unknown status';
+            }
+          } catch (err) {
+            statusMessage.textContent = 'Network error checking status';
+            setTimeout(checkStatus, 3000);
+          }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+          checkStatus();
+        });
+      </script>
+    </body>
+  </html>
