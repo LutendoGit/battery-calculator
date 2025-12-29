@@ -115,47 +115,86 @@
         </div>
       </div>
     </div>
-    <script>
-      async function pollStatus(jobId) {
-        const statusEl = document.getElementById('pdfMessage');
-        try {
-          const res = await fetch(`/pdf-status/${jobId}`);
-          const text = await res.text();
-          // page is rendered server-side and will include download link when ready
-          if (res.ok) {
-            // replace the body with returned HTML to show status/download link
-            document.open();
-            document.write(text);
-            document.close();
-          } else {
-            statusEl.textContent = 'Error checking status';
-          }
-        } catch (err) {
-          statusEl.textContent = 'Network error while checking PDF status';
-        }
+  <script>
+  async function pollStatus(jobId) {
+    const statusEl = document.getElementById('pdfMessage');
+    try {
+      const res = await fetch(`/pdf-status/${jobId}`);
+      const text = await res.text();
+      if (res.ok) {
+        // Replace the body with returned HTML (status/download link)
+        document.open();
+        document.write(text);
+        document.close();
+      } else {
+        statusEl.textContent = 'Error checking status';
+      }
+    } catch (err) {
+      statusEl.textContent = 'Network error while checking PDF status';
+      console.error(err);
+    }
+  }
+
+  const exportBtn = document.getElementById('exportPdfBtn');
+  if (exportBtn) {
+  exportBtn.addEventListener('click', async function (e) {
+    e.preventDefault();
+
+    const statusWrap = document.getElementById('pdfStatus');
+    statusWrap.style.display = 'block';
+
+    const msg = document.getElementById('pdfMessage');
+    msg.textContent = 'Submitting PDF job…';
+
+    try {
+      // Embed the current result text into the request so the server doesn't rely
+      // on in-memory state (works with multiple gunicorn workers).
+      let resultText;
+      try {
+        resultText = {{ result['summary_text']|tojson }};
+      } catch (e) {
+        // If template rendering failed for some reason, fallback to reading the
+        // displayed text from the page.
+        console.warn('Failed to parse inlined result JSON, falling back to DOM text', e);
+        const pre = document.querySelector('#result-content pre');
+        resultText = pre ? pre.innerText : '';
+      }
+      if (typeof resultText !== 'string') resultText = String(resultText);
+      const payload = new FormData();
+      payload.append('result_text', resultText);
+      payload.append('title', {{ title|tojson }});
+
+      const resp = await fetch("{{ url_for('export_pdf') }}", {
+        method: 'POST',
+        body: payload
+      });
+
+      if (!resp.ok) {
+        // show server error message if available
+        let body = '';
+        try { body = await resp.text(); } catch (e) {}
+        msg.textContent = 'Unexpected response from server';
+        console.log('Export error:', resp.status, body);
+        return;
       }
 
-      document.getElementById('exportPdfBtn').addEventListener('click', async function (e) {
-        e.preventDefault();
-        const statusWrap = document.getElementById('pdfStatus');
-        statusWrap.style.display = 'block';
-        const msg = document.getElementById('pdfMessage');
-        msg.textContent = 'Submitting PDF job…';
-        try {
-          // POST to export endpoint (which now enqueues and redirects)
-          const resp = await fetch("{{ url_for("export_pdf") }}", { method: 'POST', redirect: 'follow' });
-          if (resp.redirected) {
-            // navigate to the redirected status page
-            window.location = resp.url;
-            return;
-          }
-          const text = await resp.text();
-          msg.textContent = 'Unexpected response';
-          console.log(text);
-        } catch (err) {
-          msg.textContent = 'Failed to submit PDF job';
-        }
-      });
-    </script>
+      const data = await resp.json();
+      if (data && data.job_id) {
+        msg.textContent = 'Job submitted, redirecting to status…';
+        // go to the polling/status page which will auto-download
+        window.location = `/pdf-status/${data.job_id}`;
+      } else {
+        msg.textContent = 'Unexpected response from server';
+        console.log('Missing job_id in response', data);
+      }
+    } catch (err) {
+      msg.textContent = 'Failed to submit PDF job';
+      console.error("Export failed:", err);
+    }
+  });
+  } else {
+    console.warn('Export button not found on page');
+  }
+  </script>
   </body>
 </html>
