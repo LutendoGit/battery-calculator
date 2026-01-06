@@ -20,7 +20,25 @@
       }
       
       .container {
-        max-width: 1000px;
+        max-width: 700px;
+      }
+
+      /* Strong portrait-style constraints */
+      .portrait-container {
+        max-width: 700px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .portrait-card, .tab-content .card {
+        max-width: 680px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      @media (max-width: 576px) {
+        body { padding: 20px 10px !important; }
+        .portrait-container { padding: 0 8px !important; }
       }
       
       h1 {
@@ -59,11 +77,33 @@
         border-radius: 8px;
         padding: 10px 15px;
         transition: border-color 0.3s ease;
+        background: #ffffff !important;
+        color: #333333 !important;
       }
-      
+
+      /* Ensure select/options and placeholders are readable */
+      select.form-control, textarea.form-control {
+        background: #ffffff !important;
+        color: #333333 !important;
+        -webkit-text-fill-color: #333333 !important;
+      }
+
+      .form-control::placeholder {
+        color: #888888 !important;
+        opacity: 1;
+      }
+
+      .form-control option {
+        color: #333333 !important;
+        background: #ffffff !important;
+        -webkit-text-fill-color: #333333 !important;
+      }
+
       .form-control:focus {
         border-color: #667eea;
         box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        background: #ffffff !important;
+        color: #333333 !important;
       }
       
       .btn-primary {
@@ -99,7 +139,7 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container portrait-container">
       <h1 class="mb-4">Battery Design Calculator </h1>
 
       {% with messages = get_flashed_messages(with_categories=true) %}
@@ -109,9 +149,17 @@
           {% endfor %}
         {% endif %}
       {% endwith %}
+      <ul class="nav nav-tabs mb-3" id="designTabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="pack-tab" data-toggle="tab" href="#pack" role="tab" aria-controls="pack" aria-selected="true"><i class="fa-solid fa-battery-three-quarters mr-2"></i> Pack Design</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="bank" aria-selected="false"><i class="fa-solid fa-layer-group mr-2"></i> Bank / Module Design</a>
+        </li>
+      </ul>
 
-      <div class="row">
-        <div class="col-md-6">
+      <div class="tab-content" id="designTabsContent">
+        <div class="tab-pane fade show active" id="pack" role="tabpanel" aria-labelledby="pack-tab">
           <div class="card mb-4">
             <div class="card-body">
               <h5 class="card-title">Pack Design</h5>
@@ -182,7 +230,7 @@
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="tab-pane fade" id="bank" role="tabpanel" aria-labelledby="bank-tab">
           <div class="card mb-4">
             <div class="card-body">
               <h5 class="card-title">Bank / Module Design</h5>
@@ -224,5 +272,24 @@
         </div>
       </div>
     </div>
+
+    <!-- JS: jQuery, Popper, Bootstrap (for tab behavior) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+    <script>
+      (function($){
+        $(function(){
+          var hash = window.location.hash;
+          if(hash){
+            $('#designTabs a[href="'+hash+'"]').tab('show');
+          }
+          $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            history.replaceState(null, null, e.target.hash);
+          });
+        });
+      })(jQuery);
+    </script>
   </body>
 </html>
