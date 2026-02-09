@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel,
-    QLineEdit, QComboBox, QPushButton, QMessageBox, QFileDialog,QComboBox,QTabWidget
+    QLineEdit, QComboBox, QPushButton, QMessageBox, QFileDialog, QTabWidget, QTextEdit
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QPainter, QPen,QIcon
@@ -8,6 +8,8 @@ import sys
 import re
 import os 
 import matplotlib.pyplot as plt
+from dataclasses import dataclass
+import math
 
 icon_path = os.path.join(os.path.dirname(__file__), "Unleashing-Solar-Power-Illuminate-Your-Life-with-Solar-Panels-in-Poquoson-700x441.png")
 
@@ -34,11 +36,128 @@ class cycleLifeEstimator():
         return int(base * multiplier)    
 
 
+# --- Solar design dataclasses and helper functions ---
+@dataclass
+class Load:
+    name: str
+    power_w: float
+    hours_per_day: float
+
+
+@dataclass
+class PanelSpecs:
+    p_stc_w: float
+    area_m2: float
+    voc_v: float
+    vmp_v: float
+    isc_a: float
+    imp_a: float
+    temp_coeff_pmp_pct_per_c: float
+    nominal_operating_cell_temp_c: float
+    weight_kg: float
+    manufacturer: str = ""
+    model: str = ""
+
+
+@dataclass
+class inverterSpecs:
+    ac_power_w: float
+    dc_power_w: float
+    mppt_min_v: float
+    mppt_max_v: float
+    mppt_max_current_a: float
+
+
+@dataclass
+class BatterySpecs:
+    capacity_ah: float
+    nominal_voltage_v: float
+    max_discharge_current_a: float
+    round_trip_efficiency_pct: float
+    depth_of_discharge_pct: float
+    manufacturer: str = ""
+    model: str = ""
+    efficiency: float = None
+
+
+@dataclass
+class siteSpecs:
+    latitude_deg: float
+    longitude_deg: float
+    timezone: str
+    elevation_m: float
+    avg_solar_irradiance_kw_per_m2: float
+    psh_per_day: float
+    shading_factor_pct: float
+    t_hot_c: float
+    t_cold_c: float = 0.0
+
+
+def calculate_daily_energy_consumption(loads):
+    total_energy_wh = 0.0
+    for load in loads:
+        energy_wh = load.power_w * load.hours_per_day
+        total_energy_wh += energy_wh
+    return total_energy_wh
+
+
+def calculate_panel_output(panel: PanelSpecs, site: siteSpecs):
+    irradiance_factor = site.avg_solar_irradiance_kw_per_m2 / 1.0  # kW/m2 (already kW/m2)
+    temperature_factor = (site.t_hot_c - panel.nominal_operating_cell_temp_c) * panel.temp_coeff_pmp_pct_per_c / 100.0
+    adjusted_power = panel.p_stc_w * irradiance_factor * (1 - temperature_factor)
+    return adjusted_power
+
+
+def calculate_battery_capacity(battery: BatterySpecs):
+    usable_capacity_ah = battery.capacity_ah * (battery.depth_of_discharge_pct / 100.0)
+    usable_capacity_wh = usable_capacity_ah * battery.nominal_voltage_v
+    return usable_capacity_wh
+
+
+def string_voltage_limits(inverter: inverterSpecs, panel: PanelSpecs):
+    min_panels = math.ceil(inverter.mppt_min_v / panel.vmp_v)
+    max_panels = math.floor(inverter.mppt_max_v / panel.vmp_v)
+    return min_panels, max_panels
+
+
+def array_layout(total_power_w, panel: PanelSpecs, inverter: inverterSpecs):
+    num_panels = math.ceil(total_power_w / panel.p_stc_w)
+    min_strings = math.ceil(num_panels / max(1, string_voltage_limits(inverter, panel)[1]))
+    max_strings = math.floor(num_panels / max(1, string_voltage_limits(inverter, panel)[0]))
+    return num_panels, min_strings, max_strings
+
+
+def check_mppt_current(inverter: inverterSpecs, panel: PanelSpecs, num_panels_per_string: int, num_strings: int):
+    total_current_a = panel.imp_a * num_strings
+    return total_current_a <= inverter.mppt_max_current_a
+
+
+def system_size(loads, panel: PanelSpecs, inverter: inverterSpecs, battery: BatterySpecs, site: siteSpecs):
+    daily_energy_wh = calculate_daily_energy_consumption(loads)
+    panel_output_w = calculate_panel_output(panel, site)
+    # size array to meet average daily energy using peak sun hours
+    if site.psh_per_day <= 0:
+        num_panels = 0
+        min_strings = 0
+        max_strings = 0
+    else:
+        num_panels, min_strings, max_strings = array_layout(daily_energy_wh / site.psh_per_day, panel, inverter)
+    battery_capacity_wh = calculate_battery_capacity(battery)
+    return {
+        "daily_energy_wh": daily_energy_wh,
+        "panel_output_w": panel_output_w,
+        "num_panels": num_panels,
+        "min_strings": min_strings,
+        "max_strings": max_strings,
+        "battery_capacity_wh": battery_capacity_wh
+    }
+
+
 # --------- Main Application Class ----------
 class BatteryCalculator(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Battery Design Calculator")
+        self.setWindowTitle("Solar Energy System Design")
         self.setWindowIcon(QIcon(icon_path))
         self.setGeometry(200, 200, 520, 700)
         self.background_image = icon_path
@@ -62,6 +181,73 @@ class BatteryCalculator(QMainWindow):
         self.tab2 = QWidget()
         self.tabs.addTab(self.tab2,"Bank design")
 
+        # Tab 3: Solar system design
+        self.tab3 = QWidget()
+        tab_layout3 = QVBoxLayout(self.tab3)
+        self.tabs.addTab(self.tab3, "Solar design")
+
+        # --- Solar inputs ---
+        loads_label = QLabel("Loads (one per line: name,power_w,hrs/day):")
+        loads_label.setStyleSheet("background:Transparent;color:purple;font-weight:bold;")
+        self.loads_edit = QTextEdit()
+        self.loads_edit.setPlaceholderText("Light,50,4\nFridge,150,24")
+        tab_layout3.addWidget(loads_label)
+        tab_layout3.addWidget(self.loads_edit)
+
+        # Panel specs
+        h_panel = QHBoxLayout()
+        self.panel_pstc_input = QLineEdit()
+        self.panel_pstc_input.setPlaceholderText("Panel Pstc (W)")
+        self.panel_vmp_input = QLineEdit()
+        self.panel_vmp_input.setPlaceholderText("Vmp (V)")
+        self.panel_imp_input = QLineEdit()
+        self.panel_imp_input.setPlaceholderText("Imp (A)")
+        h_panel.addWidget(QLabel("Panel Pstc(W):"))
+        h_panel.addWidget(self.panel_pstc_input)
+        h_panel.addWidget(QLabel("Vmp(V):"))
+        h_panel.addWidget(self.panel_vmp_input)
+        h_panel.addWidget(QLabel("Imp(A):"))
+        h_panel.addWidget(self.panel_imp_input)
+        tab_layout3.addLayout(h_panel)
+
+        # Inverter specs
+        h_inv = QHBoxLayout()
+        self.inv_mppt_min = QLineEdit(); self.inv_mppt_min.setPlaceholderText("MPPT min V")
+        self.inv_mppt_max = QLineEdit(); self.inv_mppt_max.setPlaceholderText("MPPT max V")
+        self.inv_mppt_i = QLineEdit(); self.inv_mppt_i.setPlaceholderText("MPPT max I (A)")
+        h_inv.addWidget(QLabel("MPPT Vmin:")); h_inv.addWidget(self.inv_mppt_min)
+        h_inv.addWidget(QLabel("MPPT Vmax:")); h_inv.addWidget(self.inv_mppt_max)
+        h_inv.addWidget(QLabel("MPPT I(A):")); h_inv.addWidget(self.inv_mppt_i)
+        tab_layout3.addLayout(h_inv)
+
+        # Battery specs
+        h_batt = QHBoxLayout()
+        self.batt_cap_ah = QLineEdit(); self.batt_cap_ah.setPlaceholderText("Battery Ah")
+        self.batt_nom_v = QLineEdit(); self.batt_nom_v.setPlaceholderText("Battery V")
+        self.batt_dod = QLineEdit(); self.batt_dod.setPlaceholderText("DOD %")
+        h_batt.addWidget(QLabel("Batt Ah:")); h_batt.addWidget(self.batt_cap_ah)
+        h_batt.addWidget(QLabel("Batt V:")); h_batt.addWidget(self.batt_nom_v)
+        h_batt.addWidget(QLabel("DOD%:")); h_batt.addWidget(self.batt_dod)
+        tab_layout3.addLayout(h_batt)
+
+        # Site specs
+        h_site = QHBoxLayout()
+        self.site_psh = QLineEdit(); self.site_psh.setPlaceholderText("PSH/day")
+        self.site_irr = QLineEdit(); self.site_irr.setPlaceholderText("Irr (kW/m2)")
+        h_site.addWidget(QLabel("PSH/day:")); h_site.addWidget(self.site_psh)
+        h_site.addWidget(QLabel("Irr (kW/m2):")); h_site.addWidget(self.site_irr)
+        tab_layout3.addLayout(h_site)
+
+        # Calculate and result
+        self.solar_calc_btn = QPushButton("Calculate Solar System")
+        self.solar_calc_btn.setStyleSheet("background-color:orange;color:white;")
+        self.solar_calc_btn.clicked.connect(self.calculate_solar)
+        tab_layout3.addWidget(self.solar_calc_btn, alignment=Qt.AlignLeft)
+
+        self.result_label3 = QLabel("")
+        self.result_label3.setWordWrap(True)
+        tab_layout3.addWidget(self.result_label3)
+
         self.tabs.setStyleSheet("""
                                 QTabWidget::pane {border:0px solid #ccc;}
                                 QTabBar::tab{background:#eee;padding:8px;}
@@ -70,6 +256,7 @@ class BatteryCalculator(QMainWindow):
         """)
         self.tabs.currentChanged.connect(self.on_tab_switch)
 
+        # --------- Battery design (Tab 1) inputs ----------
         # Cell voltage
         hlayout1 = QHBoxLayout()
         self.cell_label = QLabel("Cell Voltage (V):")
@@ -132,6 +319,60 @@ class BatteryCalculator(QMainWindow):
         self.parallel_cells_input.hide()
         tab_layout1.addWidget(self.series_cells_input)
         tab_layout1.addWidget(self.parallel_cells_input)
+
+        # Chemistry selection
+        hlayout5 = QHBoxLayout()
+        self.chemistry_label = QLabel("Chemistry:")
+        self.chemistry_label.setToolTip("Select battery chemistry for cycle life estimation")
+        self.chemistry_label.setStyleSheet("background:Transparent;color:purple;font-weight:bold;font-size:12px;")
+        self.chemistry_box = QComboBox()
+        self.chemistry_box.setToolTip("Select battery chemistry for cycle life estimation")
+        self.chemistry_box.addItems(["Li-ion", "LiFePO4", "Lead Acid", "NiMH"])
+        self.chemistry_box.setCurrentText("LiFePO4")  # Default to LiFePO4
+        self.chemistry_box.setStyleSheet("background:Transparent;")
+        self.chemistry_box.setFixedWidth(130)
+        hlayout5.addWidget(self.chemistry_label)
+        hlayout5.addWidget(self.chemistry_box)
+        tab_layout1.addLayout(hlayout5)
+
+        # C-rate
+        hlayout_crate = QHBoxLayout()
+        self.crate_label = QLabel("C-rate for Max Power:")
+        self.crate_label.setToolTip("C-rate to estimate max power and voltage sag (default 5C if empty)")
+        self.crate_label.setStyleSheet("background:Transparent;color:purple;font-weight:bold;font-size:12px;")
+        self.c_rate_input = QLineEdit()
+        self.c_rate_input.setToolTip("C-rate to estimate max power and voltage sag (default 5C if empty)")
+        self.c_rate_input.setStyleSheet("background:Transparent;")
+        self.c_rate_input.setPlaceholderText("e.g. 5 for 5C")
+        hlayout_crate.addWidget(self.crate_label)
+        hlayout_crate.addWidget(self.c_rate_input)
+        tab_layout1.addLayout(hlayout_crate)
+
+        # Internal resistance (mΩ)
+        hlayout7 = QHBoxLayout()
+        self.cell_ir_label = QLabel("Cell Internal Resistance (mΩ):")
+        self.cell_ir_label.setToolTip("Internal resistance of a single cell in milliohms")
+        self.cell_ir_label.setStyleSheet("background:Transparent;color:purple;font-weight:bold;font-size:12px;")
+        self.cell_ir_input = QLineEdit()
+        self.cell_ir_input.setPlaceholderText("e.g. 50mΩ")
+        self.cell_ir_input.setToolTip("Internal resistance of a single cell in milliohms")
+        self.cell_ir_input.setStyleSheet("background:Transparent;")
+        hlayout7.addWidget(self.cell_ir_label)
+        hlayout7.addWidget(self.cell_ir_input)
+        tab_layout1.addLayout(hlayout7)
+
+        # DOD Dropdown
+        hlayout_dod = QHBoxLayout()
+        self.dod_label = QLabel("Depth of Discharge (DOD):")
+        self.dod_label.setToolTip("Select Depth of Discharge for cycle life estimation")
+        self.dod_label.setStyleSheet("background:Transparent;color:purple;font-weight:bold;font-size:12px;")
+        self.dod_combo = QComboBox()
+        self.dod_combo.setToolTip("Select Depth of Discharge for cycle life estimation")
+        self.dod_combo.setStyleSheet("background:Transparent;")
+        self.dod_combo.setFixedWidth(130)
+        self.dod_combo.addItems(["100%", "80%", "60%", "40%", "20%"])
+        self.dod_combo.setCurrentText("80%")  # Default to 80%
+        
 
         # Chemistry selection
         hlayout5 = QHBoxLayout()
@@ -380,6 +621,59 @@ class BatteryCalculator(QMainWindow):
             QMessageBox.warning(self, "Error", "Please enter a valid module capacity.")
 
 #-----end of bank design layout(tab2)----------#
+    # Solar calculation handler
+    def calculate_solar(self):
+        try:
+            # parse loads from text area
+            loads_text = self.loads_edit.toPlainText().strip()
+            loads = []
+            if loads_text:
+                for line in loads_text.splitlines():
+                    parts = [p.strip() for p in line.split(',') if p.strip()]
+                    if len(parts) >= 3:
+                        name = parts[0]
+                        power = float(parts[1])
+                        hrs = float(parts[2])
+                        loads.append(Load(name, power, hrs))
+
+            # Panel
+            pstc = float(self.panel_pstc_input.text() or 0)
+            vmp = float(self.panel_vmp_input.text() or 0)
+            imp = float(self.panel_imp_input.text() or 0)
+            panel = PanelSpecs(p_stc_w=pstc, area_m2=0.0, voc_v=0.0, vmp_v=vmp, isc_a=0.0, imp_a=imp,
+                               temp_coeff_pmp_pct_per_c=0.0, nominal_operating_cell_temp_c=25.0, weight_kg=0.0)
+
+            # Inverter
+            mppt_min = float(self.inv_mppt_min.text() or 0)
+            mppt_max = float(self.inv_mppt_max.text() or 0)
+            mppt_i = float(self.inv_mppt_i.text() or 0)
+            inverter = inverterSpecs(ac_power_w=0.0, dc_power_w=0.0, mppt_min_v=mppt_min, mppt_max_v=mppt_max, mppt_max_current_a=mppt_i)
+
+            # Battery
+            batt_ah = float(self.batt_cap_ah.text() or 0)
+            batt_v = float(self.batt_nom_v.text() or 0)
+            batt_dod = float(self.batt_dod.text() or 80)
+            battery = BatterySpecs(capacity_ah=batt_ah, nominal_voltage_v=batt_v, max_discharge_current_a=0.0,
+                                   round_trip_efficiency_pct=90.0, depth_of_discharge_pct=batt_dod)
+
+            # Site
+            psh = float(self.site_psh.text() or 4.0)
+            irr = float(self.site_irr.text() or 1.0)
+            site = siteSpecs(latitude_deg=0.0, longitude_deg=0.0, timezone="UTC", elevation_m=0.0,
+                             avg_solar_irradiance_kw_per_m2=irr, psh_per_day=psh, shading_factor_pct=0.0, t_hot_c=25.0)
+
+            results = system_size(loads, panel, inverter, battery, site)
+
+            out = (
+                f"Daily load: {results['daily_energy_wh']:.1f} Wh\n"
+                f"Panel per-unit adjusted power: {results['panel_output_w']:.1f} W\n"
+                f"Panels needed: {results['num_panels']} (strings min:{results['min_strings']}, max:{results['max_strings']})\n"
+                f"Battery usable capacity: {results['battery_capacity_wh']:.1f} Wh\n"
+            )
+            self.result_label3.setText(out)
+        except Exception as e:
+            QMessageBox.warning(self, "Error", f"Solar calculation failed: {e}")
+
     # printing the index of the selected tab
     def on_tab_switch(self,index):
         print(f"Switched to tab{index}")
@@ -734,8 +1028,7 @@ class BatteryCalculator(QMainWindow):
             self.result_label.show()
             self.result_label.resize(500, self.result_label.sizeHint().height())
             self.result_label.setText(summary)
-            QApplication.processEvents( )
-            self.resize(self.size().width(), self.size().height()+1)
+            QApplication.processEvents()
             
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Invalid input: {e}")

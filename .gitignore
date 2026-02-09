@@ -9,3 +9,7 @@ build/
 .venv
 .env
 /.venv
+
+# Local test/output artifacts
+test_output.pdf
+fix_test_output.pdf

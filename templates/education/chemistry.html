@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Chemistry Types - Lithium Battery Education</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #667eea; margin-bottom: 10px; }
+        .chemistry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .chemistry-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid #667eea;
+        }
+        .chemistry-card h2 { color: #667eea; margin-bottom: 10px; font-size: 1.3em; }
+        .chemistry-card h3 { color: #764ba2; margin: 15px 0 10px 0; font-size: 0.95em; }
+        .property {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .property:last-child { border-bottom: none; }
+        .property-label { font-weight: 600; }
+        .property-value { color: #667eea; font-weight: bold; }
+        .pros { color: #10b981; }
+        .cons { color: #ef4444; }
+        .pros::before { content: "✓ "; }
+        .cons::before { content: "✗ "; }
+        ul { margin-left: 20px; }
+        li { margin-bottom: 8px; line-height: 1.6; }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .nav-links a {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔋 Lithium Battery Chemistry Types</h1>
+            <p>Compare different lithium battery chemistries to understand their strengths and weaknesses</p>
+        </header>
+        
+        <div class="chemistry-grid">
+            {% for chemistry_name, props in chemistries.items() %}
+            <div class="chemistry-card">
+                <h2>{{ chemistry_name }}</h2>
+                <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">{{ props.description }}</p>
+                
+                <h3>Key Properties:</h3>
+                <div class="property">
+                    <span class="property-label">Nominal Voltage:</span>
+                    <span class="property-value">{{ props.nominal_voltage }}</span>
+                </div>
+                <div class="property">
+                    <span class="property-label">Charge Voltage:</span>
+                    <span class="property-value">{{ props.charge_voltage }}</span>
+                </div>
+                <div class="property">
+                    <span class="property-label">Cutoff Voltage:</span>
+                    <span class="property-value">{{ props.discharge_cutoff }}</span>
+                </div>
+                <div class="property">
+                    <span class="property-label">Cycle Life:</span>
+                    <span class="property-value">{{ props.cycle_life }}</span>
+                </div>
+                <div class="property">
+                    <span class="property-label">Energy Density:</span>
+                    <span class="property-value">{{ props.energy_density }}</span>
+                </div>
+                <div class="property">
+                    <span class="property-label">Ideal DOD:</span>
+                    <span class="property-value">{{ props.ideal_dod }}</span>
+                </div>
+                <div class="property">
+                    <span class="property-label">Ideal Temperature:</span>
+                    <span class="property-value">{{ props.ideal_temperature }}</span>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Advantages:</h3>
+                <ul>
+                    {% for advantage in props.advantages %}
+                    <li class="pros">{{ advantage }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <h3>Disadvantages:</h3>
+                <ul>
+                    {% for disadvantage in props.disadvantages %}
+                    <li class="cons">{{ disadvantage }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div style="background: white; border-radius: 8px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <h2 style="color: #667eea; margin-bottom: 15px;">💡 Choosing the Right Chemistry</h2>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+                <li><strong>Energy Storage Systems:</strong> LiFePO4 (safe, long life, can do 100% DOD)</li>
+                <li><strong>Consumer Electronics:</strong> Li-ion/NCM (high energy density)</li>
+                <li><strong>Electric Vehicles:</strong> NCA or NCM (power and energy balance)</li>
+                <li><strong>High-Power Applications:</strong> NCA (highest energy density)</li>
+                <li><strong>Critical Applications (Medical):</strong> LiFePO4 (safest option)</li>
+            </ul>
+        </div>
+        
+        <div style="background: white; border-radius: 8px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <h2 style="color: #667eea; margin-bottom: 15px;">📚 Continue Learning</h2>
+            <div class="nav-links">
+                <a href="/learn/fundamentals">Fundamentals</a>
+                <a href="/learn/capacity-dod">Capacity & DOD</a>
+                <a href="/learn/crate">C-Rates</a>
+                <a href="/learn/cycles-aging">Cycles & Aging</a>
+                <a href="/learn/cell-simulator">Simulators</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

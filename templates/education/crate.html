@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C-Rates - Lithium Battery Education</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #667eea; margin-bottom: 10px; }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        .card h2 { color: #667eea; margin-bottom: 15px; font-size: 1.4em; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+        .definition-box { background: #f0f4ff; border-left: 4px solid #667eea; padding: 15px; margin: 15px 0; border-radius: 4px; }
+        .example-box { background: #f0fff4; border-left: 4px solid #10b981; padding: 15px; margin: 15px 0; border-radius: 4px; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        .comparison-table th, .comparison-table td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .comparison-table th { background-color: #667eea; color: white; font-weight: bold; }
+        .comparison-table tr:hover { background-color: #f9f9f9; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .nav-links a { display: inline-block; background: #667eea; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; }
+        ul { margin-left: 20px; line-height: 1.8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Understanding C-Rates</h1>
+            <p>Learn how discharge rate affects battery performance</p>
+        </header>
+        
+        <div class="card">
+            <h2>📊 What is C-Rate?</h2>
+            <div class="definition-box">
+                <strong>Definition:</strong> {{ content.definition }}
+            </div>
+            <div class="definition-box">
+                <strong>Formula:</strong> C-rate = Current (A) / Capacity (Ah)
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🔢 C-Rate Examples</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Rate</th>
+                    <th>Description</th>
+                    <th>Discharge Time</th>
+                    <th>Example (2Ah cell)</th>
+                </tr>
+                <tr>
+                    <td><strong>0.5C</strong></td>
+                    <td>Slow discharge</td>
+                    <td>2 hours</td>
+                    <td>1A current</td>
+                </tr>
+                <tr>
+                    <td><strong>1C</strong></td>
+                    <td>Standard rate</td>
+                    <td>1 hour</td>
+                    <td>2A current</td>
+                </tr>
+                <tr>
+                    <td><strong>2C</strong></td>
+                    <td>Fast discharge</td>
+                    <td>30 minutes</td>
+                    <td>4A current</td>
+                </tr>
+                <tr>
+                    <td><strong>5C</strong></td>
+                    <td>Very fast</td>
+                    <td>12 minutes</td>
+                    <td>10A current</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>💡 How C-Rate Affects Capacity</h2>
+            <p>Higher C-rates result in less available capacity due to voltage sag from internal resistance:</p>
+            <table class="comparison-table">
+                <tr>
+                    <th>C-Rate</th>
+                    <th>Available Capacity</th>
+                    <th>What This Means</th>
+                </tr>
+                <tr>
+                    <td><strong>0.2C (slow)</strong></td>
+                    <td>100%</td>
+                    <td>You get all the capacity</td>
+                </tr>
+                <tr>
+                    <td><strong>1C (standard)</strong></td>
+                    <td>95%</td>
+                    <td>Slightly less due to voltage sag</td>
+                </tr>
+                <tr>
+                    <td><strong>2C (fast)</strong></td>
+                    <td>90%</td>
+                    <td>Noticeable loss</td>
+                </tr>
+                <tr>
+                    <td><strong>5C (very fast)</strong></td>
+                    <td>75-80%</td>
+                    <td>Significant loss</td>
+                </tr>
+            </table>
+            <div class="example-box">
+                <strong>Why?</strong> Faster discharge = higher current → larger voltage drop across internal resistance → battery "appears" more discharged than it really is
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🎯 Practical Implications</h2>
+            <h3 style="color: #667eea; margin-top: 0;">✓ Low C-Rate Benefits (0.2-0.5C):</h3>
+            <ul>
+                <li>Maximum capacity utilization</li>
+                <li>Minimal voltage sag</li>
+                <li>Lower internal heating</li>
+                <li>Longer cycle life</li>
+                <li>Ideal for: Energy storage, slow-drain devices</li>
+            </ul>
+            
+            <h3 style="color: #667eea; margin: 20px 0 0 0;">⚡ High C-Rate Challenges (2C+):</h3>
+            <ul>
+                <li>Reduced available capacity</li>
+                <li>More voltage sag</li>
+                <li>Higher heat generation</li>
+                <li>Faster aging</li>
+                <li>Higher risk if not managed properly</li>
+                <li>Ideal for: Power tools, drones, EVs</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>📚 Continue Learning</h2>
+            <div class="nav-links">
+                <a href="/learn/fundamentals">Fundamentals</a>
+                <a href="/learn/capacity-dod">Capacity & DOD</a>
+                <a href="/learn/cycles-aging">Cycles & Aging</a>
+                <a href="/learn/cell-simulator">Cell Simulator</a>
+                <a href="/learn/calculators">Calculators</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

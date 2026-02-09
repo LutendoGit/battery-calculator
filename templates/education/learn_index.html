@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learn — Battery Education</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      :root {
+        --primary: #667eea;
+        --secondary: #764ba2;
+      }
+      
+      body { 
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); 
+        color: #222; 
+        min-height: 100vh; 
+        padding: 20px;
+      }
+      
+      .hero { 
+        padding: 40px 20px;
+        margin-top: 20px;
+      }
+      
+      .main-card {
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        background: white;
+      }
+      
+      h1 {
+        color: var(--primary);
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      
+      .lead {
+        color: #555;
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+      }
+      
+      .section-title {
+        color: var(--primary);
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .section-title i {
+        font-size: 1.4rem;
+      }
+      
+      .feature-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-left: 5px solid var(--primary);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: #333;
+        display: block;
+      }
+      
+      .feature-card:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        color: #333;
+        text-decoration: none;
+      }
+      
+      .feature-card h5 {
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      
+      .feature-card p {
+        font-size: 0.95rem;
+        color: #666;
+        margin: 0;
+      }
+      
+      .feature-icon {
+        font-size: 1.8rem;
+        color: var(--primary);
+        margin-right: 10px;
+      }
+      
+      .nav-back {
+        margin-top: 30px;
+        text-align: center;
+      }
+      
+      .nav-back a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      
+      .nav-back a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container hero">
+      <div class="main-card p-5">
+        <h1><i class="fas fa-graduation-cap"></i> Battery Learning Hub</h1>
+        <p class="lead">Master lithium battery fundamentals with interactive lessons, simulators, and calculators.</p>
+        
+        <!-- FUNDAMENTAL CONCEPTS SECTION -->
+        <div class="section-title">
+          <i class="fas fa-book"></i> Fundamental Concepts
+        </div>
+        
+        <a href="{{ url_for('education.fundamentals') }}" class="feature-card">
+          <h5><i class="fas fa-lightbulb feature-icon"></i>Cell Fundamentals</h5>
+          <p>Understand good cell operation, bad cell detection, and pack imbalance.</p>
+        </a>
+        
+        <a href="{{ url_for('education.chemistry') }}" class="feature-card">
+          <h5><i class="fas fa-flask feature-icon"></i>Battery Chemistry</h5>
+          <p>Compare Li-ion, LiFePO4, Li-Polymer, NCA, NCM and their properties.</p>
+        </a>
+        
+        <a href="{{ url_for('education.capacity_dod') }}" class="feature-card">
+          <h5><i class="fas fa-battery-three-quarters feature-icon"></i>Capacity & DOD</h5>
+          <p>Learn about battery capacity, depth of discharge, and cycle life impact.</p>
+        </a>
+        
+        <a href="{{ url_for('education.crate_learn') }}" class="feature-card">
+          <h5><i class="fas fa-tachometer-alt feature-icon"></i>C-Rate Explained</h5>
+          <p>Understand charge/discharge rates and their effects on battery performance.</p>
+        </a>
+        
+        <a href="{{ url_for('education.cycles_aging') }}" class="feature-card">
+          <h5><i class="fas fa-hourglass-half feature-icon"></i>Cycles & Aging</h5>
+          <p>Explore battery cycle life, degradation mechanisms, and lifespan factors.</p>
+        </a>
+        
+        <!-- INTERACTIVE TOOLS SECTION -->
+        <div class="section-title">
+          <i class="fas fa-tools"></i> Interactive Tools
+        </div>
+        
+        <a href="{{ url_for('education.cell_simulator_page') }}" class="feature-card">
+          <h5><i class="fas fa-microscope feature-icon"></i>Cell Simulator</h5>
+          <p>Simulate single cell discharge and charge behavior with custom parameters.</p>
+        </a>
+        
+        <a href="{{ url_for('education.pack_simulator_page') }}" class="feature-card">
+          <h5><i class="fas fa-cubes feature-icon"></i>Pack Simulator</h5>
+          <p>Test multi-cell pack behavior and detect imbalance issues.</p>
+        </a>
+        
+        <a href="{{ url_for('education.calculators') }}" class="feature-card">
+          <h5><i class="fas fa-calculator feature-icon"></i>Calculators</h5>
+          <p>Energy, C-rate, cycle life, and pack voltage calculators for quick reference.</p>
+        </a>
+        
+        <!-- ASSESSMENT SECTION -->
+        <div class="section-title">
+          <i class="fas fa-clipboard-check"></i> Assessment
+        </div>
+        
+        <a href="{{ url_for('education.quiz_index') }}" class="feature-card">
+          <h5><i class="fas fa-question-circle feature-icon"></i>Quizzes</h5>
+          <p>Test your knowledge with interactive quizzes on capacity, C-rates, and cell health.</p>
+        </a>
+        
+        <!-- REFERENCE SECTION -->
+        <div class="section-title">
+          <i class="fas fa-book-open"></i> Reference
+        </div>
+        
+        <a href="{{ url_for('education.glossary') }}" class="feature-card">
+          <h5><i class="fas fa-dictionary feature-icon"></i>Glossary</h5>
+          <p>80+ battery terms with searchable definitions and explanations.</p>
+        </a>
+        
+        <div class="nav-back">
+          <a href="{{ url_for('index') }}"><i class="fas fa-arrow-left"></i> Back to Battery Calculator</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

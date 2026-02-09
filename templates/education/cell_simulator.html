@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cell Simulator - Lithium Battery Education</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .simulator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .simulator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input[type="number"],
+        input[type="range"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        
+        input[type="range"] {
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .range-value {
+            display: inline-block;
+            margin-left: 10px;
+            color: #667eea;
+            font-weight: bold;
+            min-width: 50px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #764ba2;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: #667eea;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 0;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            border-bottom-color: #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .result-panel {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result-panel.active {
+            display: block;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .result-value {
+            color: #667eea;
+            font-weight: bold;
+            text-align: right;
+        }
+        
+        .status-healthy {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .status-warning {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+        
+        .status-critical {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 20px;
+        }
+        
+        .voltage-gauge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Cell Simulator - Watch a Cell Discharge & Charge</h1>
+            <p>See how voltage, capacity, and SOC change during discharge/charge cycles</p>
+        </header>
+        
+        <div class="simulator-grid">
+            <!-- INPUT PANEL -->
+            <div class="card">
+                <h2>⚙️ Cell Configuration</h2>
+                
+                <div class="form-group">
+                    <label for="chemistry">Chemistry Type:</label>
+                    <select id="chemistry">
+                        <option value="liion">Li-ion (3.7V nominal)</option>
+                        <option value="lifepo4">LiFePO4 (3.2V nominal)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="capacity">Capacity (mAh):</label>
+                    <input type="number" id="capacity" value="2000" min="500" max="10000" step="100">
+                </div>
+                
+                <div class="form-group">
+                    <label for="current">Discharge Current (A):</label>
+                    <input type="number" id="current" value="1.0" min="0.1" max="10" step="0.1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">Duration (hours):</label>
+                    <input type="number" id="duration" value="1.0" min="0.1" max="24" step="0.1">
+                </div>
+                
+                <div class="tabs" style="margin-bottom: 0; border: none;">
+                    <button class="tab-button active" onclick="switchTab('discharge')">Discharge</button>
+                    <button class="tab-button" onclick="switchTab('charge')">Charge</button>
+                </div>
+                
+                <div id="discharge" class="tab-content active">
+                    <button onclick="simulateDischarge()">⬇️ Simulate Discharge</button>
+                </div>
+                
+                <div id="charge" class="tab-content">
+                    <button onclick="simulateCharge()">⬆️ Simulate Charge</button>
+                </div>
+                
+                <!-- CURRENT VALUES -->
+                <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #ddd;">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">📊 Cell Status</h3>
+                    <div class="result-item">
+                        <span class="result-label">C-rate:</span>
+                        <span class="result-value" id="current-crate">0.5C</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Energy (Wh):</span>
+                        <span class="result-value" id="cell-energy">7.40</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RESULTS PANEL -->
+            <div class="card">
+                <h2>📈 Simulation Results</h2>
+                
+                <div class="voltage-gauge" id="voltage-display">--</div>
+                
+                <div class="result-panel active" id="results">
+                    <div class="result-item">
+                        <span class="result-label">New Voltage:</span>
+                        <span class="result-value" id="result-voltage">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">State of Charge:</span>
+                        <span class="result-value" id="result-soc">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">C-rate Used:</span>
+                        <span class="result-value" id="result-crate">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Energy Discharged/Charged:</span>
+                        <span class="result-value" id="result-energy">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Time Remaining:</span>
+                        <span class="result-value" id="result-time">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Voltage Sag:</span>
+                        <span class="result-value" id="result-sag">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Status:</span>
+                        <span class="result-value status-healthy" id="result-status">--</span>
+                    </div>
+                </div>
+                
+                <div class="info-box" style="margin-top: 20px;">
+                    <strong>💡 What you're seeing:</strong>
+                    <ul style="margin-left: 15px; margin-top: 10px;">
+                        <li>Voltage drops as the cell discharges</li>
+                        <li>Higher C-rates cause more voltage sag</li>
+                        <li>SOC follows the voltage curve</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- EDUCATIONAL CONTENT -->
+        <div class="card">
+            <h2>📚 About Cell Behavior</h2>
+            
+            <h3 style="color: #667eea; margin: 15px 0;">Why Does Voltage Sag Occur?</h3>
+            <p>
+                When you draw current from a cell, the internal resistance causes a voltage drop.
+                Higher discharge rates (higher C-rates) create more voltage sag because the current is larger.
+                This is why fast discharge delivers less usable capacity than slow discharge.
+            </p>
+            
+            <h3 style="color: #667eea; margin: 15px 0;">Understanding the Discharge Curve</h3>
+            <p>
+                A healthy lithium cell has a characteristic S-shaped discharge curve:
+            </p>
+            <ul style="margin-left: 20px; margin: 10px 0;">
+                <li><strong>Top (100% to ~80%):</strong> Voltage drops slowly (flat region)</li>
+                <li><strong>Middle (80% to 20%):</strong> Linear voltage drop (steep slope)</li>
+                <li><strong>Bottom (20% to 0%):</strong> Voltage drops rapidly as cell empties</li>
+            </ul>
+            
+            <h3 style="color: #667eea; margin: 15px 0;">Try This:</h3>
+            <ol style="margin-left: 20px; margin: 10px 0;">
+                <li>Discharge at 1C rate and note the voltage sag</li>
+                <li>Try discharging at 0.5C (same cell, half current)</li>
+                <li>Compare the voltage curves - lower C-rate = less sag!</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // Chemistry-specific defaults
+        const chemistryDefaults = {
+            'liion': { nominal: 3.7, min: 2.5, max: 4.2 },
+            'lifepo4': { nominal: 3.2, min: 2.0, max: 3.65 }
+        };
+        
+        // Update C-rate and energy display
+        function updateCellInfo() {
+            const capacity = parseFloat(document.getElementById('capacity').value);
+            const current = parseFloat(document.getElementById('current').value);
+            const chemistry = document.getElementById('chemistry').value;
+            const defaults = chemistryDefaults[chemistry];
+            
+            const crate = (current / (capacity / 1000)).toFixed(2);
+            const energy = ((capacity / 1000) * defaults.nominal).toFixed(2);
+            
+            document.getElementById('current-crate').textContent = crate + 'C';
+            document.getElementById('cell-energy').textContent = energy + ' Wh';
+        }
+        
+        // Update cell info on input change
+        document.getElementById('capacity').addEventListener('change', updateCellInfo);
+        document.getElementById('current').addEventListener('change', updateCellInfo);
+        document.getElementById('chemistry').addEventListener('change', updateCellInfo);
+        
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function simulateDischarge() {
+            const capacity = parseFloat(document.getElementById('capacity').value);
+            const current = parseFloat(document.getElementById('current').value);
+            const duration = parseFloat(document.getElementById('duration').value);
+            const chemistry = document.getElementById('chemistry').value;
+            const defaults = chemistryDefaults[chemistry];
+            
+            fetch('/learn/api/cell-simulator/discharge', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    capacity_mah: capacity,
+                    current_a: current,
+                    duration_hours: duration,
+                    nominal_voltage: defaults.nominal,
+                    min_voltage: defaults.min,
+                    max_voltage: defaults.max
+                })
+            })
+            .then(r => r.json())
+            .then(data => displayResults(data, defaults.nominal));
+        }
+        
+        function simulateCharge() {
+            const capacity = parseFloat(document.getElementById('capacity').value);
+            const current = parseFloat(document.getElementById('current').value);
+            const duration = parseFloat(document.getElementById('duration').value);
+            const chemistry = document.getElementById('chemistry').value;
+            const defaults = chemistryDefaults[chemistry];
+            
+            fetch('/learn/api/cell-simulator/discharge', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    capacity_mah: capacity,
+                    current_a: current,
+                    duration_hours: duration,
+                    nominal_voltage: defaults.nominal,
+                    min_voltage: defaults.min,
+                    max_voltage: defaults.max
+                })
+            })
+            .then(r => r.json())
+            .then(data => displayResults(data, defaults.nominal));
+        }
+        
+        function displayResults(data, nominal) {
+            document.getElementById('voltage-display').textContent = data.new_voltage.toFixed(2) + 'V';
+            document.getElementById('result-voltage').textContent = data.new_voltage.toFixed(3) + 'V';
+            document.getElementById('result-soc').textContent = data.new_soc.toFixed(1) + '%';
+            document.getElementById('result-crate').textContent = data.crate + 'C';
+            document.getElementById('result-energy').textContent = data.energy_discharged_wh.toFixed(2) + ' Wh';
+            document.getElementById('result-time').textContent = data.time_remaining_hours.toFixed(1) + ' hrs';
+            document.getElementById('result-sag').textContent = data.voltage_sag_v.toFixed(3) + 'V';
+            
+            const statusElement = document.getElementById('result-status');
+            statusElement.textContent = data.status;
+            statusElement.className = 'result-value status-' + (data.status === 'HEALTHY' ? 'healthy' : data.status === 'CHARGING' ? 'healthy' : 'critical');
+        }
+        
+        // Initialize
+        updateCellInfo();
+    </script>
+</body>
+</html>

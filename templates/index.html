@@ -53,6 +53,14 @@
         border-radius: 15px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+          /* Background image for the form card. Replace the URL with an external link or
+            place an image at static/images/form-bg.jpg for local serving via Flask. */
+            background-color: #ffffff;
+            background-image: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url("{{ url_for('static', filename='images/Unleashing-Solar-Power-Illuminate-Your-Life-with-Solar-Panels-in-Poquoson-700x441.png') }}");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+          background-blend-mode: overlay;
       }
       
       .card:hover {
@@ -140,7 +148,12 @@
   </head>
   <body>
     <div class="container portrait-container">
-      <h1 class="mb-4">Battery Design Calculator </h1>
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="m-0">Battery Design Calculator</h1>
+        <div>
+          <a class="btn btn-outline-light" href="{{ url_for('education.learn_index') }}">Learn</a>
+        </div>
+      </div>
 
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -179,7 +192,7 @@
                 </div>
                 <div class="form-group">
                   <label>Connection Type</label>
-                  <select class="form-control" name="connection_type">
+                  <select class="form-control" name="connection_type" placeholder="e.g. series or parallel">
                     <option>Series</option>
                     <option>Parallel</option>
                     <option>Series-Parallel</option>
@@ -188,20 +201,20 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label>Series Cells (for S-P)</label>
-                    <input class="form-control" name="series_cells">
+                    <input class="form-control" name="series_cells" placeholder="e.g. 4 cells in series">
                   </div>
                   <div class="form-group col-md-6">
                     <label>Parallel Cells (for S-P)</label>
-                    <input class="form-control" name="parallel_cells">
+                    <input class="form-control" name="parallel_cells" placeholder="e.g. 1 cell in parallel">
                   </div>
                 </div>
                 <div class="form-group">
                   <label>C-rate (for max power)</label>
-                  <input class="form-control" name="c_rate" placeholder="e.g. 5">
+                  <input class="form-control" name="c_rate" placeholder="e.g. 0.5">
                 </div>
                 <div class="form-group">
                   <label>Cell Internal Resistance (mΩ)</label>
-                  <input class="form-control" name="cell_ir" placeholder="e.g. 50">
+                  <input class="form-control" name="cell_ir" placeholder="e.g. 0.2">
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">

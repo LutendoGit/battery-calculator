@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Calculators - Lithium Battery Education</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #667eea; margin-bottom: 10px; }
+        .calculator-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .card h2 { color: #667eea; margin-bottom: 15px; font-size: 1.2em; }
+        input, select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        button { width: 100%; padding: 10px; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #764ba2; }
+        .result { background: #e8f5e9; border: 1px solid #10b981; padding: 15px; border-radius: 4px; margin-top: 15px; display: none; }
+        .result.active { display: block; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧮 Interactive Learning Calculators</h1>
+            <p>Hands-on tools to understand battery concepts</p>
+        </header>
+        
+        <div class="calculator-grid">
+            <!-- Energy Calculator -->
+            <div class="card">
+                <h2>⚡ Energy Calculator</h2>
+                <label for="cap-mah">Capacity (mAh):</label>
+                <input type="number" id="cap-mah" value="2000" min="100" max="10000">
+                
+                <label for="volt">Voltage (V):</label>
+                <input type="number" id="volt" value="3.7" min="2" max="5" step="0.1">
+                
+                <button onclick="calcEnergy()">Calculate</button>
+                
+                <div class="result" id="energy-result">
+                    <p><strong>Energy: </strong><span id="energy-wh">--</span> Wh</p>
+                </div>
+            </div>
+            
+            <!-- C-Rate Calculator -->
+            <div class="card">
+                <h2>⚡ C-Rate Calculator</h2>
+                <label for="current-a">Current (A):</label>
+                <input type="number" id="current-a" value="1" min="0.1" max="100" step="0.1">
+                
+                <label for="capacity-ah">Capacity (Ah):</label>
+                <input type="number" id="capacity-ah" value="2" min="0.1" max="100" step="0.1">
+                
+                <button onclick="calcCRate()">Calculate</button>
+                
+                <div class="result" id="crate-result">
+                    <p><strong>C-Rate: </strong><span id="crate-value">--</span>C</p>
+                    <p><strong>Discharge Time: </strong><span id="discharge-time">--</span> hours</p>
+                </div>
+            </div>
+            
+            <!-- Cycle Life Calculator -->
+            <div class="card">
+                <h2>🔄 Cycle Life Calculator</h2>
+                <label for="chemistry-select">Chemistry:</label>
+                <select id="chemistry-select">
+                    <option value="LIFEPO4">LiFePO4</option>
+                    <option value="LI_ION">Li-ion</option>
+                    <option value="NCA">NCA</option>
+                </select>
+                
+                <label for="dod-slider">DOD (%):</label>
+                <input type="range" id="dod-slider" min="20" max="100" value="80" step="10">
+                <p style="text-align: center; color: #667eea; font-weight: bold;"><span id="dod-display">80</span>%</p>
+                
+                <button onclick="calcCycles()">Calculate</button>
+                
+                <div class="result" id="cycles-result">
+                    <p><strong>Cycles: </strong><span id="cycles-value">--</span></p>
+                    <p><strong>Years (1/day): </strong><span id="years-value">--</span></p>
+                </div>
+            </div>
+            
+            <!-- Pack Voltage Calculator -->
+            <div class="card">
+                <h2>🔋 Pack Voltage Calculator</h2>
+                <label for="num-cells-calc">Number of Cells:</label>
+                <input type="number" id="num-cells-calc" value="4" min="1" max="100">
+                
+                <label for="cell-voltage">Cell Voltage (V):</label>
+                <input type="number" id="cell-voltage" value="3.7" min="2" max="5" step="0.1">
+                
+                <button onclick="calcPackVoltage()">Calculate</button>
+                
+                <div class="result" id="pack-voltage-result">
+                    <p><strong>Pack Voltage: </strong><span id="pack-v">--</span>V (Series)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Energy Calculator
+        function calcEnergy() {
+            const mah = parseFloat(document.getElementById('cap-mah').value);
+            const v = parseFloat(document.getElementById('volt').value);
+            const wh = (mah / 1000) * v;
+            
+            document.getElementById('energy-wh').textContent = wh.toFixed(2);
+            document.getElementById('energy-result').classList.add('active');
+        }
+        
+        // C-Rate Calculator
+        function calcCRate() {
+            const current = parseFloat(document.getElementById('current-a').value);
+            const capacity = parseFloat(document.getElementById('capacity-ah').value);
+            const crate = (current / capacity).toFixed(2);
+            const time = (capacity / current).toFixed(2);
+            
+            document.getElementById('crate-value').textContent = crate;
+            document.getElementById('discharge-time').textContent = time;
+            document.getElementById('crate-result').classList.add('active');
+        }
+        
+        // DOD Slider
+        document.getElementById('dod-slider').addEventListener('input', function() {
+            document.getElementById('dod-display').textContent = this.value;
+        });
+        
+        // Cycle Life Calculator
+        function calcCycles() {
+            const chemistry = document.getElementById('chemistry-select').value;
+            const dod = parseInt(document.getElementById('dod-slider').value);
+            
+            fetch('/learn/api/calculate/cycle-life', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chemistry, dod_percent: dod })
+            })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('cycles-value').textContent = data.estimated_cycles.toLocaleString();
+                document.getElementById('years-value').textContent = Math.floor(data.estimated_cycles / 365);
+                document.getElementById('cycles-result').classList.add('active');
+            });
+        }
+        
+        // Pack Voltage Calculator
+        function calcPackVoltage() {
+            const cells = parseInt(document.getElementById('num-cells-calc').value);
+            const voltage = parseFloat(document.getElementById('cell-voltage').value);
+            const packV = cells * voltage;
+            
+            document.getElementById('pack-v').textContent = packV.toFixed(1);
+            document.getElementById('pack-voltage-result').classList.add('active');
+        }
+    </script>
+</body>
+</html>

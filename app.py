@@ -13,11 +13,17 @@ from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib import colors
+from routes.education_routes import education_bp
+
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev'
+# Register the education blueprint only if explicitly enabled via env var.
+# Keeps the app focused on the Battery Design calculator by default.
+app.register_blueprint(education_bp)
 
-# Store last result for PDF export
+# Store last result cache for PDF export
 last_result = {'text': '', 'title': '', 'chemistry': 'LiFePO4', 'dod': '80'}
 
 # Background PDF executor and job store
@@ -195,6 +201,7 @@ def index():
                 cell_ir = float(request.form.get('cell_ir') or 0)
                 chemistry = request.form.get('chemistry') or 'LiFePO4'
                 dod = int(request.form.get('dod') or 80)
+                
 
                 res = calculator.compute_pack_design(
                     cell_voltage=cell_voltage,
@@ -243,22 +250,26 @@ def index():
 
 @app.route('/export-pdf',methods = ['POST'])
 def export_pdf():
-     result_text = last_result['text']
-     title = last_result['title']
-     chemistry = last_result['chemistry']
-     dod = last_result['dod']
+    # Allow the client to POST the result text (works across multiple workers)
+    # Accept form fields or JSON: 'result_text', 'title', 'chemistry', 'dod'
+    req_json = request.get_json(silent=True)
+    result_text = request.form.get('result_text') or (req_json and req_json.get('result_text')) or last_result.get('text', '')
+    title = request.form.get('title') or (req_json and req_json.get('title')) or last_result.get('title', 'Report')
+    chemistry = request.form.get('chemistry') or (req_json and req_json.get('chemistry')) or last_result.get('chemistry', 'LiFePO4')
+    dod = request.form.get('dod') or (req_json and req_json.get('dod')) or last_result.get('dod', '80')
 
-     if not result_text.strip():
+    if not str(result_text).strip():
         return jsonify({"error": "No result to export"}), 400
-     tmp = tempfile.NamedTemporaryFile(prefix='battery_pdf_', suffix='.pdf', delete=False)
-     tmp_path = tmp.name
-     tmp.close()
 
-     job_id = str(uuid.uuid4())
-     future = executor.submit(build_pdf_to_file, result_text, title, chemistry, dod, tmp_path)
-     pdf_jobs[job_id] = {'future': future, 'path': tmp_path}
+    tmp = tempfile.NamedTemporaryFile(prefix='battery_pdf_', suffix='.pdf', delete=False)
+    tmp_path = tmp.name
+    tmp.close()
 
-     return jsonify({"job_id": job_id})
+    job_id = str(uuid.uuid4())
+    future = executor.submit(build_pdf_to_file, result_text, title, chemistry, dod, tmp_path)
+    pdf_jobs[job_id] = {'future': future, 'path': tmp_path}
+
+    return jsonify({"job_id": job_id})
 
 
 @app.route('/pdf-status/<job_id>')
@@ -322,4 +333,30 @@ def pdf_status_json(job_id):
     else:
         return jsonify({'status': 'working'})
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Tidy startup: allow controlling debug with env var, avoid double browser
+    # opens from the reloader, and reduce werkzeug log noise.
+    import webbrowser
+    import logging
+
+    host = os.environ.get('FLASK_RUN_HOST', '127.0.0.1')
+    port = int(os.environ.get('FLASK_RUN_PORT', 5000))
+    debug = os.environ.get('FLASK_DEBUG', '1') == '1'
+
+    # Reduce noisy request logs during development if desired
+    logging.getLogger('werkzeug').setLevel(logging.WARNING)
+    app.logger.setLevel(logging.INFO)
+
+    url = f'http://{host}:{port}/'
+
+    # Only open a browser once: when not running under the reloader parent.
+    # When debug=True Flask uses the reloader which runs the script twice; the
+    # reloader child sets WERKZEUG_RUN_MAIN='true'. Open browser in the child
+    # (or when debug is False).
+    if (not debug) or (os.environ.get('WERKZEUG_RUN_MAIN') == 'true'):
+        try:
+            webbrowser.open(url)
+        except Exception:
+            pass
+
+    # Use the debug flag from env and let Flask control the reloader.
+    app.run(debug=debug, host=host, port=port)

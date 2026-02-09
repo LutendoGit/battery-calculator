@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Cycles & Aging - Lithium Battery Education</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #667eea; margin-bottom: 10px; }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        .card h2 { color: #667eea; margin-bottom: 15px; font-size: 1.4em; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+        .card h3 { color: #764ba2; margin-top: 20px; margin-bottom: 10px; }
+        .definition-box { background: #f0f4ff; border-left: 4px solid #667eea; padding: 15px; margin: 15px 0; border-radius: 4px; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .nav-links a { display: inline-block; background: #667eea; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; }
+        ul { margin-left: 20px; line-height: 1.8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔄 Battery Cycles & Aging</h1>
+            <p>Understand how batteries age and what determines their lifespan</p>
+        </header>
+        
+        <div class="card">
+            <h2>📊 What is a Battery Cycle?</h2>
+            <div class="definition-box">
+                <strong>Definition:</strong> One complete charge-discharge cycle from 0% to 100% and back to 0%
+            </div>
+            
+            <h3>Cycle Counting Examples:</h3>
+            <ul>
+                <li>Full discharge 0% → 100% → 0% = 1 cycle</li>
+                <li>Partial discharge 20% → 80% → 20% = 0.6 cycles</li>
+                <li>Multiple small discharges accumulate (e.g., 5 × 0.2 cycles = 1 full cycle)</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>⚠️ Degradation Mechanisms</h2>
+            <p>Batteries age through several physical and chemical processes:</p>
+            
+            <h3>1. SEI Layer Growth</h3>
+            <p>The Solid Electrolyte Interphase layer thickens over time, increasing internal resistance.</p>
+            
+            <h3>2. Electrolyte Decomposition</h3>
+            <p>The electrolyte breaks down, reducing ion conductivity and increasing resistance.</p>
+            
+            <h3>3. Active Material Loss</h3>
+            <p>Cathode and anode particles dissolve or become disconnected, reducing capacity.</p>
+            
+            <h3>4. Electrode Cracking</h3>
+            <p>Repeated expansion and contraction causes physical cracks in electrode materials.</p>
+        </div>
+        
+        <div class="card">
+            <h2>🛡️ How to Extend Battery Life</h2>
+            
+            <h3>Temperature Management (Most Important!)</h3>
+            <ul>
+                <li>Keep batteries cool: 15-25°C is ideal</li>
+                <li>Avoid heat: Every 10°C increase doubles aging rate</li>
+                <li>Never store in hot cars or direct sunlight</li>
+            </ul>
+            
+            <h3>Charging Habits</h3>
+            <ul>
+                <li>Avoid 100% charge: Keep below 90% for daily use</li>
+                <li>Avoid 0% discharge: Recharge before 10% remaining</li>
+                <li>Ideal range: Keep between 20-80% SOC</li>
+            </ul>
+            
+            <h3>Usage Patterns</h3>
+            <ul>
+                <li>Use consistent C-rates: Avoid extreme currents</li>
+                <li>Shallow discharges are gentler than deep ones</li>
+                <li>Regular use is better than long storage</li>
+            </ul>
+            
+            <h3>Calendar Storage</h3>
+            <ul>
+                <li>Store at 40-60% SOC (not 0% or 100%)</li>
+                <li>Cool location (below 25°C)</li>
+                <li>Dry environment</li>
+                <li>Check charge level every 3-6 months</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>📚 Continue Learning</h2>
+            <div class="nav-links">
+                <a href="/learn/fundamentals">Fundamentals</a>
+                <a href="/learn/chemistry">Chemistry</a>
+                <a href="/learn/capacity-dod">Capacity & DOD</a>
+                <a href="/learn/crate">C-Rates</a>
+                <a href="/learn/glossary">Glossary</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

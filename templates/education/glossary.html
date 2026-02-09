@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/jpeg" href="/static/images/static/images/OIP.jpg">
+    <title>Battery Glossary - Lithium Battery Education</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #667eea; margin-bottom: 10px; }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        .glossary-list {
+            list-style: none;
+        }
+        .glossary-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s;
+        }
+        .glossary-item:hover {
+            background: #f9f9f9;
+        }
+        .glossary-term {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        .glossary-definition {
+            color: #555;
+            line-height: 1.6;
+            margin-left: 0;
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .nav-links a {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Lithium Battery Glossary</h1>
+            <p>Quick reference for battery and cell terminology</p>
+        </header>
+        
+        <div class="card">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search glossary..." onkeyup="filterGlossary()">
+            </div>
+            
+            <ul class="glossary-list" id="glossaryList">
+                {% for term, definition in terms.items() %}
+                <li class="glossary-item">
+                    <div class="glossary-term">{{ term }}</div>
+                    <div class="glossary-definition">{{ definition }}</div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2 style="color: #667eea; margin-bottom: 15px;">📚 Continue Learning</h2>
+            <div class="nav-links">
+                <a href="/learn/fundamentals">Fundamentals</a>
+                <a href="/learn/chemistry">Chemistry</a>
+                <a href="/learn/capacity-dod">Capacity & DOD</a>
+                <a href="/learn/crate">C-Rates</a>
+                <a href="/learn/cycles-aging">Cycles & Aging</a>
+                <a href="/learn/cell-simulator">Simulators</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function filterGlossary() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.glossary-item');
+            
+            items.forEach(item => {
+                const term = item.querySelector('.glossary-term').textContent.toLowerCase();
+                const definition = item.querySelector('.glossary-definition').textContent.toLowerCase();
+                
+                if (term.includes(input) || definition.includes(input)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

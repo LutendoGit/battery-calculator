@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#667eea" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#764ba2" stop-opacity="1"/>
+    </linearGradient>
+    <filter id="grain" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" result="noise" />
+      <feColorMatrix type="saturate" values="0" />
+      <feBlend in="SourceGraphic" in2="noise" mode="overlay" />
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#g1)" />
+
+  <!-- subtle diagonal highlights -->
+  <g opacity="0.08" fill="#fff">
+    <rect x="-200" y="-100" width="1200" height="900" transform="rotate(-25 400 300)"/>
+    <rect x="200" y="-100" width="1200" height="900" transform="rotate(-25 1000 300)"/>
+  </g>
+
+  <!-- repeating battery motif -->
+  <g fill="rgba(255,255,255,0.06)" transform="translate(40,40)">
+    <rect x="0" y="0" width="1400" height="820" rx="8"/>
+    <g transform="translate(40,40)" opacity="0.12">
+      <defs>
+        <pattern id="p" width="200" height="120" patternUnits="userSpaceOnUse">
+          <rect width="180" height="80" x="10" y="20" rx="8" fill="#fff"/>
+        </pattern>
+      </defs>
+      <rect width="1400" height="820" fill="url(#p)"/>
+    </g>
+  </g>
+
+  <g filter="url(#grain)" opacity="0.05">
+    <rect width="1600" height="900" fill="#000" />
+  </g>
+
+</svg>

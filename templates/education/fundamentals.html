@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lithium Battery Education - Fundamentals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .card ul, .card ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .card li {
+            margin-bottom: 10px;
+        }
+        
+        .card li strong {
+            color: #667eea;
+        }
+        
+        .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+        
+        .highlight-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table th {
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .nav-links a {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Lithium Battery Fundamentals</h1>
+            <p>Learn how to identify good cells, detect bad cells, and manage cell imbalance in battery packs</p>
+        </header>
+        
+        <div class="content-grid">
+            <!-- GOOD CELL BEHAVIOR -->
+            <div class="card">
+                <div class="icon">✅</div>
+                <h2>{{ content.good_cell.title }}</h2>
+                
+                <div class="highlight-box">
+                    <strong>Voltage Profile:</strong> {{ content.good_cell.voltage_profile }}
+                </div>
+                
+                <h3 style="color: #667eea; margin-top: 15px;">Key Characteristics:</h3>
+                <ul>
+                    {% for char in content.good_cell.characteristics %}
+                    <li>{{ char }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- BAD CELL DETECTION -->
+            <div class="card">
+                <div class="icon">⚠️</div>
+                <h2>{{ content.bad_cell.title }}</h2>
+                
+                <h3 style="color: #667eea; margin-top: 0;">Warning Signs:</h3>
+                <ul>
+                    {% for sign in content.bad_cell.signs %}
+                    <li>{{ sign }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <h3 style="color: #667eea; margin-top: 20px;">Measurements to Check:</h3>
+                <table class="comparison-table">
+                    {% for param, value in content.bad_cell.measurements.items() %}
+                    <tr>
+                        <td><strong>{{ param.replace('_', ' ').title() }}:</strong></td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            
+            <!-- PACK IMBALANCE -->
+            <div class="card">
+                <div class="icon">🔋</div>
+                <h2>{{ content.pack_imbalance.title }}</h2>
+                
+                <h3 style="color: #667eea; margin-top: 0; margin-bottom: 10px;">⬇️ Problems with Low Cells:</h3>
+                <ul>
+                    {% for issue in content.pack_imbalance.low_cell_issues %}
+                    <li>{{ issue }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <h3 style="color: #667eea; margin-top: 15px; margin-bottom: 10px;">⬆️ Problems with High Cells:</h3>
+                <ul>
+                    {% for issue in content.pack_imbalance.high_cell_issues %}
+                    <li>{{ issue }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <h3 style="color: #667eea; margin-top: 15px; margin-bottom: 10px;">🛠️ Solutions:</h3>
+                <ul>
+                    {% for solution in content.pack_imbalance.mitigation %}
+                    <li>{{ solution }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
+        <!-- NAVIGATION -->
+        <div class="card">
+            <h2>📚 Learn More Topics</h2>
+            <div class="nav-links">
+                <a href="/learn/chemistry">Chemistry Types</a>
+                <a href="/learn/capacity-dod">Capacity & DOD</a>
+                <a href="/learn/crate">C-Rates</a>
+                <a href="/learn/cycles-aging">Cycles & Aging</a>
+                <a href="/learn/cell-simulator">Cell Simulator</a>
+                <a href="/learn/pack-simulator">Pack Simulator</a>
+                <a href="/learn/quiz">Quizzes</a>
+                <a href="/learn/glossary">Glossary</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacity & DOD - Lithium Battery Education</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .card h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .definition-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .example-box {
+            background: #f0fff4;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table th {
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .calculator-box {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .calculator-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .calculator-box button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .calculator-box button:hover {
+            background: #764ba2;
+        }
+        
+        .result-box {
+            background: #e8f5e9;
+            border: 1px solid #10b981;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .nav-links a {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #764ba2;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Capacity & Depth of Discharge (DOD)</h1>
+            <p>Understanding two of the most important battery parameters</p>
+        </header>
+        
+        <!-- CAPACITY SECTION -->
+        <div class="card">
+            <h2>🔋 Battery Capacity</h2>
+            
+            <div class="definition-box">
+                <strong>Definition:</strong> {{ content.capacity.definition }}
+            </div>
+            
+            <h3>Energy vs Capacity</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Meaning</th>
+                </tr>
+                {% for key, value in content.capacity.energy_vs_capacity.items() %}
+                <tr>
+                    <td><strong>{{ key.replace('_', ' ').title() }}</strong></td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+            <h3>Nominal vs Practical Capacity</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>Nominal</strong></td>
+                    <td>{{ content.capacity.nominal_vs_practical.nominal }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Practical</strong></td>
+                    <td>{{ content.capacity.nominal_vs_practical.practical }}</td>
+                </tr>
+            </table>
+            
+            <h3>Factors Affecting Available Capacity</h3>
+            <ul>
+                {% for factor in content.capacity.factors_affecting_capacity %}
+                <li>{{ factor }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <!-- DOD SECTION -->
+        <div class="card">
+            <h2>📉 Depth of Discharge (DOD)</h2>
+            
+            <div class="definition-box">
+                <strong>Definition:</strong> {{ content.dod.definition }}
+            </div>
+            
+            <h3>DOD vs SOC (State of Charge)</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Meaning</th>
+                </tr>
+                <tr>
+                    <td><strong>DOD</strong></td>
+                    <td>{{ content.dod.dod_vs_soc.dod }}</td>
+                </tr>
+                <tr>
+                    <td><strong>SOC</strong></td>
+                    <td>{{ content.dod.dod_vs_soc.soc }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Relationship</strong></td>
+                    <td>{{ content.dod.dod_vs_soc.relationship }}</td>
+                </tr>
+            </table>
+            
+            <h3>How DOD Affects Cycle Life</h3>
+            <div class="example-box">
+                <strong>Key Principle:</strong> {{ content.dod.cycle_life_impact.explanation }}
+            </div>
+            
+            <h3>Cycle Life Examples</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>DOD Level</th>
+                    <th>LiFePO4 Cycles</th>
+                    <th>Li-ion Cycles</th>
+                </tr>
+                {% for dod_level, data in content.dod.cycle_life_impact.examples.items() %}
+                <tr>
+                    <td><strong>{{ data.dod }}</strong></td>
+                    <td>{{ data.lifepo4_cycles }}</td>
+                    <td>{{ data.liion_cycles }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+            <h3>💡 Practical Recommendations</h3>
+            <ul>
+                {% for use_case, recommendation in content.dod.practical_recommendations.items() %}
+                <li><strong>{{ use_case.replace('_', ' ').title() }}:</strong> {{ recommendation }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <!-- INTERACTIVE CALCULATOR -->
+        <div class="card">
+            <h2>🧮 Cycle Life Calculator</h2>
+            
+            <div class="calculator-box">
+                <label for="chemistry">Battery Chemistry:</label>
+                <select id="chemistry" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="LI_ION">Lithium-ion (Li-ion)</option>
+                    <option value="LIFEPO4">Lithium Iron Phosphate (LiFePO4)</option>
+                    <option value="LI_POLYMER">Lithium Polymer (Li-Po)</option>
+                    <option value="NCA">Nickel Cobalt Aluminum (NCA)</option>
+                </select>
+                
+                <label for="dod">Depth of Discharge (%):</label>
+                <input type="range" id="dod" min="20" max="100" value="80" step="10" style="margin-bottom: 10px;">
+                <div style="text-align: center; color: #667eea; font-weight: bold; margin-bottom: 15px;">
+                    <span id="dod-value">80</span>%
+                </div>
+                
+                <button onclick="calculateCycleLife()">Calculate Cycle Life</button>
+                
+                <div class="result-box" id="result-box">
+                    <h3 style="color: #10b981; margin-top: 0;">📊 Results:</h3>
+                    <p id="cycle-result"></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NAVIGATION -->
+        <div class="card">
+            <h2>📚 Continue Learning</h2>
+            <div class="nav-links">
+                <a href="/learn/fundamentals">Fundamentals</a>
+                <a href="/learn/chemistry">Chemistry Types</a>
+                <a href="/learn/crate">C-Rates</a>
+                <a href="/learn/cycles-aging">Cycles & Aging</a>
+                <a href="/learn/calculators">Calculators</a>
+                <a href="/learn/quiz">Quizzes</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Update DOD display
+        document.getElementById('dod').addEventListener('input', function() {
+            document.getElementById('dod-value').textContent = this.value;
+        });
+        
+        function calculateCycleLife() {
+            const chemistry = document.getElementById('chemistry').value;
+            const dod = parseInt(document.getElementById('dod').value);
+            
+            fetch('/learn/api/calculate/cycle-life', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chemistry, dod_percent: dod })
+            })
+            .then(r => r.json())
+            .then(data => {
+                const resultBox = document.getElementById('result-box');
+                document.getElementById('cycle-result').innerHTML = `
+                    <strong>${data.chemistry}</strong> at <strong>${data.dod_percent} DOD</strong><br>
+                    <strong>Estimated Cycles:</strong> ${data.estimated_cycles.toLocaleString()}<br>
+                    <strong>Years (1 cycle/day):</strong> ~${Math.floor(data.estimated_cycles / 365)} years<br>
+                    <p style="color: #10b981; margin-top: 10px;">${data.explanation}</p>
+                `;
+                resultBox.style.display = 'block';
+            });
+        }
+    </script>
+</body>
+</html>

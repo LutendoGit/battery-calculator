@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzes - Lithium Battery Education</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #667eea; margin-bottom: 10px; }
+        .quiz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .quiz-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .quiz-card:hover { transform: translateY(-5px); }
+        .quiz-icon { font-size: 3em; margin-bottom: 15px; }
+        .quiz-card h2 { color: #667eea; margin-bottom: 10px; }
+        .quiz-card p { color: #666; margin-bottom: 20px; }
+        .quiz-card button {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        .quiz-card button:hover { background: #764ba2; }
+
+        .runner {
+            margin-top: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            display: none;
+        }
+        .runner-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .runner-title { color: #667eea; font-size: 1.3em; font-weight: 700; }
+        .runner-meta { color: #666; }
+        .question {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 10px 0 15px;
+        }
+        .options { display: grid; gap: 10px; margin-bottom: 15px; }
+        .option-btn {
+            text-align: left;
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e5e7eb;
+            background: #f8fafc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .option-btn:hover { border-color: #667eea; }
+        .option-btn.correct { border-color: #16a34a; background: #dcfce7; }
+        .option-btn.wrong { border-color: #dc2626; background: #fee2e2; }
+        .explanation {
+            background: #f3f4f6;
+            border-left: 4px solid #667eea;
+            padding: 12px 14px;
+            border-radius: 6px;
+            color: #374151;
+            display: none;
+        }
+        .runner-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .secondary-btn {
+            background: #111827;
+        }
+        .secondary-btn:hover { background: #0b1220; }
+        .ghost-btn {
+            background: transparent;
+            border: 1px solid #cbd5e1;
+            color: #111827;
+        }
+        .ghost-btn:hover {
+            background: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Battery Knowledge Quizzes</h1>
+            <p>Test your understanding with interactive quizzes</p>
+        </header>
+        
+        <div class="quiz-grid">
+            <div class="quiz-card">
+                <div class="quiz-icon">📊</div>
+                <h2>Capacity & DOD</h2>
+                <p>Test your knowledge of capacity and depth of discharge</p>
+                <button onclick="startQuiz('capacity-dod')">Start Quiz</button>
+            </div>
+            
+            <div class="quiz-card">
+                <div class="quiz-icon">⚡</div>
+                <h2>C-Rates</h2>
+                <p>Understand discharge rates and their effects</p>
+                <button onclick="startQuiz('crate')">Start Quiz</button>
+            </div>
+            
+            <div class="quiz-card">
+                <div class="quiz-icon">🔍</div>
+                <h2>Cell Health Detection</h2>
+                <p>Learn how to identify bad cells</p>
+                <button onclick="startQuiz('cell-health')">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-icon">🧪</div>
+                <h2>Chemistry</h2>
+                <p>Compare Li-ion, LiFePO4, and other chemistries</p>
+                <button onclick="startQuiz('chemistry')">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-icon">⏳</div>
+                <h2>Cycles & Aging</h2>
+                <p>Test what affects cycle life and degradation</p>
+                <button onclick="startQuiz('cycles-aging')">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-icon">🧩</div>
+                <h2>Pack Design</h2>
+                <p>Series/parallel basics and pack calculations</p>
+                <button onclick="startQuiz('pack-design')">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-icon">🛡️</div>
+                <h2>BMS & Balancing</h2>
+                <p>Protection, monitoring, and cell balancing concepts</p>
+                <button onclick="startQuiz('bms-balancing')">Start Quiz</button>
+            </div>
+        </div>
+
+        <section id="runner" class="runner" aria-live="polite">
+            <div class="runner-header">
+                <div id="runnerTitle" class="runner-title">Quiz</div>
+                <div id="runnerMeta" class="runner-meta">Loading…</div>
+            </div>
+            <div id="questionText" class="question"></div>
+            <div id="options" class="options"></div>
+            <div id="explanation" class="explanation"></div>
+            <div class="runner-actions">
+                <button id="nextBtn" onclick="nextQuestion()">Next</button>
+                <button class="ghost-btn" onclick="restartQuiz()">Restart</button>
+                <button class="secondary-btn" onclick="closeQuiz()">Close</button>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        const QUIZ_TITLES = {
+            'capacity-dod': 'Capacity & DOD Quiz',
+            'crate': 'C-Rate Quiz',
+            'cell-health': 'Cell Health Detection Quiz',
+            'chemistry': 'Chemistry Quiz',
+            'cycles-aging': 'Cycles & Aging Quiz',
+            'pack-design': 'Pack Design Quiz',
+            'bms-balancing': 'BMS & Balancing Quiz'
+        };
+
+        let activeQuizId = null;
+        let questions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function setRunnerVisible(isVisible) {
+            const runner = document.getElementById('runner');
+            runner.style.display = isVisible ? 'block' : 'none';
+            if (isVisible) {
+                runner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        async function startQuiz(quizId) {
+            activeQuizId = quizId;
+            questions = [];
+            currentIndex = 0;
+            score = 0;
+            answered = false;
+
+            document.getElementById('runnerTitle').textContent = QUIZ_TITLES[quizId] || 'Quiz';
+            document.getElementById('runnerMeta').textContent = 'Loading questions…';
+            document.getElementById('questionText').textContent = '';
+            document.getElementById('options').innerHTML = '';
+            document.getElementById('explanation').style.display = 'none';
+            setRunnerVisible(true);
+
+            try {
+                const resp = await fetch(`/learn/api/quiz/${quizId}`);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                if (!Array.isArray(data) || data.length === 0) throw new Error('No questions returned');
+                questions = data;
+                renderQuestion();
+            } catch (e) {
+                document.getElementById('runnerMeta').textContent = 'Failed to load quiz.';
+                document.getElementById('questionText').textContent = 'Error loading questions. Please try again.';
+                console.error(e);
+            }
+        }
+
+        function renderQuestion() {
+            const q = questions[currentIndex];
+            if (!q) return;
+            answered = false;
+
+            document.getElementById('runnerMeta').textContent = `Question ${currentIndex + 1} of ${questions.length} • Score ${score}/${questions.length}`;
+            document.getElementById('questionText').textContent = q.question;
+
+            const optionsEl = document.getElementById('options');
+            optionsEl.innerHTML = '';
+
+            const explanationEl = document.getElementById('explanation');
+            explanationEl.style.display = 'none';
+            explanationEl.textContent = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.type = 'button';
+                btn.textContent = opt;
+                btn.onclick = () => answer(idx);
+                optionsEl.appendChild(btn);
+            });
+
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.textContent = currentIndex === questions.length - 1 ? 'Finish' : 'Next';
+            nextBtn.disabled = true;
+        }
+
+        function answer(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const q = questions[currentIndex];
+            const optionButtons = Array.from(document.querySelectorAll('.option-btn'));
+            optionButtons.forEach(btn => (btn.disabled = true));
+
+            const correctIndex = q.correct;
+            if (selectedIndex === correctIndex) {
+                score += 1;
+                optionButtons[selectedIndex].classList.add('correct');
+            } else {
+                optionButtons[selectedIndex].classList.add('wrong');
+                if (optionButtons[correctIndex]) optionButtons[correctIndex].classList.add('correct');
+            }
+
+            const explanationEl = document.getElementById('explanation');
+            explanationEl.textContent = q.explanation || '';
+            explanationEl.style.display = q.explanation ? 'block' : 'none';
+
+            document.getElementById('runnerMeta').textContent = `Question ${currentIndex + 1} of ${questions.length} • Score ${score}/${questions.length}`;
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (!questions.length) return;
+            if (currentIndex < questions.length - 1) {
+                currentIndex += 1;
+                renderQuestion();
+                return;
+            }
+
+            // Finish
+            const pct = Math.round((score / questions.length) * 100);
+            document.getElementById('questionText').textContent = `Finished! Your score: ${score}/${questions.length} (${pct}%).`;
+            document.getElementById('options').innerHTML = '';
+            const explanationEl = document.getElementById('explanation');
+            explanationEl.textContent = 'Tip: Restart to try again or pick another quiz above.';
+            explanationEl.style.display = 'block';
+            document.getElementById('runnerMeta').textContent = QUIZ_TITLES[activeQuizId] || 'Quiz';
+            document.getElementById('nextBtn').disabled = true;
+        }
+
+        function restartQuiz() {
+            if (!activeQuizId) return;
+            startQuiz(activeQuizId);
+        }
+
+        function closeQuiz() {
+            setRunnerVisible(false);
+            activeQuizId = null;
+            questions = [];
+            currentIndex = 0;
+            score = 0;
+            answered = false;
+        }
+    </script>
+</body>
+</html>
