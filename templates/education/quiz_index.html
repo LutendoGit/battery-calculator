@@ -310,6 +310,17 @@
             explanationEl.style.display = 'block';
             document.getElementById('runnerMeta').textContent = QUIZ_TITLES[activeQuizId] || 'Quiz';
             document.getElementById('nextBtn').disabled = true;
+
+            // Record progress (if logged in). Safe to ignore failures.
+            try {
+                fetch('/learn/api/progress/quiz-complete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ quiz_id: activeQuizId, score: score, total: questions.length })
+                }).then(() => {}).catch(() => {});
+            } catch (e) {
+                // ignore
+            }
         }
 
         function restartQuiz() {

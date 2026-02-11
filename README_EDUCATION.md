@@ -109,6 +109,12 @@ app.register_blueprint(education_bp)
 
 ## 📍 URLS AFTER SETUP
 
+## 🔒 Access Control (Guest vs Registered)
+
+- Guests (not logged in) can access: `/learn` (hub) and `/learn/fundamentals` (teaser lesson).
+- Registered/logged-in users unlock: all lessons, interactive tools, quizzes, progress tracking, and certificates.
+- Direct navigation to locked routes redirects to `/learn/login?next=...`.
+
 ```
 Learning Hub:
   /learn/fundamentals      - Good/bad cells, pack imbalance

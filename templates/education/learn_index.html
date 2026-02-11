@@ -113,8 +113,27 @@
   <body>
     <div class="container hero">
       <div class="main-card p-5">
+        {% set is_logged_in = session.get('edu_user_id') %}
+        <div class="d-flex justify-content-end align-items-center mb-3" style="gap: 10px; flex-wrap: wrap;">
+          {% if is_logged_in %}
+            <span class="text-muted">Hi {{ session.get('edu_username') }}</span>
+            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.progress') }}">Progress</a>
+            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('education.logout') }}">Logout</a>
+          {% else %}
+            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.login') }}">Login</a>
+            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.register') }}">Create account</a>
+          {% endif %}
+        </div>
+
         <h1><i class="fas fa-graduation-cap"></i> Battery Learning Hub</h1>
         <p class="lead">Master lithium battery fundamentals with interactive lessons, simulators, and calculators.</p>
+
+        {% if not is_logged_in %}
+          <div class="alert alert-info" role="alert" style="border-radius: 10px;">
+            <strong>Guest access:</strong> You can view <em>Cell Fundamentals</em>.
+            Create an account or log in to unlock the full lessons, interactive tools, quizzes, progress tracking, and certificates.
+          </div>
+        {% endif %}
         
         <!-- FUNDAMENTAL CONCEPTS SECTION -->
         <div class="section-title">
@@ -125,66 +144,80 @@
           <h5><i class="fas fa-lightbulb feature-icon"></i>Cell Fundamentals</h5>
           <p>Understand good cell operation, bad cell detection, and pack imbalance.</p>
         </a>
-        
-        <a href="{{ url_for('education.chemistry') }}" class="feature-card">
-          <h5><i class="fas fa-flask feature-icon"></i>Battery Chemistry</h5>
-          <p>Compare Li-ion, LiFePO4, Li-Polymer, NCA, NCM and their properties.</p>
-        </a>
-        
-        <a href="{{ url_for('education.capacity_dod') }}" class="feature-card">
-          <h5><i class="fas fa-battery-three-quarters feature-icon"></i>Capacity & DOD</h5>
-          <p>Learn about battery capacity, depth of discharge, and cycle life impact.</p>
-        </a>
-        
-        <a href="{{ url_for('education.crate_learn') }}" class="feature-card">
-          <h5><i class="fas fa-tachometer-alt feature-icon"></i>C-Rate Explained</h5>
-          <p>Understand charge/discharge rates and their effects on battery performance.</p>
-        </a>
-        
-        <a href="{{ url_for('education.cycles_aging') }}" class="feature-card">
-          <h5><i class="fas fa-hourglass-half feature-icon"></i>Cycles & Aging</h5>
-          <p>Explore battery cycle life, degradation mechanisms, and lifespan factors.</p>
-        </a>
+
+        {% if is_logged_in %}
+          <a href="{{ url_for('education.chemistry') }}" class="feature-card">
+            <h5><i class="fas fa-flask feature-icon"></i>Battery Chemistry</h5>
+            <p>Compare Li-ion, LiFePO4, Li-Polymer, NCA, NCM and their properties.</p>
+          </a>
+
+          <a href="{{ url_for('education.capacity_dod') }}" class="feature-card">
+            <h5><i class="fas fa-battery-three-quarters feature-icon"></i>Capacity & DOD</h5>
+            <p>Learn about battery capacity, depth of discharge, and cycle life impact.</p>
+          </a>
+
+          <a href="{{ url_for('education.crate_learn') }}" class="feature-card">
+            <h5><i class="fas fa-tachometer-alt feature-icon"></i>C-Rate Explained</h5>
+            <p>Understand charge/discharge rates and their effects on battery performance.</p>
+          </a>
+
+          <a href="{{ url_for('education.cycles_aging') }}" class="feature-card">
+            <h5><i class="fas fa-hourglass-half feature-icon"></i>Cycles & Aging</h5>
+            <p>Explore battery cycle life, degradation mechanisms, and lifespan factors.</p>
+          </a>
+        {% endif %}
         
         <!-- INTERACTIVE TOOLS SECTION -->
         <div class="section-title">
           <i class="fas fa-tools"></i> Interactive Tools
         </div>
-        
-        <a href="{{ url_for('education.cell_simulator_page') }}" class="feature-card">
-          <h5><i class="fas fa-microscope feature-icon"></i>Cell Simulator</h5>
-          <p>Simulate single cell discharge and charge behavior with custom parameters.</p>
-        </a>
-        
-        <a href="{{ url_for('education.pack_simulator_page') }}" class="feature-card">
-          <h5><i class="fas fa-cubes feature-icon"></i>Pack Simulator</h5>
-          <p>Test multi-cell pack behavior and detect imbalance issues.</p>
-        </a>
-        
-        <a href="{{ url_for('education.calculators') }}" class="feature-card">
-          <h5><i class="fas fa-calculator feature-icon"></i>Calculators</h5>
-          <p>Energy, C-rate, cycle life, and pack voltage calculators for quick reference.</p>
-        </a>
+
+        {% if is_logged_in %}
+          <a href="{{ url_for('education.cell_simulator_page') }}" class="feature-card">
+            <h5><i class="fas fa-microscope feature-icon"></i>Cell Simulator</h5>
+            <p>Simulate single cell discharge and charge behavior with custom parameters.</p>
+          </a>
+
+          <a href="{{ url_for('education.pack_simulator_page') }}" class="feature-card">
+            <h5><i class="fas fa-cubes feature-icon"></i>Pack Simulator</h5>
+            <p>Test multi-cell pack behavior and detect imbalance issues.</p>
+          </a>
+
+          <a href="{{ url_for('education.calculators') }}" class="feature-card">
+            <h5><i class="fas fa-calculator feature-icon"></i>Calculators</h5>
+            <p>Energy, C-rate, cycle life, and pack voltage calculators for quick reference.</p>
+          </a>
+        {% else %}
+          <div class="text-muted" style="margin-bottom: 10px;">Login required.</div>
+        {% endif %}
         
         <!-- ASSESSMENT SECTION -->
         <div class="section-title">
           <i class="fas fa-clipboard-check"></i> Assessment
         </div>
-        
-        <a href="{{ url_for('education.quiz_index') }}" class="feature-card">
-          <h5><i class="fas fa-question-circle feature-icon"></i>Quizzes</h5>
-          <p>Test your knowledge with interactive quizzes on capacity, C-rates, and cell health.</p>
-        </a>
+
+        {% if is_logged_in %}
+          <a href="{{ url_for('education.quiz_index') }}" class="feature-card">
+            <h5><i class="fas fa-question-circle feature-icon"></i>Quizzes</h5>
+            <p>Test your knowledge with interactive quizzes on capacity, C-rates, and cell health.</p>
+          </a>
+        {% else %}
+          <div class="text-muted" style="margin-bottom: 10px;">Login required.</div>
+        {% endif %}
         
         <!-- REFERENCE SECTION -->
         <div class="section-title">
           <i class="fas fa-book-open"></i> Reference
         </div>
-        
-        <a href="{{ url_for('education.glossary') }}" class="feature-card">
-          <h5><i class="fas fa-dictionary feature-icon"></i>Glossary</h5>
-          <p>80+ battery terms with searchable definitions and explanations.</p>
-        </a>
+
+        {% if is_logged_in %}
+          <a href="{{ url_for('education.glossary') }}" class="feature-card">
+            <h5><i class="fas fa-dictionary feature-icon"></i>Glossary</h5>
+            <p>80+ battery terms with searchable definitions and explanations.</p>
+          </a>
+        {% else %}
+          <div class="text-muted" style="margin-bottom: 10px;">Login required.</div>
+        {% endif %}
         
         <div class="nav-back">
           <a href="{{ url_for('index') }}"><i class="fas fa-arrow-left"></i> Back to Battery Calculator</a>

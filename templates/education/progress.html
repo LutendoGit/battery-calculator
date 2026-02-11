@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Progress — Battery Education</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .container { max-width: 900px; }
+      .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      }
+      h1 { color: #667eea; font-weight: 700; }
+      .badge-key { font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card mt-4">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div>
+              <h1 class="h4 m-0">Progress</h1>
+              <div class="text-muted">Student: <strong>{{ user.username }}</strong></div>
+            </div>
+            <div class="mt-2">
+              <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.learn_index') }}">Learning Hub</a>
+              <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('index') }}">Calculator</a>
+              <a class="btn btn-sm btn-danger" href="{{ url_for('education.logout') }}">Logout</a>
+            </div>
+          </div>
+
+          <hr>
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          <h2 class="h5 mt-3">Lessons</h2>
+          <div class="list-group mb-4">
+            {% for item in lesson_items %}
+              <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{{ item.url }}">
+                <span>{{ item.title }}</span>
+                {% if item.key in completed %}
+                  <span class="badge badge-success badge-key">Completed</span>
+                {% else %}
+                  <span class="badge badge-light badge-key">Not yet</span>
+                {% endif %}
+              </a>
+            {% endfor %}
+          </div>
+
+          <h2 class="h5">Quizzes (best attempt)</h2>
+          <div class="list-group mb-4">
+            {% for q in quizzes %}
+              <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{{ url_for('education.quiz_index') }}">
+                <span>{{ q.title }}</span>
+                {% if q.id in quiz_best %}
+                  {% set s = quiz_best[q.id]['best_score'] %}
+                  {% set t = quiz_best[q.id]['total'] %}
+                  <span class="badge badge-primary badge-key">{{ s }}/{{ t }}</span>
+                {% else %}
+                  <span class="badge badge-light badge-key">No attempts</span>
+                {% endif %}
+              </a>
+            {% endfor %}
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="text-muted">
+              Overall quiz score (avg of attempted quizzes): <strong>{{ '%.0f'|format(overall_pct) }}%</strong> •
+              Quizzes attempted: <strong>{{ quiz_best|length }}/{{ quizzes|length }}</strong> •
+              Certificate status:
+              {% if eligible %}
+                <span class="text-success font-weight-bold">Eligible</span>
+              {% else %}
+                <span class="text-warning font-weight-bold">Not yet (need all quizzes + ≥ 75%)</span>
+              {% endif %}
+            </div>
+            <div class="mt-2">
+              <a class="btn btn-outline-secondary" href="{{ url_for('education.quiz_index') }}">Take a quiz</a>
+              {% if eligible %}
+                <a class="btn btn-primary" href="{{ url_for('education.certificate') }}">View certificate</a>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
