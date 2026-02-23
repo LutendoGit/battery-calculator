@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, send_file, jsonify
+from flask import Flask, Response, render_template,abort, request,stream_with_context, redirect, url_for, flash, send_file, jsonify
 import calculator
-import re
+#import re
+import json
+import time
 from io import BytesIO
 import uuid
 import tempfile
@@ -14,11 +16,26 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib import colors
 from routes.education_routes import education_bp
-
+from modules import education_store
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev'
+# Ensure template changes reflect immediately during development, even when
+# running via `flask run` (where the __main__ debug flag below is not used).
+app.config.setdefault('TEMPLATES_AUTO_RELOAD', True)
+app.jinja_env.auto_reload = True
+# Reduce caching of static assets in dev so UI tweaks are visible.
+app.config.setdefault('SEND_FILE_MAX_AGE_DEFAULT', 0)
+
+
+@app.after_request
+def _disable_client_caching_in_debug(response):
+    if app.debug:
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
 # Register the education blueprint only if explicitly enabled via env var.
 # Keeps the app focused on the Battery Design calculator by default.
 app.register_blueprint(education_bp)
@@ -64,6 +81,71 @@ def cleanup_temp_files(interval_seconds=1800, max_age_seconds=3600):
 # start cleanup thread as daemon
 cleanup_thread = threading.Thread(target=cleanup_temp_files, args=(1800, 3600), daemon=True)
 cleanup_thread.start()
+
+
+def _require_admin_stream_token() -> None:
+    expected = os.environ.get("ADMIN_STREAM_TOKEN", "")
+    if not expected:
+        abort(403, description="Set ADMIN_STREAM_TOKEN env var to enable admin event streaming")
+    provided = request.headers.get("X-Admin-Token") or request.args.get("token", "")
+    if provided != expected:
+        abort(403)
+
+@app.get("/admin/events")
+def admin_events_page():
+    _require_admin_stream_token()
+    # Minimal inline page. (Keep token in query string or set header in your client.)
+    token = request.args.get("token", "")
+    html = f"""
+    <!doctype html>
+    <html>
+      <head><meta charset="utf-8"><title>Live User Events</title></head>
+      <body>
+        <h3>Live User Events</h3>
+        <pre id="log" style="white-space: pre-wrap;"></pre>
+        <script>
+          const log = document.getElementById("log");
+          const es = new EventSource("/admin/events/stream?token={token}");
+          es.addEventListener("user_event", (e) => {{
+            log.textContent += e.data + "\\n";
+          }});
+          es.onerror = () => {{
+            log.textContent += "[SSE disconnected]\\n";
+          }};
+        </script>
+      </body>
+    </html>
+    """
+    return Response(html, mimetype="text/html")
+
+@app.get("/admin/events/recent")
+def admin_events_recent():
+    _require_admin_stream_token()
+    since = int(request.args.get("since", "0"))
+    limit = int(request.args.get("limit", "200"))
+    events = education_store.get_events_since(since, limit=limit)
+    return {"events": events, "last_id": (events[-1]["id"] if events else since)}
+
+@app.get("/admin/events/stream")
+def admin_events_stream():
+    _require_admin_stream_token()
+
+    @stream_with_context
+    def gen():
+        last_id = int(request.args.get("since", "0"))
+        while True:
+            events = education_store.get_events_since(last_id, limit=200)
+            for ev in events:
+                last_id = int(ev["id"])
+                yield f"id: {last_id}\n"
+                yield "event: user_event\n"
+                yield f"data: {json.dumps(ev, ensure_ascii=False)}\n\n"
+            time.sleep(0.5)
+
+    resp = Response(gen(), mimetype="text/event-stream")
+    resp.headers["Cache-Control"] = "no-cache"
+    resp.headers["X-Accel-Buffering"] = "no"
+    return resp
 
 
 def build_pdf_to_file(result_text, title, chemistry, dod, out_path):
@@ -185,8 +267,18 @@ def build_pdf_to_file(result_text, title, chemistry, dod, out_path):
         raise
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
+    """App landing page.
+
+    Redirect away from the calculator UI so it is not the default homepage.
+    """
+    return redirect(url_for('education.login'))
+
+
+@app.route('/calculator', methods=['GET', 'POST'])
+def calculator_page():
+    """Battery design calculator UI."""
     if request.method == 'POST':
         form_type = request.form.get('form_type')
         try:
@@ -201,7 +293,6 @@ def index():
                 cell_ir = float(request.form.get('cell_ir') or 0)
                 chemistry = request.form.get('chemistry') or 'LiFePO4'
                 dod = int(request.form.get('dod') or 80)
-                
 
                 res = calculator.compute_pack_design(
                     cell_voltage=cell_voltage,
@@ -231,7 +322,7 @@ def index():
                 dod = int(request.form.get('bank_dod') or 100)
 
                 res = calculator.compute_bank_design(energy, module_capacity, chemistry, dod)
-                
+
                 # Store for PDF export
                 last_result['text'] = res['summary_text']
                 last_result['title'] = 'Bank Design Result'
@@ -242,7 +333,7 @@ def index():
 
         except Exception as e:
             flash(f'Error: {e}', 'danger')
-            return redirect(url_for('index'))
+            return redirect(url_for('calculator_page'))
 
     # GET
     return render_template('index.html')
@@ -306,7 +397,7 @@ def download_pdf(job_id):
     job = pdf_jobs.get(job_id)
     if not job:
         flash('File not found', 'danger')
-        return redirect(url_for('index'))
+        return redirect(url_for('calculator_page'))
     future = job['future']
     if not future.done():
         flash('File still being generated. Try again in a moment.', 'warning')
@@ -314,7 +405,7 @@ def download_pdf(job_id):
     path = job['path']
     if not os.path.exists(path):
         flash('Generated file missing', 'danger')
-        return redirect(url_for('index'))
+        return redirect(url_for('calculator_page'))
     # send file and optionally remove after sending
     return send_file(path, mimetype='application/pdf', as_attachment=True, download_name=os.path.basename(path))
 

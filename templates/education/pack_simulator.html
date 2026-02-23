@@ -11,14 +11,21 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             min-height: 100vh;
-            padding: 20px;
+            padding: 0;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
         header {
             background: white;
             padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
+            border-radius: 0;
+            margin-bottom: 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         h1 { color: #667eea; margin-bottom: 10px; }
@@ -40,82 +47,192 @@
         .nav-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
         .nav-links a { display: inline-block; background: #667eea; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; }
         label { display: block; margin-bottom: 5px; color: #333; font-weight: 500; }
+
+        .lesson-stage { padding: 20px; min-height: 0; }
+        .step-card { height: 100%; overflow: auto; }
+
+        .pager {
+            background: rgba(255, 255, 255, 0.92);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .pager .btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+
+        .pager .btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+        .pager a { color: #667eea; text-decoration: none; font-weight: 600; }
+        .pager a:hover { text-decoration: underline; }
+        .meta { color: #555; font-size: 0.95em; }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-actions a {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        .header-actions a:hover { background: #764ba2; }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: 1px solid rgba(0,0,0,0.08);
+            background: rgba(102, 126, 234, 0.12);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-weight: 900;
+            color: #667eea;
+            text-transform: uppercase;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🔋 Battery Pack Simulator</h1>
-            <p>See how cells behave together in a battery pack</p>
-        </header>
-        
-        <div class="simulator-grid">
-            <div class="card">
-                <h2>battery-pack.png Pack Configuration</h2>
-                
-                <label for="num-cells">Number of Cells in Series:</label>
-                <input type="number" id="num-cells" value="4" min="2" max="20">
-                
-                <label for="pack-current">Pack Current (A):</label>
-                <input type="number" id="pack-current" value="4" min="0.1" max="100" step="0.1">
-                
-                <label for="duration">Duration (hours):</label>
-                <input type="number" id="duration" value="1" min="0.1" max="24" step="0.1">
-                
-                <label><input type="checkbox" id="imbalance"> Introduce Cell Imbalance</label>
-                
-                <button onclick="simulatePack()">⬇️ Simulate Pack Discharge</button>
+            <div class="header-row">
+                <div>
+                    <h1>🔋 Battery Pack Simulator</h1>
+                    <p>See how cells behave together in a battery pack</p>
+                    <div class="meta"><strong data-lesson-title>Pack Simulator</strong> · <span data-lesson-counter>1 / 2</span></div>
+                </div>
+                {% if session.get('edu_user_id') %}
+                <div class="header-actions">
+                    <span class="avatar" aria-label="Profile">
+                        {% if session.get('edu_avatar') %}
+                            <img src="{{ url_for('static', filename='avatars/' ~ session.get('edu_avatar')) }}" alt="Profile picture">
+                        {% else %}
+                            {{ (session.get('edu_username', '?')[:1] | upper) }}
+                        {% endif %}
+                    </span>
+                    <a href="{{ url_for('education.logout') }}">Logout</a>
+                </div>
+                {% endif %}
             </div>
-            
-            <div class="card">
-                <h2>📊 Pack Health</h2>
-                
-                <div class="result-panel active" id="results">
-                    <div class="result-item">
-                        <span><strong>Pack Voltage:</strong></span>
-                        <span id="pack-voltage">--V</span>
+        </header>
+
+        <main class="lesson-stage" data-lesson-stage>
+            <section data-lesson-step data-step-title="Pack Simulator">
+                <div class="simulator-grid">
+                    <div class="card step-card">
+                        <h2>battery-pack.png Pack Configuration</h2>
+                        
+                        <label for="num-cells">Number of Cells in Series:</label>
+                        <input type="number" id="num-cells" value="4" min="2" max="20">
+                        
+                        <label for="pack-current">Pack Current (A):</label>
+                        <input type="number" id="pack-current" value="10" min="0.1" max="100" step="0.1">
+                        
+                        <label for="duration">Duration (hours):</label>
+                        <input type="number" id="duration" value="1" min="0.1" max="24" step="0.1">
+                        
+                        <label><input type="checkbox" id="imbalance"> Introduce Cell Imbalance</label>
+                        
+                        <button onclick="simulatePack()">⬇️ Simulate Pack Discharge</button>
                     </div>
-                    <div class="result-item">
-                        <span><strong>Average SOC:</strong></span>
-                        <span id="avg-soc">--%</span>
-                    </div>
-                    <div class="result-item">
-                        <span><strong>Voltage Imbalance:</strong></span>
-                        <span id="imbalance-v">--V</span>
-                    </div>
-                    <div class="result-item">
-                        <span><strong>Lowest Cell:</strong></span>
-                        <span id="lowest-cell">--</span>
-                    </div>
-                    <div class="result-item">
-                        <span><strong>Highest Cell:</strong></span>
-                        <span id="highest-cell">--</span>
-                    </div>
-                    <div class="result-item">
-                        <span><strong>Status:</strong></span>
-                        <span id="pack-status" style="color: #667eea; font-weight: bold;">READY</span>
+                    
+                    <div class="card step-card">
+                        <h2>📊 Pack Health</h2>
+                        
+                        <div class="result-panel active" id="results">
+                            <div class="result-item">
+                                <span><strong>Pack Voltage:</strong></span>
+                                <span id="pack-voltage">--V</span>
+                            </div>
+                            <div class="result-item">
+                                <span><strong>Average SOC:</strong></span>
+                                <span id="avg-soc">--%</span>
+                            </div>
+                            <div class="result-item">
+                                <span><strong>Voltage Imbalance:</strong></span>
+                                <span id="imbalance-v">--V</span>
+                            </div>
+                            <div class="result-item">
+                                <span><strong>Lowest Cell:</strong></span>
+                                <span id="lowest-cell">--</span>
+                            </div>
+                            <div class="result-item">
+                                <span><strong>Highest Cell:</strong></span>
+                                <span id="highest-cell">--</span>
+                            </div>
+                            <div class="result-item">
+                                <span><strong>Status:</strong></span>
+                                <span id="pack-status" style="color: #667eea; font-weight: bold;">READY</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </section>
+
+            <section data-lesson-step data-step-title="About Pack Behavior">
+                <div class="card step-card">
+                    <h2>📚 About Pack Behavior</h2>
+                    <p>In a series battery pack, all cells carry the same current but may have different voltages. This creates an imbalance problem:</p>
+                    <ul style="margin-left: 20px; line-height: 1.8; margin-top: 10px;">
+                        <li><strong>Weak cells</strong> reach cutoff voltage first, limiting pack capacity</li>
+                        <li><strong>Voltage imbalance</strong> indicates cell mismatch or degradation</li>
+                        <li><strong>Balancing circuits</strong> help equalize cell voltages</li>
+                        <li><strong>Cell matching</strong> during assembly prevents imbalance</li>
+                    </ul>
+                    
+                    <div class="nav-links" style="margin-top: 25px;">
+                        <a href="/learn/fundamentals">Fundamentals</a>
+                        <a href="/learn/cell-simulator">Cell Simulator</a>
+                        <a href="/learn/glossary">Glossary</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="pager">
+            <a href="{{ url_for('education.learn_index', hub=1) }}">Back to Training Hub</a>
+            <div class="meta">
+                <button class="btn" type="button" data-lesson-prev>Previous</button>
+                <button class="btn" type="button" data-lesson-next>Next</button>
             </div>
-        </div>
-        
-        <div class="card">
-            <h2>📚 About Pack Behavior</h2>
-            <p>In a series battery pack, all cells carry the same current but may have different voltages. This creates an imbalance problem:</p>
-            <ul style="margin-left: 20px; line-height: 1.8; margin-top: 10px;">
-                <li><strong>Weak cells</strong> reach cutoff voltage first, limiting pack capacity</li>
-                <li><strong>Voltage imbalance</strong> indicates cell mismatch or degradation</li>
-                <li><strong>Balancing circuits</strong> help equalize cell voltages</li>
-                <li><strong>Cell matching</strong> during assembly prevents imbalance</li>
-            </ul>
-            
-            <div class="nav-links" style="margin-top: 25px;">
-                <a href="/learn/fundamentals">Fundamentals</a>
-                <a href="/learn/cell-simulator">Cell Simulator</a>
-                <a href="/learn/glossary">Glossary</a>
-            </div>
-        </div>
+        </footer>
     </div>
+
+    <script src="{{ url_for('static', filename='lesson_pager.js') }}"></script>
     
     <script>
         function simulatePack() {
@@ -151,6 +268,11 @@
                 document.getElementById('pack-status').textContent = status;
             });
         }
+
+        window.LessonPager && window.LessonPager.init({
+            doneUrl: "{{ url_for('education.learn_index', hub=1) }}",
+            doneLabel: "Back to Topics"
+        });
     </script>
 </body>
 </html>

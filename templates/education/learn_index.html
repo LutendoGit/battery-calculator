@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Learn — Battery Education</title>
+    <title>Home — Revov WattWorks Installer Training Platform</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -14,7 +14,7 @@
       
       body { 
         background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); 
-        color: #222; 
+        color: rgba(255,255,255,0.92);
         min-height: 100vh; 
         padding: 20px;
       }
@@ -26,201 +26,336 @@
       
       .main-card {
         border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        background: white;
+        box-shadow: none;
+        background: transparent;
+        border: none;
       }
       
       h1 {
-        color: var(--primary);
+        color: rgba(255,255,255,0.98);
         font-weight: 700;
         margin-bottom: 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.25);
       }
       
       .lead {
-        color: #555;
+        color: rgba(255,255,255,0.9);
         font-size: 1.1rem;
         margin-bottom: 30px;
       }
-      
-      .section-title {
-        color: var(--primary);
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin-top: 30px;
-        margin-bottom: 15px;
-        display: flex;
+
+      .info-box {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 12px;
+        padding: 16px;
+        margin: 16px 0 10px;
+      }
+
+      .info-box ul {
+        margin-bottom: 0;
+      }
+
+      .muted-small {
+        color: rgba(255,255,255,0.86);
+        font-size: 0.95rem;
+      }
+
+      .section-heading {
+        margin-top: 22px;
+        margin-bottom: 10px;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        color: rgba(255,255,255,0.98);
+        text-shadow: 0 2px 10px rgba(0,0,0,0.22);
+      }
+
+      .subheading {
+        font-weight: 800;
+        margin-top: 18px;
+        margin-bottom: 8px;
+        color: rgba(255,255,255,0.98);
+      }
+
+      .program-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 10px 0 0;
+      }
+
+      .program-list li {
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.18);
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.35);
+        background: rgba(255,255,255,0.18);
+        display: inline-flex;
         align-items: center;
-        gap: 10px;
+        justify-content: center;
+        overflow: hidden;
+        font-weight: 900;
+        color: rgba(255,255,255,0.98);
+        text-transform: uppercase;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.18);
       }
-      
-      .section-title i {
-        font-size: 1.4rem;
-      }
-      
-      .feature-card {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 15px;
-        border-left: 5px solid var(--primary);
-        transition: all 0.3s ease;
-        text-decoration: none;
-        color: #333;
+
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         display: block;
       }
-      
-      .feature-card:hover {
-        transform: translateX(5px);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        color: #333;
-        text-decoration: none;
+
+      .avatar-menu {
+        position: relative;
       }
-      
-      .feature-card h5 {
-        color: var(--primary);
-        font-weight: 600;
+
+      .avatar-menu summary {
+        list-style: none;
+        cursor: pointer;
+      }
+
+      .avatar-menu summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .avatar-panel {
+        position: absolute;
+        right: 0;
+        top: 42px;
+        width: 260px;
+        background: rgba(20, 22, 36, 0.92);
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+        z-index: 20;
+        backdrop-filter: blur(10px);
+      }
+
+      .avatar-panel label {
+        display: block;
+        color: rgba(255,255,255,0.9);
+        font-weight: 800;
+        font-size: 0.9rem;
         margin-bottom: 8px;
       }
-      
-      .feature-card p {
-        font-size: 0.95rem;
-        color: #666;
-        margin: 0;
+
+      .avatar-panel input[type="file"] {
+        width: 100%;
+        color: rgba(255,255,255,0.85);
+        font-size: 0.9rem;
       }
-      
-      .feature-icon {
-        font-size: 1.8rem;
-        color: var(--primary);
-        margin-right: 10px;
+
+      .avatar-panel .hint {
+        margin-top: 8px;
+        color: rgba(255,255,255,0.7);
+        font-size: 0.82rem;
+        line-height: 1.25;
       }
-      
-      .nav-back {
-        margin-top: 30px;
-        text-align: center;
+
+      .avatar-panel .btn-row {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
       }
-      
-      .nav-back a {
-        color: white;
-        text-decoration: none;
-        font-weight: 600;
+
+      .avatar-panel .btn-save {
+        border: none;
+        background: rgba(255,255,255,0.18);
+        color: rgba(255,255,255,0.95);
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-weight: 900;
       }
-      
-      .nav-back a:hover {
-        text-decoration: underline;
+
+      .avatar-panel .btn-save:hover {
+        background: rgba(255,255,255,0.24);
       }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .cta-row .btn {
+        border-radius: 999px;
+        font-weight: 700;
+        padding: 10px 16px;
+      }
+
+      .cta-row .btn i {
+        margin-right: 8px;
+      }
+      .gradient-title { 
+        font-size: 2.5rem; 
+        font-weight: bold; 
+        text-align: center; 
+        background: linear-gradient(90deg, #ff6f61, #6a11cb, #2575fc); 
+        -webkit-background-clip: text; 
+        -webkit-text-fill-color: transparent; 
+        margin-bottom: 30px;}
     </style>
   </head>
   <body>
+    <!--<h1 class="gradient-title">Revov WattWorks Installer Training Platform</h1>-->
     <div class="container hero">
+       <!--<h1><i class="fas fa-graduation-cap"></i> Welcome to the Revov WattWorks Installer Training Platform</h1>-->
+        <!--<p class="lead">WattWorks is Revov’s official online installer training platform, built for real-world performance.</p>-->
+        
       <div class="main-card p-5">
         {% set is_logged_in = session.get('edu_user_id') %}
         <div class="d-flex justify-content-end align-items-center mb-3" style="gap: 10px; flex-wrap: wrap;">
           {% if is_logged_in %}
-            <span class="text-muted">Hi {{ session.get('edu_username') }}</span>
-            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.progress') }}">Progress</a>
-            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('education.logout') }}">Logout</a>
+            
+            <span style="color: rgba(255,255,255,0.85);">User: <strong style="color: rgba(255,255,255,0.98);">{{ session.get('edu_username') }}</strong></span>
+            <div class="d-flex align-items-center" style="gap: 10px;">
+              <details class="avatar-menu">
+                <summary class="avatar" aria-label="Profile">
+                  {% if session.get('edu_avatar') %}
+                    <img src="{{ url_for('static', filename='avatars/' ~ session.get('edu_avatar')) }}" alt="Profile picture">
+                  {% else %}
+                    {{ (session.get('edu_username', '?')[:1] | upper) }}
+                  {% endif %}
+                </summary>
+                <div class="avatar-panel">
+                  <form method="post" enctype="multipart/form-data" action="{{ url_for('education.update_avatar') }}">
+                    <label>Update profile picture</label>
+                    <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp" required>
+                    <div class="hint">PNG/JPG/WEBP. Uploading replaces your current photo.</div>
+                    <div class="btn-row">
+                      <button class="btn-save" type="submit">Save</button>
+                    </div>
+                  </form>
+                </div>
+              </details>
+              <a class="btn btn-sm btn-outline-danger" href="{{ url_for('education.logout') }}">Logout</a>
+            </div>
           {% else %}
             <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.login') }}">Login</a>
             <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.register') }}">Create account</a>
           {% endif %}
         </div>
+        <h1><i class="fas fa-graduation-cap"></i> Welcome to the Revov WattWorks Installer Training Platform</h1>
+        <p class="lead">WattWorks is Revov’s official online installer training platform, built for real-world performance.</p>
 
-        <h1><i class="fas fa-graduation-cap"></i> Battery Learning Hub</h1>
-        <p class="lead">Master lithium battery fundamentals with interactive lessons, simulators, and calculators.</p>
+        <p class="muted-small" style="margin-bottom: 8px;">
+          Whether you are new to battery-based energy systems or already installing daily, WattWorks gives you the practical knowledge,
+          technical confidence and product understanding to do the job right, first time.
+        </p>
+
+        <div class="info-box">
+          <div class="font-weight-bold" style="margin-bottom: 8px; color: rgba(255,255,255,0.98);">This is a focused, installer driven training program designed around:</div>
+          <ul class="mb-0">
+            <li>Real system design</li>
+            <li>Safe and compliant installation</li>
+            <li>Revov Lithium-Ion battery integration</li>
+            <li>Commissioning and troubleshooting</li>
+            <li>Product-specific deep dives</li>
+            <li>Ongoing technical updates</li>
+          </ul>
+        </div>
 
         {% if not is_logged_in %}
           <div class="alert alert-info" role="alert" style="border-radius: 10px;">
             <strong>Guest access:</strong> You can view <em>Cell Fundamentals</em>.
             Create an account or log in to unlock the full lessons, interactive tools, quizzes, progress tracking, and certificates.
           </div>
-        {% endif %}
-        
-        <!-- FUNDAMENTAL CONCEPTS SECTION -->
-        <div class="section-title">
-          <i class="fas fa-book"></i> Fundamental Concepts
-        </div>
-        
-        <a href="{{ url_for('education.fundamentals') }}" class="feature-card">
-          <h5><i class="fas fa-lightbulb feature-icon"></i>Cell Fundamentals</h5>
-          <p>Understand good cell operation, bad cell detection, and pack imbalance.</p>
-        </a>
-
-        {% if is_logged_in %}
-          <a href="{{ url_for('education.chemistry') }}" class="feature-card">
-            <h5><i class="fas fa-flask feature-icon"></i>Battery Chemistry</h5>
-            <p>Compare Li-ion, LiFePO4, Li-Polymer, NCA, NCM and their properties.</p>
-          </a>
-
-          <a href="{{ url_for('education.capacity_dod') }}" class="feature-card">
-            <h5><i class="fas fa-battery-three-quarters feature-icon"></i>Capacity & DOD</h5>
-            <p>Learn about battery capacity, depth of discharge, and cycle life impact.</p>
-          </a>
-
-          <a href="{{ url_for('education.crate_learn') }}" class="feature-card">
-            <h5><i class="fas fa-tachometer-alt feature-icon"></i>C-Rate Explained</h5>
-            <p>Understand charge/discharge rates and their effects on battery performance.</p>
-          </a>
-
-          <a href="{{ url_for('education.cycles_aging') }}" class="feature-card">
-            <h5><i class="fas fa-hourglass-half feature-icon"></i>Cycles & Aging</h5>
-            <p>Explore battery cycle life, degradation mechanisms, and lifespan factors.</p>
-          </a>
-        {% endif %}
-        
-        <!-- INTERACTIVE TOOLS SECTION -->
-        <div class="section-title">
-          <i class="fas fa-tools"></i> Interactive Tools
-        </div>
-
-        {% if is_logged_in %}
-          <a href="{{ url_for('education.cell_simulator_page') }}" class="feature-card">
-            <h5><i class="fas fa-microscope feature-icon"></i>Cell Simulator</h5>
-            <p>Simulate single cell discharge and charge behavior with custom parameters.</p>
-          </a>
-
-          <a href="{{ url_for('education.pack_simulator_page') }}" class="feature-card">
-            <h5><i class="fas fa-cubes feature-icon"></i>Pack Simulator</h5>
-            <p>Test multi-cell pack behavior and detect imbalance issues.</p>
-          </a>
-
-          <a href="{{ url_for('education.calculators') }}" class="feature-card">
-            <h5><i class="fas fa-calculator feature-icon"></i>Calculators</h5>
-            <p>Energy, C-rate, cycle life, and pack voltage calculators for quick reference.</p>
-          </a>
         {% else %}
-          <div class="text-muted" style="margin-bottom: 10px;">Login required.</div>
+          <div class="alert alert-success" role="alert" style="border-radius: 10px;">
+            <strong>Welcome, {{ session.get('edu_username') }}.</strong> Start with Fundamentals.
+          </div>
         {% endif %}
-        
-        <!-- ASSESSMENT SECTION -->
-        <div class="section-title">
-          <i class="fas fa-clipboard-check"></i> Assessment
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="{{ url_for('education.fundamentals') }}">
+            <i class="fas fa-book"></i> Fundamentals
+          </a>
+          {% if is_logged_in %}
+            <a class="btn btn-outline-primary" href="{{ url_for('education.progress') }}">
+              <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+          {% else %}
+            <a class="btn btn-outline-primary" href="{{ url_for('education.login', next=url_for('education.progress')) }}">
+              <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+          {% endif %}
         </div>
 
-        {% if is_logged_in %}
-          <a href="{{ url_for('education.quiz_index') }}" class="feature-card">
-            <h5><i class="fas fa-question-circle feature-icon"></i>Quizzes</h5>
-            <p>Test your knowledge with interactive quizzes on capacity, C-rates, and cell health.</p>
-          </a>
-        {% else %}
-          <div class="text-muted" style="margin-bottom: 10px;">Login required.</div>
-        {% endif %}
-        
-        <!-- REFERENCE SECTION -->
-        <div class="section-title">
-          <i class="fas fa-book-open"></i> Reference
+        <div class="section-heading">Programs</div>
+        <ul class="program-list">
+          <li>WattWorks Foundation Installer Training</li>
+          <li>WattWorks Advance Training</li>
+          <li>WattWorks Product Series</li>
+          <li>WattWorks Technical Updates</li>
+        </ul>
+
+        <div class="section-heading" style="margin-top: 28px;">Welcome to the Revov WattWorks Foundation Installer Training Program</div>
+
+        <div class="info-box" style="margin-top: 10px;">
+          <p class="mb-2"><strong>Welcome to WattWorks Foundation Installer Training</strong>, the starting point for becoming a REVOV Certified Installer.</p>
+          <p class="mb-2">This is where real installation knowledge begins.</p>
+          <p class="mb-0">
+            The WattWorks Foundation Installer Program is designed to give you the technical understanding, practical confidence and system-level thinking required
+            to install battery-based energy systems safely, correctly and professionally.
+          </p>
         </div>
 
-        {% if is_logged_in %}
-          <a href="{{ url_for('education.glossary') }}" class="feature-card">
-            <h5><i class="fas fa-dictionary feature-icon"></i>Glossary</h5>
-            <p>80+ battery terms with searchable definitions and explanations.</p>
-          </a>
-        {% else %}
-          <div class="text-muted" style="margin-bottom: 10px;">Login required.</div>
-        {% endif %}
-        
-        <div class="nav-back">
-          <a href="{{ url_for('index') }}"><i class="fas fa-arrow-left"></i> Back to Battery Calculator</a>
+        <p class="muted-small" style="margin-top: 10px;">
+          Whether you are new to battery installations or already working in the field and want to sharpen your fundamentals, this program will strengthen your core knowledge,
+          so you can install it right the first time.
+        </p>
+
+        <div class="subheading">What You’ll Gain from WattWorks Foundation Installer Training Program</div>
+        <div class="info-box">
+          <div class="font-weight-bold" style="margin-bottom: 8px; color: rgba(255,255,255,0.98);">By completing this training program, you will understand:</div>
+          <ul class="mb-0">
+            <li>How complete energy systems actually work</li>
+            <li>The role of each component within a battery-based installation</li>
+            <li>Safe installation practices and compliance basics</li>
+            <li>Core system sizing principles</li>
+            <li>How Revov Lithium-Ion batteries integrate into systems</li>
+            <li>Proper commissioning procedures</li>
+            <li>How to identify and prevent common installation errors</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <div class="font-weight-bold" style="margin-bottom: 8px; color: rgba(255,255,255,0.98);">This is not just theory.</div>
+          <div class="muted-small">
+            WattWorks is practical, field-relevant training built around real installation scenarios, helping you reduce call-backs, avoid costly mistakes and build installer confidence.
+          </div>
+        </div>
+
+        <div class="subheading">How WattWorks Foundation Installer Program Works</div>
+        <div class="info-box">
+          <div class="muted-small" style="margin-bottom: 10px;">
+            The Foundation program is structured into focused modules, each covering a key part of the installation process.
+          </div>
+
+          <div class="font-weight-bold" style="margin-bottom: 8px; color: rgba(255,255,255,0.98);">You can:</div>
+          <div class="muted-small" style="margin-bottom: 6px;">🔹 Complete the modules in sequence (recommended to build strong foundational knowledge)</div>
+          <div class="muted-small" style="margin-bottom: 10px;">OR</div>
+          <div class="muted-small" style="margin-bottom: 10px;">🔹 Navigate between modules based on your learning needs</div>
+
+          <div class="muted-small" style="margin-bottom: 8px;">
+            At the end of each module, you will complete a short assessment quiz to confirm your understanding.
+          </div>
+          <div class="muted-small">
+            Once all modules and quizzes are successfully completed, you will earn your: <strong style="color: rgba(255,255,255,0.98);">WattWorks Foundation Installer Certificate</strong>.
+          </div>
         </div>
       </div>
     </div>

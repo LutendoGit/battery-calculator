@@ -166,629 +166,581 @@ class EducationalQuizzes:
     
     @staticmethod
     def quiz_capacity_dod() -> List[Dict]:
-        """Quiz on capacity and DOD"""
+        """Module 1 quiz: Power vs Energy & Backup Sizing"""
         return [
             {
-                "question": "What does 80% DOD mean?",
+                "question": "Power (kW) is best described as…",
                 "options": [
-                    "The battery is 80% charged",
-                    "80% of the capacity has been used in this cycle",
-                    "The battery is 80% discharged",
-                    "The battery can do 80% of its rated cycles"
+                    "The total electricity used over time (kWh)",
+                    "The rate electricity is used right now",
+                    "Electrical pressure",
+                    "The AC frequency"
                 ],
                 "correct": 1,
-                "explanation": "DOD (Depth of Discharge) is the percentage of capacity that has been used. 80% DOD means 20% SOC remains."
+                "explanation": "Power is the instantaneous rate of use and is a key input for inverter sizing."
             },
             {
-                "question": "Which relationship between SOC and DOD is correct?",
+                "question": "Energy (kWh) is best described as…",
                 "options": [
-                    "SOC + DOD = 50%",
-                    "SOC + DOD = 100%",
-                    "SOC = DOD",
-                    "SOC = 100% - (2 × DOD)"
+                    "The rate electricity is used right now",
+                    "The total electricity stored/used over time",
+                    "The current through a cable",
+                    "The voltage of the grid"
                 ],
                 "correct": 1,
-                "explanation": "SOC is the remaining charge percentage, DOD is the used percentage, so SOC + DOD = 100%."
+                "explanation": "Energy is what determines runtime and battery bank sizing."
             },
             {
-                "question": "Capacity in mAh is best described as…",
+                "question": "Which most directly determines inverter size?",
                 "options": [
-                    "Energy (power × time)",
-                    "Charge quantity (current × time)",
-                    "Voltage (potential difference)",
-                    "Resistance (opposition to current)"
-                ],
-                "correct": 1,
-                "explanation": "mAh (or Ah) is charge: current × time. Energy depends on voltage too (Wh = Ah × V)."
-            },
-            {
-                "question": "A 2.0Ah cell at 3.7V nominal contains approximately how much energy?",
-                "options": [
-                    "2.0 Wh",
-                    "3.7 Wh",
-                    "7.4 Wh",
-                    "13.7 Wh"
-                ],
-                "correct": 2,
-                "explanation": "Energy (Wh) ≈ Capacity (Ah) × Voltage (V) = 2.0 × 3.7 = 7.4 Wh."
-            },
-            {
-                "question": "Which factor usually REDUCES practical capacity compared to the rated (nominal) capacity?",
-                "options": [
-                    "Warm temperature around 25°C",
-                    "Slower discharge (lower C-rate)",
-                    "Cold temperature",
-                    "Resting the cell after discharge"
-                ],
-                "correct": 2,
-                "explanation": "Cold temperature increases internal resistance and reduces effective capacity and power delivery."
-            },
-            {
-                "question": "What generally happens to cycle life when you reduce DOD from 100% to 80%?",
-                "options": [
-                    "Cycle life decreases",
-                    "Cycle life increases",
-                    "Cycle life is unchanged",
-                    "Cycle life becomes unpredictable"
-                ],
-                "correct": 1,
-                "explanation": "Shallower cycles reduce stress on electrodes, typically increasing cycle life."
-            },
-            {
-                "question": "If you cycle a LiFePO4 cell at 100% DOD, how many cycles does it typically get?",
-                "options": ["500 cycles", "1000 cycles", "2000 cycles", "5000 cycles"],
-                "correct": 2,
-                "explanation": "LiFePO4 cells can handle 2000+ cycles at 100% DOD due to their stable chemistry."
-            },
-            {
-                "question": "If a battery is at 30% SOC, what is its DOD?",
-                "options": ["30%", "70%", "130%", "Depends on chemistry"],
-                "correct": 1,
-                "explanation": "DOD = 100% − SOC, so 100 − 30 = 70% DOD."
-            },
-            {
-                "question": "Why is 'Wh' often a better comparison than 'mAh' when comparing different batteries?",
-                "options": [
-                    "Because Wh includes voltage and represents energy",
-                    "Because Wh ignores voltage and represents charge",
-                    "Because mAh is only used for lead-acid",
-                    "Because Wh is always larger than mAh"
+                    "Peak/continuous load power (kW)",
+                    "Battery energy (kWh)",
+                    "System frequency (Hz)",
+                    "Cable color"
                 ],
                 "correct": 0,
-                "explanation": "Two packs can have the same mAh but different voltage; Wh captures total energy."
+                "explanation": "Inverter sizing is driven by the power demand it must supply."
             },
             {
-                "question": "How can you extend battery cycle life?",
+                "question": "Which most directly determines battery size for backup runtime?",
                 "options": [
-                    "Keep it always fully charged",
-                    "Use shallower DOD (e.g., 80% instead of 100%)",
-                    "Discharge it completely each cycle",
-                    "Keep it at very high temperature"
+                    "Energy needed (kWh)",
+                    "Load frequency (Hz)",
+                    "Inverter brand",
+                    "Battery chemistry color"
                 ],
-                "correct": 1,
-                "explanation": "Shallower DOD reduces stress on the battery, extending cycle life significantly."
+                "correct": 0,
+                "explanation": "Battery bank size is about kWh required over the outage duration."
             },
             {
-                "question": "Which is the most accurate statement about rated capacity?",
-                "options": [
-                    "It is always achieved in real use",
-                    "It is measured under standard conditions and can vary with temperature, C-rate, and aging",
-                    "It is the same as internal resistance",
-                    "It depends only on pack configuration (series vs parallel)"
-                ],
+                "question": "If essential loads average 1 kW and the outage lasts 4 hours, the energy needed is…",
+                "options": ["1 kWh", "4 kWh", "10 kWh", "40 kWh"],
                 "correct": 1,
-                "explanation": "Manufacturers rate capacity under standard test conditions; real-world capacity depends on conditions and cell age."
+                "explanation": "Energy (kWh) = Load (kW) × Hours. 1 × 4 = 4 kWh."
+            },
+            {
+                "question": "A 10 kWh battery can ideally supply 2 kW for about…",
+                "options": ["2 hours", "5 hours", "10 hours", "20 hours"],
+                "correct": 1,
+                "explanation": "Time ≈ Energy ÷ Power = 10 ÷ 2 = 5 hours (idealized)."
+            },
+            {
+                "question": "If a kettle (2 kW) and microwave (1.2 kW) run at the same time, total power is…",
+                "options": ["1.2 kW", "2.0 kW", "3.2 kW", "4.2 kW"],
+                "correct": 2,
+                "explanation": "Power adds when loads run together: 2.0 + 1.2 = 3.2 kW."
+            },
+            {
+                "question": "Why is it not ideal to size a battery to discharge 100% on every outage?",
+                "options": [
+                    "Deep discharge generally reduces lifespan and leaves no safety margin",
+                    "It increases PV output",
+                    "It increases grid frequency",
+                    "It changes AC into DC"
+                ],
+                "correct": 0,
+                "explanation": "Practical designs include usable DoD limits and margin for longevity and real-world variation."
+            },
+            {
+                "question": "Which statement is MOST accurate for sizing?",
+                "options": [
+                    "kW sets inverter size; kWh sets runtime",
+                    "kWh sets inverter size; kW sets runtime",
+                    "Hz sets runtime; V sets inverter size",
+                    "A sets battery size; V sets runtime"
+                ],
+                "correct": 0,
+                "explanation": "Power (kW) is about how much at once; energy (kWh) is about how long."
+            },
+            {
+                "question": "Why do installers often add sizing margin beyond the simple kW×hours calculation?",
+                "options": [
+                    "DoD limits, efficiency losses, surge loads, and future expansion",
+                    "Because AC has no losses",
+                    "Because kW and kWh are identical",
+                    "Because voltage is the same as current"
+                ],
+                "correct": 0,
+                "explanation": "Real systems have losses and constraints; margin improves reliability and durability."
             }
         ]
     
     @staticmethod
     def quiz_crate() -> List[Dict]:
-        """Quiz on C-rates"""
+        """Module 1 quiz: AC vs DC — How Electricity Moves Through the System"""
         return [
             {
-                "question": "What is the C-rate for a 2000mAh cell discharging at 1A current?",
-                "options": ["0.5C", "1C", "2C", "0.25C"],
-                "correct": 0,
-                "explanation": "C-rate = Current / Capacity. 1A / 2A (2000mAh = 2Ah) = 0.5C"
+                "question": "In South Africa, household wall plugs are supplied with…",
+                "options": ["DC at 48 V", "AC at about 230 V, 50 Hz", "AC at 110 V, 60 Hz", "DC at 12 V"],
+                "correct": 1,
+                "explanation": "Standard residential supply is AC around 230 V at 50 Hz in South Africa."
             },
             {
-                "question": "A 3Ah cell discharged at 6A is operating at approximately…",
-                "options": ["0.5C", "1C", "2C", "6C"],
-                "correct": 2,
-                "explanation": "C-rate = I / Ah = 6A / 3Ah = 2C."
+                "question": "Solar PV panels produce…",
+                "options": ["AC power directly", "DC power", "Only reactive power", "Only frequency"],
+                "correct": 1,
+                "explanation": "PV panels generate DC electricity."
             },
             {
-                "question": "What does a 1C discharge rate mean (idealized)?",
+                "question": "Lithium batteries store and deliver…",
+                "options": ["AC energy directly", "DC energy", "Only frequency", "Only voltage"],
+                "correct": 1,
+                "explanation": "Batteries are DC devices; conversion to AC happens in the inverter."
+            },
+            {
+                "question": "The main job of an inverter is to…",
                 "options": [
-                    "The cell will discharge in about 1 hour",
-                    "The cell will discharge in about 10 minutes",
-                    "The cell will discharge in about 2 hours",
-                    "The cell voltage is 1V"
+                    "Convert DC (PV/battery) into AC for household loads",
+                    "Convert AC into DC only for plugs",
+                    "Increase battery capacity",
+                    "Change system voltage without losses"
                 ],
                 "correct": 0,
-                "explanation": "By definition, 1C corresponds to a 1-hour discharge (for an ideal cell at rated capacity)."
+                "explanation": "Inverters provide AC output for normal household appliances from DC sources."
             },
             {
-                "question": "If you discharge a 2Ah cell at 0.25C, the ideal discharge time is about…",
-                "options": ["15 minutes", "30 minutes", "1 hour", "4 hours"],
-                "correct": 3,
-                "explanation": "Time (hours) ≈ 1 / C-rate = 1 / 0.25 = 4 hours (idealized)."
-            },
-            {
-                "question": "If you discharge a 2000mAh cell at 1C rate, how long until it's empty?",
-                "options": ["30 minutes", "1 hour", "2 hours", "4 hours"],
+                "question": "A charger/rectifier function typically converts…",
+                "options": ["DC to AC", "AC to DC", "kW to kWh", "Hz to V"],
                 "correct": 1,
-                "explanation": "1C rate means discharge in exactly 1 hour. A 1C rate discharge always takes 1 hour by definition."
+                "explanation": "Charging a battery requires DC; grid power is AC."
             },
             {
-                "question": "Which outcome is MOST associated with very high C-rate discharge?",
-                "options": [
-                    "Less voltage sag and less heat",
-                    "More voltage sag and more heat",
-                    "No change in voltage sag",
-                    "Higher usable capacity than rated"
-                ],
-                "correct": 1,
-                "explanation": "High current increases I×R losses, leading to voltage sag and heating."
-            },
-            {
-                "question": "A 5Ah battery rated for 10A continuous has a continuous C-rate rating of roughly…",
-                "options": ["0.2C", "1C", "2C", "10C"],
+                "question": "What does “50 Hz” mean?",
+                "options": ["50 volts", "50 amps", "50 cycles per second", "50% state of charge"],
                 "correct": 2,
-                "explanation": "C-rate ≈ 10A / 5Ah = 2C continuous."
+                "explanation": "Hz is cycles per second; 50 Hz means the AC waveform cycles 50 times each second."
             },
             {
-                "question": "Higher C-rates result in...",
-                "options": [
-                    "More available capacity",
-                    "Less available capacity",
-                    "No difference in capacity",
-                    "Longer discharge time"
-                ],
+                "question": "Which part of a system is MOST likely DC-only?",
+                "options": ["Household plug circuits", "Battery bank", "AC geyser element", "AC DB breakers"],
                 "correct": 1,
-                "explanation": "Higher C-rates mean faster discharge, which causes more voltage sag and uses less of the total capacity."
+                "explanation": "Batteries are DC devices; household circuits are typically AC."
             },
             {
-                "question": "If a cell has high internal resistance, what will you observe at a given C-rate?",
+                "question": "Why can conversion reduce usable energy compared to battery nameplate kWh?",
                 "options": [
-                    "Less voltage sag",
-                    "More voltage sag",
-                    "Higher SOC",
-                    "Higher nominal voltage"
+                    "Conversion is not 100% efficient and creates losses",
+                    "kW and kWh are the same",
+                    "AC has no losses",
+                    "DC cannot flow in cables"
                 ],
-                "correct": 1,
-                "explanation": "Voltage sag under load increases with resistance: ΔV ≈ I × R."
+                "correct": 0,
+                "explanation": "Inverters/chargers and wiring have losses (heat), so delivered energy is usually less than stored energy."
             },
             {
-                "question": "Which is the correct formula for C-rate?",
+                "question": "Which statement is MOST accurate?",
                 "options": [
-                    "C-rate = Capacity (Ah) / Current (A)",
-                    "C-rate = Current (A) / Capacity (Ah)",
-                    "C-rate = Voltage (V) / Capacity (Ah)",
-                    "C-rate = Power (W) / Voltage (V)"
+                    "Grid and household loads are mostly AC; PV and batteries are DC",
+                    "Everything in the system is DC",
+                    "Everything in the system is AC",
+                    "PV panels output AC"
                 ],
-                "correct": 1,
-                "explanation": "C-rate is normalized current: Current divided by capacity in Ah."
-            },
-            {
-                "question": "A '2C' charge rate on a 3Ah cell corresponds to approximately…",
-                "options": ["1.5A", "3A", "6A", "12A"],
-                "correct": 2,
-                "explanation": "I = C-rate × Ah = 2 × 3Ah = 6A."
+                "correct": 0,
+                "explanation": "Homes primarily use AC, while PV/batteries are DC internally."
             }
         ]
     
     @staticmethod
     def quiz_cell_health() -> List[Dict]:
-        """Quiz on detecting bad cells"""
+        """Module 1 quiz: Core Components of a Modern Energy System"""
         return [
             {
-                "question": "Which is NOT a sign of a bad cell?",
+                "question": "Which component primarily supplies AC power to household loads?",
+                "options": ["Battery bank", "Inverter", "PV panel", "Circuit breaker"],
+                "correct": 1,
+                "explanation": "The inverter converts DC (battery/PV) into AC for household appliances."
+            },
+            {
+                "question": "The battery bank is mainly sized in…",
+                "options": ["kW", "kWh", "Hz", "°C"],
+                "correct": 1,
+                "explanation": "Battery storage sizing is about energy over time (kWh)."
+            },
+            {
+                "question": "Solar PV panels supply which type of power directly?",
+                "options": ["AC", "DC", "Only frequency", "Only voltage"],
+                "correct": 1,
+                "explanation": "PV panels generate DC power."
+            },
+            {
+                "question": "An MPPT/charge controller is primarily used to…",
                 "options": [
-                    "Rapid voltage drop under load",
-                    "Slow, gradual voltage decline during discharge",
-                    "Excessive heat (>10°C above ambient)",
-                    "Capacity < 80% of nominal"
+                    "Create 50 Hz AC",
+                    "Optimize PV power and regulate charging into the battery/DC bus",
+                    "Increase battery kWh by software",
+                    "Replace breakers"
                 ],
                 "correct": 1,
-                "explanation": "A slow, gradual voltage decline is normal and healthy. Rapid drops and heat are warning signs."
+                "explanation": "MPPT improves PV harvest and controls charging safely."
             },
             {
-                "question": "A cell that shows a large voltage drop only when a load is applied most likely has…",
+                "question": "Why are breakers/fuses and isolators important?",
                 "options": [
-                    "Low internal resistance",
-                    "High internal resistance",
-                    "Higher nominal voltage",
-                    "Higher capacity than rated"
+                    "They increase battery energy",
+                    "They provide protection and safe isolation for faults/maintenance",
+                    "They convert DC to AC",
+                    "They increase inverter kW"
                 ],
                 "correct": 1,
-                "explanation": "Under load, voltage sag is largely caused by internal resistance (ΔV ≈ I × R)."
+                "explanation": "Protection devices help prevent damage and allow safe servicing."
             },
             {
-                "question": "What is the best way to detect a weak cell in a pack?",
+                "question": "If essential loads exceed the inverter’s rating, the system will most likely…",
                 "options": [
-                    "Visual inspection",
-                    "Weight measurement",
-                    "Monitor individual cell voltages under load",
-                    "Feel the temperature"
-                ],
-                "correct": 2,
-                "explanation": "Monitoring individual cell voltages under load shows voltage sag differences caused by high resistance."
-            },
-            {
-                "question": "In a series pack, why can one weak cell reduce usable pack capacity?",
-                "options": [
-                    "Series connections increase capacity",
-                    "The weakest cell hits voltage cutoff first and limits the pack",
-                    "Only the highest-voltage cell matters",
-                    "Because temperature sensors average the readings"
+                    "Run normally with no effect",
+                    "Overload/trip and shut down the output",
+                    "Increase battery capacity",
+                    "Increase PV power"
                 ],
                 "correct": 1,
-                "explanation": "In series strings, current is the same through all cells; the first cell to reach cutoff limits the whole pack."
+                "explanation": "Inverters have protection limits; overload typically causes a trip/shutdown."
             },
             {
-                "question": "How much voltage imbalance in a pack is concerning?",
+                "question": "Monitoring (app/display) is mainly used to…",
                 "options": [
-                    "> 0.05V", "> 0.1V", "> 0.2V", "> 0.5V"
+                    "Make panels generate more sunlight",
+                    "See SOC, power flow, alarms, and performance for troubleshooting",
+                    "Increase inverter kW",
+                    "Replace the battery"
                 ],
-                "correct": 2,
-                "explanation": "Voltage imbalance > 0.1-0.2V indicates cell imbalance. > 0.2V requires immediate balancing."
+                "correct": 1,
+                "explanation": "Visibility into SOC and power flows makes commissioning and troubleshooting easier."
             },
             {
-                "question": "Which measurement is MOST useful for estimating state-of-charge (SOC) in a resting lithium cell?",
+                "question": "Which statement about cables is MOST accurate?",
                 "options": [
-                    "Open-circuit voltage (after rest)",
-                    "Pack label color",
-                    "Cell weight",
-                    "Wire thickness"
+                    "Current (A) is used to size cable thickness",
+                    "Hz is used to size cable thickness",
+                    "kWh is used to size cable thickness",
+                    "Cable thickness is unrelated to current"
                 ],
                 "correct": 0,
-                "explanation": "After resting, open-circuit voltage is a practical (though imperfect) SOC indicator for lithium chemistries."
+                "explanation": "Higher current needs thicker conductors to reduce heating and voltage drop."
             },
             {
-                "question": "Which action is generally appropriate when you see large cell-to-cell imbalance in a pack?",
-                "options": [
-                    "Ignore it; imbalance always self-corrects",
-                    "Balance the pack and investigate the weak cell",
-                    "Increase discharge current to “even them out”",
-                    "Remove the BMS"
-                ],
+                "question": "The distribution board (DB) is mainly where you find…",
+                "options": ["Lithium ions", "Protection devices and circuit distribution", "Solar irradiance", "Battery chemistry"],
                 "correct": 1,
-                "explanation": "Significant imbalance should be corrected by balancing and diagnosing the underlying cell issue."
-            },
-            {
-                "question": "A cell that heats much more than others at the same current is often…",
-                "options": [
-                    "Lower resistance than others",
-                    "Higher resistance than others",
-                    "Higher capacity than others",
-                    "Always safer than others"
-                ],
-                "correct": 1,
-                "explanation": "Extra heat at the same current often indicates higher internal resistance (more I²R loss)."
-            },
-            {
-                "question": "Capacity below about 80% of nominal is commonly used as a threshold for…",
-                "options": [
-                    "End-of-life / degraded cell",
-                    "Brand-new cell",
-                    "Perfectly balanced pack",
-                    "Fully charged cell"
-                ],
-                "correct": 0,
-                "explanation": "A common health metric is capacity retention; <80% is often considered degraded/end-of-life for many uses."
-            },
-            {
-                "question": "Which is the BEST indicator of a weak cell during a discharge test?",
-                "options": [
-                    "The cell that stays highest voltage under load",
-                    "The cell with the largest voltage sag under load and earliest cutoff",
-                    "The cell that is physically largest",
-                    "The cell with the newest wrapper"
-                ],
-                "correct": 1,
-                "explanation": "Weak cells show more sag and reach cutoff earlier when stressed."
+                "explanation": "The DB handles distribution and protection (breakers, isolators, etc.)."
             }
         ]
 
     @staticmethod
     def quiz_chemistry() -> List[Dict]:
-        """Quiz on lithium cell chemistries"""
+        """Module 1 quiz: How Lithium-Ion Batteries Work"""
         return [
             {
-                "question": "Which chemistry is generally known for the best cycle life and stability?",
-                "options": ["Li-ion (NMC/NCA)", "LiFePO4", "Li-Po", "NCA"],
-                "correct": 1,
-                "explanation": "LiFePO4 is widely used where long cycle life and safety are prioritized."
-            },
-            {
-                "question": "Typical nominal voltage of a LiFePO4 cell is closest to…",
-                "options": ["2.0V", "3.2V", "3.7V", "4.2V"],
-                "correct": 1,
-                "explanation": "LiFePO4 nominal voltage is about 3.2V (vs ~3.7V for many Li-ion chemistries)."
-            },
-            {
-                "question": "A common full-charge voltage for many Li-ion (NMC/NCA) cells is…",
-                "options": ["3.65V", "4.20V", "4.80V", "2.50V"],
-                "correct": 1,
-                "explanation": "Many Li-ion cells charge to 4.2V per cell (some variants slightly higher)."
-            },
-            {
-                "question": "If you want maximum energy density (Wh/kg), which chemistry is most likely the best choice?",
-                "options": ["LiFePO4", "NCA", "Lead-acid", "NiMH"],
-                "correct": 1,
-                "explanation": "NCA is commonly associated with very high energy density among lithium chemistries."
-            },
-            {
-                "question": "Which statement is MOST accurate?",
+                "question": "In a lithium-ion battery, energy is stored and released mainly by…",
                 "options": [
-                    "All lithium chemistries have the same charge voltage",
-                    "LiFePO4 typically charges to a lower voltage per cell than Li-ion",
-                    "LiFePO4 has higher nominal voltage than Li-ion",
-                    "Chemistry does not affect safety"
+                    "Water evaporation",
+                    "Movement of lithium ions between electrodes",
+                    "Changing AC frequency",
+                    "Increasing grid voltage"
                 ],
                 "correct": 1,
-                "explanation": "LiFePO4 typically uses ~3.65V max vs ~4.2V for many Li-ion cells."
+                "explanation": "Lithium ions move between anode and cathode during charge/discharge."
             },
             {
-                "question": "Which chemistry is generally considered safer and more thermally stable?",
-                "options": ["LiFePO4", "NCA", "Li-Po (generic)", "NMC"],
-                "correct": 0,
-                "explanation": "LiFePO4 is known for strong thermal stability and reduced thermal runaway risk compared to some high-energy chemistries."
+                "question": "During charging, lithium ions generally move…",
+                "options": ["From anode to cathode", "From cathode to anode", "Out to the grid", "Only through AC cables"],
+                "correct": 1,
+                "explanation": "Charging drives ions toward the anode; discharge reverses the direction."
             },
             {
-                "question": "Two cells both read 3.7V at rest. Which conclusion is best?",
+                "question": "During discharge, the battery…",
                 "options": [
-                    "They have the same SOC regardless of chemistry",
-                    "They have the same energy regardless of capacity",
-                    "SOC interpretation depends on chemistry and voltage-SOC curve",
-                    "They must both be fully charged"
+                    "Absorbs energy and SOC increases",
+                    "Delivers energy to loads and SOC decreases",
+                    "Creates AC frequency",
+                    "Increases grid voltage"
                 ],
-                "correct": 2,
-                "explanation": "Voltage-to-SOC mapping depends on chemistry and the cell's voltage curve, especially for LFP which is flatter."
+                "correct": 1,
+                "explanation": "Discharge means delivering energy to the system; SOC goes down."
             },
             {
-                "question": "Which chemistry typically has a flatter voltage curve (harder to estimate SOC from voltage alone)?",
-                "options": ["LiFePO4", "NCA", "NMC", "Li-ion (general)"] ,
-                "correct": 0,
-                "explanation": "LiFePO4 has a relatively flat discharge curve across much of its SOC range."
+                "question": "The separator is important because it…",
+                "options": [
+                    "Carries electrons freely",
+                    "Prevents electrode contact while allowing ions to pass",
+                    "Creates AC output",
+                    "Increases kWh by itself"
+                ],
+                "correct": 1,
+                "explanation": "The separator reduces short-circuit risk while allowing ionic movement."
+            },
+            {
+                "question": "Why is a BMS important in lithium systems?",
+                "options": [
+                    "It converts DC to AC",
+                    "It monitors and protects the battery within safe limits",
+                    "It creates sunlight",
+                    "It increases kW rating"
+                ],
+                "correct": 1,
+                "explanation": "A BMS enforces protections (voltage/current/temperature) and supports safe operation."
+            },
+            {
+                "question": "Which statement is a good installer takeaway?",
+                "options": [
+                    "Voltage alone always tells the full story",
+                    "Protections and correct design are essential for safety and lifespan",
+                    "BMS is optional in all systems",
+                    "Conversion has no losses"
+                ],
+                "correct": 1,
+                "explanation": "Correct design and operating limits matter; real systems have losses and constraints."
             }
         ]
 
     @staticmethod
     def quiz_cycles_aging() -> List[Dict]:
-        """Quiz on cycles, aging, and degradation"""
+        """Module 1 quiz: Key Battery Concepts Installers Must Know"""
         return [
             {
-                "question": "What is 'calendar aging'?",
-                "options": [
-                    "Degradation caused by charge/discharge cycles only",
-                    "Degradation over time even without cycling",
-                    "A method to count cycles in a BMS",
-                    "A test done once per year"
-                ],
+                "question": "SOC stands for…",
+                "options": ["System Output Capacity", "State of Charge", "Series of Cells", "Standard Operating Condition"],
                 "correct": 1,
-                "explanation": "Calendar aging is time-based degradation that occurs even if the battery is not actively cycled."
+                "explanation": "SOC is the battery’s remaining charge percentage."
             },
             {
-                "question": "What is 'cycle aging'?",
-                "options": [
-                    "Degradation over time without use",
-                    "Degradation driven by charge/discharge cycling",
-                    "The same as calendar aging",
-                    "Only happens at low temperature"
-                ],
-                "correct": 1,
-                "explanation": "Cycle aging is wear from charging and discharging (throughput, depth, and current matter)."
-            },
-            {
-                "question": "Which operating condition generally accelerates degradation the MOST?",
-                "options": [
-                    "Moderate temperature and shallow cycles",
-                    "High temperature and high SOC storage",
-                    "Cool temperature and partial cycles",
-                    "Resting at mid-SOC"
-                ],
-                "correct": 1,
-                "explanation": "High temperature and high SOC storage are common accelerators of lithium battery degradation."
-            },
-            {
-                "question": "Reducing DOD from 100% to 50% generally…",
-                "options": ["Reduces cycle life", "Increases cycle life", "Has no effect", "Only matters for lead-acid"],
-                "correct": 1,
-                "explanation": "Shallower cycling usually increases cycle life because it reduces mechanical/chemical stress."
-            },
-            {
-                "question": "Two 50% DOD cycles are approximately equivalent to…",
-                "options": ["One 100% DOD equivalent full cycle", "Half a cycle", "Two full cycles", "Zero cycles"],
+                "question": "DoD (Depth of Discharge) is…",
+                "options": ["The percentage of capacity used", "The battery’s nominal voltage", "The AC frequency", "The cable thickness"],
                 "correct": 0,
-                "explanation": "Battery wear is often tracked as equivalent full cycles (EFC): 2 × 50% ≈ 1 EFC."
+                "explanation": "DoD is how much of the battery capacity has been discharged."
             },
             {
-                "question": "Why can very high C-rate discharging reduce usable capacity?",
+                "question": "Which relationship is correct?",
+                "options": ["SOC + DoD = 100%", "SOC × DoD = 100%", "SOC − DoD = 100%", "SOC + DoD = 50%"],
+                "correct": 0,
+                "explanation": "If 30% SOC remains, 70% DoD has been used: 30 + 70 = 100."
+            },
+            {
+                "question": "A “cycle” generally means…",
                 "options": [
-                    "Because the cell voltage sags and hits cutoff earlier",
-                    "Because SOC increases under load",
-                    "Because internal resistance becomes zero",
-                    "Because voltage rises with higher current"
+                    "One charge/discharge equivalent over time",
+                    "One inverter restart",
+                    "One hour of loadshedding",
+                    "One AC sinewave"
                 ],
                 "correct": 0,
-                "explanation": "High current increases voltage sag; the cell can reach cutoff voltage before all capacity is used."
+                "explanation": "Cycles track throughput; several partial cycles can add up to one equivalent full cycle."
             },
             {
-                "question": "Which is a good long-term storage practice for many lithium packs?",
+                "question": "Round-trip efficiency refers to…",
                 "options": [
-                    "Store fully charged at high temperature",
-                    "Store near 40–60% SOC in a cool place",
-                    "Store at 0% SOC",
-                    "Store with no BMS connected"
+                    "Energy out divided by energy in (charge + discharge)",
+                    "Battery voltage multiplied by current",
+                    "The number of AC cycles per second",
+                    "Cable thickness"
                 ],
-                "correct": 1,
-                "explanation": "Mid-SOC and cool temperatures typically reduce calendar aging for many lithium chemistries."
+                "correct": 0,
+                "explanation": "Efficiency describes how much energy you can get back after losses."
             },
             {
-                "question": "Internal resistance typically…",
+                "question": "A BMS primarily helps by…",
                 "options": [
-                    "Decreases as the battery ages",
-                    "Increases as the battery ages",
-                    "Is unrelated to performance",
-                    "Only changes with voltage"
+                    "Monitoring and protecting the battery within safe limits",
+                    "Increasing solar irradiance",
+                    "Making the inverter bigger",
+                    "Removing the need for breakers"
                 ],
+                "correct": 0,
+                "explanation": "BMS protections include over/under-voltage, over-current, and temperature safeguards."
+            },
+            {
+                "question": "Which statement about kW vs kWh is correct?",
+                "options": ["kW is energy; kWh is power", "kW is power; kWh is energy", "Both mean the same thing", "kWh is frequency"],
                 "correct": 1,
-                "explanation": "Internal resistance usually increases with aging, which increases heat and voltage sag under load."
+                "explanation": "kW is how much at once; kWh is how long."
+            },
+            {
+                "question": "Why might delivered usable energy be lower than the battery nameplate kWh?",
+                "options": [
+                    "Because of conversion and system losses",
+                    "Because energy cannot be measured",
+                    "Because AC has no losses",
+                    "Because kW and kWh are identical"
+                ],
+                "correct": 0,
+                "explanation": "Inverters, wiring, and internal behavior create losses; practical design includes margin."
             }
         ]
 
     @staticmethod
     def quiz_pack_design() -> List[Dict]:
-        """Quiz on pack design (series/parallel basics)"""
+        """Module 1 quiz: System Types & Energy Flow"""
         return [
             {
-                "question": "In a series connection (e.g., 4S), what increases?",
-                "options": ["Voltage", "Capacity (Ah)", "Both voltage and capacity", "Neither"],
-                "correct": 0,
-                "explanation": "Series adds voltage (cell voltages sum). Capacity (Ah) stays roughly the same as one cell."
-            },
-            {
-                "question": "In a parallel connection (e.g., 4P), what increases?",
-                "options": ["Voltage", "Capacity (Ah)", "Voltage rating only", "Cell charge voltage"],
-                "correct": 1,
-                "explanation": "Parallel adds capacity and current capability; voltage stays the same as one cell."
-            },
-            {
-                "question": "A 10S pack using 3.7V nominal cells has a nominal pack voltage of about…",
-                "options": ["3.7V", "10V", "37V", "42V"],
-                "correct": 2,
-                "explanation": "Nominal voltage ≈ 10 × 3.7V = 37V. (42V would be near full charge at 4.2V/cell.)"
-            },
-            {
-                "question": "If one cell in a series string is weak, the pack usable capacity is often limited by…",
-                "options": ["The strongest cell", "The weakest cell", "Ambient temperature only", "The charger"],
-                "correct": 1,
-                "explanation": "In series, all cells carry the same current; the weakest cell hits cutoff first."
-            },
-            {
-                "question": "A 4S2P pack made from 2Ah cells has pack capacity closest to…",
-                "options": ["2Ah", "4Ah", "8Ah", "16Ah"],
-                "correct": 1,
-                "explanation": "Parallel count sets Ah: 2P of 2Ah cells ≈ 4Ah. Series does not increase Ah."
-            },
-            {
-                "question": "Why is cell matching important when building packs?",
+                "question": "Which system type can keep loads running during loadshedding using a battery?",
                 "options": [
-                    "To make the pack heavier",
-                    "To reduce imbalance and uneven aging",
-                    "To increase nominal voltage",
-                    "To eliminate the need for a BMS"
+                    "Grid-tied solar with no battery",
+                    "Backup/UPS or hybrid system with battery",
+                    "PV panels with no inverter",
+                    "Grid-only supply"
                 ],
                 "correct": 1,
-                "explanation": "Similar capacity/resistance cells share load more evenly and reduce imbalance and stress."
+                "explanation": "Backup/hybrid systems with batteries can supply loads when the grid is down."
             },
             {
-                "question": "If a 4S pack is discharged at 20A, what current flows through each series cell (idealized)?",
-                "options": ["5A", "10A", "20A", "80A"],
-                "correct": 2,
-                "explanation": "In series, the same current flows through each cell: 20A through each cell in the string."
+                "question": "Which description best fits an off-grid system?",
+                "options": [
+                    "Relies on PV + battery (and possibly generator) without needing the grid",
+                    "Always exports energy to the grid",
+                    "Uses only AC power and no DC",
+                    "Cannot use batteries"
+                ],
+                "correct": 0,
+                "explanation": "Off-grid systems are designed to run without a utility connection."
             },
             {
-                "question": "What does 'energy' of a pack depend on most directly?",
-                "options": ["Voltage only", "Capacity (Ah) only", "Voltage and capacity (Wh = V × Ah)", "Connector type"],
-                "correct": 2,
-                "explanation": "Energy in watt-hours depends on both pack voltage and pack capacity (Ah)."
+                "question": "A hybrid system typically allows…",
+                "options": [
+                    "Only grid power",
+                    "PV + battery + grid to work together under inverter control",
+                    "Only battery with no inverter",
+                    "Only DC loads"
+                ],
+                "correct": 1,
+                "explanation": "Hybrid systems coordinate PV, battery, and grid to power loads and optimize usage."
+            },
+            {
+                "question": "When PV production is higher than current household load, excess energy is MOST commonly used to…",
+                "options": [
+                    "Increase grid frequency",
+                    "Charge the battery (if configured) and/or export to grid",
+                    "Reduce battery SOC",
+                    "Turn AC into DC in the DB"
+                ],
+                "correct": 1,
+                "explanation": "Excess PV can charge batteries and sometimes export to the grid depending on configuration."
+            },
+            {
+                "question": "When PV is low and the grid is available, a hybrid system will typically…",
+                "options": [
+                    "Stop powering loads",
+                    "Use the grid to supply loads (and possibly charge the battery)",
+                    "Only power DC loads",
+                    "Disable protections"
+                ],
+                "correct": 1,
+                "explanation": "Grid often supplements PV when needed and can charge the battery if configured."
+            },
+            {
+                "question": "Which statement about “grid-tied solar with no battery” is MOST accurate during loadshedding?",
+                "options": [
+                    "It usually cannot power the home when the grid is down (anti-islanding)",
+                    "It always provides full backup",
+                    "It charges batteries automatically",
+                    "It works without an inverter"
+                ],
+                "correct": 0,
+                "explanation": "Most grid-tied systems shut down when the grid fails to protect line workers."
+            },
+            {
+                "question": "Which flow describes a common backup scenario during an outage?",
+                "options": [
+                    "Grid → Loads",
+                    "Battery (DC) → Inverter → Loads (AC)",
+                    "PV → Grid only",
+                    "DB → Battery"
+                ],
+                "correct": 1,
+                "explanation": "During outages, the battery supplies DC which the inverter converts to AC for loads."
+            },
+            {
+                "question": "Which is an example of a “backup/UPS” style system?",
+                "options": [
+                    "Battery + inverter to keep essential loads on when grid fails",
+                    "PV panels with no inverter",
+                    "Grid-only supply",
+                    "A system that exports but has no loads"
+                ],
+                "correct": 0,
+                "explanation": "Backup systems focus on keeping essential loads running during outages."
             }
         ]
 
     @staticmethod
     def quiz_bms_balancing() -> List[Dict]:
-        """Quiz on BMS fundamentals and balancing"""
+        """Module 1 quiz: Efficiency, System Losses & Where REVOV Fits"""
         return [
             {
-                "question": "What is a primary job of a BMS?",
+                "question": "Round-trip efficiency is best defined as…",
                 "options": [
-                    "Increase cell nominal voltage",
-                    "Protect cells from over-voltage/under-voltage and monitor safety limits",
-                    "Replace weak cells automatically",
-                    "Charge the battery without a charger"
-                ],
-                "correct": 1,
-                "explanation": "A BMS monitors cell/pack conditions and enforces safety protections (OV/UV, over-current, temperature)."
-            },
-            {
-                "question": "Cell balancing is primarily used to…",
-                "options": [
-                    "Make the pack voltage higher",
-                    "Equalize cell SOC/voltage to prevent one cell from drifting high/low",
-                    "Increase cell capacity beyond rating",
-                    "Reduce nominal voltage per cell"
-                ],
-                "correct": 1,
-                "explanation": "Balancing reduces cell-to-cell differences so the string can be charged/discharged safely and fully."
-            },
-            {
-                "question": "Passive balancing typically works by…",
-                "options": [
-                    "Moving charge from high cells to low cells efficiently",
-                    "Bleeding energy from higher-voltage cells as heat",
-                    "Increasing charger voltage",
-                    "Disconnecting the pack permanently"
-                ],
-                "correct": 1,
-                "explanation": "Passive balancing uses resistors to bleed the highest cells, converting extra energy into heat."
-            },
-            {
-                "question": "Active balancing differs from passive balancing because it…",
-                "options": [
-                    "Only works on LiFePO4",
-                    "Transfers energy between cells instead of burning it as heat",
-                    "Eliminates the need for cell voltage measurement",
-                    "Always balances only at 0% SOC"
-                ],
-                "correct": 1,
-                "explanation": "Active balancing can move energy from higher cells to lower cells with better efficiency."
-            },
-            {
-                "question": "Why is per-cell monitoring important in series packs?",
-                "options": [
-                    "Pack voltage alone guarantees all cells are safe",
-                    "A single cell can overcharge/overdischarge even when pack voltage seems normal",
-                    "It is only needed for parallel packs",
-                    "It increases energy density"
-                ],
-                "correct": 1,
-                "explanation": "Cells can drift; pack voltage can hide a dangerously high/low individual cell."
-            },
-            {
-                "question": "Which condition most commonly triggers balancing on many consumer-grade BMS boards?",
-                "options": [
-                    "Mid-SOC during discharge",
-                    "Near top-of-charge (higher voltages)",
-                    "Only when the pack is empty",
-                    "Only when the pack is disconnected"
-                ],
-                "correct": 1,
-                "explanation": "Many BMS designs balance near the top because voltage differences are easier to detect and correct there."
-            },
-            {
-                "question": "A BMS over-current protection is designed to…",
-                "options": [
-                    "Allow unlimited current",
-                    "Disconnect or limit current if current exceeds safe limits",
-                    "Increase capacity",
-                    "Make balancing faster"
-                ],
-                "correct": 1,
-                "explanation": "Over-current protection prevents overheating, wiring damage, and unsafe operation."
-            },
-            {
-                "question": "If one cell consistently reaches high voltage before others during charge, what is a likely cause?",
-                "options": [
-                    "That cell has lower capacity than the others",
-                    "That cell has infinite capacity",
-                    "The pack has too many cells in parallel",
-                    "The charger is too small"
+                    "Energy out divided by energy in (including charge + discharge)",
+                    "Battery voltage multiplied by current",
+                    "The number of AC cycles per second",
+                    "The battery’s nameplate capacity"
                 ],
                 "correct": 0,
-                "explanation": "Lower-capacity cells fill up sooner (reach upper voltage earlier), causing imbalance and limiting pack charge."
+                "explanation": "Round-trip efficiency describes how much energy you get back after losses."
+            },
+            {
+                "question": "Which is a common source of system loss?",
+                "options": ["Inverter conversion losses", "Making the cable shorter", "Increasing SOC", "Using correct fusing"],
+                "correct": 0,
+                "explanation": "Conversion electronics and wiring losses reduce delivered usable energy."
+            },
+            {
+                "question": "Why do installers add margin to battery sizing beyond the basic kW×hours calculation?",
+                "options": [
+                    "To account for DoD limits and losses",
+                    "Because voltage becomes power",
+                    "Because AC has no losses",
+                    "Because kW always equals kWh"
+                ],
+                "correct": 0,
+                "explanation": "Usable energy is reduced by DoD limits and conversion/system losses."
+            },
+            {
+                "question": "Which statement about real systems is MOST accurate?",
+                "options": [
+                    "All systems are 100% efficient",
+                    "Losses mean delivered energy is usually less than stored energy",
+                    "Efficiency only matters for DC loads",
+                    "Efficiency is the same as frequency"
+                ],
+                "correct": 1,
+                "explanation": "Conversion and wiring losses appear as heat and reduce usable delivered energy."
+            },
+            {
+                "question": "Where does REVOV typically fit in a modern energy system?",
+                "options": ["As the battery energy storage component", "As the AC distribution board", "As the PV panels", "As the household plug circuits"],
+                "correct": 0,
+                "explanation": "REVOV batteries provide storage that the inverter can charge/discharge as part of the system."
+            },
+            {
+                "question": "If your loads need 5 kWh delivered to AC appliances, a safe sizing assumption is…",
+                "options": [
+                    "Exactly 5 kWh battery is always enough",
+                    "You may need more than 5 kWh due to DoD limits and losses",
+                    "Battery size depends only on Hz",
+                    "Battery size depends only on inverter color"
+                ],
+                "correct": 1,
+                "explanation": "Delivered usable energy must account for conversion losses and usable DoD."
+            },
+            {
+                "question": "Why do efficiency and losses matter in troubleshooting?",
+                "options": [
+                    "They explain why input and output may not match perfectly",
+                    "They guarantee no heat is generated",
+                    "They eliminate the need for protection devices",
+                    "They make AC become DC"
+                ],
+                "correct": 0,
+                "explanation": "Losses show up as heat/voltage drop and differences between stored vs delivered energy."
+            },
+            {
+                "question": "Which statement best captures the Module 1 “REVOV fit” message?",
+                "options": [
+                    "Energy storage is core infrastructure; the battery enables backup and solar self-consumption",
+                    "Batteries are optional and only cosmetic",
+                    "Only PV matters; batteries never help",
+                    "Efficiency and losses do not matter"
+                ],
+                "correct": 0,
+                "explanation": "Module 1 positions storage as essential for reliability and savings in modern systems."
             }
         ]
 

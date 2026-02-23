@@ -3,56 +3,269 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login — Battery Education</title>
+    <title>Welcome — to Revov WattWorks</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <style>
       body {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
-        padding: 20px;
+        padding: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow-x: hidden;
       }
-      .card {
-        max-width: 520px;
-        margin: 60px auto;
+
+      .page {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+
+      header {
+        padding: 34px 20px 14px;
+        background: rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      @supports ((-webkit-backdrop-filter: blur(6px)) or (backdrop-filter: blur(6px))) {
+        header {
+          -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+        }
+      }
+
+      .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        color: rgba(255,255,255,0.95);
+      }
+
+      .header-inner h1 {
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        margin: 0 0 10px;
+        font-size: clamp(2.6rem, 5vw, 4.2rem);
+        line-height: 1.05;
+        text-align: center;
+        width: 100%;
+      }
+
+      .header-inner p {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+        color: rgba(255,255,255,0.90);
+        text-align: center;
+      }
+
+      .header-inner .muted {
+        color: rgba(255,255,255,0.82);
+      }
+
+      .bullets {
+        margin: 16px auto 0;
+        padding-left: 18px;
+        line-height: 1.8;
+        color: rgba(255,255,255,0.92);
+        columns: 2;
+        column-gap: 36px;
+        max-width: 980px;
+      }
+
+      .bullets li {
+        break-inside: avoid;
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      @media (max-width: 768px) {
+        .bullets {
+          columns: 1;
+          column-gap: 0;
+        }
+      }
+
+      main {
+        padding: 14px 20px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Desktop readability tweaks */
+      @media (min-width: 992px) {
+        header { padding: 42px 24px 20px; }
+        .header-inner { max-width: 1400px; }
+        .header-inner h1 { margin-bottom: 16px; }
+        .header-inner p { font-size: 1.2rem; }
+        .bullets { font-size: 1.05rem; column-gap: 44px; }
+        main { padding: 20px 24px 40px; }
+        .login-title { font-size: 1.25rem; }
+        .login-card .card-header { padding-top: 22px !important; padding-bottom: 18px !important; }
+        .login-card .card-body { padding-top: 22px !important; }
+      }
+
+      .login-card {
         border: none;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.22);
       }
-      h1 { color: #667eea; font-weight: 700; }
+
+      .login-card .card-header {
+        background: white;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+      }
+
+      .login-card .card-body {
+        background: white;
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+      }
+
+      .login-title {
+        font-weight: 800;
+        color: #111827;
+      }
+
+      .muted {
+        color: #6b7280;
+        font-size: 0.95rem;
+      }
+
+      .btn-primary {
+        background: #667eea;
+        border-color: #667eea;
+        font-weight: 700;
+      }
+
+      .btn-primary:hover {
+        background: #764ba2;
+        border-color: #764ba2;
+      }
+
+      .pw-toggle-btn {
+        min-width: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 0;
+        padding: 0 10px;
+        color: #6c757d;
+        text-decoration: none;
+        box-shadow: none;
+      }
+
+      .pw-toggle-btn:hover,
+      .pw-toggle-btn:focus {
+        color: #495057;
+        text-decoration: none;
+        box-shadow: none;
+      }
+
+      .pw-toggle-btn svg {
+        width: 18px;
+        height: 18px;
+        display: block;
+      }
     </style>
   </head>
   <body>
-    <div class="card">
-      <div class="card-body p-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h1 class="h4 m-0">Student Login</h1>
-          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.learn_index') }}">Back</a>
+    <div class="page">
+      <header>
+        <div class="header-inner">
+          <h1>Welcome to Revov WattWorks</h1>
+          <p>Revov’s official online installer training platform, built for real-world performance.</p>
+          <p class="muted">Log in to access training modules, interactive tools, quizzes, progress tracking, and certificates in:</p>
+          <ul class="bullets">
+            <li>Real system design</li>
+            <li>Safe and compliant installation</li>
+            <li>REVOV Lithium-Ion battery integration</li>
+            <li>Commissioning and troubleshooting</li>
+            <li>Product-specific deep dives</li>
+            <li>Ongoing technical updates</li>
+          </ul>
         </div>
+      </header>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-
-        <form method="post" action="{{ url_for('education.login', next=request.args.get('next')) }}">
-          <input type="hidden" name="next" value="{{ request.args.get('next', '') }}">
-          <div class="form-group">
-            <label>Username</label>
-            <input class="form-control" name="username" autocomplete="username" required>
+      <main aria-label="Login">
+        <div class="card login-card" style="width: 100%; max-width: 520px;">
+          <div class="card-header p-4">
+            <div class="login-title">Installer Login</div>
+            <div class="muted">Enter your WattWorks account details.</div>
           </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input class="form-control" name="password" type="password" autocomplete="current-password" required>
-          </div>
+          <div class="card-body p-4">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
 
-          <button class="btn btn-primary" type="submit">Login</button>
-          <a class="btn btn-link" href="{{ url_for('education.register') }}">Create account</a>
-        </form>
-      </div>
+            <form method="post" action="{{ url_for('education.login', next=request.args.get('next')) }}">
+              <input type="hidden" name="next" value="{{ request.args.get('next', '') }}">
+              <div class="form-group">
+                <label>Username</label>
+                <input class="form-control" name="username" autocomplete="username" required>
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <div class="input-group">
+                  <input id="password" class="form-control" name="password" type="password" autocomplete="current-password" required>
+                  <div class="input-group-append">
+                    <button class="btn btn-link pw-toggle-btn" type="button" data-toggle-password="#password" aria-label="Show password" title="Show password"></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center" style="gap: 12px; flex-wrap: wrap;">
+                <a class="btn btn-link p-0" href="{{ url_for('education.forgot_password') }}">Forgot password?</a>
+                <a class="btn btn-link p-0" href="{{ url_for('education.register') }}">Create account</a>
+              </div>
+
+              <button class="btn btn-primary btn-block mt-3" type="submit">Login</button>
+            </form>
+          </div>
+        </div>
+      </main>
     </div>
+
+    <script>
+      (function () {
+        var EYE = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+          + '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+          + '<path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+          + '</svg>';
+
+        var EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+          + '<path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+          + '<path d="M10.6 10.6a3 3 0 0 0 4.24 4.24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+          + '<path d="M9.88 5.09A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a17.14 17.14 0 0 1-3.22 4.39" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+          + '<path d="M6.11 6.11C3.86 7.73 2 10.5 2 12s3.5 7 10 7a10.94 10.94 0 0 0 4.91-1.12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+          + '</svg>';
+
+        function setButtonState(button, isHidden) {
+          button.innerHTML = isHidden ? EYE : EYE_OFF;
+          var label = isHidden ? 'Show password' : 'Hide password';
+          button.setAttribute('aria-label', label);
+          button.setAttribute('title', label);
+        }
+
+        document.querySelectorAll('[data-toggle-password]').forEach(function (button) {
+          var selector = button.getAttribute('data-toggle-password');
+          var input = selector ? document.querySelector(selector) : null;
+          if (!input) return;
+
+          setButtonState(button, input.type === 'password');
+          button.addEventListener('click', function () {
+            var isHidden = input.type === 'password';
+            input.type = isHidden ? 'text' : 'password';
+            setButtonState(button, input.type === 'password');
+            try { input.focus(); } catch (e) {}
+          });
+        });
+      })();
+    </script>
   </body>
 </html>

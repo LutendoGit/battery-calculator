@@ -1,6 +1,6 @@
 # 🎓 LITHIUM BATTERY EDUCATIONAL PLATFORM - START HERE
 
-## What You Have Built
+##  Built
 
 A **complete, production-ready web application** to teach beginners about lithium batteries and cells.
 
@@ -42,7 +42,7 @@ Visit: http://localhost:5000/learn/fundamentals
 - **5 battery chemistries** compared side-by-side
 - **80+ glossary terms** searchable
 - **3 interactive simulators**
-- **3 quiz sets** with immediate feedback
+- **7 quiz sets** with immediate feedback
 - **20+ calculators** for hands-on learning
 
 ### ✅ Interactive Tools
@@ -123,7 +123,7 @@ touch modules/__init__.py routes/__init__.py
 
 ### Advanced (3-4 hours)
 1. Deep dive: All topics
-2. Quizzes: All 3 quiz sets
+2. Quizzes: All 7 quiz sets
 3. Reference: Glossary and calculators
 
 ---

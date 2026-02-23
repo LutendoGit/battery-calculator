@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin — Live User Data</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+      body { background: #f7f7fb; }
+      .wrap { max-width: 1100px; margin: 24px auto; }
+      pre { background: #0b1020; color: #e5e7eb; padding: 16px; border-radius: 8px; max-height: 520px; overflow: auto; }
+      .small-muted { color: #6b7280; font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h4 class="mb-0">Live User Data (SQLite)</h4>
+          <div class="small-muted">Token-protected. Auto-refreshes the selected query.</div>
+        </div>
+        <div>
+          <a class="btn btn-outline-secondary" href="{{ url_for('education.learn_index', hub=1) }}">Back</a>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label>Query</label>
+              <select class="form-control" id="query">
+                <option value="users">Users</option>
+                <option value="users_summary">Users summary</option>
+                <option value="progress">Progress</option>
+                <option value="quiz_attempts">Quiz attempts</option>
+                <option value="latest_quiz">Latest quiz (per user)</option>
+                <option value="quiz_failures">Quiz failures (below pass %)</option>
+                <option value="events">Events (stream)</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label>User ID (optional)</label>
+              <input class="form-control" id="user_id" placeholder="e.g. 1" />
+            </div>
+            <div class="form-group col-md-2">
+              <label>Limit</label>
+              <input class="form-control" id="limit" value="200" />
+            </div>
+            <div class="form-group col-md-3">
+              <label>Pass % (failures only)</label>
+              <input class="form-control" id="pass_pct" value="75" />
+            </div>
+            <div class="form-group col-md-3">
+              <label>Refresh (ms)</label>
+              <input class="form-control" id="refresh_ms" value="2000" />
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="small-muted">Using token from URL: <code id="tokState"></code></div>
+            <div>
+              <button class="btn btn-primary" id="btnRun">Run now</button>
+              <button class="btn btn-outline-secondary" id="btnPause">Pause</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="small-muted">Last updated: <span id="updated">never</span></div>
+            <div class="small-muted">Events cursor: <span id="cursor">0</span></div>
+          </div>
+          <pre id="out">Select a query and click “Run now”.</pre>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const token = {{ token|tojson }};
+      const tokState = document.getElementById('tokState');
+      tokState.textContent = token ? 'present' : 'missing';
+
+      const out = document.getElementById('out');
+      const updated = document.getElementById('updated');
+      const cursorEl = document.getElementById('cursor');
+
+      let timer = null;
+      let paused = false;
+      let eventsCursor = 0;
+
+      function getInt(el, fallback) {
+        const v = parseInt((el.value || '').trim(), 10);
+        return Number.isFinite(v) ? v : fallback;
+      }
+
+      function buildUrl() {
+        const query = document.getElementById('query').value;
+        const userId = (document.getElementById('user_id').value || '').trim();
+        const limit = getInt(document.getElementById('limit'), 200);
+        const passPct = getInt(document.getElementById('pass_pct'), 75);
+
+        const params = new URLSearchParams();
+        if (token) params.set('token', token);
+        params.set('limit', String(limit));
+
+        if (userId) params.set('user_id', userId);
+        if (query === 'events') params.set('since', String(eventsCursor));
+        if (query === 'quiz_failures') params.set('pass_pct', String(passPct));
+
+        return `/learn/admin/db/api/${query}?${params.toString()}`;
+      }
+
+      async function runOnce() {
+        if (paused) return;
+        const url = buildUrl();
+        try {
+          const res = await fetch(url, { headers: token ? { 'X-Admin-Token': token } : {} });
+          const data = await res.json();
+          if (!res.ok) {
+            out.textContent = JSON.stringify({ error: res.status, data }, null, 2);
+            return;
+          }
+
+          if (data && typeof data.last_id === 'number') {
+            eventsCursor = data.last_id;
+            cursorEl.textContent = String(eventsCursor);
+          }
+
+          out.textContent = JSON.stringify(data, null, 2);
+          updated.textContent = new Date().toLocaleTimeString();
+        } catch (e) {
+          out.textContent = String(e);
+        }
+      }
+
+      function schedule() {
+        if (timer) clearInterval(timer);
+        const ms = getInt(document.getElementById('refresh_ms'), 2000);
+        timer = setInterval(runOnce, Math.max(250, ms));
+      }
+
+      document.getElementById('btnRun').addEventListener('click', () => { runOnce(); });
+      document.getElementById('btnPause').addEventListener('click', () => {
+        paused = !paused;
+        document.getElementById('btnPause').textContent = paused ? 'Resume' : 'Pause';
+      });
+
+      document.getElementById('query').addEventListener('change', () => {
+        if (document.getElementById('query').value !== 'events') {
+          eventsCursor = 0;
+          cursorEl.textContent = '0';
+        }
+        runOnce();
+      });
+      document.getElementById('refresh_ms').addEventListener('change', schedule);
+
+      schedule();
+    </script>
+  </body>
+</html>

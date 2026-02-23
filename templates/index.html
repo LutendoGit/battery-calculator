@@ -53,14 +53,13 @@
         border-radius: 15px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-          /* Background image for the form card. Replace the URL with an external link or
-            place an image at static/images/form-bg.jpg for local serving via Flask. */
-            background-color: #ffffff;
-            background-image: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)), url("{{ url_for('static', filename='images/Unleashing-Solar-Power-Illuminate-Your-Life-with-Solar-Panels-in-Poquoson-700x441.png') }}");
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-          background-blend-mode: overlay;
+        /* Background image for the form card. Replace the URL with an external link or
+           place an image at static/images/form-bg.jpg for local serving via Flask. */
+        background-image: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)),
+          url("/static/images/Unleashing-Solar-Power-Illuminate-Your-Life-with-Solar-Panels-in-Poquoson-700x441.png");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
       }
       
       .card:hover {
@@ -149,7 +148,7 @@
   <body>
     <div class="container portrait-container">
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="m-0">Battery Design Calculator</h1>
+        <h1 class="m-0">Battery Design LAB</h1>
         <div>
           <a class="btn btn-outline-light" href="{{ url_for('education.learn_index') }}">Learn</a>
         </div>
@@ -237,7 +236,7 @@
                     </select>
                   </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Calculate Pack</button>
+                <button class="btn btn-primary" type="submit">Design Pack</button>
               </form>
             </div>
           </div>
@@ -278,7 +277,7 @@
                     </select>
                   </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Calculate Bank</button>
+                <button class="btn btn-primary" type="submit">Design Bank</button>
               </form>
             </div>
           </div>

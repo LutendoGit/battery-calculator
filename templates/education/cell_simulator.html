@@ -17,19 +17,23 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             min-height: 100vh;
-            padding: 20px;
+            padding: 0;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
         }
         
         header {
             background: white;
             padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
+            border-radius: 0;
+            margin-bottom: 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
@@ -224,18 +228,114 @@
             border-radius: 4px;
             margin-bottom: 20px;
         }
+
+        .lesson-stage { padding: 20px; min-height: 0; }
+        .step-card { height: 100%; overflow: auto; }
+
+        .pager {
+            background: rgba(255, 255, 255, 0.92);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .pager .btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+
+        .pager .btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+        .pager a { color: #667eea; text-decoration: none; font-weight: 600; }
+        .pager a:hover { text-decoration: underline; }
+        .meta { color: #555; font-size: 0.95em; }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-actions a {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        .header-actions a:hover { background: #764ba2; }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: 1px solid rgba(0,0,0,0.08);
+            background: rgba(102, 126, 234, 0.12);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-weight: 900;
+            color: #667eea;
+            text-transform: uppercase;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>⚡ Cell Simulator - Watch a Cell Discharge & Charge</h1>
-            <p>See how voltage, capacity, and SOC change during discharge/charge cycles</p>
+            <div class="header-row">
+                <div>
+                    <h1>⚡ Cell Simulator - Watch a Cell Discharge & Charge</h1>
+                    <p>See how voltage, capacity, and SOC change during discharge/charge cycles</p>
+                    <div class="meta"><strong data-lesson-title>Simulator</strong> · <span data-lesson-counter>1 / 2</span></div>
+                </div>
+                {% if session.get('edu_user_id') %}
+                <div class="header-actions">
+                    <span class="avatar" aria-label="Profile">
+                        {% if session.get('edu_avatar') %}
+                            <img src="{{ url_for('static', filename='avatars/' ~ session.get('edu_avatar')) }}" alt="Profile picture">
+                        {% else %}
+                            {{ (session.get('edu_username', '?')[:1] | upper) }}
+                        {% endif %}
+                    </span>
+                    <a href="{{ url_for('education.logout') }}">Logout</a>
+                </div>
+                {% endif %}
+            </div>
         </header>
-        
+
+        <main class="lesson-stage" data-lesson-stage>
+        <section data-lesson-step data-step-title="Simulator">
         <div class="simulator-grid">
             <!-- INPUT PANEL -->
-            <div class="card">
+            <div class="card step-card">
                 <h2>⚙️ Cell Configuration</h2>
                 
                 <div class="form-group">
@@ -289,7 +389,7 @@
             </div>
             
             <!-- RESULTS PANEL -->
-            <div class="card">
+            <div class="card step-card">
                 <h2>📈 Simulation Results</h2>
                 
                 <div class="voltage-gauge" id="voltage-display">--</div>
@@ -335,9 +435,11 @@
                 </div>
             </div>
         </div>
+        </section>
         
         <!-- EDUCATIONAL CONTENT -->
-        <div class="card">
+        <section data-lesson-step data-step-title="About Cell Behavior">
+        <div class="card step-card">
             <h2>📚 About Cell Behavior</h2>
             
             <h3 style="color: #667eea; margin: 15px 0;">Why Does Voltage Sag Occur?</h3>
@@ -364,7 +466,19 @@
                 <li>Compare the voltage curves - lower C-rate = less sag!</li>
             </ol>
         </div>
+        </section>
+        </main>
+
+        <footer class="pager">
+            <a href="{{ url_for('education.learn_index', hub=1) }}">Back to Training Hub</a>
+            <div class="meta">
+                <button class="btn" type="button" data-lesson-prev>Previous</button>
+                <button class="btn" type="button" data-lesson-next>Next</button>
+            </div>
+        </footer>
     </div>
+
+    <script src="{{ url_for('static', filename='lesson_pager.js') }}"></script>
     
     <script>
         // Chemistry-specific defaults
@@ -462,6 +576,11 @@
         
         // Initialize
         updateCellInfo();
+
+        window.LessonPager && window.LessonPager.init({
+            doneUrl: "{{ url_for('education.learn_index', hub=1) }}",
+            doneLabel: "Back to Topics"
+        });
     </script>
 </body>
 </html>
