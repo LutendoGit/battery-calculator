@@ -217,47 +217,41 @@ def _connect() -> sqlite3.Connection:
     conn.execute("PRAGMA foreign_keys=ON;")
     conn.execute("PRAGMA busy_timeout=5000;")
     return conn
+    
 def record_event(event_type: str, *, user_id: Optional[int] = None, payload: Optional[dict[str, Any]] = None) -> None:
-    """Append an event for monitoring/auditing.
-
-    Keep payload small; it is stored as JSON text.
-    """
     event_type = (event_type or "").strip()
     if not event_type:
         return
 
     safe_payload = payload or {}
-    normalized_user_id: Optional[int]
+
     try:
         normalized_user_id = int(user_id) if user_id is not None else None
     except Exception:
-        nrmalized_user_id = None
-        
-        
+        normalized_user_id = None
+
     with _connect() as conn:
-       try:
+        try:
             conn.execute(
-                    "INSERT INTO user_events (user_id, type, payload, created_at) VALUES (?, ?, ?, ?)",
-            (
-                #(int(user_id) if user_id is not None else None),
-                normalized_user_id,
-                event_type,
-                json.dumps(safe_payload, separators=(",", ":"), ensure_ascii=False),
-                _utc_now_iso(),
-            ),
-        )
-       except sqlite3.IntegrityError:
-           conn.execute( "INSERT INTO user_events(user_id,type,payload,created_at) VALUES (?,?,?,?),
-                        ( 
-                            None,
-                            event_type,
-                            json.dumps(safe_payload,separator=(",", ":"), ensure_ascii =False),
-                                                                            _utc_now_iso(),
-                        ),
-
-                       )
-       conn.commit()
-
+                "INSERT INTO user_events (user_id, type, payload, created_at) VALUES (?, ?, ?, ?)",
+                (
+                    normalized_user_id,
+                    event_type,
+                    json.dumps(safe_payload, separators=(",", ":"), ensure_ascii=False),
+                    _utc_now_iso(),
+                ),
+            )
+        except sqlite3.IntegrityError:
+            conn.execute(
+                "INSERT INTO user_events (user_id, type, payload, created_at) VALUES (?, ?, ?, ?)",
+                (
+                    None,
+                    event_type,
+                    json.dumps(safe_payload, separators=(",", ":"), ensure_ascii=False),
+                    _utc_now_iso(),
+                ),
+            )
+        conn.commit()
 
 def get_events_since(after_id: int, *, limit: int = 200) -> list[dict[str, Any]]:
     """Fetch events with id > after_id."""
