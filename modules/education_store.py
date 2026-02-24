@@ -23,7 +23,7 @@ import os
 import secrets
 import sqlite3
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone 
 from typing import Any, Iterable, Optional
 import json
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -227,17 +227,36 @@ def record_event(event_type: str, *, user_id: Optional[int] = None, payload: Opt
         return
 
     safe_payload = payload or {}
+    normalized_user_id: Optional[int]
+    try:
+        normalized_user_id = int(user_id) if user_id is not None else None
+    except Exception:
+        nrmalized_user_id = None
+        
+        
     with _connect() as conn:
-        conn.execute(
-            "INSERT INTO user_events (user_id, type, payload, created_at) VALUES (?, ?, ?, ?)",
+       try:
+            conn.execute(
+                    "INSERT INTO user_events (user_id, type, payload, created_at) VALUES (?, ?, ?, ?)",
             (
-                (int(user_id) if user_id is not None else None),
+                #(int(user_id) if user_id is not None else None),
+                normalized_user_id,
                 event_type,
                 json.dumps(safe_payload, separators=(",", ":"), ensure_ascii=False),
                 _utc_now_iso(),
             ),
         )
-        conn.commit()
+       except sqlite3.IntegrityError:
+           conn.execute( "INSERT INTO user_events(user_id,type,payload,created_at) VALUES (?,?,?,?),
+                        ( 
+                            None,
+                            event_type,
+                            json.dumps(safe_payload,separator=(",", ":"), ensure_ascii =False),
+                                                                            _utc_now_iso(),
+                        ),
+
+                       )
+       conn.commit()
 
 
 def get_events_since(after_id: int, *, limit: int = 200) -> list[dict[str, Any]]:
