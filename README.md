@@ -82,6 +82,12 @@ git push -u origin main
 3. Add environment variables (important):
 	- `SECRET_KEY` — set to a secure random string (do NOT use `'dev'` in production).
 
+You can generate a key locally (PowerShell):
+
+```powershell
+python -c "import secrets; print(secrets.token_urlsafe(32))"
+```
+
 Render will provide a stable public URL (e.g., `https://your-app.onrender.com`).
 
 ### Other hosts
