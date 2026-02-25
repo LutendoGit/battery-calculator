@@ -23,7 +23,8 @@ import os
 import secrets
 import sqlite3
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone 
+from datetime import datetime, timedelta, timezone
+from email.utils import parseaddr
 from typing import Any, Iterable, Optional
 import json
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -122,6 +123,7 @@ def ensure_db() -> None:
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT NOT NULL UNIQUE,
+                email TEXT,
                 password_hash TEXT NOT NULL,
                 created_at TEXT NOT NULL,
                 avatar_filename TEXT
@@ -129,20 +131,7 @@ def ensure_db() -> None:
             """
         )
 
-         conn.execute(
-            """
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NOT NULL UNIQUE,
-                password_hash TEXT NOT NULL,
-                created_at TEXT NOT NULL,
-                avatar_filename TEXT,
-                email TEXT
-            )
-            """
-        )
-
-        # Migration for older DBs:
+        # Migration: older DBs won't have newer columns.
         try:
             cols = [r[1] for r in conn.execute("PRAGMA table_info(users)").fetchall()]
             if "avatar_filename" not in cols:
@@ -150,24 +139,18 @@ def ensure_db() -> None:
             if "email" not in cols:
                 conn.execute("ALTER TABLE users ADD COLUMN email TEXT")
         except Exception:
+            # Best-effort migration; schema issues should not crash app startup.
             pass
 
-        # Enforce email uniqueness (case-insensitive), but allow NULLs.
-        conn.execute(
-            """
-            CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email_unique
-            ON users(lower(email))
-            WHERE email IS NOT NULL
-            """
-        )
-
-        # Migration: older DBs won't have avatar_filename.
+        # Best-effort: case-insensitive unique email addresses (allows multiple NULLs).
         try:
-            cols = [r[1] for r in conn.execute("PRAGMA table_info(users)").fetchall()]
-            if "avatar_filename" not in cols:
-                conn.execute("ALTER TABLE users ADD COLUMN avatar_filename TEXT")
+            conn.execute(
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email_unique "
+                "ON users(lower(email)) WHERE email IS NOT NULL"
+            )
         except Exception:
-            # Best-effort migration; schema issues should not crash app startup.
+            # If existing DB has duplicate emails, index creation can fail.
+            # Keep going; runtime validation will still attempt to prevent duplicates.
             pass
 
         # `password_resets`: one-time reset tokens (stored as hashes).
@@ -324,7 +307,30 @@ class User:
     """
     id: int
     username: str
+    email: Optional[str] = None
     avatar_filename: Optional[str] = None
+
+
+def _normalize_email(email: str) -> str:
+    email = (email or "").strip().lower()
+    return email
+
+
+def _is_valid_email(email: str) -> bool:
+    """Very small email validation.
+
+    We only need something user-friendly for this app. Strict RFC email
+    validation is intentionally out of scope.
+    """
+    if not email:
+        return False
+    _, addr = parseaddr(email)
+    if not addr or "@" not in addr:
+        return False
+    local, domain = addr.rsplit("@", 1)
+    if not local or not domain or "." not in domain:
+        return False
+    return True
 
 
 def get_user_by_username(username: str) -> Optional[User]:
@@ -337,7 +343,7 @@ def get_user_by_username(username: str) -> Optional[User]:
         return None
     with _connect() as conn:
         row = conn.execute(
-            "SELECT id, username, avatar_filename FROM users WHERE username = ?",
+            "SELECT id, username, email, avatar_filename FROM users WHERE username = ?",
             (username,),
         ).fetchone()
     if not row:
@@ -345,11 +351,18 @@ def get_user_by_username(username: str) -> Optional[User]:
     return User(
         id=int(row["id"]),
         username=str(row["username"]),
+        email=(str(row["email"]).strip() if row["email"] else None),
         avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
     )
 
 
-def create_user(username: str, password: str, *, avatar_filename: Optional[str] = None) -> User:
+def create_user(
+    username: str,
+    password: str,
+    *,
+    email: str | None = None,
+    avatar_filename: Optional[str] = None,
+) -> User:
     """Create a new user account.
 
     Validation rules are kept simple to match the educational use case.
@@ -364,22 +377,50 @@ def create_user(username: str, password: str, *, avatar_filename: Optional[str] 
     if not password or len(password) < 6:
         raise ValueError("Password must be at least 6 characters")
 
+    email_norm = _normalize_email(email or "")
+    if not email_norm:
+        raise ValueError("Email is required")
+    if not _is_valid_email(email_norm):
+        raise ValueError("Please enter a valid email address")
+
     # Store a salted hash (never the raw password).
     password_hash = generate_password_hash(password)
 
     with _connect() as conn:
+        # Friendlier validation errors than relying on sqlite's IntegrityError.
+        existing = conn.execute(
+            "SELECT username, email FROM users WHERE username = ? OR email = ?",
+            (username, email_norm),
+        ).fetchall()
+        for r in existing:
+            if str(r["username"]) == username:
+                raise ValueError("Username already exists")
+            if r["email"] and str(r["email"]).strip().lower() == email_norm:
+                raise ValueError("Email already exists")
+
         try:
             cur = conn.execute(
-                "INSERT INTO users (username, password_hash, created_at, avatar_filename) VALUES (?, ?, ?, ?)",
-                (username, password_hash, _utc_now_iso(), (str(avatar_filename) if avatar_filename else None)),
+                "INSERT INTO users (username, email, password_hash, created_at, avatar_filename) VALUES (?, ?, ?, ?, ?)",
+                (
+                    username,
+                    email_norm,
+                    password_hash,
+                    _utc_now_iso(),
+                    (str(avatar_filename) if avatar_filename else None),
+                ),
             )
         except sqlite3.IntegrityError as e:
-            # The UNIQUE constraint on username triggers this.
-            raise ValueError("Username already exists") from e
+            # Covers UNIQUE(username) and (if present) unique email index.
+            raise ValueError("Account already exists") from e
         user_id = int(cur.lastrowid)
         conn.commit()
 
-    return User(id=user_id, username=username, avatar_filename=(str(avatar_filename) if avatar_filename else None))
+    return User(
+        id=user_id,
+        username=username,
+        email=email_norm,
+        avatar_filename=(str(avatar_filename) if avatar_filename else None),
+    )
 
 
 def authenticate_user(username: str, password: str) -> Optional[User]:
@@ -390,7 +431,7 @@ def authenticate_user(username: str, password: str) -> Optional[User]:
 
     with _connect() as conn:
         row = conn.execute(
-            "SELECT id, username, password_hash, avatar_filename FROM users WHERE username = ?",
+            "SELECT id, username, email, password_hash, avatar_filename FROM users WHERE username = ?",
             (username,),
         ).fetchone()
 
@@ -404,6 +445,7 @@ def authenticate_user(username: str, password: str) -> Optional[User]:
     user = User(
         id=int(row["id"]),
         username=str(row["username"]),
+        email=(str(row["email"]).strip() if row["email"] else None),
         avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
     )
     # Log successful auth for live monitoring.
@@ -539,7 +581,7 @@ def get_user(user_id: int) -> Optional[User]:
     """Look up a user by numeric id."""
     with _connect() as conn:
         row = conn.execute(
-            "SELECT id, username, avatar_filename FROM users WHERE id = ?",
+            "SELECT id, username, email, avatar_filename FROM users WHERE id = ?",
             (int(user_id),),
         ).fetchone()
     if not row:
@@ -547,7 +589,8 @@ def get_user(user_id: int) -> Optional[User]:
     return User(
         id=int(row["id"]),
         username=str(row["username"]),
-        avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
+        email=(str(row["email"]).strip() if row["email"] else None),
+         avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
     )
 
 

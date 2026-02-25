@@ -13,9 +13,12 @@ from datetime import datetime
 from functools import wraps
 from io import BytesIO
 import csv
+from email.message import EmailMessage
 import os
 import secrets
 import sqlite3
+import ssl
+import smtplib
 import uuid
 
 
@@ -56,6 +59,55 @@ from modules.interactive_tools import (
 )
 
 education_bp = Blueprint('education', __name__, url_prefix='/learn')
+
+
+def _smtp_configured() -> bool:
+    return bool(os.environ.get("SMTP_USERNAME") and os.environ.get("SMTP_PASSWORD"))
+
+
+def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
+    """Send a password reset email using SMTP settings from env vars.
+
+    Env vars:
+    - SMTP_HOST (default: smtp.gmail.com)
+    - SMTP_PORT (default: 587)
+    - SMTP_USERNAME (required)
+    - SMTP_PASSWORD (required)  # Gmail app password
+    - SMTP_FROM (default: SMTP_USERNAME)
+    - SMTP_STARTTLS (default: 1)
+    """
+    host = (os.environ.get("SMTP_HOST", "smtp.gmail.com") or "smtp.gmail.com").strip() or "smtp.gmail.com"
+    port = int((os.environ.get("SMTP_PORT", "587") or "587").strip())
+    username = (os.environ.get("SMTP_USERNAME") or "").strip()
+    # Gmail app passwords are often displayed/pasted with spaces: "xxxx xxxx xxxx xxxx".
+    # Remove whitespace so SMTP auth works even if the user includes spaces.
+    password = "".join((os.environ.get("SMTP_PASSWORD") or "").split())
+    from_addr = (os.environ.get("SMTP_FROM") or username).strip()
+    use_starttls = (os.environ.get("SMTP_STARTTLS", "1").strip().lower() not in {"0", "false", "no"})
+
+    if not username or not password:
+        raise RuntimeError("SMTP_USERNAME and SMTP_PASSWORD must be set")
+    if not from_addr:
+        raise RuntimeError("SMTP_FROM must be set (or SMTP_USERNAME must be non-empty)")
+
+    msg = EmailMessage()
+    msg["Subject"] = "Password reset"
+    msg["From"] = from_addr
+    msg["To"] = to_email
+    msg.set_content(
+        "We received a request to reset your password.\n\n"
+        f"Reset link: {reset_url}\n\n"
+        "If you did not request this, you can ignore this email.\n"
+    )
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP(host, port, timeout=15) as smtp:
+        smtp.ehlo()
+        if use_starttls:
+            smtp.starttls(context=context)
+            smtp.ehlo()
+        smtp.login(username, password)
+        smtp.send_message(msg)
 
 
 def _project_root() -> str:
@@ -413,7 +465,11 @@ def login():
 def register():
     if request.method == "POST":
         try:
-            user = create_user(username=request.form.get("username", ""), password=request.form.get("password", ""))
+            user = create_user(
+                username=request.form.get("username", ""),
+                email=request.form.get("email", ""),
+                password=request.form.get("password", ""),
+            )
 
             # Optional avatar upload.
             avatar_file = request.files.get("avatar")
@@ -474,8 +530,8 @@ def update_avatar():
 def forgot_password():
     """Start password reset.
 
-    For this demo app, we can optionally display the reset link directly after POST.
-    In production, you would email the reset link instead.
+    If SMTP is configured, we email the reset link to the user's registered email.
+    In development, you can optionally display the reset link directly.
     """
     reset_url = None
     if request.method == "POST":
@@ -483,11 +539,62 @@ def forgot_password():
         token = create_password_reset(username)
 
         # Avoid account enumeration: always show the same message.
-        flash("If that account exists, a password reset link has been generated.", "info")
+        flash("If that account exists, a password reset link will be sent.", "info")
 
-        show_link = bool(current_app.config.get("EDU_SHOW_RESET_LINK", current_app.debug))
-        if token and show_link:
-            reset_url = url_for("education.reset_password", token=token, _external=True)
+        emailed_ok = False
+
+        if not token:
+            # Internal diagnostics only (UI remains generic to avoid account enumeration).
+            record_event("password_reset_not_issued", payload={"username": str(username or "")[:80]})
+
+        if token:
+            user = education_store.get_user_by_username(username)
+            email = (user.email if user else None)
+            if (not email) and user and ("@" in str(user.username)):
+                # Backward compatibility: older DBs/users may not have an email field populated,
+                # but many projects used an email address as the username.
+                email = str(user.username).strip()
+                record_event(
+                    "password_reset_email_fallback_username",
+                    user_id=int(user.id),
+                    payload={"username": str(username or "")[:80]},
+                )
+
+            if not email:
+                record_event(
+                    "password_reset_email_missing",
+                    user_id=(user.id if user else None),
+                    payload={"username": str(username or "")[:80]},
+                )
+
+            if email and (not _smtp_configured()):
+                record_event(
+                    "password_reset_smtp_not_configured",
+                    user_id=(user.id if user else None),
+                    payload={"username": str(username or "")[:80]},
+                )
+
+            if email and _smtp_configured():
+                reset_url = url_for("education.reset_password", token=token, _external=True)
+                try:
+                    _send_password_reset_email(to_email=email, reset_url=reset_url)
+                    record_event("password_reset_email_sent", user_id=(user.id if user else None), payload={"username": username})
+                    emailed_ok = True
+                except Exception as e:
+                    record_event(
+                        "password_reset_email_failed",
+                        user_id=(user.id if user else None),
+                        payload={"username": username, "error": str(e)[:300]},
+                    )
+                    emailed_ok = False
+
+            if emailed_ok:
+                reset_url = None  # do not display link in UI when successfully emailed
+
+            show_link = bool(current_app.config.get("EDU_SHOW_RESET_LINK", current_app.debug))
+            if show_link and (not emailed_ok):
+                # If SMTP is not configured or email send failed, show link in dev.
+                reset_url = url_for("education.reset_password", token=token, _external=True)
 
     return render_template("education/forgot_password.html", reset_url=reset_url)
 

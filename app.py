@@ -20,7 +20,9 @@ from modules import education_store
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'dev'
+# Never hard-code production secrets. On Render (and other hosts), set SECRET_KEY
+# as an environment variable. Local dev can fall back to "dev".
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev")
 # Ensure template changes reflect immediately during development, even when
 # running via `flask run` (where the __main__ debug flag below is not used).
 app.config.setdefault('TEMPLATES_AUTO_RELOAD', True)
@@ -437,6 +439,31 @@ if __name__ == '__main__':
     logging.getLogger('werkzeug').setLevel(logging.WARNING)
     app.logger.setLevel(logging.INFO)
 
+    def _mask_email(addr: str) -> str:
+        addr = (addr or "").strip()
+        if not addr or "@" not in addr:
+            return ""
+        local, domain = addr.split("@", 1)
+        if len(local) <= 2:
+            return f"{local[0:1]}***@{domain}"
+        return f"{local[0:2]}***@{domain}"
+
+    def _log_smtp_status() -> None:
+        smtp_user = (os.environ.get("SMTP_USERNAME") or "").strip()
+        smtp_pass = "".join((os.environ.get("SMTP_PASSWORD") or "").split())
+        smtp_from = (os.environ.get("SMTP_FROM") or "").strip() or smtp_user
+        smtp_host = (os.environ.get("SMTP_HOST") or "smtp.gmail.com").strip() or "smtp.gmail.com"
+        smtp_port = (os.environ.get("SMTP_PORT") or "587").strip() or "587"
+        enabled = bool(smtp_user and smtp_pass)
+        app.logger.info(
+            "SMTP enabled=%s host=%s port=%s user=%s from=%s",
+            enabled,
+            smtp_host,
+            smtp_port,
+            _mask_email(smtp_user),
+            _mask_email(smtp_from),
+        )
+
     url = f'http://{host}:{port}/'
 
     # Only open a browser once: when not running under the reloader parent.
@@ -444,6 +471,7 @@ if __name__ == '__main__':
     # reloader child sets WERKZEUG_RUN_MAIN='true'. Open browser in the child
     # (or when debug is False).
     if (not debug) or (os.environ.get('WERKZEUG_RUN_MAIN') == 'true'):
+        _log_smtp_status()
         try:
             webbrowser.open(url)
         except Exception:

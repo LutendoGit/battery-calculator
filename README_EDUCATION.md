@@ -115,6 +115,27 @@ app.register_blueprint(education_bp)
 - Registered/logged-in users unlock: all lessons, interactive tools, quizzes, progress tracking, and certificates.
 - Direct navigation to locked routes redirects to `/learn/login?next=...`.
 
+## 🔁 Password Resets (Email)
+
+- Registration now requires an email address (used for password reset).
+- `/learn/forgot-password` asks for username, then emails a one-time reset link to the email stored on that account.
+
+### Gmail SMTP (App Password)
+
+Set these environment variables before running the app (or in your host dashboard like Render/Heroku):
+
+```powershell
+$env:SMTP_HOST = "smtp.gmail.com"
+$env:SMTP_PORT = "587"
+$env:SMTP_USERNAME = "youraccount@gmail.com"
+$env:SMTP_PASSWORD = "your16charapppassword"    # Gmail app password (spaces ok too)
+$env:SMTP_FROM = "youraccount@gmail.com"        # optional
+```
+
+Notes:
+- Use a Gmail **App Password** (requires 2FA on the Google account). Do not use your normal Gmail password.
+- In development, the app may still show the reset link on-screen if `EDU_SHOW_RESET_LINK` is enabled in Flask config.
+
 ```
 Learning Hub:
   /learn/fundamentals      - Good/bad cells, pack imbalance
