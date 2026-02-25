@@ -129,6 +129,38 @@ def ensure_db() -> None:
             """
         )
 
+         conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL UNIQUE,
+                password_hash TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                avatar_filename TEXT,
+                email TEXT
+            )
+            """
+        )
+
+        # Migration for older DBs:
+        try:
+            cols = [r[1] for r in conn.execute("PRAGMA table_info(users)").fetchall()]
+            if "avatar_filename" not in cols:
+                conn.execute("ALTER TABLE users ADD COLUMN avatar_filename TEXT")
+            if "email" not in cols:
+                conn.execute("ALTER TABLE users ADD COLUMN email TEXT")
+        except Exception:
+            pass
+
+        # Enforce email uniqueness (case-insensitive), but allow NULLs.
+        conn.execute(
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email_unique
+            ON users(lower(email))
+            WHERE email IS NOT NULL
+            """
+        )
+
         # Migration: older DBs won't have avatar_filename.
         try:
             cols = [r[1] for r in conn.execute("PRAGMA table_info(users)").fetchall()]
