@@ -31,6 +31,43 @@ app.jinja_env.auto_reload = True
 app.config.setdefault('SEND_FILE_MAX_AGE_DEFAULT', 0)
 
 
+def _maintenance_enabled() -> bool:
+    """Return True when the app should serve a maintenance page."""
+    return (os.environ.get("MAINTENANCE_MODE", "").strip().lower() in {"1", "true", "yes", "on"})
+
+
+def _maintenance_response() -> Response:
+    """Build a 503 Maintenance response.
+
+    Optional env vars:
+    - MAINTENANCE_RETRY_AFTER: value for HTTP Retry-After header (seconds or HTTP-date)
+    """
+    html = render_template("maintenance.html")
+    resp = Response(html, status=503)
+    resp.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    resp.headers["Pragma"] = "no-cache"
+    resp.headers["Expires"] = "0"
+    retry_after = (os.environ.get("MAINTENANCE_RETRY_AFTER") or "").strip()
+    if retry_after:
+        resp.headers["Retry-After"] = retry_after
+    return resp
+
+
+@app.before_request
+def _maintenance_gate():
+    if not _maintenance_enabled():
+        return None
+    # Allow the maintenance page itself and static assets needed to render it.
+    if request.endpoint in {"maintenance", "static"}:
+        return None
+    return _maintenance_response()
+
+
+@app.get("/maintenance")
+def maintenance():
+    return _maintenance_response()
+
+
 @app.after_request
 def _disable_client_caching_in_debug(response):
     if app.debug:
