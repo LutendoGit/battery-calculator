@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capacity & DOD - Lithium Battery Education</title>
+    {% include '_favicon.html' %}
     <style>
         * {
             margin: 0;
@@ -249,7 +250,7 @@
             width: 32px;
             height: 32px;
             border-radius: 999px;
-            border: 1px solid rgba(0,0,0,0.08);
+            border: none;
             background: rgba(102, 126, 234, 0.12);
             display: inline-flex;
             align-items: center;
@@ -266,6 +267,8 @@
             object-fit: cover;
             display: block;
         }
+
+        {% include '_site_footer_styles.html' %}
     </style>
 </head>
 <body>
@@ -452,6 +455,8 @@
         </footer>
     </div>
     
+    {% include '_site_footer.html' %}
+
     <script src="{{ url_for('static', filename='lesson_pager.js') }}"></script>
     <script>
         // Update DOD display

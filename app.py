@@ -75,6 +75,8 @@ def _disable_client_caching_in_debug(response):
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
     return response
+
+
 # Register the education blueprint only if explicitly enabled via env var.
 # Keeps the app focused on the Battery Design calculator by default.
 app.register_blueprint(education_bp)

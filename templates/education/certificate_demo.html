@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Demo Certificate — Review Poll</title>
+    {% include '_favicon.html' %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <style>
       body {
@@ -100,7 +101,7 @@
             {% endfor %}
           </ul>
           <div class="muted mb-2">Assessments attempted:</div>
-          <div><strong>{{ quiz_count }}</strong></div>
+          <div><strong>{{ total_attempts }} (Rating: {{ attempt_rating }})</strong></div>
           <div class="muted mb-2 mt-2">Overall Assessments score (avg of attempted Assessments):</div>
           <div><strong>{{ '%.0f'|format(overall_pct) }}%</strong></div>
         </div>

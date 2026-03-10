@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/jpeg" href="/static/images/static/images/OIP.jpg">
     <title>Battery Glossary - Lithium Battery Education</title>
+    {% include '_favicon.html' %}
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -143,7 +143,7 @@
             width: 32px;
             height: 32px;
             border-radius: 999px;
-            border: 1px solid rgba(0,0,0,0.08);
+            border: none;
             background: rgba(102, 126, 234, 0.12);
             display: inline-flex;
             align-items: center;
@@ -159,6 +159,47 @@
             height: 100%;
             object-fit: cover;
             display: block;
+        }
+
+        .site-footer {
+            width: 100%;
+            margin-top: 30px;
+            background: transparent;
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            padding: 28px 20px 20px;
+            font-size: 0.85em;
+            line-height: 1.6;
+        }
+
+        .site-footer .footer-brand {
+            font-weight: 700;
+            font-size: 1.05em;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .site-footer-links {
+            margin-top: 6px;
+        }
+
+        .site-footer a,
+        .site-footer-link {
+            color: rgba(255,255,255,0.95);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .site-footer a:hover,
+        .site-footer-link:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .site-footer-copy {
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.6);
         }
     </style>
 </head>
@@ -209,10 +250,13 @@
                     <h2 style="color: #667eea; margin-bottom: 15px;">📚 Continue Learning</h2>
                     <div class="nav-links">
                         <a href="/learn/fundamentals">Fundamentals</a>
-                        <a href="/learn/chemistry">Chemistry</a>
+                        <!--<a href="/learn/chemistry">Chemistry</a>
                         <a href="/learn/capacity-dod">Capacity & DOD</a>
                         <a href="/learn/crate">C-Rates</a>
-                        <a href="/learn/cycles-aging">Cycles & Aging</a>
+                        <a href="/learn/cycles-aging">Cycles & Aging</a>-->
+                        <a href="/learn/fundamentals/module-2">Electrical Fundamentals</a>
+                        <a href="/learn/quiz?start=capacity-dod">Module 1 Quiz</a>
+                        <a href="/learn/quiz?start=module-2-assessment">Module 2 Quiz</a>
                         <a href="/learn/cell-simulator">Simulators</a>
                     </div>
                 </div>
@@ -227,6 +271,8 @@
             </div>
         </footer>
     </div>
+
+    {% include '_site_footer.html' %}
 
     <script src="{{ url_for('static', filename='lesson_pager.js') }}"></script>
     

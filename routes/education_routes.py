@@ -38,6 +38,7 @@ from modules.education_store import (
     create_password_reset,
     get_completed_items,
     get_quiz_best,
+    get_total_quiz_attempts,
     get_user,
     mark_progress,
     record_event,
@@ -153,12 +154,16 @@ def _demo_certificate_context() -> dict[str, object]:
     issued_date = datetime.now().strftime("%Y-%m-%d")
     certificate_id = f"DEMO-{datetime.now().strftime('%Y%m%d')}"
     completed_lessons = [{"key": item.key, "title": item.title} for item in _LESSON_ITEMS]
+    total_attempts = 3  # Demo with C rating (>2 attempts)
+    attempt_rating = "C" if total_attempts > 2 else "B" if total_attempts == 2 else "A"
     return {
         "user": {"username": "Demo Reviewer"},
         "issued_date": issued_date,
         "certificate_id": certificate_id,
         "completed_lessons": completed_lessons,
         "quiz_count": 7,
+        "total_attempts": total_attempts,
+        "attempt_rating": attempt_rating,
         "overall_pct": 88.0,
     }
 
@@ -200,21 +205,67 @@ class _NavItem:
 
 _LESSON_ITEMS = [
     _NavItem("lesson:fundamentals", "Fundamentals (Module 1)", "education.fundamentals"),
-    _NavItem("lesson:chemistry", "Battery Chemistry", "education.chemistry"),
-    _NavItem("lesson:capacity-dod", "Capacity & DOD", "education.capacity_dod"),
-    _NavItem("lesson:crate", "C-Rate Explained", "education.crate_learn"),
-    _NavItem("lesson:cycles-aging", "Cycles & Aging", "education.cycles_aging"),
+    _NavItem("lesson:fundamentals-2", "Fundamentals (Module 2)", "education.fundamentals_module2"),
+    # _NavItem("lesson:chemistry", "Battery Chemistry", "education.chemistry"),
+    # _NavItem("lesson:capacity-dod", "Capacity & DOD", "education.capacity_dod"),
+    # _NavItem("lesson:crate", "C-Rate Explained", "education.crate_learn"),
+    # _NavItem("lesson:cycles-aging", "Cycles & Aging", "education.cycles_aging"),
 ]
 
 _QUIZZES = [
-    {"id": "capacity-dod", "title": "Power vs Energy & Backup Sizing Quiz"},
-    {"id": "crate", "title": "AC vs DC & Conversion Quiz"},
-    {"id": "cell-health", "title": "Core System Components Quiz"},
-    {"id": "chemistry", "title": "How Lithium-Ion Works Quiz"},
-    {"id": "cycles-aging", "title": "Key Battery Concepts Quiz"},
-    {"id": "pack-design", "title": "System Types & Energy Flow Quiz"},
-    {"id": "bms-balancing", "title": "Efficiency, Losses & REVOV Fit Quiz"},
+    {"id": "capacity-dod", "title": "Module 1 Assessment Quiz"},
+    {"id": "module-2-assessment", "title": "Module 2 Assessment Quiz"},
 ]
+
+
+_QUIZ_PREREQ_LESSONS: dict[str, str] = {
+    "capacity-dod": "lesson:fundamentals",
+    "module-2-assessment": "lesson:fundamentals-2",
+}
+
+
+_TRACKED_LESSON_STEP_COUNTS: dict[str, int] = {
+    "lesson:fundamentals": len(LithiumBatteryFundamentals.MODULE_1_FUNDAMENTALS.get("sections", [])) + 1,
+    "lesson:fundamentals-2": len(LithiumBatteryFundamentals.MODULE_2_ELECTRICAL_FUNDAMENTALS.get("sections", [])) + 1,
+}
+
+
+_QUIZ_PASS_MARKS: dict[str, int] = {
+    # Module 1 assessment
+    "capacity-dod": 75,
+    "module-2-assessment": 75,
+}
+
+
+def _quiz_pass_mark(quiz_id: str) -> int | None:
+    val = _QUIZ_PASS_MARKS.get(str(quiz_id))
+    try:
+        val_int = int(val) if val is not None else None
+    except Exception:
+        val_int = None
+    if val_int is None:
+        return None
+    return max(0, min(100, val_int))
+
+
+def _lesson_step_progress_key(lesson_key: str, step_number: int) -> str:
+    return f"{lesson_key}:step:{int(step_number)}"
+
+
+def _is_lesson_complete(completed_items: set[str], lesson_key: str) -> bool:
+    lesson_key = str(lesson_key or "").strip()
+    if not lesson_key:
+        return False
+
+    required_steps = _TRACKED_LESSON_STEP_COUNTS.get(lesson_key)
+    if not required_steps:
+        return lesson_key in completed_items
+
+    return all(_lesson_step_progress_key(lesson_key, step_number) in completed_items for step_number in range(1, required_steps + 1))
+
+
+def _completed_active_lessons(completed_items: set[str]) -> set[str]:
+    return {item.key for item in _LESSON_ITEMS if _is_lesson_complete(completed_items, item.key)}
 
 
 def _quiz_order_ids() -> list[str]:
@@ -222,29 +273,20 @@ def _quiz_order_ids() -> list[str]:
 
 
 def _quiz_unlock_state(user_id: int) -> dict[str, object]:
-    """Return sequential unlock state derived from persisted progress.
-
-    Persistence is stored in SQLite via `mark_progress(user_id, f"quiz:{quiz_id}")`.
-    Unlock is sequential: only the first uncompleted quiz and those before it
-    are unlocked.
-    """
+    """Return lesson-based quiz unlock state derived from persisted progress."""
 
     order = _quiz_order_ids()
     completed_items = get_completed_items(int(user_id))
     completed_quizzes = {k.split("quiz:", 1)[1] for k in completed_items if str(k).startswith("quiz:")}
-
-    unlocked_index = 0
-    for idx in range(len(order) - 1):
-        if order[idx] in completed_quizzes:
-            unlocked_index = idx + 1
-        else:
-            break
-
-    # Ensure at least the first quiz is available.
-    unlocked_index = max(0, min(unlocked_index, max(0, len(order) - 1)))
+    completed_lessons = _completed_active_lessons(completed_items)
+    unlocked = [
+        quiz_id
+        for quiz_id in order
+        if _QUIZ_PREREQ_LESSONS.get(quiz_id) in completed_lessons
+    ]
     return {
         "order": order,
-        "unlocked_index": unlocked_index,
+        "unlocked": unlocked,
         "completed": sorted([qid for qid in completed_quizzes if qid in order]),
     }
 
@@ -299,10 +341,9 @@ def _require_quiz_unlocked(user_id: int, quiz_id: str):
         return jsonify({"error": "unknown_quiz"}), 404
 
     state = _quiz_unlock_state(int(user_id))
-    unlocked_index = int(state["unlocked_index"])
-    quiz_idx = order.index(quiz_id)
-    if quiz_idx > unlocked_index:
-        return jsonify({"error": "locked", "unlocked_index": unlocked_index, "quiz_index": quiz_idx}), 403
+    unlocked = set(state.get("unlocked") or [])
+    if quiz_id not in unlocked:
+        return jsonify({"error": "locked", "quiz_id": quiz_id}), 403
     return None
 
 
@@ -394,8 +435,9 @@ def api_login_required(fn=None, *, message: str = "login_required"):
 
 
 def _is_certificate_eligible(user_id: int) -> bool:
-    completed = get_completed_items(user_id)
-    has_required_lessons = all(item.key in completed for item in _LESSON_ITEMS)
+    completed_items = get_completed_items(user_id)
+    completed_lessons = _completed_active_lessons(completed_items)
+    has_required_lessons = all(item.key in completed_lessons for item in _LESSON_ITEMS)
 
     # Overall quiz score is defined as:
     #   overall_pct = (avg of each attempted quiz pct) * 100
@@ -548,7 +590,7 @@ def forgot_password():
             record_event("password_reset_not_issued", payload={"username": str(username or "")[:80]})
 
         if token:
-            user = education_store.get_user_by_username(username)
+            user = education_store.get_user_by_identifier(username)
             email = (user.email if user else None)
             if (not email) and user and ("@" in str(user.username)):
                 # Backward compatibility: older DBs/users may not have an email field populated,
@@ -652,7 +694,8 @@ def progress():
     # until the user has actually navigated to the dashboard at least once.
     session["edu_seen_dashboard"] = True
 
-    completed = get_completed_items(user.id)
+    completed_items = get_completed_items(user.id)
+    completed_lessons = _completed_active_lessons(completed_items)
     quiz_best = get_quiz_best(user.id)
     overall_pct = _overall_quiz_percentage(user.id)
     eligible = _is_certificate_eligible(user.id)
@@ -667,7 +710,7 @@ def progress():
         for item in _LESSON_ITEMS
     ]
 
-    lessons_completed_count = sum(1 for item in _LESSON_ITEMS if item.key in completed)
+    lessons_completed_count = sum(1 for item in _LESSON_ITEMS if item.key in completed_lessons)
     quizzes_completed_count = len(unlock_state.get("completed") or [])
 
     # Always start/continue users at Module 1 (Fundamentals).
@@ -677,7 +720,7 @@ def progress():
         "education/progress.html",
         user=user,
         lesson_items=lesson_items,
-        completed=completed,
+        completed=completed_lessons,
         quizzes=_QUIZZES,
         quiz_best=quiz_best,
         overall_pct=overall_pct,
@@ -706,8 +749,69 @@ def api_quiz_complete():
         return jsonify({"error": "quiz_id_required"}), 400
 
     record_quiz_attempt(user.id, quiz_id, score, total)
-    mark_progress(user.id, f"quiz:{quiz_id}")
-    return jsonify({"ok": True})
+
+    required = _quiz_pass_mark(quiz_id)
+    passed = True
+    pct: float | None = None
+    if required is not None:
+        if total <= 0:
+            passed = False
+        else:
+            pct = (float(score) / float(total)) * 100.0
+            passed = pct >= float(required)
+
+    if passed:
+        mark_progress(user.id, f"quiz:{quiz_id}")
+    return jsonify({"ok": True, "passed": passed, "required_pct": required, "pct": pct})
+
+
+@education_bp.route("/api/progress/lesson-step", methods=["POST"])
+@api_login_required
+def api_lesson_step_progress():
+    user = _current_user()
+    if not user:
+        return jsonify({"error": "login_required"}), 401
+
+    data = request.get_json(silent=True) or {}
+    lesson_key = str(data.get("lesson_key") or "").strip()
+    expected_steps = _TRACKED_LESSON_STEP_COUNTS.get(lesson_key)
+    if not expected_steps:
+        return jsonify({"error": "unknown_lesson"}), 400
+
+    try:
+        step_number = int(data.get("step"))
+    except Exception:
+        return jsonify({"error": "step_required"}), 400
+
+    try:
+        total_steps = int(data.get("total_steps"))
+    except Exception:
+        total_steps = expected_steps
+
+    if total_steps != expected_steps:
+        return jsonify({"error": "invalid_step_count", "expected": expected_steps}), 400
+
+    if step_number < 1 or step_number > expected_steps:
+        return jsonify({"error": "invalid_step"}), 400
+
+    mark_progress(user.id, _lesson_step_progress_key(lesson_key, step_number))
+    completed_items = get_completed_items(user.id)
+    lesson_complete = _is_lesson_complete(completed_items, lesson_key)
+    if lesson_complete:
+        mark_progress(user.id, lesson_key)
+
+    visited_steps = sum(
+        1 for current_step in range(1, expected_steps + 1)
+        if _lesson_step_progress_key(lesson_key, current_step) in completed_items
+    )
+
+    return jsonify({
+        "ok": True,
+        "lesson_key": lesson_key,
+        "visited_steps": visited_steps,
+        "total_steps": expected_steps,
+        "lesson_complete": lesson_complete,
+    })
 
 
 @education_bp.route("/certificate")
@@ -723,9 +827,18 @@ def certificate():
 
     completed = get_completed_items(user.id)
     quiz_best = get_quiz_best(user.id)
+    total_attempts = get_total_quiz_attempts(user.id)
     overall_pct = _overall_quiz_percentage(user.id)
     issued_date = datetime.now().strftime("%Y-%m-%d")
     certificate_id = f"EDU-{user.id}-{datetime.now().strftime('%Y%m%d')}"
+
+    # Calculate letter grade based on total quiz attempts
+    if total_attempts == 1:
+        attempt_rating = "A"
+    elif total_attempts == 2:
+        attempt_rating = "B"
+    else:  # > 2 attempts
+        attempt_rating = "C"
 
     completed_lessons = [
         {"key": item.key, "title": item.title}
@@ -740,6 +853,8 @@ def certificate():
         certificate_id=certificate_id,
         completed_lessons=completed_lessons,
         quiz_count=len(quiz_best),
+        total_attempts=total_attempts,
+        attempt_rating=attempt_rating,
         overall_pct=overall_pct,
     )
 
@@ -775,7 +890,7 @@ def certificate_pdf():
 
     c.setFillColorRGB(0.2, 0.2, 0.2)
     c.setFont("Helvetica", 12)
-    c.drawCentredString(width / 2, height - 2.45 * inch, "Lithium Battery Educational Platform")
+    c.drawCentredString(width / 2, height - 2.45 * inch, " Revov WattWorks Foundation Installer Training ")
 
     # Body
     c.setFont("Helvetica", 12)
@@ -1257,54 +1372,113 @@ def admin_db_quiz_failures():
 @education_bp.route('/fundamentals')
 def fundamentals():
     """Main fundamentals page"""
-    _track("lesson:fundamentals")
     content = LithiumBatteryFundamentals.MODULE_1_FUNDAMENTALS
-    return render_template('education/fundamentals.html', content=content)
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Next steps",
+        "paragraphs": [
+            "You’ve reached the end of Module 1 Fundamentals.",
+        ],
+        "links": [
+            {
+                "url": url_for("education.quiz_index", start="capacity-dod"),
+                "label": "Take Module 1 Quiz",
+            },
+            {
+                "url": url_for("education.fundamentals_module2"),
+                "label": "Start Module 2 (Electrical Fundamentals)",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals",
+    )
+
+
+@education_bp.route('/fundamentals/module-2')
+def fundamentals_module2():
+    """Fundamentals Module 2: Electrical Fundamentals"""
+    content = LithiumBatteryFundamentals.MODULE_2_ELECTRICAL_FUNDAMENTALS
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Continue to Module 2 Assessment Quiz (Electrical Fundamentals)",
+        "paragraphs": [
+            "You’ve reached the end of Module 2 (Electrical Fundamentals).",
+        ],
+        "links": [
+            {
+                "url": url_for("education.quiz_index", start="module-2-assessment"),
+                "label": "Take Module 2 Quiz",
+            },
+            {
+                "url": url_for("education.learn_index", hub=1),
+                "label": "Back to Training Hub",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals-2",
+    )
 
 
 @education_bp.route('/chemistry')
 @login_required(message="Please log in to access this lesson.")
 def chemistry():
-    """Learn about battery chemistries"""
-    _track("lesson:chemistry")
-    chemistries = {}
-    for chem in CellChemistry:
-        chemistries[chem.value] = LithiumBatteryFundamentals.CHEMISTRY_PROPERTIES[chem]
-    
-    return render_template('education/chemistry.html', chemistries=chemistries)
+    """Deactivated lesson route."""
+    # _track("lesson:chemistry")
+    # chemistries = {}
+    # for chem in CellChemistry:
+    #     chemistries[chem.value] = LithiumBatteryFundamentals.CHEMISTRY_PROPERTIES[chem]
+    # return render_template('education/chemistry.html', chemistries=chemistries)
+    flash("Battery Chemistry is currently inactive in the training flow.", "warning")
+    return redirect(url_for("education.learn_index", hub=1))
 
 
 @education_bp.route('/capacity-dod')
 @login_required(message="Please log in to access this lesson.")
 def capacity_dod():
-    """Learn about capacity and DOD"""
-    _track("lesson:capacity-dod")
-    content = {
-        "capacity": CapacityAndDOD.capacity_explanation(),
-        "dod": CapacityAndDOD.dod_explanation()
-    }
-    return render_template('education/capacity_dod.html', content=content)
+    """Deactivated lesson route."""
+    # _track("lesson:capacity-dod")
+    # content = {
+    #     "capacity": CapacityAndDOD.capacity_explanation(),
+    #     "dod": CapacityAndDOD.dod_explanation()
+    # }
+    # return render_template('education/capacity_dod.html', content=content)
+    flash("Capacity & DOD is currently inactive in the training flow.", "warning")
+    return redirect(url_for("education.learn_index", hub=1))
 
 
 @education_bp.route('/crate')
 @login_required(message="Please log in to access this lesson.")
 def crate_learn():
-    """Learn about C-rates"""
-    _track("lesson:crate")
-    content = CRate.crate_explanation()
-    return render_template('education/crate.html', content=content)
+    """Deactivated lesson route."""
+    # _track("lesson:crate")
+    # content = CRate.crate_explanation()
+    # return render_template('education/crate.html', content=content)
+    flash("C-Rate Explained is currently inactive in the training flow.", "warning")
+    return redirect(url_for("education.learn_index", hub=1))
 
 
 @education_bp.route('/cycles-aging')
 @login_required(message="Please log in to access this lesson.")
 def cycles_aging():
-    """Learn about battery cycles and aging"""
-    _track("lesson:cycles-aging")
-    content = {
-        "cycles": BatteryLifeAndCycles.cycle_definition(),
-        "degradation": BatteryLifeAndCycles.degradation_factors()
-    }
-    return render_template('education/cycles_aging.html', content=content)
+    """Deactivated lesson route."""
+    # _track("lesson:cycles-aging")
+    # content = {
+    #     "cycles": BatteryLifeAndCycles.cycle_definition(),
+    #     "degradation": BatteryLifeAndCycles.degradation_factors()
+    # }
+    # return render_template('education/cycles_aging.html', content=content)
+    flash("Cycles & Aging is currently inactive in the training flow.", "warning")
+    return redirect(url_for("education.learn_index", hub=1))
 
 
 # ============= INTERACTIVE TOOLS ROUTES =============
@@ -1482,16 +1656,24 @@ def api_calculate_pack_voltage():
 @login_required(message="Please log in to take quizzes.")
 def quiz_index():
     """Quiz selection page"""
-    quizzes = [
-        {'id': 'capacity-dod', 'title': 'Power vs Energy & Backup Sizing Quiz'},
-        {'id': 'crate', 'title': 'AC vs DC & Conversion Quiz'},
-        {'id': 'cell-health', 'title': 'Core System Components Quiz'},
-        {'id': 'chemistry', 'title': 'How Lithium-Ion Works Quiz'},
-        {'id': 'cycles-aging', 'title': 'Key Battery Concepts Quiz'},
-        {'id': 'pack-design', 'title': 'System Types & Energy Flow Quiz'},
-        {'id': 'bms-balancing', 'title': 'Efficiency, Losses & REVOV Fit Quiz'}
-    ]
-    return render_template('education/quiz_index.html', quizzes=quizzes)
+    return render_template('education/quiz_index.html', quizzes=_QUIZZES)
+
+
+@education_bp.route('/api/quiz/module-2-assessment')
+@api_login_required
+def api_quiz_module_2_assessment():
+    """API: Get Module 2 assessment quiz."""
+    user = _current_user()
+    if not user:
+        return jsonify({"error": "login_required"}), 401
+    locked = _require_quiz_unlocked(user.id, "module-2-assessment")
+    if locked is not None:
+        return locked
+
+    questions = EducationalQuizzes.quiz_module_2_assessment()
+    resp = jsonify(questions)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
 
 
 @education_bp.route("/api/quiz/unlock-state")
@@ -1514,7 +1696,9 @@ def api_quiz_capacity_dod():
     if locked is not None:
         return locked
     questions = EducationalQuizzes.quiz_capacity_dod()
-    resp = jsonify(_randomize_quiz_questions(questions))
+    # Module 1 Assessment must keep A/B/C/D option order and question order.
+    # Shuffling would break the lettered options.
+    resp = jsonify(questions)
     resp.headers["Cache-Control"] = "no-store"
     return resp
 

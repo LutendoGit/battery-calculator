@@ -129,6 +129,7 @@ class LithiumBatteryFundamentals:
                     },
                     {
                         "heading": "📈 Installer Example",
+                        "variant": "installer-example",
                         "paragraphs": [
                             "A small shop loses ±R2 000 per hour when fridges shut down, card machines go offline, security systems drop etc.",
                             "A properly sized 5 kVA inverter with a 10 kWh REVOV battery keeps essentials running and protects revenue.",
@@ -174,6 +175,7 @@ class LithiumBatteryFundamentals:
                     },
                     {
                         "heading": "📈 Installer Example",
+                        "variant": "installer-example",
                         "paragraphs": [
                             "If a house essential loads average 1 kW and loadshedding lasts 5 hours:",
                         ],
@@ -182,7 +184,10 @@ class LithiumBatteryFundamentals:
                         ],
                         "paragraphs_after": [
                             "But … you should never size a battery for 100% discharge.",
-                            "The recommended practical design is to install 8 – 10 kWh to protect battery lifespan, allow for surge loads, and allow for growth.",
+                            "The recommended practical design is to install 8 – 10 kWh to: ",
+                            "- protect battery lifespan",
+                            "- allow for surge loads",
+                            "- allow for growth",
                         ],
                     },
                     {
@@ -209,6 +214,7 @@ class LithiumBatteryFundamentals:
                 "subsections": [
                     {
                         "heading": "Step 1: Identify Essential Loads (kW)",
+        
                         "bullets": [
                             "Lights = 0.2 kW",
                             "WiFi + Router = 0.05 kW",
@@ -229,13 +235,22 @@ class LithiumBatteryFundamentals:
                         "heading": "Step 3: Calculate the battery size needed",
                         "highlights": [
                             "Battery Size (kWh) = Load (kW) × Hours",
-                            "Example: 1 kW × 4 hours = 4 kWh needed",
                         ],
-                        "paragraphs": [
-                            "But… you should NEVER size a battery for 100% depth of discharge.",
-                        ],
-                        "notes": [
-                            "📘 Safe recommended battery: 8–10 kWh REVOV (longer life + future expansion)",
+                        "subsections": [
+                            {
+                                "heading": "📈 Installer Example",
+                                "variant": "installer-example",
+                                "highlights": [
+                                    "1 kW × 4 hours = 4 kWh needed",
+                                ],
+                                "paragraphs": [
+                                    "But…",
+                                    "You should NEVER size a battery for 100% depth of discharge.",
+                                ],
+                                "notes": [
+                                    "📘 Safe recommended battery: 8–10 kWh REVOV (longer life + future expansion)",
+                                ],
+                            }
                         ],
                     },
                 ],
@@ -266,6 +281,13 @@ class LithiumBatteryFundamentals:
                         ],
                     },
                     {
+                        "heading": "🔌 Homes run on AC",
+                        "paragraphs": [
+                            "🔋 Solar panels and batteries operate in DC",
+                            "This is why the inverter is essential",
+                        ],
+                    },
+                    {
                         "heading": "⚙️ The Inverter’s Role",
                         "paragraphs": [
                             "The inverter:",
@@ -277,8 +299,10 @@ class LithiumBatteryFundamentals:
                         ],
                     },
                     {
-                        "heading": "📐 Basic Flow Diagram",
-                        "preformatted": "☀️ PV (DC)\n↓\n🔋 Battery (DC)\n↓\n⚙️ Inverter (DC ↔ AC)\n↓\n🏠 Loads (AC)\n↔\n⚡ Grid (AC)",
+                        "image": {
+                            "src": "images/Solar + grid integration.png",
+                            "alt": "Solar + grid integration diagram",
+                        },
                     },
                     {
                         "heading": "🛠️ Installer Tip",
@@ -361,6 +385,13 @@ class LithiumBatteryFundamentals:
                             "Integration requires proper switching and safety compliance (SANS 10142-1).",
                         ],
                     },
+
+                    {
+                        "image": {
+                            "src": "images/core-components-of-energy-system.png",
+                            "alt": "Core components of energy system diagram",
+                        },
+                    },
                 ],
                 "notes": [
                     "Now that we understand system basics, let’s look inside the battery itself.",
@@ -374,6 +405,12 @@ class LithiumBatteryFundamentals:
                     "Unlike older chemistries such as lead-acid or Nickel-Manganese-Cobalt (NMC), LiFePO₄ cells are thermally stable, non-flammable, and deliver more usable energy across thousands of charge and discharge cycles.",
                 ],
                 "subsections": [
+                    {
+                        "image": {
+                            "src": "images/How-lithium-works.png",
+                            "alt": "How lithium-ion batteries work diagram",
+                        },
+                    },
                     {
                         "heading": "Cell Structure and Function",
                         "paragraphs": [
@@ -390,6 +427,13 @@ class LithiumBatteryFundamentals:
                         },
                     },
                     {
+                        "image": {
+                            "src": "images/Cell-structure-and-functionality.png",
+                            "alt": "How lithium-ion batteries work diagram",
+                        },
+                    },
+
+                    {
                         "heading": "How the Cell Works",
                         "subsections": [
                             {
@@ -404,10 +448,10 @@ class LithiumBatteryFundamentals:
                                 "paragraphs": [
                                     "When energy is needed, ions flow back from the anode to the cathode through the electrolyte while electrons travel through the external circuit toward the load, delivering usable DC power.",
                                 ],
+                                "notes": [
+                                    "💡 Think of it as a reversible chemical pump — charging pushes energy in; discharging releases it.",
+                                ],
                             },
-                        ],
-                        "notes": [
-                            "💡 Think of it as a reversible chemical pump — charging pushes energy in; discharging releases it.",
                         ],
                     },
                     {
@@ -458,45 +502,93 @@ class LithiumBatteryFundamentals:
                             "A cycle refers to one complete process of charging the battery and then discharging it.",
                             "A battery rated for “6000 cycles” can perform roughly 6000 full charge–discharge events before its capacity drops to about 80% of original.",
                         ],
-                        "notes": [
+                        "highlights": [
                             "Example: Charging from 20% → 100% and discharging back to 20% equals one full cycle.",
-                            "Daily cycling under normal conditions provides 10–15 years of service life for REVOV LiFePO₄ batteries.",
+                            
+                       
                         ],
+                         "bullets": [
+                            "Daily cycling under normal conditions provides 10–15 years of service life for REVOV LiFePO₄ batteries.",
+                        ]
+
+                          
+                        
                     },
+                    {
+                        "image": {
+                            "src": "images/Cycle.png",
+                            "alt": "How lithium-ion batteries work diagram",
+                        },
+                    },
+
                     {
                         "heading": "⚡ State of Charge (SOC)",
                         "paragraphs": [
                             "The State of Charge shows how much energy remains in the battery, expressed as a percentage of its total capacity.",
                             "Think of SOC as the “fuel gauge” of the battery — showing how full or empty it is.",
                         ],
-                        "notes": [
+                        "highlights": [
                             "Example: If a 10 kWh battery shows an SOC of 60%, it still holds 6 kWh of usable energy.",
-                            "Monitored continuously by the Battery Management System (BMS).",
-                            "Ideal operating range for lithium-ion: 20% – 90% SOC to extend lifespan.",
+                           
                         ],
+                        "bullets": [ 
+                             "Monitored continuously by the Battery Management System (BMS).",
+                             "Ideal operating range for lithium-ion: 20% – 90% SOC to extend lifespan.",
+                        ],
+                    
+
+                    },
+                    {
+                        "image": {
+                            "src": "images/State-of-Charge(SOC).png",
+                            "alt": "How lithium-ion batteries work diagram",
+                        },
                     },
                     {
                         "heading": "🔋 Depth of Discharge (DoD)",
                         "paragraphs": [
                             "The Depth of Discharge measures how much of the battery’s capacity is used during one cycle, expressed as a percentage.",
                         ],
-                        "notes": [
-                            "Example: Using 8 kWh from a 10 kWh battery means a DoD of 80%.",
-                            "The deeper the discharge, the shorter the overall lifespan.",
+                        "highlights": [
+                            "Example: Using 8 kWh from a 10 kWh battery means a DoD of 80%. The deeper the discharge, the shorter the overall lifespan.",
+                           
+                        ],
+                        "bullets": [
+                             
                             "Limiting DoD to 80–90% helps protect lithium-ion cells.",
                             "Most BMS systems automatically prevent over-discharge for safety.",
                         ],
+                
+
+
+                    },
+                    {  "image": {
+                            "src": "images/Depth-of-discharge(DOD).png",
+                            "alt": "Depth of Discharge (DoD) diagram"
+
+                    },
+
                     },
                     {
                         "heading": "⚙️ Efficiency",
                         "paragraphs": [
                             "Battery efficiency measures how much of the stored energy can be recovered during discharge compared to what was put in during charging.",
                         ],
-                        "notes": [
+                        "highlights": [
                             "Example: If 10 kWh is charged into the battery and 9.5 kWh is discharged, efficiency = 95%.",
-                            "Lithium-ion systems typically operate at 93–97% efficiency.",
-                            "Temperature, age, and inverter quality can affect performance.",
+                           
                         ],
+                        "bullets": [
+                             "Lithium-ion systems typically operate at 93–97% efficiency.",
+                            "Temperature, age, and inverter quality can affect performance.",
+
+                        ]
+                    },
+                    {
+                        "image": {
+                            "src": "images/Efficiency.png",
+                            "alt": "Efficiency diagram"
+                        }
                     },
                     {
                         "heading": "🧠 Battery Management System (BMS)",
@@ -505,7 +597,7 @@ class LithiumBatteryFundamentals:
                             "It acts as the “brain” of the battery, ensuring safe operation, balanced performance, and efficient communication with the inverter.",
                             "Think of the BMS as the “control tower” that constantly checks battery health, regulates energy flow, and prevents unsafe conditions.",
                         ],
-                        "notes": [
+                        "highlights": [
                             "Example: If one cell in a battery starts charging faster than the others, the BMS will reduce current flow to that cell and balance the pack to avoid overheating or overvoltage.",
                         ],
                         "bullets": [
@@ -515,6 +607,13 @@ class LithiumBatteryFundamentals:
                             "Communicates with the inverter via CAN or RS485 for coordinated charge/discharge control.",
                             "Logs data such as cycle count, SOC, and fault history for performance tracking.",
                         ],
+                    },
+                    {
+                        "image":{
+                            "src": "images/BMS.png",
+                            "alt": "Battery Management System(BMS) diagram",
+                        }
+
                     },
                     {
                         "heading": "Summary",
@@ -551,7 +650,7 @@ class LithiumBatteryFundamentals:
                             "Pros: Cheap, simple, reliable",
                             "Cons: No savings",
                         ],
-                        "notes": [
+                        "highlights": [
                             "Example: A home using 3 kW during outages needs: 5 kVA inverter + 10 kWh REVOV battery",
                         ],
                     },
@@ -568,7 +667,7 @@ class LithiumBatteryFundamentals:
                             "Cons: No backup during outages",
                         ],
                         "notes": [
-                            "Not common in SA because people need backup.",
+                            "🛠️Not common in SA because people need backup.",
                         ],
                     },
                     {
@@ -583,31 +682,46 @@ class LithiumBatteryFundamentals:
                             "Pros: Provide backup power and reduce grid reliance",
                             "Cons: More expensive upfront",
                         ],
-                        "notes": [
-                            "Example Hybrid Setup: 5 kW Hybrid Inverter + 5 kWp PV + 10 kWh REVOV battery → Can run the house during day AND night.",
+                        "highlights": [
+                            "Example Hybrid Setup: 5 kW Hybrid Inverter + "
+                            "5 kWp PV + 10 kWh REVOV battery "
+                            "→ Can run the house during day AND night.",
                         ],
                     },
                     {
                         "heading": "🏠 Fully Off-Grid System",
                         "paragraphs": [
-                            "Operates independently from the grid, relying entirely on solar panels, battery storage, and often a backup generator.",
-                            "Designed for areas with no grid access or where independence and energy resilience are priorities.",
+                            "An off-grid system operates independently from the grid, relying entirely on solar panels, "
+                            "battery storage, and often a backup generator.",
+                            "It is designed for areas with no grid access or where independence and energy resilience are priorities.",
                         ],
                         "bullets": [
                             "Purpose: No Eskom connection.",
                             "Pros: Full independence",
                             "Cons: Expensive + complex",
                         ],
-                        "notes": [
-                            "Requires large inverter, large battery bank, large solar array, and a backup generator.",
-                            "These systems MUST be sized correctly to avoid failure.",
+                        "bullets": [
+                          "Requires: ",
+                            "large inverter"
+                            " large battery bank"
+                            " large solar array, and a backup generator.",
+                            
                         ],
+                        "notes": [
+                            "🛠️These systems MUST be sized correctly to avoid failure.",
+                        ]
                     },
                 ],
             },
             {
+                "image": {
+                    "src": "images/Module1-system-types.png",
+                    "alt": "Diagram showing the four main system types: Backup, Grid-Tied, Hybrid, Off-Grid",
+                },
+            },
+            {
                 "title": "1.10 Energy Flow and System Operation",
-                "icon": "🔄",
+                #"icon": "🔄",
                 "paragraphs": [
                     "The hybrid energy system intelligently manages power flow between solar panels (PV), batteries, inverter, grid, and loads to ensure optimal efficiency and uninterrupted supply.",
                     "Understanding how these components interact under different conditions is key to effective installation, setup, and troubleshooting.",
@@ -678,7 +792,7 @@ class LithiumBatteryFundamentals:
             },
             {
                 "title": "1.11 Efficiency and System Losses",
-                "icon": "📉",
+                #"icon": "📉",
                 "paragraphs": [
                     "Every energy system experiences some level of loss as electricity moves through different components.",
                     "These losses reduce the total amount of energy that finally reaches the load.",
@@ -699,6 +813,13 @@ class LithiumBatteryFundamentals:
                         "highlights": [
                             "Roughly 90%–95% of the energy produced by the PV array is effectively used to power loads in well-designed systems.",
                         ],
+                    },
+                    {
+                        "image": {
+                            "src": "images/Module-1-system-losses.png",
+                            "alt": "Diagram showing typical system losses at each stage: Inverter, Cabling, Battery",
+                        },
+
                     },
                     {
                         "heading": "💡 How to Minimise Losses",
@@ -752,8 +873,15 @@ class LithiumBatteryFundamentals:
                 ],
             },
             {
+                "image":{
+                    "src": "images/Module-1-how-to-minimise-system-losses.png",
+                    "alt": "Diagram showing tips to minimise system losses: Correct cable sizing, shorter cable runs, high-quality components, system design optimisation, regular maintenance",
+                },
+
+            },
+            {
                 "title": "1.12 Where REVOV Fits into these Systems",
-                "icon": "🏷️",
+                #"icon": "🏷️",
                 "paragraphs": [
                     "REVOV supplies high-quality lithium energy storage solutions designed for residential, commercial and industrial systems.",
                 ],
@@ -770,6 +898,7 @@ class LithiumBatteryFundamentals:
                             "Works with most popular inverters",
                         ],
                     },
+                   
                     {
                         "heading": "🛠️ Installer Tip",
                         "paragraphs": [
@@ -784,8 +913,769 @@ class LithiumBatteryFundamentals:
                             "Firmware is updated",
                         ],
                     },
+                    {
+                      "image": {
+                         "src": "images/Module-1-Where-revov-fits-into-the-system.png",
+                         "alt": "Diagram showing where REVOV batteries fit into the system: connected to the inverter, which manages energy flow between PV array, battery, grid, and loads",
+                         },
+                    },
                 ],
             },
+           
+        ],
+    }
+
+    MODULE_2_ELECTRICAL_FUNDAMENTALS = {
+        "module_title": "MODULE 2 – Electrical Fundamentals",
+        "module_subtitle": "Electrical basics needed to wire safely, size correctly, and troubleshoot faster.",
+        "sections": [
+            {
+                "title": "Contents",
+                "icon": "📚",
+                "bullets": [
+                    "2.1 Module 2 Learning Outcomes",
+                    "2.2 The Core Electrical Terms You Must Be Comfortable With",
+                    "2.3 AC vs DC in Practice",
+                    "2.4 Series & Parallel — Explained for Installers",
+                    "2.5 Electrical Components",
+                    "2.6 Earthing & Bonding — The Safety Backbone",
+                    "2.7 Electrical Safety — Non-Negotiable Installer Rules",
+                    "2.8 Practical Installer Examples (What Can Go Wrong + How to Fix It)",
+                ],
+            },
+            {
+                "title": "2.1 Module 2 Learning Outcomes",
+                "icon": "🎯",
+                "paragraphs": [
+                    "This module gives you the electrical basics needed to wire safely, size correctly, and troubleshoot faster.",
+                    "By the end of this module, you will be able to:",
+                ],
+                "bullets": [
+                    "Explain the core electrical terms used in solar and battery systems (V, A, W, kW, Wh, kWh)",
+                    "Apply the key formulas used in installer work (Ohm’s Law + power and energy equations)",
+                    "Understand how series and parallel wiring changes voltage and capacity",
+                    "Make better decisions on cable sizing, terminations and protection devices",
+                    "Understand earthing and bonding basics for safe, stable systems",
+                    "Identify common electrical installation errors before they cause failures",
+                ],
+            },
+            {
+                "title": "2.2 The Core Electrical Terms You Must Be Comfortable With",
+                "icon": "🧠",
+                "paragraphs": [
+                    "These are the everyday terms you’ll use when sizing, wiring, testing and fault finding.",
+                ],
+                "subsections": [
+                    {
+                        "heading": "⚡ Voltage (V) — “Electrical Pressure”",
+                        "paragraphs": [
+                            "Voltage is the electrical pressure that pushes current through a circuit.",
+                            "Think of it like water pressure in a pipe.",
+                            "More pressure = stronger push",
+                            "More voltage = stronger push",
+                            "Why this matters to you:",
+                        ],
+                        "bullets": [
+                            "Higher voltage systems carry the same power with lower current",
+                            "Lower current means thinner cables and less heat",
+                            "That’s why modern lithium systems run at 48 V / 51.2 V",
+                        ],
+                        "highlights": [
+                            "Example: If you need 5 kW of power → 12 V: 5 000 ÷ 12 = 417 A · 48 V: 5 000 ÷ 48 = 104 A",
+                        ],
+                        "notes": [
+                            "Same power. Very different current. That difference changes everything in cable sizing and safety.",
+                        ],
+                    },
+                    {
+                        "heading": "🔌 Current (A) — “How Much is Flowing”",
+                        "paragraphs": [
+                            "Current is the amount of electricity flowing through a cable.",
+                            "More current means:",
+                        ],
+                        "bullets": [
+                            "Thicker cables",
+                            "Larger breakers",
+                            "More heat",
+                            "Higher fire risk if undersized",
+                        ],
+                        "notes": [
+                            "If voltage is pressure, current is the volume of water flowing.",
+                            "Most battery-side problems happen because current was underestimated.",
+                        ],
+                    },
+                    {
+                        "heading": "⚙️ Resistance (Ω) — “Opposition to Flow”",
+                        "paragraphs": [
+                            "Resistance is what “fights” current flow — and cables have resistance.",
+                            "Long cables = more resistance.",
+                            "Thin cables = more resistance.",
+                            "Loose lugs = more resistance.",
+                            "Resistance causes:",
+                        ],
+                        "bullets": [
+                            "Voltage drop",
+                            "Heat",
+                            "Efficiency loss",
+                            "Shutdowns under load",
+                        ],
+                        "notes": [
+                            "Resistance is invisible — but you see its effects.",
+                        ],
+                    },
+                    {
+                        "heading": "⚡ Power (W / kW) — “How Fast Energy is Used”",
+                        "paragraphs": [
+                            "Power is the rate at which energy is being used right now.",
+                        ],
+                        "highlights": [
+                            "Power (W) = Voltage (V) × Current (A)",
+                            "Example: 50 V × 50 A = 2 500 W = 2.5 kW",
+                        ],
+                        "notes": [
+                            "This is why power determines inverter size (Module 1).",
+                        ],
+                    },
+                    {
+                        "heading": "🔋 Energy (Wh / kWh) — “Power Over Time”",
+                        "paragraphs": [
+                            "Energy is how much electricity is used or stored over time.",
+                        ],
+                        "highlights": [
+                            "Energy (kWh) = Power (kW) × Time (hours)",
+                            "Example: 1 kW load for 5 hours = 5 kWh battery usage",
+                        ],
+                    },
+                    {
+                        "heading": "📐 Quick Summary Table",
+                        "table": {
+                            "headers": ["Term", "Meaning", "Unit", "Installer Use"],
+                            "rows": [
+                                ["Voltage", "Push / pressure", "V", "System design voltage"],
+                                ["Current", "Flow", "A", "Cable + breaker sizing"],
+                                ["Resistance", "Opposition", "Ω", "Voltage drop + heat"],
+                                ["Power", "Rate of use", "W / kW", "Inverter sizing"],
+                                ["Energy", "Total over time", "Wh / kWh", "Battery sizing"],
+                            ],
+                        },
+                    },
+                ],
+            },
+            {
+
+               "image": {
+                   "src": "images/WattWorks_Essential_E_Terms.png",
+                   "alt": "Diagram of essential electrical terms",
+               },
+            },
+            {
+                "title": "2.3 AC vs DC in Practice",
+                "icon": "🔌",
+                "paragraphs": [
+                    "This section explains what AC and DC do in the system, why they behave differently, and what that means for wiring, protection and fault finding.",
+                ],
+                "subsections": [
+                    {
+                        "heading": "🔌 AC (Alternating Current)",
+                        "bullets": [
+                            "Household power and comes from Eskom or generator",
+                        ],
+                    },
+                    {
+                        "heading": "🔋 DC (Direct Current)",
+                        "bullets": [
+                            "Comes from solar panels and batteries",
+                        ],
+                    },
+                    {
+                        "heading": "🔋 DC (Direct Current) — “High Current, High Consequence”",
+                        "paragraphs": [
+                            "DC flows in one direction. Simple in theory… but in practice, it demands respect.",
+                            "In our systems, DC is used for:",
+                        ],
+                        "bullets": [
+                            "PV strings feeding the inverter",
+                            "Battery charge and discharge",
+                            "High-current battery cables",
+                            "DC breakers and isolators",
+                        ],
+                        "subsections": [
+                            {
+                                "heading": "DC does not forgive mistakes",
+                                "bullets": [
+                                    "Polarity matters — reverse it and you can damage equipment instantly.",
+                                    "DC arcs don’t “let go” easily like AC does. If something sparks, it can keep sparking.",
+                                    "High battery currents mean heat becomes a real issue if cables or lugs are undersized.",
+                                    "Small mistakes (loose lug, wrong torque, bad crimp) show up quickly under load.",
+                                ],
+                            },
+                        ],
+                        "notes": [
+                            "If a system randomly shuts down when loads increase, don’t immediately blame the inverter. Check the DC side first — cable size, voltage drop, loose lugs, breaker ratings, battery comms.",
+                            "A large percentage of real-world faults live on the DC side.",
+                        ],
+                    },
+                    {
+                        "heading": "🔌 AC (Alternating Current) — Where Compliance and Stability Matter",
+                        "paragraphs": [
+                            "AC changes direction 50 times per second (50 Hz). That constant switching is what allows it to travel long distances efficiently and power homes safely.",
+                            "On your installs, AC is used for:",
+                        ],
+                        "bullets": [
+                            "Inverter output to essential loads",
+                            "Grid input",
+                            "Generator connection (where applicable)",
+                        ],
+                        "subsections": [
+                            {
+                                "heading": "AC-side considerations",
+                                "bullets": [
+                                    "The inverter must match the grid’s voltage and frequency before connecting.",
+                                    "Neutral and earth must be handled correctly — this is where many nuisance trips start.",
+                                    "Earth leakage placement matters.",
+                                    "Protection must comply with SANS wiring standards.",
+                                ],
+                            },
+                        ],
+                        "notes": [
+                            "If customers complain about earth leakage tripping, strange inverter behaviour, or “getting shocked” from metal surfaces — you’re usually dealing with AC-side bonding, neutral or earthing issues.",
+                        ],
+                    },
+                    {
+                        "heading": "⚙️ The Inverter — The Electrical Traffic Controller",
+                        "paragraphs": [
+                            "The inverter isn’t just converting power. It’s managing two completely different electrical environments at the same time.",
+                            "On one side: DC from PV and battery.",
+                            "On the other side: AC for loads and grid.",
+                            "It constantly decides:",
+                        ],
+                        "bullets": [
+                            "Should solar power the loads?",
+                            "Should excess solar charge the battery?",
+                            "Should the battery discharge to support the load?",
+                            "Should we draw from the grid?",
+                            "Should we export (if allowed)?",
+                        ],
+                        "notes": [
+                            "In a hybrid system, it’s a traffic controller, not just a converter.",
+                        ],
+                        
+                    },
+                    {
+                      "heading": "📐What This Looks Like In Real Life",
+                      "image":{
+                          "src" : "images/WattWorks_AC-DC-INVERTER.png",
+                          "alt": "Diagram showing the inverter managing DC input from PV and battery, and AC output to loads and grid",
+
+                      },
+                    },
+                    {
+                        "heading": "What You Should Be Checking on Site",
+                        "paragraphs": [
+                            "When you’re troubleshooting, think in two halves. If you can mentally separate AC and DC while diagnosing a fault, your troubleshooting becomes much faster.",
+                        ],
+                        "subsections": [
+                            {
+                                "heading": "DC Side Checks (heat, polarity, voltage drop, high current)",
+                                "bullets": [
+                                    "Polarity correct",
+                                    "Cable size correct",
+                                    "Lugs properly crimped and torqued",
+                                    "DC breaker rated for DC",
+                                    "PV voltage within limits",
+                                    "Battery communication working",
+                                ],
+                            },
+                            {
+                                "heading": "AC Side Checks (compliance, synchronisation, bonding, protection)",
+                                "bullets": [
+                                    "Essential and non-essential loads separated correctly",
+                                    "Neutral correctly installed",
+                                    "Earth leakage correctly placed",
+                                    "Grid settings configured properly",
+                                    "Earthing and bonding done to standard",
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                "title": "2.4 Series & Parallel — Explained for Installers",
+                "icon": "🧩",
+                "paragraphs": [
+                    "This section helps you expand systems correctly without damaging equipment or voiding warranties.",
+                    "You only have two ways to connect batteries: series or parallel. Each changes the system differently.",
+                ],
+                "subsections": [
+                    {
+                        "heading": "🔌 Series Connection – Voltage Adds",
+                        "paragraphs": [
+                            "When batteries are connected positive to negative:",
+                        ],
+                        "bullets": [
+                            "Voltage adds up",
+                            "Capacity (Ah) stays the same",
+                        ],
+                        "highlights": [
+                            "Example: 48 V + 48 V = 96 V (capacity stays the same)",
+                        ],
+                        "paragraphs_after": [
+                            "Think of it like stacking batteries on top of each other to create more pressure.",
+                            "Used for: high-voltage stacks and some commercial/BESS systems.",
+                        ],
+                        "notes": [
+                            "Never series-connect batteries unless the manufacturer and product design specifically allow it.",
+                        ],
+                    },
+                    {
+                        "heading": "🔋 Parallel Connection – Capacity Adds",
+                        "paragraphs": [
+                            "When batteries are connected positive to positive and negative to negative:",
+                        ],
+                        "bullets": [
+                            "Voltage stays the same",
+                            "Capacity increases",
+                        ],
+                        "highlights": [
+                            "Example: Two 200 Ah batteries at 48 V in parallel → 400 Ah at 48 V",
+                        ],
+                        "paragraphs_after": [
+                            "Think of it like widening the water tank — same pressure, more stored volume.",
+                            "Used for expanding capacity in most home and SME installs.",
+                        ],
+                        "notes": [
+                            "Most REVOV LV setups are typically parallel expansion — always follow product rules and inverter limits.",
+                        ],
+                    },
+                    {
+                        "heading": "📐 Quick Comparison Table",
+                        "table": {
+                            "headers": ["Connection", "Voltage", "Capacity", "Typical Use"],
+                            "rows": [
+                                ["Series", "Increases", "Same", "HV banks / specific stacks"],
+                                ["Parallel", "Same", "Increases", "Most LV systems"],
+                            ],
+                        },
+                    },
+                ],
+            },
+            {
+                "title": "2.5 Electrical Components",
+                "icon": "🧰",
+                "paragraphs": [
+                    "This is where safety, reliability, and warranty protection really live.",
+                ],
+                "subsections": [
+                    {
+                        "heading": "Cable Thickness Matters",
+                        "paragraphs": [
+                            "If cables are too thin (or runs are too long):",
+                        ],
+                        "bullets": [
+                            "They heat up",
+                            "Voltage drops under load",
+                            "BMS/inverter may trip or shut down",
+                            "Fire risk increases",
+                        ],
+                        "notes": [
+                            "Rule of thumb: Always follow inverter + battery manufacturer specs first — then verify against current, run length and installation environment.",
+                        ],
+                    },
+                    {
+                        "heading": "Lugs & Terminations (Do it once, do it right)",
+                        "paragraphs": [
+                            "Good terminations prevent heat, faults, and failures.",
+                            "Best practice checklist:",
+                        ],
+                        "bullets": [
+                            "Correct lug size (match cable + terminal)",
+                            "Hydraulic crimp (not “hammer crimp”)",
+                            "Heat-shrink on lug",
+                            "Clean contact surfaces",
+                            "Torque to manufacturer spec",
+                            "Re-check after initial commissioning (because copper settles)",
+                        ],
+                        "notes": [
+                            "Loose DC lugs = hot terminals = shutdowns = warranty issues.",
+                        ],
+                    },
+                    {
+                        "heading": "Fuses, Breakers, Isolators & Protection",
+                        "paragraphs": [
+                            "Protection devices are there to stop fires and save expensive equipment.",
+                        ],
+                        "subsections": [
+                            {
+                                "heading": "Battery Fuse/Breaker (DC)",
+                                "bullets": [
+                                    "Protects battery cables and equipment",
+                                    "Must match maximum expected current",
+                                    "Install as close as possible to the battery side (where applicable)",
+                                ],
+                                "notes": [
+                                    "Example: If expected current is ±100 A, use a breaker/fuse sized appropriately for the design and manufacturer guidelines (often the next rating up, e.g. 125 A — but follow spec).",
+                                ],
+                            },
+                            {
+                                "heading": "AC Breakers",
+                                "paragraphs": [
+                                    "Protect AC output circuits and distribution boards.",
+                                ],
+                            },
+                            {
+                                "heading": "DC Isolator",
+                                "paragraphs": [
+                                    "Used between PV and inverter/MPPT to allow safe shutdown and maintenance.",
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                "image" : {
+                    "src" : "images/Fuses-breakers-isolators.png",
+                    "alt" : "Diagram showing examples of fuses, breakers and isolators used in solar and battery systems"
+
+
+                },
+            },
+            {
+                "title": "2.6 Earthing & Bonding — The Safety Backbone",
+                "icon": "🛡️",
+                "paragraphs": [
+                    "This section explains the grounding basics that keep systems safe and stable.",
+                ],
+                "bullets": [
+                    "Earthing = connecting the system to ground for safety and surge control",
+                    "Bonding = linking metal parts together so they are at the same potential",
+                ],
+                "subsections": [
+                    {
+                        "heading": "Why it matters",
+                        "bullets": [
+                            "Reduces shock risk",
+                            "Improves protection performance",
+                            "Reduces nuisance faults / unstable readings",
+                            "Supports inverter stability",
+                        ],
+                    },
+                ],
+                "notes": [
+                    "Incorrect earthing and bonding can cause “weird” issues like nuisance alarms, noise, unstable inverter behaviour, or unsafe touch voltages.",
+                    "Always install to SANS 10142-1 and project requirements.",
+                ],
+            },
+            {
+                "title": "2.7 Electrical Safety — Non-Negotiable Installer Rules",
+                "icon": "⛑️",
+                "paragraphs": [
+                    "This is the minimum standard for working safely and professionally.",
+                    "Before you touch anything:",
+                ],
+                "bullets": [
+                    "Isolate power properly",
+                    "Lockout/tagout where possible",
+                    "Test for dead (don’t assume)",
+                    "Double-check polarity on DC",
+                    "Use insulated tools",
+                    "Wear PPE (gloves, boots, eyewear)",
+                    "Never work alone around live DC systems",
+                ],
+                "notes": [
+                    "DC can be extremely dangerous because it can maintain continuous current flow — treat it with respect.",
+                ],
+            },
+            {
+                "title": "2.8 Practical Installer Examples (What Can Go Wrong + How to Fix It)",
+                "icon": "🛠️",
+                "paragraphs": [
+                    "This is where electrical theory becomes real-world consequences.",
+                    "On paper, voltage, current and resistance are just formulas.",
+                    "On site, they become heat, sparks, shutdowns and unhappy clients.",
+                    "Let’s walk through real scenarios installers face every day.",
+                ],
+                "subsections": [
+                    {
+                        "heading": "📈 Example 1 — Incorrect Cable Size",
+                        "variant": "installer-example",
+                        "subsections": [
+                            {
+                                "heading": "What Happened",
+                                "paragraphs": [
+                                    "An installer connects a 5 kW inverter to a 48 V battery using 10 mm² cable.",
+                                    "A 5-kW inverter at 48 V draws:",
+                                ],
+                                "highlights": [
+                                    "I = P / V = 5 000 ÷ 48 = 104 A",
+                                ],
+                                "notes": [
+                                    "Can 10 mm² cable safely carry 100+ amps continuously? Usually not.",
+                                ],
+                            },
+                            {
+                                "heading": "What Happens Next",
+                                "bullets": [
+                                    "Cable starts heating up",
+                                    "Voltage drop increases",
+                                    "Battery sees unstable voltage",
+                                    "BMS detects abnormal conditions",
+                                    "Inverter throws DC undervoltage faults",
+                                    "Customer calls complaining about shutdowns",
+                                ],
+                                "paragraphs_after": [
+                                    "In worst cases: melted insulation, burnt terminals, and fire risk.",
+                                ],
+                            },
+                            {
+                                "heading": "Why This Happens (Electrical Principle)",
+                                "paragraphs": [
+                                    "High current + undersized cable = higher resistance → heat → voltage drop → instability.",
+                                    "Resistance increases with smaller cables and longer runs.",
+                                ],
+                            },
+                            {
+                                "heading": "✅ The Fix",
+                                "bullets": [
+                                    "Calculate current first",
+                                    "Check inverter manual",
+                                    "Check battery manual",
+                                    "Consider cable length",
+                                    "Typically use 16–25 mm² for this size system (depending on run)",
+                                ],
+                                "notes": [
+                                    "Never size cable by guesswork. Always size by current.",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        "image": {
+                            "src": "images/Under_sized_cable_overheating.png",
+                            "alt": "Photo showing an example of an under-sized cable overheating with melted insulation and burnt terminals",
+
+                        },
+                    },
+                    {
+                        "heading": "📈 Example 2 — Swapped Polarity",
+                        "variant": "installer-example",
+                        "subsections": [
+                            {
+                                "heading": "What Happened",
+                                "paragraphs": [
+                                    "Installer connects battery negative to inverter positive during commissioning.",
+                                    "This usually happens because:",
+                                ],
+                                "bullets": [
+                                    "Cables are not labelled",
+                                    "Installer is rushing",
+                                    "No final polarity check",
+                                ],
+                            },
+                            {
+                                "heading": "What Happens Next",
+                                "bullets": [
+                                    "Loud spark",
+                                    "Inverter may instantly shut down",
+                                    "Possible blown internal fuse",
+                                    "BMS protection triggers",
+                                    "Worst case: permanent damage",
+                                ],
+                                "notes": [
+                                    "DC does not forgive mistakes. Unlike AC, DC polarity matters.",
+                                ],
+                            },
+                            {
+                                "heading": "Why This Happens (Electrical Principle)",
+                                "paragraphs": [
+                                    "Batteries supply constant DC current.",
+                                    "Reverse polarity forces current in the wrong direction through internal components.",
+                                    "That can destroy: capacitors, MOSFETs, and internal protection circuits.",
+                                ],
+                            },
+                            {
+                                "heading": "✅ The Fix",
+                                "paragraphs": [
+                                    "Before energising:",
+                                ],
+                                "bullets": [
+                                    "Use a multimeter",
+                                    "Confirm voltage",
+                                    "Confirm polarity",
+                                    "Label positive (red) and negative (black) clearly",
+                                    "Never assume — always test",
+                                ],
+                                "notes": [
+                                    "Meter first. Energise second.",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        "image" :{
+                            "src": "images/reverse_polarity_connection.png",
+                            "alt": "Photo showing an example of a reverse polarity connection with a spark and damaged inverter components",
+                        },
+                    },
+                    {
+                        "heading": "📈 Example 3 — Poor Crimping / Loose Lug",
+                        "variant": "installer-example",
+                        "subsections": [
+                            {
+                                "heading": "What Happened",
+                                "paragraphs": [
+                                    "Installer uses a manual crimper instead of hydraulic.",
+                                    "Lug looks tight but isn’t properly compressed.",
+                                    "Everything works at commissioning. Two weeks later the customer reports the inverter randomly shutting down.",
+                                ],
+                            },
+                            {
+                                "heading": "What’s Actually Happening",
+                                "paragraphs": [
+                                    "The loose connection creates micro-resistance and heat build-up. Under load you see:",
+                                ],
+                                "bullets": [
+                                    "Terminal discoloration",
+                                    "Voltage fluctuation",
+                                    "Eventually a melted lug",
+                                ],
+                            },
+                            {
+                                "heading": "Why This Happens (Electrical Principle)",
+                                "paragraphs": [
+                                    "Loose connection = increased resistance.",
+                                    "Resistance × high current = heat.",
+                                    "Heat damages cable insulation, battery terminals, and inverter studs.",
+                                    "Heat increases resistance further — creating a failure loop.",
+                                ],
+                            },
+                            {
+                                "heading": "✅ The Fix",
+                                "bullets": [
+                                    "Use hydraulic crimpers only",
+                                    "Correct lug size for cable",
+                                    "Heat shrink after crimp",
+                                    "Torque to manufacturer specification",
+                                    "Re-check torque after commissioning",
+                                ],
+                                "notes": [
+                                    "DC connections must be mechanically tight AND electrically sound.",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        "image": {
+                            "src":"images/reverse_polarity_connection.png",
+                            "alt": "image showing the effect of poor crimping on cable lugs",
+                        },
+                    },
+                    {
+                        "heading": "📈 Example 4 — No DC Isolator Installed",
+                        "variant": "installer-example",
+                        "subsections": [
+                            {
+                                "heading": "What Happened",
+                                "paragraphs": [
+                                    "Installer connects battery directly to inverter with no DC isolator.",
+                                    "Everything works — until service is required.",
+                                    "Now to work safely, the technician must disconnect live battery cables manually.",
+                                ],
+                            },
+                            {
+                                "heading": "What Happens Next",
+                                "bullets": [
+                                    "High arc risk",
+                                    "Spark hazard",
+                                    "Personal injury risk",
+                                    "Equipment damage",
+                                ],
+                                "notes": [
+                                    "Lithium batteries deliver high current instantly.",
+                                ],
+                            },
+                            {
+                                "heading": "Why This Matters",
+                                "paragraphs": [
+                                    "DC arcs do not self-extinguish like AC arcs. They sustain longer and burn hotter.",
+                                ],
+                            },
+                            {
+                                "heading": "✅ The Fix",
+                                "paragraphs": [
+                                    "Always install:",
+                                ],
+                                "bullets": [
+                                    "DC breaker or fuse close to battery",
+                                    "Proper DC isolator",
+                                    "Label isolators clearly",
+                                ],
+                                "notes": [
+                                    "If you cannot safely isolate it, you installed it wrong.",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        "images": {
+                            "src":"images/No_dc-isolator_installed.png",
+                            "alt": "image showing the risks of not having a DC isolator with a photo of a technician trying to disconnect live battery cables with sparks flying",
+
+                        },
+                    },
+                    {
+                        "heading": "📈 Example 5 — Unequal Parallel Battery Cables",
+                        "variant": "installer-example",
+                        "subsections": [
+                            {
+                                "heading": "What Happened",
+                                "paragraphs": [
+                                    "Two batteries are connected in parallel, but one cable is longer than the other.",
+                                    "Installer thinks: “It’s fine.”",
+                                ],
+                            },
+                            {
+                                "heading": "What Actually Happens",
+                                "paragraphs": [
+                                    "Current does not split equally. The shorter cable carries more current, so that battery works harder.",
+                                ],
+                                "bullets": [
+                                    "Uneven cycling",
+                                    "One battery ages faster",
+                                    "Premature failure",
+                                    "BMS imbalance warnings",
+                                ],
+                            },
+                            {
+                                "heading": "Why This Happens",
+                                "paragraphs": [
+                                    "Current takes the path of least resistance.",
+                                    "Longer cable = more resistance, so current favours the shorter cable.",
+                                ],
+                            },
+                            {
+                                "heading": "✅ The Fix",
+                                "bullets": [
+                                    "Use equal cable lengths",
+                                    "Use proper busbars for parallel banks",
+                                    "Follow manufacturer wiring diagrams",
+                                ],
+                                "notes": [
+                                    "Parallel batteries must be electrically balanced.",
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                "image": {
+                    "src": "images/Un_equal_cables.png",
+                    "alt": "image showing the effect of poor crimping on cable lugs",
+                }, 
+            },
+               
         ],
     }
     

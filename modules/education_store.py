@@ -32,7 +32,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 # Bump this when you ship changes to learning content/structure and want all
 # existing users to restart learning progress from scratch.
-_EDUCATION_CONTENT_VERSION = "2026-02-20_module1_fundamentals_v3_quiz_update"
+_EDUCATION_CONTENT_VERSION = "2026-03-02_module1_fundamentals_v4_installer_callouts_and_table_borders"
 
 
 def _ensure_content_version(conn: sqlite3.Connection) -> None:
@@ -356,6 +356,29 @@ def get_user_by_username(username: str) -> Optional[User]:
     )
 
 
+def get_user_by_identifier(identifier: str) -> Optional[User]:
+    """Look up a user by username or email.
+
+    Returns None if `identifier` is empty/whitespace or not found.
+    """
+    identifier = (identifier or "").strip()
+    if not identifier:
+        return None
+    with _connect() as conn:
+        row = conn.execute(
+            "SELECT id, username, email, avatar_filename FROM users WHERE username = ? OR email = ?",
+            (identifier, identifier),
+        ).fetchone()
+    if not row:
+        return None
+    return User(
+        id=int(row["id"]),
+        username=str(row["username"]),
+        email=(str(row["email"]).strip() if row["email"] else None),
+        avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
+    )
+
+
 def create_user(
     username: str,
     password: str,
@@ -423,16 +446,21 @@ def create_user(
     )
 
 
-def authenticate_user(username: str, password: str) -> Optional[User]:
+def authenticate_user(identifier: str, password: str) -> Optional[User]:
     """Validate credentials and return the matching user, else None."""
-    username = (username or "").strip()
-    if not username or not password:
+    identifier = (identifier or "").strip()
+    if not identifier or not password:
         return None
 
+    user = get_user_by_identifier(identifier)
+    if not user:
+        return None
+
+    # Get the password hash from the database
     with _connect() as conn:
         row = conn.execute(
-            "SELECT id, username, email, password_hash, avatar_filename FROM users WHERE username = ?",
-            (username,),
+            "SELECT password_hash FROM users WHERE id = ?",
+            (user.id,),
         ).fetchone()
 
     if not row:
@@ -442,12 +470,6 @@ def authenticate_user(username: str, password: str) -> Optional[User]:
     if not check_password_hash(row["password_hash"], password):
         return None
 
-    user = User(
-        id=int(row["id"]),
-        username=str(row["username"]),
-        email=(str(row["email"]).strip() if row["email"] else None),
-        avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
-    )
     # Log successful auth for live monitoring.
     record_event("login", user_id=user.id, payload={"username": user.username})
     return user
@@ -484,14 +506,14 @@ def set_user_avatar(user_id: int, avatar_filename: Optional[str]) -> User:
     return user
 
 
-def create_password_reset(username: str, *, expires_in_seconds: int = 3600) -> Optional[str]:
-    """Create a single-use password reset token for a username.
+def create_password_reset(identifier: str, *, expires_in_seconds: int = 3600) -> Optional[str]:
+    """Create a single-use password reset token for a username or email.
 
     Returns a token string if the user exists, otherwise returns None.
 
     Token format is: "<reset_id>.<secret>" where secret is random.
     """
-    user = get_user_by_username(username)
+    user = get_user_by_identifier(identifier)
     if not user:
         return None
 
@@ -590,7 +612,7 @@ def get_user(user_id: int) -> Optional[User]:
         id=int(row["id"]),
         username=str(row["username"]),
         email=(str(row["email"]).strip() if row["email"] else None),
-         avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
+        avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
     )
 
 
@@ -703,3 +725,14 @@ def get_quiz_best(user_id: int) -> dict[str, dict[str, int]]:
     for r in rows:
         out[str(r["quiz_id"])] = {"best_score": int(r["best_score"]), "total": int(r["total"])}
     return out
+
+
+def get_total_quiz_attempts(user_id: int) -> int:
+    """Return total number of quiz attempts across all quizzes for a user."""
+    with _connect() as conn:
+        row = conn.execute(
+            "SELECT SUM(total) as total_attempts FROM quiz_attempts WHERE user_id = ?",
+            (int(user_id),),
+        ).fetchone()
+
+    return int(row["total_attempts"]) if row and row["total_attempts"] else 0

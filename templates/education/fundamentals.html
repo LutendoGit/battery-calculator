@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education - Fundamentals (Module 1)</title>
+    <title>Education - {{ content.module_title }}</title>
+    {% include '_favicon.html' %}
     <style>
         * {
             margin: 0;
@@ -13,7 +14,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #ffffff;
             color: #333;
             min-height: 100vh;
             padding: 0;
@@ -26,6 +27,7 @@
             min-height: 100vh;
             display: grid;
             grid-template-rows: auto 1fr auto;
+            background: #ffffff;
         }
         
         header {
@@ -33,7 +35,8 @@
             padding: 20px;
             border-radius: 0;
             margin-bottom: 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
         }
         
         h1 {
@@ -44,6 +47,7 @@
         .lesson-stage {
             padding: 20px;
             min-height: 0;
+            background: #ffffff;
         }
 
         .step-card {
@@ -55,13 +59,14 @@
             background: white;
             border-radius: 8px;
             padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.10);
         }
         
         .card h2 {
@@ -112,13 +117,14 @@
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
+            border: 1px solid #ddd;
         }
         
         .comparison-table th,
         .comparison-table td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border: 1px solid #ddd;
         }
         
         .comparison-table th {
@@ -129,6 +135,38 @@
         
         .comparison-table tr:hover {
             background-color: #f9f9f9;
+        }
+
+        .installer-example {
+            background: rgba(144, 238, 175, 0.25);
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            margin: 14px 0;
+        }
+
+        .installer-example .example-image {
+            width: 100%;
+            max-width: 680px;
+            height: auto;
+            display: block;
+            margin: 10px 0 12px 0;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .content-image {
+            width: 100%;
+            max-width: 860px;
+            height: auto;
+            display: block;
+            margin: 12px auto;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            box-shadow: none;
         }
 
         .text-block p {
@@ -183,7 +221,7 @@
         }
 
         .pager {
-            background: rgba(255, 255, 255, 0.92);
+            background: #ffffff;
             border-top: 1px solid rgba(0,0,0,0.08);
             padding: 12px 20px;
             display: flex;
@@ -262,7 +300,7 @@
             width: 32px;
             height: 32px;
             border-radius: 999px;
-            border: 1px solid rgba(0,0,0,0.08);
+            border: none;
             background: rgba(102, 126, 234, 0.12);
             display: inline-flex;
             align-items: center;
@@ -279,6 +317,47 @@
             object-fit: cover;
             display: block;
         }
+
+        .site-footer {
+            width: 100%;
+            margin-top: 30px;
+            background: transparent;
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            padding: 28px 20px 20px;
+            font-size: 0.85em;
+            line-height: 1.6;
+        }
+
+        .site-footer .footer-brand {
+            font-weight: 700;
+            font-size: 1.05em;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .site-footer-links {
+            margin-top: 6px;
+        }
+
+        .site-footer a,
+        .site-footer-link {
+            color: rgba(255,255,255,0.95);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .site-footer a:hover,
+        .site-footer-link:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .site-footer-copy {
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.6);
+        }
     </style>
 </head>
 <body>
@@ -288,7 +367,7 @@
                 <div>
                     <h1>⚡ {{ content.module_title }}</h1>
                     <p style="margin-bottom: 6px;">{{ content.module_subtitle }}</p>
-                    <div class="meta"><strong data-lesson-title>Contents</strong> · <span data-lesson-counter>1 / 14</span></div>
+                    <div class="meta"><strong data-lesson-title>Contents</strong> · <span data-lesson-counter>1 / {{ content.sections|length + 1 }}</span></div>
                 </div>
                 {% if session.get('edu_user_id') %}
                 <div class="header-actions">
@@ -305,7 +384,12 @@
             </div>
         </header>
 
-        <main class="lesson-stage" data-lesson-stage>
+        <main
+            class="lesson-stage"
+            data-lesson-stage
+            data-lesson-key="{{ lesson_key if session.get('edu_user_id') else '' }}"
+            data-progress-endpoint="{{ url_for('education.api_lesson_step_progress') if session.get('edu_user_id') else '' }}"
+        >
             {% macro render_table(tbl) -%}
                 <table class="comparison-table">
                     <thead>
@@ -329,12 +413,25 @@
 
             {% macro render_block(block, level=3) -%}
                 <div class="text-block">
+                    {% set is_installer_example = (block.variant == 'installer-example') %}
+                    {% if is_installer_example %}
+                        <div class="installer-example">
+                    {% endif %}
+
                     {% if block.heading %}
                         {% if level == 3 %}
                             <h3>{{ block.heading }}</h3>
                         {% else %}
                             <h4>{{ block.heading }}</h4>
                         {% endif %}
+                    {% endif %}
+
+                    {% if is_installer_example and block.image %}
+                        <img class="example-image" src="{{ url_for('static', filename=block.image.src) }}" alt="{{ block.image.alt }}">
+                    {% endif %}
+
+                    {% if (not is_installer_example) and block.image %}
+                        <img class="content-image" src="{{ url_for('static', filename=block.image.src) }}" alt="{{ block.image.alt }}">
                     {% endif %}
 
                     {% if block.paragraphs %}
@@ -392,6 +489,10 @@
                             {{ render_block(sub, level=4) }}
                         {% endfor %}
                     {% endif %}
+
+                    {% if is_installer_example %}
+                        </div>
+                    {% endif %}
                 </div>
             {%- endmacro %}
 
@@ -408,15 +509,35 @@
             </section>
             {% endfor %}
 
+            {% if continue_card %}
+            <section data-lesson-step data-step-title="{{ continue_card.step_title or 'Continue Learning' }}">
+                <div class="card step-card">
+                    <h2>{{ continue_card.title }}</h2>
+                    {% if continue_card.paragraphs %}
+                        {% for p in continue_card.paragraphs %}
+                            <p style="margin-bottom: 10px; color: #555;">{{ p }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if continue_card.links %}
+                    <div class="nav-links">
+                        {% for lnk in continue_card.links %}
+                            <a href="{{ lnk.url }}">{{ lnk.label }}</a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+            {% else %}
             <section data-lesson-step data-step-title="Continue Learning">
                 <div class="card step-card">
-                    <h2>📚 Continue Learning</h2>
+                    <h2>📚 Continue to Module 1 Assessment Quiz (Introduction to Energy Storage & Modern Energy)</h2>
                     <p style="margin-bottom: 10px; color: #555;">You’ve reached the end of Module 1 Fundamentals.</p>
                     <div class="nav-links">
-                        <a href="{{ url_for('education.chemistry') }}">Continue to Module 2 (Chemistry)</a>
+                        <a href="{{ url_for('education.quiz_index', start='capacity-dod') }}">Take the Quiz</a>
                     </div>
                 </div>
             </section>
+            {% endif %}
         </main>
 
         <footer class="pager">
@@ -430,11 +551,16 @@
         </footer>
     </div>
 
+    {% include '_site_footer.html' %}
+
     <script src="{{ url_for('static', filename='lesson_pager.js') }}"></script>
     <script>
+        const lessonStage = document.querySelector('[data-lesson-stage]');
         window.LessonPager && window.LessonPager.init({
             doneUrl: "{{ url_for('education.learn_index', hub=1) }}",
-            doneLabel: "Back to Topics"
+            doneLabel: "Back to Topics",
+            lessonKey: lessonStage ? (lessonStage.dataset.lessonKey || '') : '',
+            progressEndpoint: lessonStage ? (lessonStage.dataset.progressEndpoint || '') : ''
         });
     </script>
 </body>

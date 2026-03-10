@@ -98,7 +98,7 @@ Render will provide a stable public URL (e.g., `https://your-app.onrender.com`).
 
 ## Production considerations
 
-- Secrets: set `SECRET_KEY` as an environment variable on your host.
+- Secrets: set `SECRET_KEY` as an environment variable on  host.
 - Static files / large assets: consider a CDN or object storage.
 - Logging & monitoring: configure the host's log viewer or add Sentry.
 - PDF generation: `reportlab` is included; ensure your host supports installing it.
@@ -117,7 +117,3 @@ Render will provide a stable public URL (e.g., `https://your-app.onrender.com`).
 - `Procfile` — `web: gunicorn app:app` for many hosts.
 - `runtime.txt` — (optional) Python runtime version pin.
 
-If you want, I can:
-- Push this repo to GitHub for you (I can show commands or run them if you allow).
-- Walk through Render or Railway deployment step-by-step and configure environment variables.
-- Create a GitHub Actions workflow for CI / automated deploys.

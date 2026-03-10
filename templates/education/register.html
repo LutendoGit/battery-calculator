@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register — Battery Education</title>
+    {% include '_favicon.html' %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <style>
       body {
@@ -47,6 +48,44 @@
         height: 18px;
         display: block;
       }
+
+      .password-input-container {
+        position: relative;
+      }
+
+      .password-input-container .form-control {
+        padding-right: 40px;
+      }
+
+      .password-input-container .pw-toggle-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        min-width: auto;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        background: transparent;
+        border: none;
+        color: #6c757d;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .password-input-container .pw-toggle-btn:hover,
+      .password-input-container .pw-toggle-btn:focus {
+        color: #495057;
+        background: transparent;
+        outline: none;
+      }
+
+      .password-input-container .pw-toggle-btn svg {
+        width: 16px;
+        height: 16px;
+      }
     </style>
   </head>
   <body>
@@ -81,11 +120,9 @@
           </div>
           <div class="form-group">
             <label>Password</label>
-            <div class="input-group">
+            <div class="password-input-container">
               <input id="password" class="form-control" name="password" type="password" autocomplete="new-password" required>
-              <div class="input-group-append">
-                <button class="btn btn-link pw-toggle-btn" type="button" data-toggle-password="#password" aria-label="Show password" title="Show password"></button>
-              </div>
+              <button class="pw-toggle-btn" type="button" data-toggle-password="#password" aria-label="Show password" title="Show password"></button>
             </div>
             <small class="form-text text-muted">At least 6 characters.</small>
           </div>

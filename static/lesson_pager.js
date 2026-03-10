@@ -35,6 +35,9 @@
     var nextLabel = options.nextLabel || "Next";
     var prevLabel = options.prevLabel || "Previous";
     var doneLabel = options.doneLabel || "Done";
+    var lessonKey = options.lessonKey || "";
+    var progressEndpoint = options.progressEndpoint || "";
+    var trackedSteps = Object.create(null);
 
     var steps = Array.prototype.slice.call(document.querySelectorAll("[data-lesson-step]"));
     if (!steps.length) return;
@@ -48,6 +51,34 @@
     if (prevBtn) prevBtn.textContent = prevLabel;
 
     var index = parseStepIndex(paramName, steps.length);
+
+    function trackCurrentStep() {
+      if (!lessonKey || !progressEndpoint) return;
+
+      var stepNumber = index + 1;
+      if (trackedSteps[stepNumber]) return;
+      trackedSteps[stepNumber] = true;
+
+      try {
+        fetch(progressEndpoint, {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            lesson_key: lessonKey,
+            step: stepNumber,
+            total_steps: steps.length,
+          }),
+          keepalive: true,
+        }).then(function (resp) {
+          if (!resp.ok) trackedSteps[stepNumber] = false;
+        }).catch(function () {
+          trackedSteps[stepNumber] = false;
+        });
+      } catch (e) {
+        trackedSteps[stepNumber] = false;
+      }
+    }
 
     function render() {
       for (var i = 0; i < steps.length; i++) {
@@ -73,6 +104,8 @@
           nextBtn.textContent = nextLabel;
         }
       }
+
+      trackCurrentStep();
 
       if (stageEl) stageEl.scrollTop = 0;
       window.scrollTo(0, 0);
@@ -107,6 +140,54 @@
       },
     };
 
+    function isEditableTarget(target) {
+      try {
+        if (!target) return false;
+        var tag = (target.tagName || "").toLowerCase();
+        if (tag === "input" || tag === "textarea" || tag === "select") return true;
+        if (target.isContentEditable) return true;
+        return false;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function handleKeydown(e) {
+      if (!e) return;
+      if (e.defaultPrevented) return;
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (isEditableTarget(e.target)) return;
+
+      var key = e.key;
+      var code = e.code;
+
+      // Next
+      if (
+        key === "ArrowRight" ||
+        key === "PageDown" ||
+        key === "BrowserForward" ||
+        code === "ArrowRight" ||
+        code === "PageDown"
+      ) {
+        e.preventDefault();
+        controller.next();
+        return;
+      }
+
+      // Previous
+      if (
+        key === "ArrowLeft" ||
+        key === "PageUp" ||
+        key === "BrowserBack" ||
+        code === "ArrowLeft" ||
+        code === "PageUp"
+      ) {
+        e.preventDefault();
+        controller.prev();
+        return;
+      }
+    }
+
     if (prevBtn) {
       prevBtn.addEventListener("click", function () {
         go(index - 1);
@@ -122,6 +203,9 @@
         go(index + 1);
       });
     }
+
+    // Keyboard navigation (works across all lesson pages)
+    document.addEventListener("keydown", handleKeydown);
 
     // Ensure URL is normalized to include step=1 on first load
     writeStepIndex(paramName, index);

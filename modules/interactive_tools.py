@@ -166,103 +166,283 @@ class EducationalQuizzes:
     
     @staticmethod
     def quiz_capacity_dod() -> List[Dict]:
-        """Module 1 quiz: Power vs Energy & Backup Sizing"""
+        """Module 1 assessment: Introduction to Energy Storage & Modern Energy Systems."""
         return [
             {
-                "question": "Power (kW) is best described as…",
+                "question": "Power (kW) determines:",
                 "options": [
-                    "The total electricity used over time (kWh)",
-                    "The rate electricity is used right now",
-                    "Electrical pressure",
-                    "The AC frequency"
+                    "A) Battery capacity",
+                    "B) Inverter size",
+                    "C) Solar panel colour",
+                    "D) Grid frequency",
                 ],
                 "correct": 1,
-                "explanation": "Power is the instantaneous rate of use and is a key input for inverter sizing."
+                "explanation": "Power (kW) is the instantaneous demand; it drives inverter sizing so the inverter can supply the peak/continuous load.",
             },
             {
-                "question": "Energy (kWh) is best described as…",
+                "question": "Energy (kWh) determines:",
                 "options": [
-                    "The rate electricity is used right now",
-                    "The total electricity stored/used over time",
-                    "The current through a cable",
-                    "The voltage of the grid"
+                    "A) Inverter voltage",
+                    "B) Cable thickness",
+                    "C) Battery bank size",
+                    "D) AC frequency",
                 ],
-                "correct": 1,
-                "explanation": "Energy is what determines runtime and battery bank sizing."
-            },
-            {
-                "question": "Which most directly determines inverter size?",
-                "options": [
-                    "Peak/continuous load power (kW)",
-                    "Battery energy (kWh)",
-                    "System frequency (Hz)",
-                    "Cable color"
-                ],
-                "correct": 0,
-                "explanation": "Inverter sizing is driven by the power demand it must supply."
-            },
-            {
-                "question": "Which most directly determines battery size for backup runtime?",
-                "options": [
-                    "Energy needed (kWh)",
-                    "Load frequency (Hz)",
-                    "Inverter brand",
-                    "Battery chemistry color"
-                ],
-                "correct": 0,
-                "explanation": "Battery bank size is about kWh required over the outage duration."
-            },
-            {
-                "question": "If essential loads average 1 kW and the outage lasts 4 hours, the energy needed is…",
-                "options": ["1 kWh", "4 kWh", "10 kWh", "40 kWh"],
-                "correct": 1,
-                "explanation": "Energy (kWh) = Load (kW) × Hours. 1 × 4 = 4 kWh."
-            },
-            {
-                "question": "A 10 kWh battery can ideally supply 2 kW for about…",
-                "options": ["2 hours", "5 hours", "10 hours", "20 hours"],
-                "correct": 1,
-                "explanation": "Time ≈ Energy ÷ Power = 10 ÷ 2 = 5 hours (idealized)."
-            },
-            {
-                "question": "If a kettle (2 kW) and microwave (1.2 kW) run at the same time, total power is…",
-                "options": ["1.2 kW", "2.0 kW", "3.2 kW", "4.2 kW"],
                 "correct": 2,
-                "explanation": "Power adds when loads run together: 2.0 + 1.2 = 3.2 kW."
+                "explanation": "Energy (kWh) is power over time; it determines how much storage is needed in the battery bank to meet the required runtime.",
             },
             {
-                "question": "Why is it not ideal to size a battery to discharge 100% on every outage?",
+                "question": "A kettle rated at 2 kW uses:",
                 "options": [
-                    "Deep discharge generally reduces lifespan and leaves no safety margin",
-                    "It increases PV output",
-                    "It increases grid frequency",
-                    "It changes AC into DC"
+                    "A) 2 kWh per minute",
+                    "B) 2 kW at that moment",
+                    "C) 2 kWh per second",
+                    "D) 2 volts",
                 ],
-                "correct": 0,
-                "explanation": "Practical designs include usable DoD limits and margin for longevity and real-world variation."
+                "correct": 1,
+                "explanation": "A kW rating tells you the power draw at that moment. Energy (kWh) depends on how long the kettle runs.",
             },
             {
-                "question": "Which statement is MOST accurate for sizing?",
+                "question": "If multiple appliances run at the same time, what happens?",
                 "options": [
-                    "kW sets inverter size; kWh sets runtime",
-                    "kWh sets inverter size; kW sets runtime",
-                    "Hz sets runtime; V sets inverter size",
-                    "A sets battery size; V sets runtime"
+                    "A) Voltage drops automatically",
+                    "B) Their kWh adds up",
+                    "C) Their kW adds up",
+                    "D) Nothing changes",
                 ],
-                "correct": 0,
-                "explanation": "Power (kW) is about how much at once; energy (kWh) is about how long."
+                "correct": 2,
+                "explanation": "When loads run simultaneously, their power adds (kW). The inverter must be sized to handle the combined power.",
             },
             {
-                "question": "Why do installers often add sizing margin beyond the simple kW×hours calculation?",
+                "question": "In South Africa, standard household AC supply is:",
                 "options": [
-                    "DoD limits, efficiency losses, surge loads, and future expansion",
-                    "Because AC has no losses",
-                    "Because kW and kWh are identical",
-                    "Because voltage is the same as current"
+                    "A) 110 V / 60 Hz",
+                    "B) 230 V / 50 Hz",
+                    "C) 48 V DC",
+                    "D) 400 Hz",
                 ],
-                "correct": 0,
-                "explanation": "Real systems have losses and constraints; margin improves reliability and durability."
-            }
+                "correct": 1,
+                "explanation": "South Africa residential mains supply is typically AC around 230 V at 50 Hz.",
+            },
+            {
+                "question": "Solar panels produce:",
+                "options": [
+                    "A) AC",
+                    "B) DC",
+                    "C) 3-phase only",
+                    "D) Pulsed AC",
+                ],
+                "correct": 1,
+                "explanation": "PV modules generate DC electricity; conversion to AC is done by an inverter.",
+            },
+            {
+                "question": "The inverter converts:",
+                "options": [
+                    "A) AC to AC",
+                    "B) DC to DC",
+                    "C) DC to AC (and AC to DC when charging)",
+                    "D) Voltage to current",
+                ],
+                "correct": 2,
+                "explanation": "Inverters supply AC loads from DC sources (PV/battery) and typically rectify AC to DC when charging the battery.",
+            },
+            {
+                "question": "Why is understanding AC and DC critical?",
+                "options": [
+                    "A) It reduces battery cost",
+                    "B) It improves sales",
+                    "C) It improves installation and fault finding",
+                    "D) It changes grid frequency",
+                ],
+                "correct": 2,
+                "explanation": "Knowing which side is AC or DC helps with correct wiring, protection, commissioning, and troubleshooting across conversion stages.",
+            },
+            {
+                "question": "A home runs 1 kW of essential loads for 5 hours. Energy required is:",
+                "options": [
+                    "A) 1 kWh",
+                    "B) 5 kWh",
+                    "C) 6 kWh",
+                    "D) 10 kWh",
+                ],
+                "correct": 1,
+                "explanation": "Energy (kWh) = Load (kW) × Time (h). 1 kW × 5 h = 5 kWh.",
+            },
+            {
+                "question": "Why should batteries not be sized at 100% discharge?",
+                "options": [
+                    "A) It increases voltage",
+                    "B) It shortens lifespan",
+                    "C) It improves efficiency",
+                    "D) It increases SOC",
+                ],
+                "correct": 1,
+                "explanation": "Regularly discharging to 100% DoD increases stress and typically reduces lifespan; practical designs keep a reserve and account for losses.",
+            },
+            {
+                "question": "A safe design for 4 kWh required backup would typically recommend:",
+                "options": [
+                    "A) 4 kWh battery",
+                    "B) 5 kWh battery",
+                    "C) 8–10 kWh battery",
+                    "D) 2 kWh battery",
+                ],
+                "correct": 2,
+                "explanation": "A larger battery (e.g., 8–10 kWh) reduces depth of discharge, provides margin for inefficiencies/surges, and supports longer battery life.",
+            },
+            {
+                "question": "If essential loads total 3 kW, the inverter must be sized based on:",
+                "options": [
+                    "A) 3 kWh",
+                    "B) 3 kW",
+                    "C) 48 V",
+                    "D) Battery SOC",
+                ],
+                "correct": 1,
+                "explanation": "Inverter sizing is driven by power (kW) because it must supply that load rate at the same time.",
+            },
+            {
+                "question": "REVOV uses which chemistry?",
+                "options": [
+                    "A) Lead-acid",
+                    "B) NMC",
+                    "C) LiFePO₄",
+                    "D) Gel",
+                ],
+                "correct": 2,
+                "explanation": "REVOV systems use LiFePO₄ (Lithium Iron Phosphate), chosen for safety, stability, and long cycle life.",
+            },
+            {
+                "question": "One full charge and discharge is called:",
+                "options": [
+                    "A) SOC",
+                    "B) DoD",
+                    "C) Cycle",
+                    "D) Efficiency",
+                ],
+                "correct": 2,
+                "explanation": "A cycle is one full equivalent charge and discharge (not necessarily in one continuous event).",
+            },
+            {
+                "question": "State of Charge (SOC) represents:",
+                "options": [
+                    "A) Battery temperature",
+                    "B) Remaining energy percentage",
+                    "C) Maximum voltage",
+                    "D) Discharge speed",
+                ],
+                "correct": 1,
+                "explanation": "SOC is the remaining charge/energy in the battery expressed as a percentage.",
+            },
+            {
+                "question": "Depth of Discharge (DoD) measures:",
+                "options": [
+                    "A) Charging time",
+                    "B) Energy used per cycle",
+                    "C) Voltage fluctuation",
+                    "D) Cable resistance",
+                ],
+                "correct": 1,
+                "explanation": "DoD indicates how much of the battery capacity has been used (discharged) relative to full capacity.",
+            },
+            {
+                "question": "Typical lithium battery round-trip efficiency is:",
+                "options": [
+                    "A) 70%",
+                    "B) 80%",
+                    "C) 85%",
+                    "D) 93–97%",
+                ],
+                "correct": 3,
+                "explanation": "Lithium systems are high efficiency; typical round-trip (charge-to-discharge) efficiency is roughly in the mid-to-high 90% range.",
+            },
+            {
+                "question": "The BMS is responsible for:",
+                "options": [
+                    "A) Generating AC",
+                    "B) Cooling the inverter",
+                    "C) Monitoring and protecting battery cells",
+                    "D) Increasing voltage output",
+                ],
+                "correct": 2,
+                "explanation": "A BMS monitors cell voltages/temperature/current and protects the pack by enforcing safe operating limits.",
+            },
+            {
+                "question": "A system with inverter + battery only (no solar) is:",
+                "options": [
+                    "A) Hybrid",
+                    "B) Grid-tied",
+                    "C) Backup system",
+                    "D) Off-grid",
+                ],
+                "correct": 2,
+                "explanation": "With no PV generation, the system primarily provides backup power from the battery via the inverter.",
+            },
+            {
+                "question": "A grid-tied system without batteries:",
+                "options": [
+                    "A) Provides backup",
+                    "B) Reduces electricity bills only",
+                    "C) Works during loadshedding",
+                    "D) Is off-grid",
+                ],
+                "correct": 1,
+                "explanation": "Without storage, grid-tied PV mainly offsets consumption to reduce bills; it generally cannot provide backup during outages.",
+            },
+            {
+                "question": "A hybrid system:",
+                "options": [
+                    "A) Uses generator only",
+                    "B) Uses battery only",
+                    "C) Combines solar, battery, and grid",
+                    "D) Cannot export energy",
+                ],
+                "correct": 2,
+                "explanation": "Hybrid systems integrate PV, battery storage, and the grid so power can flow from multiple sources depending on conditions.",
+            },
+            {
+                "question": "An off-grid system:",
+                "options": [
+                    "A) Requires Eskom connection",
+                    "B) Runs independently of the grid",
+                    "C) Cannot use batteries",
+                    "D) Is cheaper than hybrid",
+                ],
+                "correct": 1,
+                "explanation": "Off-grid means the site operates independently of the utility grid and relies on PV/generator + batteries for supply.",
+            },
+            {
+                "question": "Most system losses typically occur in:",
+                "options": [
+                    "A) Solar glass",
+                    "B) Wiring insulation",
+                    "C) Inverter conversion and cabling",
+                    "D) The house DB board only",
+                ],
+                "correct": 2,
+                "explanation": "Major losses are usually from conversion (inverter/charger) and resistive losses in cabling/connectors, especially at high current.",
+            },
+            {
+                "question": "Well-designed systems typically deliver approximately:",
+                "options": [
+                    "A) 60–70% of PV energy to loads",
+                    "B) 75–80%",
+                    "C) 90–95%",
+                    "D) 100%",
+                ],
+                "correct": 2,
+                "explanation": "A well-designed system typically delivers most of the generated energy to loads, with losses commonly leaving around ~90–95% usable.",
+            },
+            {
+                "question": "Which of the following helps minimise system losses?",
+                "options": [
+                    "A) Longer cable runs",
+                    "B) Undersized conductors",
+                    "C) High-efficiency inverters and correct cable sizing",
+                    "D) Ignoring firmware updates",
+                ],
+                "correct": 2,
+                "explanation": "Efficient conversion equipment and correctly sized cables reduce conversion losses and I²R heating losses.",
+            },
         ]
     
     @staticmethod
@@ -742,6 +922,287 @@ class EducationalQuizzes:
                 "correct": 0,
                 "explanation": "Module 1 positions storage as essential for reliability and savings in modern systems."
             }
+        ]
+
+    @staticmethod
+    def quiz_module_2_assessment() -> List[Dict]:
+        """Module 2 assessment: Electrical Fundamentals."""
+        return [
+            {
+                "question": "1. Voltage (V) represents:",
+                "options": [
+                    "A) Energy stored over time",
+                    "B) Electrical pressure",
+                    "C) Cable thickness",
+                    "D) Resistance",
+                ],
+                "correct": 1,
+                "explanation": "Voltage is the electrical pressure that pushes current through a circuit.",
+            },
+            {
+                "question": "2. Current (A) determines:",
+                "options": [
+                    "A) Inverter frequency",
+                    "B) Battery chemistry",
+                    "C) Cable and breaker sizing",
+                    "D) Solar panel tilt",
+                ],
+                "correct": 2,
+                "explanation": "Higher current requires correct cable thickness and protective device sizing.",
+            },
+            {
+                "question": "3. Power is calculated using:",
+                "options": [
+                    "A) V ÷ I",
+                    "B) V × I",
+                    "C) I × R",
+                    "D) P × t",
+                ],
+                "correct": 1,
+                "explanation": "Electrical power is calculated as voltage multiplied by current.",
+            },
+            {
+                "question": "4. Energy (kWh) is calculated using:",
+                "options": [
+                    "A) Voltage × Current",
+                    "B) Current ÷ Voltage",
+                    "C) Power × Time",
+                    "D) Resistance × Voltage",
+                ],
+                "correct": 2,
+                "explanation": "Energy over time is calculated by multiplying power by time.",
+            },
+            {
+                "question": "5. A 5 kW inverter running at 48 V draws approximately:",
+                "options": [
+                    "A) 48 A",
+                    "B) 104 A",
+                    "C) 240 A",
+                    "D) 500 A",
+                ],
+                "correct": 1,
+                "explanation": "Current is approximately 5 000 W ÷ 48 V = 104 A.",
+            },
+            {
+                "question": "6. If voltage increases and power stays the same, current will:",
+                "options": [
+                    "A) Increase",
+                    "B) Stay the same",
+                    "C) Decrease",
+                    "D) Double",
+                ],
+                "correct": 2,
+                "explanation": "For the same power, higher voltage means lower current.",
+            },
+            {
+                "question": "7. Resistance increases when:",
+                "options": [
+                    "A) Cable length decreases",
+                    "B) Cable thickness increases",
+                    "C) Cable length increases",
+                    "D) Voltage increases",
+                ],
+                "correct": 2,
+                "explanation": "Longer cable runs increase resistance and therefore voltage drop and heating risk.",
+            },
+            {
+                "question": "8. DC is considered less forgiving because:",
+                "options": [
+                    "A) It changes direction constantly",
+                    "B) It produces lower voltage",
+                    "C) Polarity errors can cause immediate damage",
+                    "D) It cannot carry high current",
+                ],
+                "correct": 2,
+                "explanation": "On DC systems, reverse polarity can damage equipment immediately and DC arcs are harder to interrupt.",
+            },
+            {
+                "question": "9. Most battery-side installation faults occur on:",
+                "options": [
+                    "A) AC output",
+                    "B) Grid connection",
+                    "C) DC side",
+                    "D) Monitoring software",
+                ],
+                "correct": 2,
+                "explanation": "Battery-side issues usually show up on the DC side through polarity, terminations, cable sizing, or protection problems.",
+            },
+            {
+                "question": "10. AC in South Africa operates at:",
+                "options": [
+                    "A) 110 V / 60 Hz",
+                    "B) 230 V / 50 Hz",
+                    "C) 48 V / 50 Hz",
+                    "D) 400 V DC",
+                ],
+                "correct": 1,
+                "explanation": "Standard South African household AC supply is about 230 V at 50 Hz.",
+            },
+            {
+                "question": "11. Earth leakage nuisance trips are usually related to:",
+                "options": [
+                    "A) DC cable size",
+                    "B) AC bonding or neutral issues",
+                    "C) Battery SOC",
+                    "D) PV string voltage",
+                ],
+                "correct": 1,
+                "explanation": "Nuisance tripping is commonly caused by AC-side neutral, bonding, or earthing issues.",
+            },
+            {
+                "question": "12. The inverter in a hybrid system primarily acts as:",
+                "options": [
+                    "A) A simple DC charger",
+                    "B) A voltage regulator only",
+                    "C) A traffic controller between AC and DC",
+                    "D) A fuse replacement",
+                ],
+                "correct": 2,
+                "explanation": "A hybrid inverter manages power flow between PV, battery, loads, and grid across AC and DC sides.",
+            },
+            {
+                "question": "13. In a series battery connection:",
+                "options": [
+                    "A) Voltage stays the same",
+                    "B) Capacity increases",
+                    "C) Voltage increases",
+                    "D) Current doubles",
+                ],
+                "correct": 2,
+                "explanation": "In series, voltage adds while capacity stays the same.",
+            },
+            {
+                "question": "14. In a parallel battery connection:",
+                "options": [
+                    "A) Voltage increases",
+                    "B) Capacity increases",
+                    "C) Voltage halves",
+                    "D) Resistance doubles",
+                ],
+                "correct": 1,
+                "explanation": "In parallel, capacity increases while voltage stays the same.",
+            },
+            {
+                "question": "15. Unequal parallel cable lengths can cause:",
+                "options": [
+                    "A) Higher efficiency",
+                    "B) Equal current sharing",
+                    "C) Uneven battery loading",
+                    "D) Lower voltage",
+                ],
+                "correct": 2,
+                "explanation": "Different cable lengths create different resistance paths, leading to uneven current sharing.",
+            },
+            {
+                "question": "16. Most REVOV LV systems expand using:",
+                "options": [
+                    "A) Series only",
+                    "B) Parallel only",
+                    "C) AC coupling",
+                    "D) Step-down transformers",
+                ],
+                "correct": 1,
+                "explanation": "Low-voltage REVOV systems are typically expanded by adding compatible batteries in parallel.",
+            },
+            {
+                "question": "17. Undersized DC cables can cause:",
+                "options": [
+                    "A) Higher SOC",
+                    "B) Voltage drop and overheating",
+                    "C) Increased efficiency",
+                    "D) Faster charging",
+                ],
+                "correct": 1,
+                "explanation": "Small DC cables increase resistance, which causes voltage drop and heat build-up.",
+            },
+            {
+                "question": "18. A loose DC lug increases:",
+                "options": [
+                    "A) Voltage",
+                    "B) Current",
+                    "C) Resistance",
+                    "D) Frequency",
+                ],
+                "correct": 2,
+                "explanation": "A poor termination increases resistance and can create heat under load.",
+            },
+            {
+                "question": "19. The main purpose of a DC breaker near the battery is to:",
+                "options": [
+                    "A) Increase voltage",
+                    "B) Protect cables and equipment",
+                    "C) Improve efficiency",
+                    "D) Boost inverter output",
+                ],
+                "correct": 1,
+                "explanation": "The breaker provides fault protection for the connected conductors and equipment.",
+            },
+            {
+                "question": "20. A DC isolator is important because:",
+                "options": [
+                    "A) It improves battery lifespan",
+                    "B) It allows safe shutdown for maintenance",
+                    "C) It increases grid export",
+                    "D) It reduces SOC",
+                ],
+                "correct": 1,
+                "explanation": "A DC isolator allows the circuit to be safely disconnected before maintenance or inspection.",
+            },
+            {
+                "question": "21. Before energising a battery connection, you must:",
+                "options": [
+                    "A) Check SOC",
+                    "B) Measure polarity with a multimeter",
+                    "C) Increase inverter voltage",
+                    "D) Reset the BMS",
+                ],
+                "correct": 1,
+                "explanation": "Always verify polarity with a multimeter before making a live DC connection.",
+            },
+            {
+                "question": "22. Reverse polarity on DC can damage:",
+                "options": [
+                    "A) AC breakers only",
+                    "B) Solar panels only",
+                    "C) Internal inverter components",
+                    "D) Earth rods",
+                ],
+                "correct": 2,
+                "explanation": "Reverse polarity can damage internal electronics in the inverter or connected DC equipment.",
+            },
+            {
+                "question": "23. A 3 kW load running on a 48 V system draws approximately:",
+                "options": [
+                    "A) 6 A",
+                    "B) 30 A",
+                    "C) 62 A",
+                    "D) 144 A",
+                ],
+                "correct": 2,
+                "explanation": "Current is approximately 3 000 W ÷ 48 V = 62.5 A, so about 62 A.",
+            },
+            {
+                "question": "24. High current combined with resistance results in:",
+                "options": [
+                    "A) Cooling",
+                    "B) Heat build-up",
+                    "C) Higher frequency",
+                    "D) Reduced voltage rating",
+                ],
+                "correct": 1,
+                "explanation": "High current through resistance produces heat, which is why cable size and terminations matter.",
+            },
+            {
+                "question": "25. The safest professional practice before working on DC systems is:",
+                "options": [
+                    "A) Assume system is safe",
+                    "B) Work quickly",
+                    "C) Isolate, test for dead, and wear PPE",
+                    "D) Disconnect the grid only",
+                ],
+                "correct": 2,
+                "explanation": "Safe DC work starts with isolation, confirming the system is de-energised, and using proper PPE.",
+            },
         ]
 
 

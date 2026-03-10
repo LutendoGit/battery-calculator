@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizzes - Lithium Battery Education</title>
+    {% include '_favicon.html' %}
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -11,17 +12,25 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             min-height: 100vh;
-            padding: 20px;
+            padding: 20px 20px 0;
+            display: flex;
+            flex-direction: column;
         }
-        .container { max-width: 900px; margin: 0 auto; }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            flex: 1 0 auto;
+        }
         header {
-            background: white;
+            background: rgba(102, 126, 234, 0.85);
             padding: 25px;
             border-radius: 8px;
             margin-bottom: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: white;
         }
-        h1 { color: #667eea; margin-bottom: 10px; }
+        h1 { color: white; margin-bottom: 10px; }
         .quiz-card {
             background: white;
             border-radius: 8px;
@@ -129,7 +138,7 @@
             width: 32px;
             height: 32px;
             border-radius: 999px;
-            border: 1px solid rgba(0,0,0,0.08);
+            border: none;
             background: rgba(102, 126, 234, 0.12);
             display: inline-flex;
             align-items: center;
@@ -176,7 +185,7 @@
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 25px;
+            padding: 12px;
             display: none;
         }
 
@@ -206,7 +215,7 @@
         .option-btn {
             text-align: left;
             width: 100%;
-            padding: 12px 14px;
+            padding: 18px 18px;
             border: 1px solid #e5e7eb;
             background: #f8fafc;
             border-radius: 8px;
@@ -226,7 +235,7 @@
         }
 
         .toast {
-            background: #f3f4f6;
+            background: white;
             border-left: 4px solid #16a34a;
             padding: 10px 12px;
             border-radius: 6px;
@@ -241,10 +250,39 @@
             margin-top: 15px;
             flex-wrap: wrap;
         }
-        .secondary-btn {
-            background: #111827;
+
+        .runner-actions button {
+            padding: 12px 12px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 700;
+            min-width: 140px;
         }
-        .secondary-btn:hover { background: #0b1220; }
+
+        .runner-actions button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .primary-btn {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #764ba2;
+            border-color: #764ba2;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            border-color: #667eea;
+            color: #667eea;
+        }
+        .secondary-btn:hover { background: #e0e7ff; }
         .ghost-btn {
             background: transparent;
             border: 1px solid #cbd5e1;
@@ -253,18 +291,56 @@
         .ghost-btn:hover {
             background: #f8fafc;
         }
+
+        #nextQuizBtn {
+            display: none;
+        }
+
+        .quiz-footer {
+            width: 100%;
+            margin-top: auto;
+            background: transparent;
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            padding: 28px 20px 20px;
+            font-size: 0.85em;
+            line-height: 1.6;
+        }
+
+        .quiz-footer-brand {
+            font-weight: 700;
+            font-size: 1.05em;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .quiz-footer-links {
+            margin-top: 6px;
+        }
+
+        .quiz-footer-link {
+            color: rgba(255,255,255,0.95);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .quiz-footer-copy {
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.6);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📝 Introduction to Energy Storage & Modern Energy </h1>
-            <p>A clear understanding of power versus energy is the foundation of correct system sizing.  </p>
+            <h1>📝 Assessment Quizzes</h1>
+            <p>!.Each quiz unlocks after its matching fundamentals lesson is completed.</p>
 
             <div class="top-actions">
                 <div class="left">
                     <div class="progress-pill" id="unlockStatus">Unlocking…</div>
-                    <a href="{{ url_for('education.learn_index', hub=1) }}">Back to Training Hub</a>
+                    <a  href="{{ url_for('education.progress') }}">Dashboard</a>
                 </div>
                 {% if session.get('edu_user_id') %}
                 <div class="right">
@@ -284,65 +360,22 @@
         <div class="quiz-list" id="quizList">
             <div class="quiz-card" data-quiz-id="capacity-dod">
                 <div class="quiz-icon">⚡</div>
-                <h2>Power vs Energy & Backup Sizing</h2>
-                <p>kW vs kWh and how to size backup runtime</p>
+                <h2>Module 1 Assessment</h2>
+                <p>Introduction to Energy Storage & Modern Energy Systems</p>
+                <p>25 questions • Pass mark 75%</p>
                 <div class="pos-row" data-quiz-pos></div>
                 <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
                 <button type="button" onclick="startQuiz('capacity-dod')">Start Quiz</button>
             </div>
 
-            <div class="quiz-card" data-quiz-id="crate">
-                <div class="quiz-icon">🔌</div>
-                <h2>AC vs DC & Conversion</h2>
-                <p>How electricity moves through a modern energy system</p>
+            <div class="quiz-card" data-quiz-id="module-2-assessment">
+                <div class="quiz-icon">🧰</div>
+                <h2>Module 2 Assessment Quiz</h2>
+                <p>Electrical Fundamentals (Module 2)</p>
+                <p>25 questions • Pass mark 75%</p>
                 <div class="pos-row" data-quiz-pos></div>
                 <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
-                <button type="button" onclick="startQuiz('crate')">Start Quiz</button>
-            </div>
-
-            <div class="quiz-card" data-quiz-id="cell-health">
-                <div class="quiz-icon">🧩</div>
-                <h2>Core System Components</h2>
-                <p>Identify key parts and what each one does</p>
-                <div class="pos-row" data-quiz-pos></div>
-                <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
-                <button type="button" onclick="startQuiz('cell-health')">Start Quiz</button>
-            </div>
-
-            <div class="quiz-card" data-quiz-id="chemistry">
-                <div class="quiz-icon">🔋</div>
-                <h2>How Lithium-Ion Works</h2>
-                <p>Basic charge/discharge and what’s happening inside</p>
-                <div class="pos-row" data-quiz-pos></div>
-                <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
-                <button type="button" onclick="startQuiz('chemistry')">Start Quiz</button>
-            </div>
-
-            <div class="quiz-card" data-quiz-id="cycles-aging">
-                <div class="quiz-icon">📘</div>
-                <h2>Key Battery Concepts</h2>
-                <p>SOC, DoD, cycles, efficiency, and BMS basics</p>
-                <div class="pos-row" data-quiz-pos></div>
-                <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
-                <button type="button" onclick="startQuiz('cycles-aging')">Start Quiz</button>
-            </div>
-
-            <div class="quiz-card" data-quiz-id="pack-design">
-                <div class="quiz-icon">🔀</div>
-                <h2>System Types & Energy Flow</h2>
-                <p>Grid-tied, hybrid, off-grid, and backup operation</p>
-                <div class="pos-row" data-quiz-pos></div>
-                <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
-                <button type="button" onclick="startQuiz('pack-design')">Start Quiz</button>
-            </div>
-
-            <div class="quiz-card" data-quiz-id="bms-balancing">
-                <div class="quiz-icon">📉</div>
-                <h2>Efficiency, Losses & REVOV Fit</h2>
-                <p>Understand losses and why sizing margin matters</p>
-                <div class="pos-row" data-quiz-pos></div>
-                <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
-                <button type="button" onclick="startQuiz('bms-balancing')">Start Quiz</button>
+                <button type="button" onclick="startQuiz('module-2-assessment')">Start Quiz</button>
             </div>
         </div>
 
@@ -356,34 +389,39 @@
             <div id="options" class="options"></div>
             <div id="explanation" class="explanation"></div>
             <div class="runner-actions">
-                <button id="nextBtn" onclick="nextQuestion()">Next</button>
-                <button id="nextQuizBtn" class="secondary-btn" onclick="goNextQuiz()" style="display:none;">Next Quiz</button>
-                <button class="ghost-btn" onclick="restartQuiz()">Restart</button>
-                <button class="secondary-btn" onclick="closeQuiz()">Close</button>
+                <button id="nextBtn" class="primary-btn" onclick="nextQuestion()">Next</button>
+                <button id="nextQuizBtn" class="secondary-btn" onclick="goNextModule()">Next Module</button>
+                <button class="ghost-btn" onclick="restartQuiz()">Retry</button>
+                <button class="secondary-btn" onclick="closeQuiz()">Exit</button>
             </div>
         </section>
     </div>
     
     <script>
         const QUIZ_TITLES = {
-            'capacity-dod': 'Power vs Energy & Backup Sizing Quiz',
-            'crate': 'AC vs DC & Conversion Quiz',
-            'cell-health': 'Core System Components Quiz',
-            'chemistry': 'How Lithium-Ion Works Quiz',
-            'cycles-aging': 'Key Battery Concepts Quiz',
-            'pack-design': 'System Types & Energy Flow Quiz',
-            'bms-balancing': 'Efficiency, Losses & REVOV Fit Quiz'
+            'capacity-dod': 'Module 1 Assessment Quiz',
+            'module-2-assessment': 'Module 2 Assessment Quiz'
+        };
+
+        const PASS_MARKS = {
+            'capacity-dod': 75,
+            'module-2-assessment': 75
+        };
+
+        const QUIZ_REQUIREMENTS = {
+            'capacity-dod': 'Fundamentals (Module 1)',
+            'module-2-assessment': 'Fundamentals (Module 2)'
         };
 
         const QUIZ_ORDER = [
             'capacity-dod',
-            'crate',
-            'cell-health',
-            'chemistry',
-            'cycles-aging',
-            'pack-design',
-            'bms-balancing'
+            'module-2-assessment'
         ];
+
+        const NEXT_MODULE_URLS = {
+            'capacity-dod': "{{ url_for('education.fundamentals_module2') }}",
+            'module-2-assessment': "{{ url_for('education.learn_index', hub=1) }}"
+        };
 
         let activeQuizId = null;
         let questions = [];
@@ -392,27 +430,27 @@
         let answered = false;
 
         // Server-backed state (SQLite, tied to logged-in user)
-        let unlockedIndex = 0;
+        let unlockedSet = new Set();
         let completedSet = new Set();
 
         // Fallback local state (used only if server API fails)
-        const UNLOCK_KEY = 'edu_quiz_unlocked_index_v1';
+        const UNLOCK_KEY = 'edu_quiz_unlocked_ids_v2';
         const COMPLETED_KEY = 'edu_quiz_completed_v1';
 
-        function getUnlockedIndexLocal() {
+        function getUnlockedSetLocal() {
             try {
                 const raw = localStorage.getItem(UNLOCK_KEY);
-                const n = parseInt(raw || '0', 10);
-                if (!Number.isFinite(n) || n < 0) return 0;
-                return Math.min(n, QUIZ_ORDER.length - 1);
+                const arr = JSON.parse(raw || '[]');
+                if (!Array.isArray(arr)) return new Set();
+                return new Set(arr.filter(id => QUIZ_ORDER.includes(id)));
             } catch (e) {
-                return 0;
+                return new Set();
             }
         }
 
-        function setUnlockedIndexLocal(idx) {
+        function setUnlockedSetLocal(setObj) {
             try {
-                localStorage.setItem(UNLOCK_KEY, String(idx));
+                localStorage.setItem(UNLOCK_KEY, JSON.stringify(Array.from(setObj)));
             } catch (e) {
                 // ignore
             }
@@ -446,14 +484,16 @@
                 if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
                 const data = await resp.json();
 
-                const idx = parseInt(data.unlocked_index ?? 0, 10);
-                unlockedIndex = Number.isFinite(idx) ? Math.max(0, Math.min(idx, QUIZ_ORDER.length - 1)) : 0;
+                const unlocked = Array.isArray(data.unlocked) ? data.unlocked : [];
+                unlockedSet = new Set(unlocked.filter(id => QUIZ_ORDER.includes(id)));
                 const completed = Array.isArray(data.completed) ? data.completed : [];
                 completedSet = new Set(completed);
+                setUnlockedSetLocal(unlockedSet);
+                setCompletedSetLocal(completedSet);
                 return true;
             } catch (e) {
                 console.warn('Using local unlock state fallback:', e);
-                unlockedIndex = getUnlockedIndexLocal();
+                unlockedSet = getUnlockedSetLocal();
                 completedSet = getCompletedSetLocal();
                 return false;
             }
@@ -472,18 +512,16 @@
         }
 
         function isQuizUnlocked(quizId) {
-            const idx = quizIndex(quizId);
-            if (idx < 0) return false;
-            return idx <= unlockedIndex;
+            return unlockedSet.has(quizId);
         }
 
         function renderUnlockUI() {
-            const unlockedIdx = unlockedIndex;
+            const unlocked = unlockedSet;
             const completed = completedSet;
 
             const status = document.getElementById('unlockStatus');
             if (status) {
-                status.textContent = `Unlocked: ${unlockedIdx + 1}/${QUIZ_ORDER.length} • Completed: ${completed.size}/${QUIZ_ORDER.length}`;
+                status.textContent = `Unlocked: ${unlocked.size}/${QUIZ_ORDER.length} • Completed: ${completed.size}/${QUIZ_ORDER.length}`;
             }
 
             document.querySelectorAll('[data-quiz-id]').forEach(card => {
@@ -500,13 +538,14 @@
                     posRow.textContent = idx >= 0 ? `Quiz ${idx + 1} of ${QUIZ_ORDER.length}` : '';
                 }
 
-                // Status row (always visible): Locked / Unlocked / Completed
                 if (lockRow) {
                     lockRow.hidden = false;
                     lockRow.classList.remove('unlocked', 'completed');
                 }
 
                 if (completed.has(qid)) {
+                    card.classList.remove('locked');
+                    if (btn) btn.disabled = false;
                     if (lockIcon) lockIcon.textContent = '✅';
                     if (lockText) lockText.textContent = 'Completed';
                     if (lockRow) lockRow.classList.add('completed');
@@ -514,15 +553,9 @@
                     card.classList.add('locked');
                     if (btn) btn.disabled = true;
 
-                    // Show prerequisite quiz.
-                    const idx = quizIndex(qid);
-                    const prereqId = idx > 0 ? QUIZ_ORDER[idx - 1] : null;
                     if (lockText) {
-                        if (prereqId) {
-                            lockText.textContent = `Complete ${quizDisplayTitle(prereqId)} first`;
-                        } else {
-                            lockText.textContent = 'Locked';
-                        }
+                        const requiredLesson = QUIZ_REQUIREMENTS[qid] || 'the required lesson';
+                        lockText.textContent = `Complete ${requiredLesson} first`;
                     }
                     if (lockIcon) lockIcon.textContent = '🔒';
                 } else {
@@ -617,7 +650,7 @@
                 const resp = await fetch(`/learn/api/quiz/${quizId}`, { credentials: 'same-origin' });
                 if (resp.status === 403) {
                     document.getElementById('runnerMeta').textContent = 'This quiz is locked.';
-                    document.getElementById('questionText').textContent = 'Finish the previous quiz to unlock this one.';
+                    document.getElementById('questionText').textContent = 'Finish the corresponding fundamentals lesson to unlock this quiz.';
                     document.getElementById('options').innerHTML = '';
                     document.getElementById('nextBtn').disabled = true;
                     setNextQuizVisible(false);
@@ -700,33 +733,27 @@
 
             // Finish
             const pct = Math.round((score / questions.length) * 100);
-            document.getElementById('questionText').textContent = `Finished! Your score: ${score}/${questions.length} (${pct}%).`;
+            const required = PASS_MARKS[activeQuizId];
+            const hasPassMark = Number.isFinite(required);
+            const passed = !hasPassMark || (pct >= required);
+
+            if (hasPassMark) {
+                document.getElementById('questionText').textContent = `Finished! Your score: ${score}/${questions.length} (${pct}%). Pass mark: ${required}%. ${passed ? 'PASSED' : 'NOT YET'}.`;
+            } else {
+                document.getElementById('questionText').textContent = `Finished! Your score: ${score}/${questions.length} (${pct}%).`;
+            }
             document.getElementById('options').innerHTML = '';
             const explanationEl = document.getElementById('explanation');
-            explanationEl.textContent = 'Tip: Restart to try again or pick another quiz above.';
+            explanationEl.textContent = passed
+                ? 'Tip: Restart to try again or continue to the next module......'
+                : `Pass mark is ${required}%. Restart to try again.`;
             explanationEl.style.display = 'block';
             document.getElementById('runnerMeta').textContent = QUIZ_TITLES[activeQuizId] || 'Quiz';
             document.getElementById('nextBtn').disabled = true;
-            setNextQuizVisible(true);
+            setNextQuizVisible(passed);
             showToast('');
 
-            // Unlock next quiz only when this quiz is fully completed.
-            try {
-                // Keep local fallback in sync too
-                const completedLocal = getCompletedSetLocal();
-                completedLocal.add(activeQuizId);
-                setCompletedSetLocal(completedLocal);
-                const idx = quizIndex(activeQuizId);
-                if (idx >= 0) {
-                    const nextIdx = Math.min(idx + 1, QUIZ_ORDER.length - 1);
-                    const unlockedIdxLocal = getUnlockedIndexLocal();
-                    if (nextIdx > unlockedIdxLocal) setUnlockedIndexLocal(nextIdx);
-                }
-            } catch (e) {
-                // ignore
-            }
-
-            // Record progress (if logged in). Safe to ignore failures.
+            // Record attempt (server will only mark completion/unlock if pass mark is met).
             try {
                 await fetch('/learn/api/progress/quiz-complete', {
                     method: 'POST',
@@ -738,15 +765,23 @@
                 // ignore
             }
 
+            // Keep local fallback in sync only if the quiz is passed.
+            if (passed) {
+                try {
+                    const completedLocal = getCompletedSetLocal();
+                    completedLocal.add(activeQuizId);
+                    setCompletedSetLocal(completedLocal);
+                } catch (e) {
+                    // ignore
+                }
+            }
+
             // Refresh from server so unlock persists across devices.
             await refreshUnlockStateFromServer();
             renderUnlockUI();
 
-            // If the next quiz is now unlocked, confirm it.
-            const idx = quizIndex(activeQuizId);
-            const nextId = idx >= 0 ? QUIZ_ORDER[idx + 1] : null;
-            if (nextId && isQuizUnlocked(nextId)) {
-                showToast(`Unlocked: ${quizDisplayTitle(nextId)}`);
+            if (passed) {
+                showToast('Quiz result saved.');
             }
         }
 
@@ -770,6 +805,15 @@
             }
 
             startQuiz(nextId);
+        }
+
+        function goNextModule() {
+            try {
+                const nextUrl = NEXT_MODULE_URLS[activeQuizId];
+                if (nextUrl) window.location.href = nextUrl;
+            } catch (e) {
+                // ignore
+            }
         }
 
         function restartQuiz() {
@@ -797,7 +841,25 @@
         (async function () {
             await refreshUnlockStateFromServer();
             renderUnlockUI();
+
+            // Optional deep link: /learn/quizzes?start=capacity-dod
+            try {
+                const params = new URLSearchParams(window.location.search || '');
+                const startId = (params.get('start') || '').trim();
+                if (startId && isQuizUnlocked(startId)) {
+                    startQuiz(startId);
+                }
+            } catch (e) {
+                // ignore
+            }
         })();
     </script>
+
+    <div class="quiz-footer">
+        <div class="quiz-footer-brand">Revov WattWorks</div>
+        <div>Installer Training Platform &middot; Empowering Energy Professionals</div>
+        <div class="quiz-footer-links"><a href="{{ url_for('education.learn_index', hub=1) }}" class="quiz-footer-link">Home</a> &middot; <a href="{{ url_for('index') }}" class="quiz-footer-link">Battery Calculator</a></div>
+        <div class="quiz-footer-copy">&copy; 2026 Revov Energy. All rights reserved.</div>
+    </div>
 </body>
 </html>

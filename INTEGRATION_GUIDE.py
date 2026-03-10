@@ -12,7 +12,7 @@ How to add the educational modules to your Flask app
 from routes.education_routes import education_bp
 """
 
-# Add this line in your Flask app initialization (after app = Flask(__name__)):
+# Add this line in  Flask app initialization (after app = Flask(__name__)):
 """
 # Register education blueprint
 app.register_blueprint(education_bp)
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 # STEP 2: Create Directory Structure
 # ==============================================
 
-# Run these commands in your project root:
+# Run these commands in project root:
 commands = [
     "mkdir modules",
     "mkdir routes",
