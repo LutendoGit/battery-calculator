@@ -1,7 +1,16 @@
 from flask import Flask, Response, render_template,abort, request,stream_with_context, redirect, url_for, flash, send_file, jsonify
+
+# Load .env in development (no-op if file doesn't exist or python-dotenv not installed)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 import calculator
 #import re
 import json
+import logging
 import time
 from io import BytesIO
 import uuid
@@ -29,6 +38,12 @@ app.config.setdefault('TEMPLATES_AUTO_RELOAD', True)
 app.jinja_env.auto_reload = True
 # Reduce caching of static assets in dev so UI tweaks are visible.
 app.config.setdefault('SEND_FILE_MAX_AGE_DEFAULT', 0)
+
+if not (os.environ.get("SMTP_USERNAME") and os.environ.get("SMTP_PASSWORD")):
+    logging.getLogger(__name__).warning(
+        "SMTP_USERNAME and/or SMTP_PASSWORD are not set. "
+        "Password reset emails will NOT be sent."
+    )
 
 
 def _maintenance_enabled() -> bool:
