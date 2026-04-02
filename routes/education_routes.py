@@ -137,7 +137,7 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
         )
 
     try:
-        with smtplib.SMTP(host, port, timeout=30) as smtp:
+        with smtplib.SMTP(host, port, timeout=10) as smtp:
             if debug:
                 smtp.set_debuglevel(1)  # prints SMTP conversation to Render logs
 
@@ -151,12 +151,15 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
 
             if debug:
                 print("[SMTP] send_message: OK")
+                import socket
+                print("[SMTP] resoived:",socket.gethostbyname(host))
 
     except Exception as e:
         # This will show up in Render -> Logs
         print("[SMTP] ERROR:", repr(e))
         print(traceback.format_exc())
         raise
+        smtp.noop() # these forces early failure if connection is half-open( but its optional)
 
 def _project_root() -> str:
     """Return absolute project root (one level above `routes/`)."""
