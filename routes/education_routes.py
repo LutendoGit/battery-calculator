@@ -114,10 +114,10 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
       <p>If you did not request this, you can ignore this email.</p>
      </body>
    </html>
-"""
+   """
 
-msg.set_content(text_body)
-msg.add_alternative(html_body, subtype="html")
+   msg.set_content(text_body)
+   msg.add_alternative(html_body, subtype="html")
 
 
     #context = ssl.create_default_context() # no longer useful since backed by HTML altinative
