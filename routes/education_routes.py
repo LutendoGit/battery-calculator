@@ -111,7 +111,7 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
       <body>
       <p>We received a request to reset your password.</p>
       <p><a href="{reset_url}">Click here to reset your password</a></p>
-      <p>If you did not request this, you can ignore this email.</p>
+      <p> If you did not request this, you can ignore this email.</p>
      </body>
    </html>
    """
@@ -120,7 +120,7 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
     msg.add_alternative(html_body, subtype="html")
 
 
-    #context = ssl.create_default_context() # no longer useful since backed by HTML altinative
+    context = ssl.create_default_context() 
 
     # Helpful deployment-only diagnostics (safe: no password printed)
     if debug:
