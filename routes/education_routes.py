@@ -100,14 +100,27 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
     msg["Subject"] = "Password reset"
     msg["From"] = from_addr
     msg["To"] = to_email
-    msg.set_content(
-        "We received a request to reset your password.\n\n"
-        f"Reset link: {reset_url}\n\n"
-        "If you did not request this, you can ignore this email.\n"
+    text_body = (
+    "We received a request to reset your password.\n\n"
+    "Use this link to reset your password:\n"
+    f"{reset_url}\n\n"
+    "If you did not request this, you can ignore this email.\n"
     )
+    html_body = f"""
+    <html>
+      <body>
+      <p>We received a request to reset your password.</p>
+      <p><a href="{reset_url}">Click here to reset your password</a></p>
+      <p>If you did not request this, you can ignore this email.</p>
+     </body>
+   </html>
+"""
+
+msg.set_content(text_body)
+msg.add_alternative(html_body, subtype="html")
 
 
-    context = ssl.create_default_context()
+    #context = ssl.create_default_context() # no longer useful since backed by HTML altinative
 
     # Helpful deployment-only diagnostics (safe: no password printed)
     if debug:
