@@ -673,6 +673,11 @@ def forgot_password():
                     record_event("password_reset_email_sent", user_id=(user.id if user else None), payload={"username": username})
                     emailed_ok = True
                 except Exception as e:
+                    import traceback as _tb_mod
+                    current_app.logger.exception(
+                        "SMTP send failed for user=%s to=%s: %s\n%s",
+                        username, email, e, _tb_mod.format_exc()
+                    )
                     record_event(
                         "password_reset_email_failed",
                         user_id=(user.id if user else None),
@@ -1415,6 +1420,64 @@ def admin_db_quiz_failures():
                         ).fetchall()
 
         return jsonify({"rows": [dict(r) for r in rows], "pass_pct": pass_pct})
+
+
+@education_bp.get("/admin/smtp-test")
+def admin_smtp_test():
+    """Send a test email via the configured SMTP settings.
+
+    Protected by ADMIN_STREAM_TOKEN.  Call with:
+        GET /learn/admin/smtp-test?token=YOUR_TOKEN&to=you@example.com
+
+    Returns JSON with keys:
+        ok (bool), error (str|null), details (dict)
+    """
+    _require_admin_token()
+
+    to_email = (request.args.get("to") or "").strip()
+    if not to_email or "@" not in to_email:
+        return jsonify({"ok": False, "error": "Provide ?to=email@example.com", "details": {}}), 400
+
+    # Mirror exactly what _send_password_reset_email reads.
+    host = (os.environ.get("SMTP_HOST", "smtp.gmail.com") or "smtp.gmail.com").strip() or "smtp.gmail.com"
+    raw_port = (os.environ.get("SMTP_PORT", "587") or "587").strip()
+    username = (os.environ.get("SMTP_USERNAME") or "").strip()
+    password_raw = os.environ.get("SMTP_PASSWORD") or ""
+    password = "".join(password_raw.split())   # strip spaces (Gmail app pw)
+    from_addr = (os.environ.get("SMTP_FROM") or username).strip()
+    use_starttls_raw = os.environ.get("SMTP_STARTTLS", "1")
+    use_starttls = (use_starttls_raw.strip().lower() not in {"0", "false", "no"})
+
+    details = {
+        "SMTP_HOST": host,
+        "SMTP_PORT": raw_port,
+        "SMTP_USERNAME": username,
+        "SMTP_PASSWORD_SET": bool(password),
+        "SMTP_PASSWORD_LEN": len(password),
+        "SMTP_FROM": from_addr,
+        "SMTP_STARTTLS": use_starttls,
+        "smtp_configured": _smtp_configured(),
+    }
+
+    try:
+        port = int(raw_port)
+    except ValueError:
+        return jsonify({"ok": False, "error": f"SMTP_PORT is not an integer: {raw_port!r}", "details": details}), 400
+
+    if not username:
+        return jsonify({"ok": False, "error": "SMTP_USERNAME is empty", "details": details}), 400
+    if not password:
+        return jsonify({"ok": False, "error": "SMTP_PASSWORD is empty (after stripping spaces)", "details": details}), 400
+
+    import traceback as _tb
+    try:
+        test_url = url_for("education.reset_password", token="test-token", _external=True)
+        _send_password_reset_email(to_email=to_email, reset_url=test_url)
+        return jsonify({"ok": True, "error": None, "details": details})
+    except Exception as exc:
+        tb = _tb.format_exc()
+        current_app.logger.error("SMTP test failed: %s\n%s", exc, tb)
+        return jsonify({"ok": False, "error": str(exc), "traceback": tb, "details": details}), 500
 
 
 # ============= FUNDAMENTAL CONCEPTS ROUTES =============
