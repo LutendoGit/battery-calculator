@@ -107,7 +107,7 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
     )
 
 
-   context = ssl.create_default_context()
+    context = ssl.create_default_context()
 
     # Helpful deployment-only diagnostics (safe: no password printed)
     if debug:
