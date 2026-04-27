@@ -92,6 +92,9 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
     debug = (os.environ.get("SMTP_DEBUG", "0").strip().lower() in {"1", "true", "yes"})
 
     if not username or not password:
+        current_app.logger.error(
+            "_send_password_reset_email called but SMTP_USERNAME/SMTP_PASSWORD are empty"
+        )
         raise RuntimeError("SMTP_USERNAME and SMTP_PASSWORD must be set")
     if not from_addr:
         raise RuntimeError("SMTP_FROM must be set (or SMTP_USERNAME must be non-empty)")
@@ -673,6 +676,10 @@ def forgot_password():
                     record_event("password_reset_email_sent", user_id=(user.id if user else None), payload={"username": username})
                     emailed_ok = True
                 except Exception as e:
+                    current_app.logger.exception(
+                        "password_reset_email_failed for user=%s error=%s",
+                        username, str(e)[:300],
+                    )
                     record_event(
                         "password_reset_email_failed",
                         user_id=(user.id if user else None),
