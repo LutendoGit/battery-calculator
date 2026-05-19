@@ -20,6 +20,7 @@ import sqlite3
 import ssl
 import smtplib
 import uuid
+import traceback
 
 
 from flask import Blueprint, abort, flash, jsonify, redirect, render_template, request, send_file, session, url_for
@@ -87,15 +88,19 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
     - SMTP_PASSWORD (required)  # Gmail app password
     - SMTP_FROM (default: SMTP_USERNAME)
     - SMTP_STARTTLS (default: 1)
+    - SMTP_DEBUG (default: 0)   # set to 1 on Render temporarily
     """
     host = (os.environ.get("SMTP_HOST", "smtp.gmail.com") or "smtp.gmail.com").strip() or "smtp.gmail.com"
     port = int((os.environ.get("SMTP_PORT", "587") or "587").strip())
     username = (os.environ.get("SMTP_USERNAME") or "").strip()
+
     # Gmail app passwords are often displayed/pasted with spaces: "xxxx xxxx xxxx xxxx".
     # so remove whitespace so SMTP auth works even if includes spaces.
     password = "".join((os.environ.get("SMTP_PASSWORD") or "").split())
+
     from_addr = (os.environ.get("SMTP_FROM") or username).strip()
     use_starttls = (os.environ.get("SMTP_STARTTLS", "1").strip().lower() not in {"0", "false", "no"})
+    debug = (os.environ.get("SMTP_DEBUG", "0").strip().lower() in {"1", "true", "yes"})
 
     if not username or not password:
         raise RuntimeError("SMTP_USERNAME and SMTP_PASSWORD must be set")
@@ -106,21 +111,66 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
     msg["Subject"] = "Password reset"
     msg["From"] = from_addr
     msg["To"] = to_email
-    msg.set_content(
-        "We received a request to reset your password.\n\n"
-        f"Reset link: {reset_url}\n\n"
-        "If you did not request this, you can ignore this email.\n"
+    text_body = (
+    "We received a request to reset your password.\n\n"
+    "Use this link to reset your password:\n"
+    f"{reset_url}\n\n"
+    "If you did not request this, you can ignore this email.\n"
     )
+    html_body = f"""
+    <html>
+      <body>
+      <p>We received a request to reset your password.</p>
+      <p><a href="{reset_url}">Click here to reset your password</a></p>
+      <p> If you did not request this, you can ignore this email.</p>
+     </body>
+   </html>
+   """
 
-    context = ssl.create_default_context()
-    with smtplib.SMTP(host, port, timeout=15) as smtp:
-        smtp.ehlo()
-        if use_starttls:
-            smtp.starttls(context=context)
+    msg.set_content(text_body)
+    msg.add_alternative(html_body, subtype="html")
+
+
+    context = ssl.create_default_context() 
+
+    # Helpful deployment-only diagnostics (safe: no password printed)
+    if debug:
+        print(
+            "[SMTP] config:",
+            {
+                "host": host,
+                "port": port,
+                "username": username,
+                "from": from_addr,
+                "to": to_email,
+                "starttls": use_starttls,
+            },
+        )
+
+    try:
+        with smtplib.SMTP(host, port, timeout=10) as smtp:
+            if debug:
+                smtp.set_debuglevel(1)  # prints SMTP conversation to Render logs
+
             smtp.ehlo()
-        smtp.login(username, password)
-        smtp.send_message(msg)
+            if use_starttls:
+                smtp.starttls(context=context)
+                smtp.ehlo()
 
+            smtp.login(username, password)
+            smtp.send_message(msg)
+
+            if debug:
+                print("[SMTP] send_message: OK")
+                import socket
+                print("[SMTP] resoived:",socket.gethostbyname(host))
+
+    except Exception as e:
+        # This will show up in Render -> Logs
+        print("[SMTP] ERROR:", repr(e))
+        print(traceback.format_exc())
+        raise
+        smtp.noop() # these forces early failure if connection is half-open( but its optional)
 
 def _project_root() -> str:
     """Return absolute project root (one level above `routes/`)."""
