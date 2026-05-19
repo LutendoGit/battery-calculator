@@ -163,6 +163,7 @@
         padding: 12px;
         box-shadow: 0 18px 40px rgba(0,0,0,0.35);
         z-index: 20;
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
       }
 
@@ -231,9 +232,49 @@
         background-clip: text;
         -webkit-background-clip: text; 
         -webkit-text-fill-color: transparent; 
-        margin-bottom: 30px;}
+        margin-bottom: 30px;
+      }
 
-      {% include '_site_footer_styles.html' %}
+      .site-footer {
+        width: 100%;
+        margin-top: 30px;
+        background: transparent;
+        color: rgba(255,255,255,0.85);
+        text-align: center;
+        padding: 28px 20px 20px;
+        font-size: 0.85em;
+        line-height: 1.6;
+      }
+
+      .site-footer .footer-brand {
+        font-weight: 700;
+        font-size: 1.05em;
+        margin-bottom: 4px;
+        color: #fff;
+      }
+
+      .site-footer-links {
+        margin-top: 6px;
+      }
+
+      .site-footer a,
+      .site-footer-link {
+        color: rgba(255,255,255,0.95);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .site-footer a:hover,
+      .site-footer-link:hover {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .site-footer-copy {
+        margin-top: 8px;
+        font-size: 0.9em;
+        color: rgba(255,255,255,0.6);
+      }
     </style>
   </head>
   <body>
@@ -287,7 +328,7 @@
           <div class="font-weight-bold" style="margin-bottom: 8px; color: rgba(255,255,255,0.98);">This is a focused, installer driven training program designed around:</div>
           <ul class="mb-0">
             <li>Real system design</li>
-            <li>Safety and compliant installation</li>
+            <li>Safe and compliant installation</li>
             <li>Revov Lithium-Ion battery integration</li>
             <li>Commissioning and troubleshooting</li>
             <li>Product-specific deep dives</li>

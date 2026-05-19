@@ -2,7 +2,7 @@
 
 Adds educational content to the battery calculator app.
 
-Includes optional user accounts, progress tracking, and certificates.
+Includes user accounts, progress tracking, and certificates.
 """
 
 from __future__ import annotations
@@ -50,7 +50,18 @@ from modules.lithium_education import (
     CapacityAndDOD,
     CRate,
     BatteryLifeAndCycles,
-    CellSpecifications
+    CellSpecifications,
+    MODULE_3_BATTERY_FUNDAMENTALS,
+    MODULE_4_BMS,
+    MODULE_5_ENERGY_SYSTEM_DESIGN,
+    MODULE_6_INSTALLATION_WIRING,
+    MODULE_6_ASSESSMENT,
+    MODULE_7_SYSTEM_CONFIG,
+    MODULE_7_ASSESSMENT,
+    MODULE_8_MONITORING_TROUBLESHOOTING,
+    MODULE_8_ASSESSMENT,
+    MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE,
+    MODULE_10_INSTALLER_GUIDES_AND_RESOURCES,
 )
 from modules.interactive_tools import (
     CellSimulator,
@@ -81,7 +92,7 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
     port = int((os.environ.get("SMTP_PORT", "587") or "587").strip())
     username = (os.environ.get("SMTP_USERNAME") or "").strip()
     # Gmail app passwords are often displayed/pasted with spaces: "xxxx xxxx xxxx xxxx".
-    # Remove whitespace so SMTP auth works even if the user includes spaces.
+    # so remove whitespace so SMTP auth works even if includes spaces.
     password = "".join((os.environ.get("SMTP_PASSWORD") or "").split())
     from_addr = (os.environ.get("SMTP_FROM") or username).strip()
     use_starttls = (os.environ.get("SMTP_STARTTLS", "1").strip().lower() not in {"0", "false", "no"})
@@ -206,6 +217,14 @@ class _NavItem:
 _LESSON_ITEMS = [
     _NavItem("lesson:fundamentals", "Fundamentals (Module 1)", "education.fundamentals"),
     _NavItem("lesson:fundamentals-2", "Fundamentals (Module 2)", "education.fundamentals_module2"),
+    _NavItem("lesson:fundamentals-3", "Fundamentals (Module 3)", "education.fundamentals_module3"),
+    _NavItem("lesson:fundamentals-4", "Fundamentals (Module 4)", "education.fundamentals_module4"),
+    _NavItem("lesson:fundamentals-5", "Fundamentals (Module 5)", "education.fundamentals_module5"),
+    _NavItem("lesson:fundamentals-6", "Installation & Wiring (Module 6)", "education.fundamentals_module6"),
+    _NavItem("lesson:fundamentals-7", "System Configuration (Module 7)", "education.fundamentals_module7"),
+    _NavItem("lesson:fundamentals-8", "Monitoring & Troubleshooting (Module 8)", "education.fundamentals_module8"),
+    _NavItem("lesson:fundamentals-9", "REVOV Ecosystem (Module 9)", "education.fundamentals_module9"),
+    _NavItem("lesson:fundamentals-10", "Installer Guides (Module 10)", "education.fundamentals_module10"),
     # _NavItem("lesson:chemistry", "Battery Chemistry", "education.chemistry"),
     # _NavItem("lesson:capacity-dod", "Capacity & DOD", "education.capacity_dod"),
     # _NavItem("lesson:crate", "C-Rate Explained", "education.crate_learn"),
@@ -215,18 +234,38 @@ _LESSON_ITEMS = [
 _QUIZZES = [
     {"id": "capacity-dod", "title": "Module 1 Assessment Quiz"},
     {"id": "module-2-assessment", "title": "Module 2 Assessment Quiz"},
+    {"id": "module-3-assessment", "title": "Module 3 Assessment Quiz"},
+    {"id": "module-4-assessment", "title": "Module 4 Assessment Quiz"},
+    {"id": "module-5-assessment", "title": "Module 5 Assessment Quiz"},
+    {"id": "module-6-assessment", "title": "Module 6 Assessment Quiz"},
+    {"id": "module-7-assessment", "title": "Module 7 Assessment Quiz"},
+    {"id": "module-8-assessment", "title": "Module 8 Assessment Quiz"},
 ]
 
 
 _QUIZ_PREREQ_LESSONS: dict[str, str] = {
     "capacity-dod": "lesson:fundamentals",
     "module-2-assessment": "lesson:fundamentals-2",
+    "module-3-assessment": "lesson:fundamentals-3",
+    "module-4-assessment": "lesson:fundamentals-4",
+    "module-5-assessment": "lesson:fundamentals-5",
+    "module-6-assessment": "lesson:fundamentals-6",
+    "module-7-assessment": "lesson:fundamentals-7",
+    "module-8-assessment": "lesson:fundamentals-8",
 }
 
 
 _TRACKED_LESSON_STEP_COUNTS: dict[str, int] = {
     "lesson:fundamentals": len(LithiumBatteryFundamentals.MODULE_1_FUNDAMENTALS.get("sections", [])) + 1,
     "lesson:fundamentals-2": len(LithiumBatteryFundamentals.MODULE_2_ELECTRICAL_FUNDAMENTALS.get("sections", [])) + 1,
+    "lesson:fundamentals-3": len(MODULE_3_BATTERY_FUNDAMENTALS.get("sections", [])) + 1,
+    "lesson:fundamentals-4": len(MODULE_4_BMS.get("sections", [])) + 1,
+    "lesson:fundamentals-5": len(MODULE_5_ENERGY_SYSTEM_DESIGN.get("sections", [])) + 1,
+    "lesson:fundamentals-6": len(MODULE_6_INSTALLATION_WIRING.get("sections", [])) + 1,
+    "lesson:fundamentals-7": len(MODULE_7_SYSTEM_CONFIG.get("sections", [])) + 1,
+    "lesson:fundamentals-8": len(MODULE_8_MONITORING_TROUBLESHOOTING.get("sections", [])) + 1,
+    "lesson:fundamentals-9": len(MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE.get("sections", [])) + 1,
+    "lesson:fundamentals-10": len(MODULE_10_INSTALLER_GUIDES_AND_RESOURCES.get("sections", [])) + 1,
 }
 
 
@@ -234,6 +273,9 @@ _QUIZ_PASS_MARKS: dict[str, int] = {
     # Module 1 assessment
     "capacity-dod": 75,
     "module-2-assessment": 75,
+    "module-3-assessment": 75,
+    "module-4-assessment": 75,
+    "module-5-assessment": 75,
 }
 
 
@@ -1429,6 +1471,243 @@ def fundamentals_module2():
     )
 
 
+@education_bp.route('/fundamentals/module-3')
+def fundamentals_module3():
+    """Fundamentals Module 3: Battery Fundamentals"""
+    content = MODULE_3_BATTERY_FUNDAMENTALS
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Continue to Module 3 Assessment Quiz (Battery Fundamentals)",
+        "paragraphs": [
+            "You’ve reached the end of Module 3 (Battery Fundamentals).",
+        ],
+        "links": [
+            {
+                "url": url_for("education.quiz_index", start="module-3-assessment"),
+                "label": "Take Module 3 Quiz",
+            },
+            {
+                "url": url_for("education.learn_index", hub=1),
+                "label": "Back to Training Hub",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals-3",
+    )
+
+
+@education_bp.route('/fundamentals/module-4')
+def fundamentals_module4():
+    """Fundamentals Module 4: Battery Management System (BMS)"""
+    content = MODULE_4_BMS
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Continue to Module 4 Assessment Quiz (Battery Management System)",
+        "paragraphs": [
+            "You’ve reached the end of Module 4 (Battery Management System).",
+        ],
+        "links": [
+            {
+                "url": url_for("education.quiz_index", start="module-4-assessment"),
+                "label": "Take Module 4 Quiz",
+            },
+            {
+                "url": url_for("education.learn_index", hub=1),
+                "label": "Back to Training Hub",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals-4",
+    )
+
+
+@education_bp.route('/fundamentals/module-5')
+def fundamentals_module5():
+    """Fundamentals Module 5: Energy System Design & Sizing"""
+    content = MODULE_5_ENERGY_SYSTEM_DESIGN
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Continue to Module 5 Assessment Quiz (Energy System Design & Sizing)",
+        "paragraphs": [
+            "You’ve reached the end of Module 5 (Energy System Design & Sizing).",
+        ],
+        "links": [
+            {
+                "url": url_for("education.quiz_index", start="module-5-assessment"),
+                "label": "Take Module 5 Quiz",
+            },
+            {
+                "url": url_for("education.learn_index", hub=1),
+                "label": "Back to Training Hub",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals-5",
+    )
+
+
+@education_bp.route('/fundamentals/module-6')
+@login_required(message="Please log in to access this lesson.")
+def fundamentals_module6():
+    """Fundamentals Module 6: Installation, Wiring & Integration"""
+    content = MODULE_6_INSTALLATION_WIRING
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Continue to Module 6 Assessment Quiz (Installation, Wiring & Integration)",
+        "paragraphs": [
+            "You've reached the end of Module 6 (Installation, Wiring & Integration).",
+        ],
+        "links": [
+            {
+                "url": url_for("education.quiz_index", start="module-6-assessment"),
+                "label": "Take Module 6 Quiz",
+            },
+            {
+                "url": url_for("education.learn_index", hub=1),
+                "label": "Back to Training Hub",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals-6",
+    )
+
+
+@education_bp.route('/fundamentals/module-7')
+@login_required(message="Please log in to access this lesson.")
+def fundamentals_module7():
+    """Fundamentals Module 7: System Configuration, Communication & Firmware"""
+    content = MODULE_7_SYSTEM_CONFIG
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Continue to Module 7 Assessment Quiz (System Configuration, Communication & Firmware)",
+        "paragraphs": [
+            "You've reached the end of Module 7 (System Configuration, Communication & Firmware).",
+        ],
+        "links": [
+            {
+                "url": url_for("education.quiz_index", start="module-7-assessment"),
+                "label": "Take Module 7 Quiz",
+            },
+            {
+                "url": url_for("education.learn_index", hub=1),
+                "label": "Back to Training Hub",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals-7",
+    )
+
+
+@education_bp.route('/fundamentals/module-8')
+@login_required(message="Please log in to access this lesson.")
+def fundamentals_module8():
+    """Fundamentals Module 8: Monitoring, Optimisation, Troubleshooting & Fault Finding"""
+    content = MODULE_8_MONITORING_TROUBLESHOOTING
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Continue to Module 8 Assessment Quiz (Monitoring, Troubleshooting & Maintenance)",
+        "paragraphs": [
+            "You've reached the end of Module 8 (Monitoring, Optimisation, Troubleshooting & Fault Finding).",
+        ],
+        "links": [
+            {
+                "url": url_for("education.quiz_index", start="module-8-assessment"),
+                "label": "Take Module 8 Quiz",
+            },
+            {
+                "url": url_for("education.learn_index", hub=1),
+                "label": "Back to Training Hub",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals-8",
+    )
+
+
+@education_bp.route('/fundamentals/module-9')
+@login_required(message="Please log in to access this lesson.")
+def fundamentals_module9():
+    """Fundamentals Module 9: REVOV Ecosystem and Product Range"""
+    content = MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Explore REVOV Ecosystem & Product Range",
+        "paragraphs": [
+            "You've reached the end of Module 9 (REVOV Ecosystem and Product Range).",
+        ],
+        "links": [
+            {
+                "url": url_for("education.learn_index", hub=1),
+                "label": "Back to Training Hub",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals-9",
+    )
+
+
+@education_bp.route('/fundamentals/module-10')
+@login_required(message="Please log in to access this lesson.")
+def fundamentals_module10():
+    """Fundamentals Module 10: Installer Guides and Resources"""
+    content = MODULE_10_INSTALLER_GUIDES_AND_RESOURCES
+
+    continue_card = {
+        "step_title": "Continue Learning",
+        "title": "📚 Installer Guides & Best Practices",
+        "paragraphs": [
+            "You've reached the end of Module 10 (Installer Guides and Resources).",
+        ],
+        "links": [
+            {
+                "url": url_for("education.learn_index", hub=1),
+                "label": "Back to Training Hub",
+            },
+        ],
+    }
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card=continue_card,
+        lesson_key="lesson:fundamentals-10",
+    )
+
+
 @education_bp.route('/chemistry')
 @login_required(message="Please log in to access this lesson.")
 def chemistry():
@@ -1671,6 +1950,60 @@ def api_quiz_module_2_assessment():
         return locked
 
     questions = EducationalQuizzes.quiz_module_2_assessment()
+    resp = jsonify(questions)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@education_bp.route('/api/quiz/module-3-assessment')
+@api_login_required
+def api_quiz_module_3_assessment():
+    """API: Get Module 3 assessment quiz."""
+    user = _current_user()
+    if not user:
+        return jsonify({"error": "login_required"}), 401
+    locked = _require_quiz_unlocked(user.id, "module-3-assessment")
+    if locked is not None:
+        return locked
+
+    questions = EducationalQuizzes.quiz_module_3_assessment()
+    # Keep A/B/C/D option order and question order for assessment
+    resp = jsonify(questions)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@education_bp.route('/api/quiz/module-4-assessment')
+@api_login_required
+def api_quiz_module_4_assessment():
+    """API: Get Module 4 assessment quiz."""
+    user = _current_user()
+    if not user:
+        return jsonify({"error": "login_required"}), 401
+    locked = _require_quiz_unlocked(user.id, "module-4-assessment")
+    if locked is not None:
+        return locked
+
+    questions = EducationalQuizzes.quiz_module_4_assessment()
+    # Keep A/B/C/D option order and question order for assessment
+    resp = jsonify(questions)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@education_bp.route('/api/quiz/module-5-assessment')
+@api_login_required
+def api_quiz_module_5_assessment():
+    """API: Get Module 5 assessment quiz."""
+    user = _current_user()
+    if not user:
+        return jsonify({"error": "login_required"}), 401
+    locked = _require_quiz_unlocked(user.id, "module-5-assessment")
+    if locked is not None:
+        return locked
+
+    questions = EducationalQuizzes.quiz_module_5_assessment()
+    # Keep A/B/C/D option order and question order for assessment
     resp = jsonify(questions)
     resp.headers["Cache-Control"] = "no-store"
     return resp
