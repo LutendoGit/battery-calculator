@@ -8143,8 +8143,7 @@ MODULE_10_INSTALLER_GUIDES_AND_RESOURCES = {
                    "src" : "images/how to read revov batter.png",
                     "alt" : "image of how to read revov spec sheets.",
                 },
-            ],
-             "images" : [
+            
                 {
                    "src" : "images/revov e100 fault.png",
                     "alt" : "image of a REVOV E100 BATTERY",
@@ -8153,8 +8152,7 @@ MODULE_10_INSTALLER_GUIDES_AND_RESOURCES = {
                    "src" : "images/revov e300 fault.png",
                     "alt" : "image of a REVOV E300 BATTERY fault finding",
                 },
-            ],
-             "images" : [
+            
                 {
                    "src" : "images/cfe 61.44 fault.png",
                     "alt" : "image of a REVOV CFE 61.44 BATTERY fault finding",
