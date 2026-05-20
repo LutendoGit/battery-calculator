@@ -8081,7 +8081,7 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
             ],
              "images" : [
                 {
-                   "src" : "images/2e100.png",
+                   "src" : "images/e100.png",
                     "alt" : "image of a REVOV E100 BATTERY",
                 },
                   {
