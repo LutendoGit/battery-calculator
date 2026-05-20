@@ -4748,7 +4748,7 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                     "alt": "Real-World System Design Example",
                 },
                  {
-                    "src": "images/MEDIUM HOME BACKUP.png.png",
+                    "src": "images/MEDIUM HOME BACKUP.png",
                     "alt": "Real-World System Design Example",
                 },
                  {
@@ -8045,6 +8045,16 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "With integrated Bluetooth-enabled BMS functionality, excellent temperature resilience and an IP55-rated design, these batteries provide reliable low-maintenance power for recreational, marine, off-grid, emergency backup and industrial applications.",
                 "The REVOV 12V range is ideal for RVs, camping, boating, remote sites, telecoms backup systems, portable power solutions and niche mobility applications such as golf carts, utility vehicles and small electric boats where dependable energy storage and continuous operation are critical.",
             ],
+            "images" : [
+                {
+                  "src" : "images/12v100ah.png",
+                    "alt" : "image for Revov 12V100Ah battery ",
+                },
+                {
+                  "src" : "images/12v200ah.png",
+                    "alt" : "image for Revov 12v200ah.png battery ",
+                },
+            ],
         },
         {
             "title": "9.10 REVOV 24V LiFePO4 product range",
@@ -8053,6 +8063,12 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "Engineered for flexibility and durability, these batteries are ideal for installations requiring stable power in demanding environments, including telecoms infrastructure, remote sites, UPS systems, security and CCTV applications.",
                 "The REVOV 24V range combines intelligent battery management with Bluetooth monitoring capability, robust environmental protection and excellent temperature resilience to ensure reliable performance in harsh operating conditions.",
                 "With an IP55-rated design and long service life, these batteries deliver practical, low-maintenance lithium energy storage solutions for applications where space, reliability and continuous operation are critical.",
+            ],
+            "images" : [
+                {
+                   "src" : "images/24v100ah.png",
+                    "alt" : "image of a REVOV 24V100AH BATTERY",
+                },
             ],
         },
         {
@@ -8063,6 +8079,16 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "Built to handle demanding African operating conditions, including high temperatures, humidity and altitude, these modular lithium battery systems offer flexible expansion from smaller residential backup systems through to larger commercial energy storage installations.",
                 "With advanced BMS protection, high round-trip efficiency, fast charging capability and compatibility with a wide range of trusted third-party monitoring and integration platforms, the REVOV 51.2V range is ideal for residential solar systems, off-grid and hybrid installations, commercial backup applications, telecoms, data centres, security infrastructure and critical power environments where stability, scalability and business continuity are critical.",
             ],
+             "images" : [
+                {
+                   "src" : "images/2e100.png",
+                    "alt" : "image of a REVOV E100 BATTERY",
+                },
+                  {
+                   "src" : "images/e300.png",
+                    "alt" : "image of a REVOV E300 BATTERY",
+                },
+            ],
         },
         {
             "title": "9.12 High Voltage LiFePO4 product range",
@@ -8071,6 +8097,16 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "High Voltage systems operate at significantly higher voltages than traditional low-voltage battery systems, allowing for lower current flow, smaller cable diameters, improved efficiency, and easier scalability for larger installations.",
                 "These systems are ideal for large residential properties, commercial and industrial applications, agricultural operations, security infrastructure, and grid-scale energy solutions where reliability, performance, and business continuity are critical.",
                 "REVOV High Voltage solutions are highly scalable, with systems under 150kWh available as standard modular solutions, while larger systems can be expanded using multiple battery modules or custom engineered by REVOV Energy Projects for large industrial and utility-scale applications exceeding 1MWh.",
+            ],
+            "images" : [
+                {
+                   "src" : "images/cfe 61.44.png",
+                    "alt" : "image of a REVOV CFE 61.44 BATTERY",
+                },
+                  {
+                   "src" : "images/energy core 51.2.png",
+                    "alt" : "image of a REVOV energy core 51.2 BATTERY",
+                },
             ],
         },
     ],
@@ -8097,6 +8133,36 @@ MODULE_10_INSTALLER_GUIDES_AND_RESOURCES = {
                 "professional,",
                 "easy to maintain,",
                 "and trusted by customers for years to come.",
+            ],
+             "images" : [
+                {
+                   "src" : "images/installer design guid.png",
+                    "alt" : "image of a installation guid for the installers",
+                },
+                  {
+                   "src" : "images/how to read revov batter.png",
+                    "alt" : "image of how to read revov spec sheets.",
+                },
+            ],
+             "images" : [
+                {
+                   "src" : "images/revov e100 fault.png",
+                    "alt" : "image of a REVOV E100 BATTERY",
+                },
+                  {
+                   "src" : "images/revov e300 fault.png",
+                    "alt" : "image of a REVOV E300 BATTERY fault finding",
+                },
+            ],
+             "images" : [
+                {
+                   "src" : "images/cfe 61.44 fault.png",
+                    "alt" : "image of a REVOV CFE 61.44 BATTERY fault finding",
+                },
+                  {
+                   "src" : "images/energy core 51,2 fault.png",
+                    "alt" : "image of a REVOV energy core 51.2 fault finding.",
+                },
             ],
         },
     ],
