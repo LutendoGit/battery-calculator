@@ -5121,6 +5121,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "customer frustration",
                 "reduced battery lifespan",
             ],
+            "images" :[
+                {
+                    "src" : "images/best installer dont guess.png",
+                    "alt" : "images about what installers must not do",
+                }
+            ],
         },
         {
             "title": "6.4 Understanding the Customer Requirement",
@@ -5138,6 +5144,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "load separation",
                 "expansion planning",
             ],
+             "images" :[
+                {
+                    "src" : "images/good communicatiopn during.png",
+                    "alt" : "images about good communicatiopn during site inspections",
+                },
+            ],
         },
         {
             "title": "6.5 Identifying Essential vs Non-Essential Loads",
@@ -5153,6 +5165,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "improves runtime",
                 "reduces system cost",
                 "improves system stability",
+            ],
+             "images" :[
+                {
+                    "src" : "images/always walk through the property.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -5170,6 +5188,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "cable condition",
                 "overall DB compliance",
                 "earthing quality",
+            ],
+             "images" :[
+                {
+                    "src" : "images/many nuisance tripps and system install.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -5207,6 +5231,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "accessibility",
                 "protection from moisture and dust",
                 "proximity to the DB board",
+            ],
+            "images" :[
+                {
+                    "src" : "images/heat is one of the biggest causes.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -5286,6 +5316,16 @@ MODULE_6_INSTALLATION_WIRING = {
                 "maintenance access",
                 "exposure to chemicals or corrosive environments",
             ],
+            "images" :[
+                {
+                    "src" : "images/high-quality system installed in apoor.png",
+                    "alt" : "",
+                },
+                 {
+                    "src" : "images/Children pets and.jpg",
+                    "alt" : "",
+                },
+            ],
         },
         {
             "title": "6.11 Identifying Risks Before Installation",
@@ -5329,6 +5369,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "9. Verify wiring",
                 "10. Perform final inspection",
                 "11. Prepare for commissioning",
+            ],
+             "images" :[
+                {
+                    "src" : "images/very important installer rule.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -5381,7 +5427,16 @@ MODULE_6_INSTALLATION_WIRING = {
             "title": "6.15 DC Wiring Fundamentals",
             "paragraphs": [
                 "The DC side of the system is one of the highest-risk areas of the installation.",
-                "Incorrect DC wiring can cause:",
+               
+            ],
+             "images" :[
+                {
+                    "src" : "images/battery system operate at.png",
+                    "alt" : "",
+                },
+            ],
+            "paragraphs_after": [
+                 "Incorrect DC wiring can cause:",
             ],
             "bullets": [
                 "overheating",
@@ -5457,6 +5512,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "correct torque settings",
                 "heat shrink application",
                 "post-installation re-checking",
+            ],
+             "images" :[
+                {
+                    "src" : "images/bad crimp = future failure.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -5674,20 +5735,51 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.29 Ideal Installation System Examples",
+            "title": "6.27 Ideal Installation System Examples",
             "paragraphs": [
                 "A good installation is not only about making the system work — it is about creating a safe, reliable, efficient, and professional energy solution that will perform well for many years.",
                 "The following examples demonstrate what a properly planned and professionally installed REVOV system should look like in real-world applications.",
                 "Pay close attention to equipment placement, cable routing, ventilation, protection devices, communication wiring, and overall workmanship, as these small details often make the biggest difference in long-term system performance and reliability.",
             ],
+             "images" :[
+                {
+                    "src" : "images/ideal installation-small system.png",
+                    "alt" : "",
+                },
+            ],
+             "images" :[
+                {
+                    "src" : "images/ideal installation-medium system.png",
+                    "alt" : "",
+                },
+            ],
+             "images" :[
+                {
+                    "src" : "images/ideal installtion -large system.png",
+                    "alt" : "",
+                },
+            ],
         },
         {
-            "title": "6.27 Common Installation Mistakes",
+            "title": "6.28 Common Installation Mistakes",
             "paragraphs": [],
+            "images" :[
+                {
+                    "src" : "images/installer mistake.png",
+                    "alt" : "",
+                },
+            ],
         },
+         
         {
             "title": "6.29 Wrapping Up Module 6",
             "paragraphs": [],
+            "images" :[
+                {
+                    "src" : "images/wrapping up module 6.png",
+                    "alt" : "",
+                },
+            ],
         },
     ],
 }
