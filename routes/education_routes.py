@@ -170,7 +170,7 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
         print("[SMTP] ERROR:", repr(e))
         print(traceback.format_exc())
         raise
-        smtp.noop() # these forces early failure if connection is half-open( but its optional)
+        #smtp.noop() # these forces early failure if connection is half-open( but its optional)
 
 def _project_root() -> str:
     """Return absolute project root (one level above `routes/`)."""
