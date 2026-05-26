@@ -407,6 +407,36 @@
                 <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
                 <button type="button" onclick="startQuiz('module-5-assessment')">Start Quiz</button>
             </div>
+
+            <div class="quiz-card" data-quiz-id="module-6-assessment">
+                <div class="quiz-icon">🔌</div>
+                <h2>Module 6 Assessment Quiz</h2>
+                <p>System Installation, Wiring & Integration (Module 6)</p>
+                <p>25 questions • Pass mark 75%</p>
+                <div class="pos-row" data-quiz-pos></div>
+                <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
+                <button type="button" onclick="startQuiz('module-6-assessment')">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card" data-quiz-id="module-7-assessment">
+                <div class="quiz-icon">⚙️</div>
+                <h2>Module 7 Assessment Quiz</h2>
+                <p>System Configuration, Communication & Firmware (Module 7)</p>
+                <p>25 questions • Pass mark 75%</p>
+                <div class="pos-row" data-quiz-pos></div>
+                <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
+                <button type="button" onclick="startQuiz('module-7-assessment')">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card" data-quiz-id="module-8-assessment">
+                <div class="quiz-icon">🔍</div>
+                <h2>Module 8 Assessment Quiz</h2>
+                <p>Monitoring, Optimisation, Troubleshooting & Fault Finding (Module 8)</p>
+                <p>25 questions • Pass mark 75%</p>
+                <div class="pos-row" data-quiz-pos></div>
+                <div class="lock-row" data-lock-row hidden><span data-lock-icon>🔒</span><span data-lock-text>Locked</span></div>
+                <button type="button" onclick="startQuiz('module-8-assessment')">Start Quiz</button>
+            </div>
         </div>
 
         <section id="runner" class="runner" aria-live="polite">
@@ -433,7 +463,10 @@
             'module-2-assessment': 'Module 2 Assessment Quiz',
             'module-3-assessment': 'Module 3 Assessment Quiz',
             'module-4-assessment': 'Module 4 Assessment Quiz',
-            'module-5-assessment': 'Module 5 Assessment Quiz'
+            'module-5-assessment': 'Module 5 Assessment Quiz',
+            'module-6-assessment': 'Module 6 Assessment Quiz',
+            'module-7-assessment': 'Module 7 Assessment Quiz',
+            'module-8-assessment': 'Module 8 Assessment Quiz'
         };
 
         const PASS_MARKS = {
@@ -441,7 +474,10 @@
             'module-2-assessment': 75,
             'module-3-assessment': 75,
             'module-4-assessment': 75,
-            'module-5-assessment': 75
+            'module-5-assessment': 75,
+            'module-6-assessment': 75,
+            'module-7-assessment': 75,
+            'module-8-assessment': 75
         };
 
         const QUIZ_REQUIREMENTS = {
@@ -449,7 +485,10 @@
             'module-2-assessment': 'Fundamentals (Module 2)',
             'module-3-assessment': 'Fundamentals (Module 3)',
             'module-4-assessment': 'Fundamentals (Module 4)',
-            'module-5-assessment': 'Fundamentals (Module 5)'
+            'module-5-assessment': 'Fundamentals (Module 5)',
+            'module-6-assessment': 'Fundamentals (Module 6)',
+            'module-7-assessment': 'Fundamentals (Module 7)',
+            'module-8-assessment': 'Fundamentals (Module 8)'
         };
 
         const QUIZ_ORDER = [
@@ -457,7 +496,10 @@
             'module-2-assessment',
             'module-3-assessment',
             'module-4-assessment',
-            'module-5-assessment'
+            'module-5-assessment',
+            'module-6-assessment',
+            'module-7-assessment',
+            'module-8-assessment'
         ];
 
         const NEXT_MODULE_URLS = {
@@ -465,7 +507,10 @@
             'module-2-assessment': "{{ url_for('education.fundamentals_module3') }}",
             'module-3-assessment': "{{ url_for('education.fundamentals_module4') }}",
             'module-4-assessment': "{{ url_for('education.fundamentals_module5') }}",
-            'module-5-assessment': "{{ url_for('education.learn_index', hub=1) }}"
+            'module-5-assessment': "{{ url_for('education.fundamentals_module6') }}",
+            'module-6-assessment': "{{ url_for('education.fundamentals_module7') }}",
+            'module-7-assessment': "{{ url_for('education.fundamentals_module8') }}",
+            'module-8-assessment': "{{ url_for('education.learn_index', hub=1) }}"
         };
 
         let activeQuizId = null;

@@ -326,6 +326,9 @@ _QUIZ_PASS_MARKS: dict[str, int] = {
     "module-3-assessment": 75,
     "module-4-assessment": 75,
     "module-5-assessment": 75,
+    "module-6-assessment": 75,
+    "module-7-assessment": 75,
+    "module-8-assessment": 75,
 }
 
 
@@ -2054,6 +2057,57 @@ def api_quiz_module_5_assessment():
 
     questions = EducationalQuizzes.quiz_module_5_assessment()
     # Keep A/B/C/D option order and question order for assessment
+    resp = jsonify(questions)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@education_bp.route('/api/quiz/module-6-assessment')
+@api_login_required
+def api_quiz_module_6_assessment():
+    """API: Get Module 6 assessment quiz."""
+    user = _current_user()
+    if not user:
+        return jsonify({"error": "login_required"}), 401
+    locked = _require_quiz_unlocked(user.id, "module-6-assessment")
+    if locked is not None:
+        return locked
+
+    questions = EducationalQuizzes.quiz_module_6_assessment()
+    resp = jsonify(questions)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@education_bp.route('/api/quiz/module-7-assessment')
+@api_login_required
+def api_quiz_module_7_assessment():
+    """API: Get Module 7 assessment quiz."""
+    user = _current_user()
+    if not user:
+        return jsonify({"error": "login_required"}), 401
+    locked = _require_quiz_unlocked(user.id, "module-7-assessment")
+    if locked is not None:
+        return locked
+
+    questions = EducationalQuizzes.quiz_module_7_assessment()
+    resp = jsonify(questions)
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@education_bp.route('/api/quiz/module-8-assessment')
+@api_login_required
+def api_quiz_module_8_assessment():
+    """API: Get Module 8 assessment quiz."""
+    user = _current_user()
+    if not user:
+        return jsonify({"error": "login_required"}), 401
+    locked = _require_quiz_unlocked(user.id, "module-8-assessment")
+    if locked is not None:
+        return locked
+
+    questions = EducationalQuizzes.quiz_module_8_assessment()
     resp = jsonify(questions)
     resp.headers["Cache-Control"] = "no-store"
     return resp

@@ -237,7 +237,61 @@ class EducationalQuizzes:
             })
 
         return questions
-    
+
+    @staticmethod
+    def quiz_module_6_assessment() -> List[Dict]:
+        """Module 6 assessment: System Installation, Wiring & Integration."""
+        from modules.lithium_education import MODULE_6_ASSESSMENT
+
+        questions = []
+        answer_map = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
+        for q in MODULE_6_ASSESSMENT.get("questions", []):
+            correct_index = answer_map.get(q.get("answer"), 0)
+            questions.append({
+                "question": q.get("question"),
+                "options": q.get("options", []),
+                "correct": correct_index,
+                "explanation": q.get("explanation", f"Correct answer: {q.get('answer')}")
+            })
+
+        return questions
+
+    @staticmethod
+    def quiz_module_7_assessment() -> List[Dict]:
+        """Module 7 assessment: System Configuration, Communication & Firmware."""
+        from modules.lithium_education import MODULE_7_ASSESSMENT
+
+        questions = []
+        answer_map = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
+        for q in MODULE_7_ASSESSMENT.get("questions", []):
+            correct_index = answer_map.get(q.get("answer"), 0)
+            questions.append({
+                "question": q.get("question"),
+                "options": q.get("options", []),
+                "correct": correct_index,
+                "explanation": q.get("explanation", f"Correct answer: {q.get('answer')}")
+            })
+
+        return questions
+
+    @staticmethod
+    def quiz_module_8_assessment() -> List[Dict]:
+        """Module 8 assessment: Monitoring, Optimisation, Troubleshooting & Fault Finding."""
+        from modules.lithium_education import MODULE_8_ASSESSMENT
+
+        questions = []
+        answer_map = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
+        for q in MODULE_8_ASSESSMENT.get("questions", []):
+            correct_index = answer_map.get(q.get("answer"), 0)
+            questions.append({
+                "question": q.get("question"),
+                "options": q.get("options", []),
+                "correct": correct_index,
+                "explanation": q.get("explanation", f"Correct answer: {q.get('answer')}")
+            })
+
+        return questions
+
     @staticmethod
     def quiz_crate() -> List[Dict]:
         """Module 1 quiz: AC vs DC — How Electricity Moves Through the System"""
