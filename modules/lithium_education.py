@@ -4748,7 +4748,7 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                     "alt": "Real-World System Design Example",
                 },
                  {
-                    "src": "images/MEDIUM HOME BACKUP.png.png",
+                    "src": "images/MEDIUM HOME BACKUP.png",
                     "alt": "Real-World System Design Example",
                 },
                  {
@@ -5121,6 +5121,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "customer frustration",
                 "reduced battery lifespan",
             ],
+            "images" :[
+                {
+                    "src" : "images/best installer dont guess.png",
+                    "alt" : "images about what installers must not do",
+                },
+            ],
         },
         {
             "title": "6.4 Understanding the Customer Requirement",
@@ -5138,6 +5144,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "load separation",
                 "expansion planning",
             ],
+             "images" :[
+                {
+                    "src" : "images/good communicatiopn during.png",
+                    "alt" : "images about good communicatiopn during site inspections",
+                },
+            ],
         },
         {
             "title": "6.5 Identifying Essential vs Non-Essential Loads",
@@ -5153,6 +5165,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "improves runtime",
                 "reduces system cost",
                 "improves system stability",
+            ],
+             "images" :[
+                {
+                    "src" : "images/always walk through the property.png",
+                    "alt" : "image ....",
+                },
             ],
         },
         {
@@ -5170,6 +5188,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "cable condition",
                 "overall DB compliance",
                 "earthing quality",
+            ],
+             "images" :[
+                {
+                    "src" : "images/many nuisance tripps and system install.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -5207,6 +5231,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "accessibility",
                 "protection from moisture and dust",
                 "proximity to the DB board",
+            ],
+            "images" :[
+                {
+                    "src" : "images/heat is one of the biggest causes.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -5286,6 +5316,16 @@ MODULE_6_INSTALLATION_WIRING = {
                 "maintenance access",
                 "exposure to chemicals or corrosive environments",
             ],
+            "images" :[
+                {
+                    "src" : "images/high-quality system installed in apoor.png",
+                    "alt" : "",
+                },
+                 {
+                    "src" : "images/Children pets and.jpg",
+                    "alt" : "",
+                },
+            ],
         },
         {
             "title": "6.11 Identifying Risks Before Installation",
@@ -5329,6 +5369,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "9. Verify wiring",
                 "10. Perform final inspection",
                 "11. Prepare for commissioning",
+            ],
+             "images" :[
+                {
+                    "src" : "images/very important installer rule.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -5381,7 +5427,16 @@ MODULE_6_INSTALLATION_WIRING = {
             "title": "6.15 DC Wiring Fundamentals",
             "paragraphs": [
                 "The DC side of the system is one of the highest-risk areas of the installation.",
-                "Incorrect DC wiring can cause:",
+               
+            ],
+             "images" :[
+                {
+                    "src" : "images/battery system operate at.png",
+                    "alt" : "",
+                },
+            ],
+            "paragraphs_after": [
+                 "Incorrect DC wiring can cause:",
             ],
             "bullets": [
                 "overheating",
@@ -5457,6 +5512,12 @@ MODULE_6_INSTALLATION_WIRING = {
                 "correct torque settings",
                 "heat shrink application",
                 "post-installation re-checking",
+            ],
+             "images" :[
+                {
+                    "src" : "images/bad crimp = future failure.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -5674,20 +5735,49 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.29 Ideal Installation System Examples",
+            "title": "6.27 Ideal Installation System Examples",
             "paragraphs": [
                 "A good installation is not only about making the system work — it is about creating a safe, reliable, efficient, and professional energy solution that will perform well for many years.",
                 "The following examples demonstrate what a properly planned and professionally installed REVOV system should look like in real-world applications.",
                 "Pay close attention to equipment placement, cable routing, ventilation, protection devices, communication wiring, and overall workmanship, as these small details often make the biggest difference in long-term system performance and reliability.",
             ],
+             "images" :[
+                {
+                    "src" : "images/ideal installation-small system.png",
+                    "alt" : "",
+                },
+            
+                {
+                    "src" : "images/ideal installation-medium system.png",
+                    "alt" : "",
+                },
+           
+                {
+                    "src" : "images/ideal installtion -large system.png",
+                    "alt" : "",
+                },
+            ],
         },
         {
-            "title": "6.27 Common Installation Mistakes",
+            "title": "6.28 Common Installation Mistakes",
             "paragraphs": [],
+            "images" :[
+                {
+                    "src" : "images/installer mistake.png",
+                    "alt" : "",
+                },
+            ],
         },
+         
         {
             "title": "6.29 Wrapping Up Module 6",
             "paragraphs": [],
+            "images" :[
+                {
+                    "src" : "images/wrapping up module 6.png",
+                    "alt" : "",
+                },
+            ],
         },
     ],
 }
@@ -8045,6 +8135,16 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "With integrated Bluetooth-enabled BMS functionality, excellent temperature resilience and an IP55-rated design, these batteries provide reliable low-maintenance power for recreational, marine, off-grid, emergency backup and industrial applications.",
                 "The REVOV 12V range is ideal for RVs, camping, boating, remote sites, telecoms backup systems, portable power solutions and niche mobility applications such as golf carts, utility vehicles and small electric boats where dependable energy storage and continuous operation are critical.",
             ],
+            "images" : [
+                {
+                  "src" : "images/12v100ah.png",
+                    "alt" : "image for Revov 12V100Ah battery ",
+                },
+                {
+                  "src" : "images/12v200ah.png",
+                    "alt" : "image for Revov 12v200ah.png battery ",
+                },
+            ],
         },
         {
             "title": "9.10 REVOV 24V LiFePO4 product range",
@@ -8053,6 +8153,12 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "Engineered for flexibility and durability, these batteries are ideal for installations requiring stable power in demanding environments, including telecoms infrastructure, remote sites, UPS systems, security and CCTV applications.",
                 "The REVOV 24V range combines intelligent battery management with Bluetooth monitoring capability, robust environmental protection and excellent temperature resilience to ensure reliable performance in harsh operating conditions.",
                 "With an IP55-rated design and long service life, these batteries deliver practical, low-maintenance lithium energy storage solutions for applications where space, reliability and continuous operation are critical.",
+            ],
+            "images" : [
+                {
+                   "src" : "images/24v100ah.png",
+                    "alt" : "image of a REVOV 24V100AH BATTERY",
+                },
             ],
         },
         {
@@ -8063,6 +8169,16 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "Built to handle demanding African operating conditions, including high temperatures, humidity and altitude, these modular lithium battery systems offer flexible expansion from smaller residential backup systems through to larger commercial energy storage installations.",
                 "With advanced BMS protection, high round-trip efficiency, fast charging capability and compatibility with a wide range of trusted third-party monitoring and integration platforms, the REVOV 51.2V range is ideal for residential solar systems, off-grid and hybrid installations, commercial backup applications, telecoms, data centres, security infrastructure and critical power environments where stability, scalability and business continuity are critical.",
             ],
+             "images" : [
+                {
+                   "src" : "images/e100.png",
+                    "alt" : "image of a REVOV E100 BATTERY",
+                },
+                  {
+                   "src" : "images/e300.png",
+                    "alt" : "image of a REVOV E300 BATTERY",
+                },
+            ],
         },
         {
             "title": "9.12 High Voltage LiFePO4 product range",
@@ -8071,6 +8187,16 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "High Voltage systems operate at significantly higher voltages than traditional low-voltage battery systems, allowing for lower current flow, smaller cable diameters, improved efficiency, and easier scalability for larger installations.",
                 "These systems are ideal for large residential properties, commercial and industrial applications, agricultural operations, security infrastructure, and grid-scale energy solutions where reliability, performance, and business continuity are critical.",
                 "REVOV High Voltage solutions are highly scalable, with systems under 150kWh available as standard modular solutions, while larger systems can be expanded using multiple battery modules or custom engineered by REVOV Energy Projects for large industrial and utility-scale applications exceeding 1MWh.",
+            ],
+            "images" : [
+                {
+                   "src" : "images/cfe 61.44.png",
+                    "alt" : "image of a REVOV CFE 61.44 BATTERY",
+                },
+                  {
+                   "src" : "images/energy core 51.2.png",
+                    "alt" : "image of a REVOV energy core 51.2 BATTERY",
+                },
             ],
         },
     ],
@@ -8097,6 +8223,34 @@ MODULE_10_INSTALLER_GUIDES_AND_RESOURCES = {
                 "professional,",
                 "easy to maintain,",
                 "and trusted by customers for years to come.",
+            ],
+             "images" : [
+                {
+                   "src" : "images/installer design guid.png",
+                    "alt" : "image of a installation guid for the installers",
+                },
+                  {
+                   "src" : "images/how to read revov batter.png",
+                    "alt" : "image of how to read revov spec sheets.",
+                },
+            
+                {
+                   "src" : "images/revov e100 fault.png",
+                    "alt" : "image of a REVOV E100 BATTERY",
+                },
+                  {
+                   "src" : "images/revov e300 fault.png",
+                    "alt" : "image of a REVOV E300 BATTERY fault finding",
+                },
+            
+                {
+                   "src" : "images/cfe 61.44 fault.png",
+                    "alt" : "image of a REVOV CFE 61.44 BATTERY fault finding",
+                },
+                  {
+                   "src" : "images/energy core 51,2 fault.png",
+                    "alt" : "image of a REVOV energy core 51.2 fault finding.",
+                },
             ],
         },
     ],
