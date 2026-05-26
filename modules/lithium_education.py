@@ -5125,7 +5125,7 @@ MODULE_6_INSTALLATION_WIRING = {
                 {
                     "src" : "images/best installer dont guess.png",
                     "alt" : "images about what installers must not do",
-                }
+                },
             ],
         },
         {
@@ -5169,7 +5169,7 @@ MODULE_6_INSTALLATION_WIRING = {
              "images" :[
                 {
                     "src" : "images/always walk through the property.png",
-                    "alt" : "",
+                    "alt" : "image ....",
                 },
             ],
         },
