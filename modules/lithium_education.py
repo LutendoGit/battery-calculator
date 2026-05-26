@@ -5746,14 +5746,12 @@ MODULE_6_INSTALLATION_WIRING = {
                     "src" : "images/ideal installation-small system.png",
                     "alt" : "",
                 },
-            ],
-             "images" :[
+            
                 {
                     "src" : "images/ideal installation-medium system.png",
                     "alt" : "",
                 },
-            ],
-             "images" :[
+           
                 {
                     "src" : "images/ideal installtion -large system.png",
                     "alt" : "",
