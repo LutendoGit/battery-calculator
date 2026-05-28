@@ -6127,6 +6127,12 @@ MODULE_7_SYSTEM_CONFIG = {
                 "customer complaints",
                 "shortened battery lifespan",
             ],
+            "images" : [
+                {
+                    "src" : "images/not a battery fault.png",
+                    "alt" : "image about inverter to battery installation issues!",
+                },
+            ],
         },
         {
             "title": "7.3 What the Inverter and BMS Are Actually Doing",
@@ -6165,6 +6171,12 @@ MODULE_7_SYSTEM_CONFIG = {
             "paragraphs_final": [
                 "The BMS then communicates limits and instructions to the inverter.",
             ],
+             "images" : [
+                {
+                    "src" : "images/very important concept.png",
+                    "alt" : "image about importance of following the inverter to battery installations!",
+                },
+             ],
         },
         {
             "title": "SECTION 2 — SYSTEM CONFIGURATION & PAIRING",
@@ -6186,12 +6198,19 @@ MODULE_7_SYSTEM_CONFIG = {
                 "Earthing and bonding completed",
                 "Battery and inverter are compatible",
             ],
+            "images" : [
+                {
+                    "src" : "images/do not use settings to fix.png",
+                    "alt" : "",
+                },
+             ],
         },
         {
             "title": "7.5 Battery Pairing & Communication",
             "paragraphs": [
                 "Pairing means correctly connecting and configuring the inverter and battery so they can communicate and operate together as one intelligent system.",
                 "Modern lithium systems rely heavily on communication.",
+                "  ",
                 "When pairing is successful:",
             ],
             "bullets": [
@@ -6214,6 +6233,12 @@ MODULE_7_SYSTEM_CONFIG = {
             "paragraphs_extra": [
                 "A system may still \"switch on\" without proper pairing, but it will not behave like a properly integrated lithium system.",
             ],
+             "images" : [
+                {
+                    "src" : "images/signs communication is not working.png",
+                    "alt" : "",
+                },
+             ],
         },
         {
             "title": "7.7 Practical Pairing Process — Step by Step",
@@ -6237,6 +6262,12 @@ MODULE_7_SYSTEM_CONFIG = {
                 "supported firmware combinations",
                 "communication protocol requirements",
             ],
+             "images" : [
+                {
+                    "src" : "images/never assume two devices are compatible.png",
+                    "alt" : "",
+                },
+             ],
             "paragraphs_extra": [
                 "A battery and inverter may:",
             ],
@@ -6275,6 +6306,13 @@ MODULE_7_SYSTEM_CONFIG = {
                 "correct torque on lugs",
                 "secure terminations",
             ],
+            "images" : [
+                {
+                    "src" : "images/most communication troubleshooting.jpg",
+                    "alt" : "",
+                },
+            ],
+           
             "paragraphs_step3": [
                 "",
                 "Step 3 — Connect the Communication Cable",
@@ -6315,9 +6353,15 @@ MODULE_7_SYSTEM_CONFIG = {
             "paragraphs_communication": [
                 "This allows the inverter to adjust behaviour dynamically based on real-time battery conditions.",
             ],
+             "images" : [
+                {
+                    "src" : "images/connect the communication cable.png",
+                    "alt" : "",
+                },
+            ],
         },
         {
-            "title": "7.4 (Continued) - Configuration Steps",
+            "title": " ",
             "paragraphs": [
                 "Step 4 — Select the Correct Communication Port",
                 "Many batteries and inverters contain multiple communication ports.",
@@ -6370,7 +6414,7 @@ MODULE_7_SYSTEM_CONFIG = {
             ],
         },
         {
-            "title": "7.5 (Continued) - More Configuration Steps",
+            "title": " ",
             "paragraphs": [
                 "Step 6 — Power Up the System in the Correct Sequence",
                 "Startup sequence matters.",
@@ -6400,6 +6444,12 @@ MODULE_7_SYSTEM_CONFIG = {
                 "",
                 "Step 7 — Configure Battery Type in the Inverter",
                 "Inside the inverter settings:",
+            ],
+            "images" : [
+                {
+                   "src" : "images/always follow manufacuter.png",
+                    "alt" : ""
+                },
             ],
             "bullets_extra": [
                 "select the correct battery type",
@@ -6436,9 +6486,15 @@ MODULE_7_SYSTEM_CONFIG = {
                 "accurate SOC calculation",
                 "correct balancing behaviour",
             ],
+             "images" : [
+                {
+                   "src" : "images/never gues battery seetings.png",
+                    "alt" : ""
+                },
+            ],
         },
         {
-            "title": "7.6 (Continued) - Protocol and Charging Setup",
+            "title": " ",
             "paragraphs": [
                 "Step 8 — Select the Correct Communication Protocol",
                 "Some inverters allow protocol selection during setup.",
@@ -6509,6 +6565,13 @@ MODULE_7_SYSTEM_CONFIG = {
                 "❌ battery trips may occur",
                 "❌ voltage sag increases",
                 "❌ battery stress increases",
+                "VERY IMPORTANT",
+            ],
+            "images" : [
+                {
+                    "src" : "images/even with manual settings.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -6550,6 +6613,12 @@ MODULE_7_SYSTEM_CONFIG = {
                 "❌ SOC drift develops",
                 "❌ runtime estimates become inaccurate",
                 "❌ battery behaviour becomes unstable",
+            ],
+             "images" : [
+                {
+                    "src" : "images/many battery complains.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -6599,8 +6668,8 @@ MODULE_7_SYSTEM_CONFIG = {
                 "In TOU mode:",
             ],
             "bullets_extra3": [
-                "charging and discharging occur according to schedules",
-                "the inverter responds to electricity tariff periods",
+                "Charging and discharging occur according to schedules",
+                "The inverter responds to electricity tariff periods",
             ],
             "paragraphs_extra4": [
                 "Best for:",
@@ -6609,6 +6678,12 @@ MODULE_7_SYSTEM_CONFIG = {
                 "commercial systems",
                 "tariff optimisation",
                 "scheduled energy management",
+            ],
+             "images" : [
+                {
+                    "src" : "images/the wrong operating mode.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -6639,6 +6714,12 @@ MODULE_7_SYSTEM_CONFIG = {
                 "backup reserve",
                 "battery protection",
                 "emergency operation",
+            ],
+            "images" : [
+                {
+                    "src" : "images/reserve soc.png",
+                    "alt" : "",
+                },
             ],
         },
         {
@@ -6706,6 +6787,12 @@ MODULE_7_SYSTEM_CONFIG = {
                 "backup scheduling",
                 "reporting accuracy",
                 "operating behaviour",
+            ],
+            "images" : [
+                {
+                    "src" : "images/if inverter time is incorrect.png",
+                    "alt" :  "",
+                },
             ],
         },
         {
@@ -6810,6 +6897,12 @@ MODULE_7_SYSTEM_CONFIG = {
                 "communication protocol version",
                 "supported compatibility lists",
             ],
+            "images" : [
+                {
+                    "src" : "images/firmware version mattching.png",
+                    "alt",
+                },
+            ],
         },
         {
             "title": "7.12 When to Update Firmware (and When NOT To)",
@@ -6879,9 +6972,9 @@ MODULE_7_SYSTEM_CONFIG = {
                 "Interrupting firmware updates may:",
             ],
             "bullets_critical": [
-                "corrupt devices",
-                "damage communication",
-                "require factory recovery",
+                "❌corrupt devices",
+                "❌damage communication",
+                "❌require factory recovery",
             ],
         },
         {
@@ -6895,9 +6988,9 @@ MODULE_7_SYSTEM_CONFIG = {
                 "Symptoms:",
             ],
             "bullets": [
-                "frozen SOC",
-                "communication alarms",
-                "battery not recognised",
+                "❌frozen SOC",
+                "❌communication alarms",
+                "❌battery not recognised",
             ],
             "paragraphs_after": [
                 "Possible causes:",
@@ -6914,9 +7007,9 @@ MODULE_7_SYSTEM_CONFIG = {
                 "Symptoms:",
             ],
             "bullets_extra": [
-                "battery never reaches 100%",
-                "poor runtime",
-                "balancing issues",
+                "❌battery never reaches 100%",
+                "❌poor runtime",
+                "❌balancing issues",
             ],
             "paragraphs_charging": [
                 "Possible causes:",
@@ -6932,9 +7025,9 @@ MODULE_7_SYSTEM_CONFIG = {
                 "Symptoms:",
             ],
             "bullets_soc": [
-                "SOC jumps suddenly",
-                "inaccurate runtime",
-                "battery switches off unexpectedly",
+                "❌SOC jumps suddenly",
+                "❌inaccurate runtime",
+                "❌battery switches off unexpectedly",
             ],
             "paragraphs_soc_causes": [
                 "Possible causes:",
@@ -6950,9 +7043,9 @@ MODULE_7_SYSTEM_CONFIG = {
                 "Symptoms:",
             ],
             "bullets_firmware": [
-                "unstable behaviour",
-                "random faults",
-                "intermittent communication",
+                "❌unstable behaviour",
+                "❌random faults",
+                "❌intermittent communication",
             ],
             "paragraphs_firmware_causes": [
                 "Possible causes:",
@@ -6962,14 +7055,49 @@ MODULE_7_SYSTEM_CONFIG = {
                 "failed update",
                 "unsupported firmware combinations",
             ],
+            
         },
         {
             "title": "7.15 Practical Installer Examples",
             "paragraphs": [],
+            "images"  : [
+                {
+                    "src" : "images/faulty battery lets look at the real cause.png",
+                    "alt" : "",
+                },
+                 {
+                    "src" : "images/battery never full.png",
+                    "alt" : "",
+                },
+                 {
+                    "src" : "images/communication fault.png",
+                    "alt" : "",
+                },
+                 {
+                    "src" : "images/bad run time.png",
+                    "alt" : "",
+                },
+                 {
+                    "src" : "images/empty battery.png",
+                    "alt" : "",
+                },
+            ],
         },
         {
             "title": "7.16 Installer Rules for Stable Systems",
             "paragraphs": [],
+            "images"  : [
+                {
+                    "src" : "images/installer rules for stable.png",
+                    "alt" : "",
+                },
+
+                {
+                    "src" : "images/wrapping up module 7.png",
+                    "alt" : "",
+                },
+            ],
+            
         },
     ],
 }
