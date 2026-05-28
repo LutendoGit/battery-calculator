@@ -6448,7 +6448,7 @@ MODULE_7_SYSTEM_CONFIG = {
             "images" : [
                 {
                    "src" : "images/always follow manufacuter.png",
-                    "alt" : ""
+                    "alt" : "",
                 },
             ],
             "bullets_extra": [
@@ -6489,7 +6489,7 @@ MODULE_7_SYSTEM_CONFIG = {
              "images" : [
                 {
                    "src" : "images/never gues battery seetings.png",
-                    "alt" : ""
+                    "alt" : "",
                 },
             ],
         },
@@ -6900,7 +6900,7 @@ MODULE_7_SYSTEM_CONFIG = {
             "images" : [
                 {
                     "src" : "images/firmware version mattching.png",
-                    "alt",
+                    "alt" : "",
                 },
             ],
         },
