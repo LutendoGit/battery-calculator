@@ -1682,7 +1682,7 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
             ],
              "images": [
                     {
-                        "src": "images/comparing defferences in batteries.png",
+                        "src": "images/COMPARING DEFFERENT TYPES OF BATTERIES.png",
                         "alt": "images of battery comparisons",
                     },
                     
@@ -1713,7 +1713,7 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
             ],
              "images": [
                     {
-                        "src": "images/battery is not there just to add backup.png",
+                        "src": "images/BATTERY IS NOT THERE JUST TO ADD BACKUP.png",
                         "alt": "images of battery is not there just to add backup",
                     },
                     
@@ -1930,7 +1930,7 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                             "alt" : "image of so in simple terms energy(kwh) tells.",
                         },
                         {
-                            "src":"images/factors, what it meants.png,",
+                            "src":"images/factors, what it meants.png",
                             "alt" : "image of so in simple terms energy(kwh) tells.",
                         },
                     ],
