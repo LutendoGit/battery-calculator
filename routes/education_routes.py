@@ -1511,8 +1511,8 @@ def fundamentals_module2():
                 "label": "Take Module 2 Quiz",
             },
             {
-                "url": url_for("education.learn_index", hub=1),
-                "label": "Back to Training Hub",
+                "url": url_for("education.fundamentals_module3"),
+                "label": "Start Module 3 (Battery Fundamentals)",
             },
         ],
     }
@@ -1541,8 +1541,8 @@ def fundamentals_module3():
                 "label": "Take Module 3 Quiz",
             },
             {
-                "url": url_for("education.learn_index", hub=1),
-                "label": "Back to Training Hub",
+                "url": url_for("education.fundamentals_module4"),
+                "label": "Start Module 4 (Battery Management System)",
             },
         ],
     }
@@ -1571,8 +1571,8 @@ def fundamentals_module4():
                 "label": "Take Module 4 Quiz",
             },
             {
-                "url": url_for("education.learn_index", hub=1),
-                "label": "Back to Training Hub",
+                "url": url_for("education.fundamentals_module5"),
+                "label": "Start Module 5 (Energy System Design)",
             },
         ],
     }
@@ -1601,8 +1601,8 @@ def fundamentals_module5():
                 "label": "Take Module 5 Quiz",
             },
             {
-                "url": url_for("education.learn_index", hub=1),
-                "label": "Back to Training Hub",
+                "url": url_for("education.fundamentals_module6"),
+                "label": "Start Module 6 (Installation & Wiring)",
             },
         ],
     }
