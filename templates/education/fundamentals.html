@@ -155,6 +155,9 @@
             border-radius: 8px;
             background: transparent;
             box-shadow: none;
+            image-rendering: crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            object-fit: contain;
         }
 
         .content-image {
@@ -167,6 +170,26 @@
             border: none;
             background: transparent;
             box-shadow: none;
+            image-rendering: crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            object-fit: contain;
+        }
+
+        /* Native size images - no scaling for better quality */
+        .content-image-native {
+            width: auto;
+            height: auto;
+            max-width: none;
+            display: block;
+            margin: 12px auto;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            image-rendering: crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            object-fit: contain;
+            max-height: 600px;
         }
 
         .text-block p {
@@ -379,6 +402,8 @@
             cursor: zoom-out;
             user-select: none;
             transition: transform 0.2s ease;
+            image-rendering: crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
         }
 
         .image-viewer-controls {
@@ -746,9 +771,9 @@
     <!-- Image Viewer Modal -->
     <div class="image-viewer-modal" id="imageViewerModal">
         <div class="image-viewer-container">
-            <div class="image-viewer-hint" id="viewerHint">Use scroll or +/- buttons to zoom</div>
+            <div class="image-viewer-hint" id="viewerHint">Click to zoom | Scroll to zoom | Drag to pan</div>
             <div class="image-viewer-content" id="viewerContent">
-                <img class="image-viewer-img" id="viewerImage" alt="Zoomed image">
+                <img class="image-viewer-img" id="viewerImage" alt="Zoomed image" style="cursor: zoom-out;">
             </div>
             <div class="image-viewer-controls">
                 <div class="image-viewer-zoom-display" id="zoomDisplay">100%</div>
@@ -762,16 +787,16 @@
 
     <script src="{{ url_for('static', filename='lesson_pager.js') }}"></script>
     <script>
-        // Image Viewer Functionality
+        // Image Viewer Functionality - Enhanced with better error handling
         const ImageViewer = {
-            modal: document.getElementById('imageViewerModal'),
-            viewerImage: document.getElementById('viewerImage'),
-            viewerContent: document.getElementById('viewerContent'),
-            zoomDisplay: document.getElementById('zoomDisplay'),
-            zoomInBtn: document.getElementById('zoomInBtn'),
-            zoomOutBtn: document.getElementById('zoomOutBtn'),
-            zoomResetBtn: document.getElementById('zoomResetBtn'),
-            closeBtn: document.getElementById('viewerClose'),
+            modal: null,
+            viewerImage: null,
+            viewerContent: null,
+            zoomDisplay: null,
+            zoomInBtn: null,
+            zoomOutBtn: null,
+            zoomResetBtn: null,
+            closeBtn: null,
             
             currentZoom: 100,
             minZoom: 50,
@@ -784,16 +809,41 @@
             panStartScrollTop: 0,
 
             init() {
-                // Add click handlers to all images
-                document.querySelectorAll('.example-image, .content-image').forEach(img => {
-                    img.addEventListener('click', () => this.openImage(img.src, img.alt));
-                });
+                // Get elements - with safety checks
+                this.modal = document.getElementById('imageViewerModal');
+                this.viewerImage = document.getElementById('viewerImage');
+                this.viewerContent = document.getElementById('viewerContent');
+                this.zoomDisplay = document.getElementById('zoomDisplay');
+                this.zoomInBtn = document.getElementById('zoomInBtn');
+                this.zoomOutBtn = document.getElementById('zoomOutBtn');
+                this.zoomResetBtn = document.getElementById('zoomResetBtn');
+                this.closeBtn = document.getElementById('viewerClose');
+
+                // Safety check
+                if (!this.modal || !this.viewerImage || !this.viewerContent) {
+                    console.warn('Image viewer elements not found');
+                    return;
+                }
+
+                // Add click handlers to all images (with slight delay to ensure DOM is ready)
+                setTimeout(() => {
+                    const allImages = document.querySelectorAll('.example-image, .content-image, .content-image-native');
+                    console.log('Found ' + allImages.length + ' images to make clickable');
+                    
+                    allImages.forEach(img => {
+                        img.style.cursor = 'zoom-in';
+                        img.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            this.openImage(img.src, img.alt);
+                        });
+                    });
+                }, 100);
 
                 // Control buttons
-                this.zoomInBtn.addEventListener('click', () => this.zoom(this.zoomStep));
-                this.zoomOutBtn.addEventListener('click', () => this.zoom(-this.zoomStep));
-                this.zoomResetBtn.addEventListener('click', () => this.resetZoom());
-                this.closeBtn.addEventListener('click', () => this.close());
+                if (this.zoomInBtn) this.zoomInBtn.addEventListener('click', () => this.zoom(this.zoomStep));
+                if (this.zoomOutBtn) this.zoomOutBtn.addEventListener('click', () => this.zoom(-this.zoomStep));
+                if (this.zoomResetBtn) this.zoomResetBtn.addEventListener('click', () => this.resetZoom());
+                if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close());
 
                 // Modal click to close
                 this.modal.addEventListener('click', (e) => {
@@ -804,9 +854,9 @@
                 document.addEventListener('keydown', (e) => {
                     if (!this.modal.classList.contains('active')) return;
                     if (e.key === 'Escape') this.close();
-                    if (e.key === '+' || e.key === '=') this.zoom(this.zoomStep);
-                    if (e.key === '-') this.zoom(-this.zoomStep);
-                    if (e.key === '0') this.resetZoom();
+                    if (e.key === '+' || e.key === '=') { e.preventDefault(); this.zoom(this.zoomStep); }
+                    if (e.key === '-' || e.key === '_') { e.preventDefault(); this.zoom(-this.zoomStep); }
+                    if (e.key === '0') { e.preventDefault(); this.resetZoom(); }
                 });
 
                 // Mouse wheel zoom
@@ -846,6 +896,7 @@
                     this.panStartY = e.clientY;
                     this.panStartScrollLeft = this.viewerContent.scrollLeft;
                     this.panStartScrollTop = this.viewerContent.scrollTop;
+                    this.viewerContent.style.cursor = 'grabbing';
                 });
 
                 document.addEventListener('mousemove', (e) => {
@@ -858,6 +909,7 @@
 
                 document.addEventListener('mouseup', () => {
                     this.isPanning = false;
+                    if (this.viewerContent) this.viewerContent.style.cursor = 'grab';
                 });
             },
 
@@ -868,6 +920,7 @@
                 this.currentZoom = 100;
                 this.updateZoom();
                 document.body.style.overflow = 'hidden';
+                this.viewerContent.style.cursor = 'grab';
             },
 
             close() {
@@ -893,14 +946,18 @@
 
             updateZoom() {
                 this.viewerImage.style.transform = `scale(${this.currentZoom / 100})`;
-                this.zoomDisplay.textContent = Math.round(this.currentZoom) + '%';
-                this.zoomOutBtn.disabled = this.currentZoom <= this.minZoom;
-                this.zoomInBtn.disabled = this.currentZoom >= this.maxZoom;
+                if (this.zoomDisplay) this.zoomDisplay.textContent = Math.round(this.currentZoom) + '%';
+                if (this.zoomOutBtn) this.zoomOutBtn.disabled = this.currentZoom <= this.minZoom;
+                if (this.zoomInBtn) this.zoomInBtn.disabled = this.currentZoom >= this.maxZoom;
             }
         };
 
-        // Initialize image viewer
-        ImageViewer.init();
+        // Initialize image viewer when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => ImageViewer.init());
+        } else {
+            ImageViewer.init();
+        }
 
         const lessonStage = document.querySelector('[data-lesson-stage]');
         window.LessonPager && window.LessonPager.init({
