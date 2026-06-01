@@ -7423,7 +7423,7 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
             ],
             "bullets": [
                 "simple backup systems",
-                "\"install and forget\" systems",
+                "\"Install and forget\" systems",
             ],
             "paragraphs_after": [
                 "Modern systems rely heavily on:",
@@ -7462,6 +7462,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "to:",
                 "✔ proactively managing system health",
             ],
+            "images" : [
+                {
+                    "src" : "images/think like a professional.png",
+                    "alt" :  ""
+                },
+            ],
         },
         {
             "title": "8.3 What Monitoring Actually Shows You",
@@ -7492,6 +7498,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "optimisation",
                 "maintenance",
                 "customer support",
+            ],
+             "images" : [
+                {
+                    "src" : "images/monitoring data alone is not.png",
+                    "alt" :  ""
+                },
             ],
         },
         {
@@ -7543,6 +7555,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
             "bullets_after": [
                 "installers often misdiagnose healthy systems",
             ],
+              "images" : [
+                {
+                    "src" : "images/daily stytem behaviuo.png",
+                    "alt" :  ""
+                },
+            ],
         },
         {
             "title": "8.5 What \"Normal\" Looks Like",
@@ -7591,24 +7609,30 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "Before:",
             ],
             "bullets": [
-                "replacing equipment",
-                "changing settings randomly",
-                "disconnecting components",
+                "❌replacing equipment",
+                "❌changing settings randomly",
+                "❌disconnecting components",
             ],
             "paragraphs_after": [
                 "first:",
             ],
             "bullets_after": [
-                "review system behaviour",
-                "check historical trends",
-                "analyse charging behaviour",
-                "review fault history",
+                "✔review system behaviour",
+                "✔check historical trends",
+                "✔analyse charging behaviour",
+                "✔review fault history",
             ],
             "paragraphs_extra": [
                 "Good monitoring often reveals:",
             ],
             "bullets_extra": [
                 "the actual cause quickly",
+            ],
+             "images" : [
+                {
+                    "src" : "images/using monitoring to diag.png",
+                    "alt" :  ""
+                },
             ],
         },
         {
@@ -7622,19 +7646,39 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "isolates sections logically",
                 "verifies before acting",
             ],
+              "images" : [
+                {
+                    "src" : "images/most system failure are.png",
+                    "alt" :  ""
+                },
+            ],
         },
         {
-            "title": "8.8 Break the System Into Sections",
+            "title": "8.8 Break the System into Sections",
             "paragraphs": [
                 "Professional installers divide systems into logical sections during troubleshooting.",
                 "",
                 "This prevents confusion and unnecessary part replacement.",
             ],
+             "images" : [
+                {
+                    "src" : "images/trouble shooting logic flow.png",
+                    "alt" :  ""
+                },
+            ],
+        },
+            
         },
         {
             "title": "8.9 The 5-Step Troubleshooting Flow",
             "paragraphs": [
                 "Professional troubleshooting should always follow a structured process.",
+            ],
+             "images" : [
+                {
+                    "src" : "images/5-step troubleshotting.png",
+                    "alt" :  ""
+                },
             ],
         },
         {
@@ -7645,6 +7689,56 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
             "title": "8.10 Using Symptoms to Read the System",
             "paragraphs": [
                 "Symptoms provide clues.  Professional installers learn to \"read\" the system.",
+            ],
+             "images" : [
+                {
+                    "src" : "images/charging and soc faults.png",
+                    "alt" :  ""
+                },
+                 {
+                    "src" : "images/load and run time.png",
+                    "alt" :  ""
+                },
+                   {
+                    "src" : "images/communication and firmware fault.png",
+                    "alt" :  ""
+                },
+                  {
+                    "src" : "images/installation and electrical faults.png",
+                    "alt" :  ""
+                },
+                  {
+                    "src" : "images/behavior and logic problems.png",
+                    "alt" :  ""
+                },
+                  {
+                    "src" : "images/bms and protection faults.png",
+                    "alt" :  ""
+                },
+                 {
+                    "src" : "images/pv and solar problems.png",
+                    "alt" :  ""
+                },
+                  {
+                    "src" : "images/firmware update problems.png",
+                    "alt" :  ""
+                },
+                  {
+                    "src" : "images/parallel system problem.png",
+                    "alt" :  ""
+                },
+                 {
+                    "src" : "images/environmental problems.png",
+                    "alt" :  ""
+                },
+                  {
+                    "src" : "images/monitoring problems and pos.png",
+                    "alt" :  ""
+                },
+                  {
+                    "src" : "images/mechanical and installation problems.png",
+                    "alt" :  ""
+                },
             ],
         },
         {
@@ -7706,6 +7800,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "avoid excessive discharge",
                 "use correct operating modes",
                 "avoid excessive heat",
+            ],
+            "images" : [
+                {
+                    "src" : "images/bms can only balance.png",
+                    "alt"  :  "",
+                },
             ],
         },
         {
@@ -7776,6 +7876,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "checking system trends",
                 "identifying abnormal patterns",
                 "reducing unnecessary call-outs",
+            ],
+              "images" : [
+                {
+                    "src" : "images/wrapping up module 8.png",
+                    "alt"  : "",
+                },
             ],
         },
     ],
