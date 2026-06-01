@@ -91,7 +91,7 @@ class LithiumBatteryFundamentals:
             {
                 "title": "1.1 Module 1 Learning Outcomes",
                 "paragraphs": [
-                    "Before you start working with systems, it's important to understand the \"language\" of energy storage. This module lays the foundation for everything that follows — from system design and installation through to troubleshooting and maintenance.",
+                    "Before you start working with systems, it's important to understand the \"language\" of energy storage. This module lays the foundation for everything that follows — from system design and sizing through to installation, configuration, and long-term maintenance.",
                     "Think of this as your baseline knowledge. If you understand this module well, the rest of the training becomes much easier and far more practical.",
                     "By the end of this module, you will be able to:",
                 ],
@@ -193,7 +193,7 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
         {
             "title": "8.1 Module Learning Outcomes",
             "paragraphs": [
-                "This module focuses on how to monitor system behaviour, identify abnormal operation, diagnose faults, optimise performance, maintain system health, and troubleshoot problems using a structured professional approach.",
+                "This module focuses on how to monitor system behaviour, identify abnormal operation, diagnose faults, optimise performance, maintain system health, and troubleshoot problems using a structured approach.",
                 "By the end of this module, you will be able to:",
             ],
             "bullets": [
