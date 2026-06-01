@@ -1632,8 +1632,8 @@ def fundamentals_module6():
                 "label": "Take Module 6 Quiz",
             },
             {
-                "url": url_for("education.learn_index", hub=1),
-                "label": "Back to Training Hub",
+                "url": url_for("education.fundamentals_module7"),
+                "label": "Start Module 7 (System Configuration)",
             },
         ],
     }
@@ -1663,8 +1663,8 @@ def fundamentals_module7():
                 "label": "Take Module 7 Quiz",
             },
             {
-                "url": url_for("education.learn_index", hub=1),
-                "label": "Back to Training Hub",
+                "url": url_for("education.fundamentals_module8"),
+                "label": "Start Module 8 (Monitoring & Troubleshooting)",
             },
         ],
     }
@@ -1694,8 +1694,8 @@ def fundamentals_module8():
                 "label": "Take Module 8 Quiz",
             },
             {
-                "url": url_for("education.learn_index", hub=1),
-                "label": "Back to Training Hub",
+                "url": url_for("education.fundamentals_module9"),
+                "label": "Start Module 9 (REVOV Ecosystem)",
             },
         ],
     }
@@ -1721,8 +1721,8 @@ def fundamentals_module9():
         ],
         "links": [
             {
-                "url": url_for("education.learn_index", hub=1),
-                "label": "Back to Training Hub",
+                "url": url_for("education.fundamentals_module10"),
+                "label": "Start Module 10 (Installer Guides)",
             },
         ],
     }
