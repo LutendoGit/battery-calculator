@@ -147,7 +147,7 @@
 
         .installer-example .example-image {
             width: 100%;
-            max-width: 680px;
+            max-width: 100%;
             height: auto;
             display: block;
             margin: 10px 0 12px 0;
@@ -155,14 +155,12 @@
             border-radius: 8px;
             background: transparent;
             box-shadow: none;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
             object-fit: contain;
         }
 
         .content-image {
             width: 100%;
-            max-width: 860px;
+            max-width: 100%;
             height: auto;
             display: block;
             margin: 12px auto;
@@ -170,26 +168,21 @@
             border: none;
             background: transparent;
             box-shadow: none;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
             object-fit: contain;
         }
 
         /* Native size images - no scaling for better quality */
         .content-image-native {
-            width: auto;
+            width: 100%;
             height: auto;
-            max-width: none;
+            max-width: 100%;
             display: block;
             margin: 12px auto;
             border-radius: 8px;
             border: none;
             background: transparent;
             box-shadow: none;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
             object-fit: contain;
-            max-height: 600px;
         }
 
         .text-block p {
@@ -402,8 +395,6 @@
             cursor: zoom-out;
             user-select: none;
             transition: transform 0.2s ease;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
         }
 
         .image-viewer-controls {
