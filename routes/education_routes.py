@@ -163,7 +163,7 @@ def _send_password_reset_email(*, to_email: str, reset_url: str) -> None:
             if debug:
                 print("[SMTP] send_message: OK")
                 import socket
-                print("[SMTP] resoived:",socket.gethostbyname(host))
+                print("[SMTP] resolved:",socket.gethostbyname(host))
 
     except Exception as e:
         # This will show up in Render -> Logs
