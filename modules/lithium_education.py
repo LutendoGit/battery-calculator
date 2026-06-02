@@ -2501,7 +2501,7 @@ MODULE_4_BMS = {
             ],
                 "images": [
                                 {
-                                "src":"images/if bms unhappy.png",
+                                "src":"images/if the bms is unhappy.png",
                                 "alt": "image if bms unhappy.png.",
                                 },
                                
@@ -2539,13 +2539,13 @@ MODULE_4_BMS = {
             "images": [
                                 {
                                 
-                                "src":"images/what the bms monitor.png",
+                                "src":"images/what the bms monitors.png",
                                 "alt": "image of what the bms monitor.png.",
                                 },
                                 
                                 
                                 {
-                                "src":"images/the bms sess problems before.png",
+                                "src":"images/the bms sees problems before you do.png",
                                 "alt": "image of the bms sess problems before.png.",
                                 },
                                
@@ -2701,7 +2701,7 @@ MODULE_4_BMS = {
             ],
             "images": [
                 {
-                    "src": "images/bms will always choose safety over c.png.",
+                    "src": "images/the bms will always choose.png",
                     "alt": "image of bms will always choose safety over c.png",
                 },
             ],
