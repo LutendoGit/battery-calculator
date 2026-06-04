@@ -582,6 +582,13 @@ def login():
         session["edu_user_id"] = user.id
         session["edu_username"] = user.username
         session["edu_avatar"] = user.avatar_filename
+        
+        # Track login
+        session_id = str(uuid.uuid4())
+        ip_address = request.remote_addr
+        login_id = education_store.track_login(user.id, session_id, ip_address)
+        session["login_id"] = login_id
+        
         flash("Logged in.", "success")
 
         next_url = _safe_next_url(request.form.get("next") or request.args.get("next"))
@@ -764,6 +771,11 @@ def logout():
     # Capture before clearing session
     user_id = session.get("edu_user_id")
     username = session.get("edu_username")
+    login_id = session.get("login_id")
+
+    # Track logout
+    if login_id:
+        education_store.track_logout(login_id)
 
     if user_id:
         record_event("logout", user_id=int(user_id), payload={"username": username})
@@ -771,6 +783,7 @@ def logout():
     session.pop("edu_user_id", None)
     session.pop("edu_username", None)
     session.pop("edu_avatar", None)
+    session.pop("login_id", None)
 
     flash("Logged out.", "success")
     return redirect(url_for("education.login"))
@@ -1179,6 +1192,14 @@ def certificate_demo_reviews_csv():
 # ============= ADMIN: LIVE DB QUERIES =============
 
 
+@education_bp.get("/admin/users")
+def admin_users_page():
+    """Admin dashboard for user management"""
+    _require_admin_token()
+    token = request.args.get("token", "")
+    return render_template("education/admin_user_management.html", token=token)
+
+
 @education_bp.get("/admin/db")
 def admin_db_live_page():
     _require_admin_token()
@@ -1460,6 +1481,102 @@ def admin_db_quiz_failures():
                         ).fetchall()
 
         return jsonify({"rows": [dict(r) for r in rows], "pass_pct": pass_pct})
+
+
+# ============= ADMIN: USER MANAGEMENT =============
+
+@education_bp.get("/admin/api/users/list")
+def admin_api_users_list():
+    """Get list of all users"""
+    _require_admin_token()
+    users = education_store.get_all_users_list()
+    return jsonify({"users": users})
+
+
+@education_bp.get("/admin/api/users/<int:user_id>/stats")
+def admin_api_user_stats(user_id):
+    """Get user statistics"""
+    _require_admin_token()
+    stats = education_store.get_user_stats(user_id)
+    return jsonify(stats)
+
+
+@education_bp.get("/admin/api/users/<int:user_id>/logins")
+def admin_api_user_logins(user_id):
+    """Get user login history"""
+    _require_admin_token()
+    limit = _int_param("limit", 50, min_value=1, max_value=500)
+    logins = education_store.get_user_login_history(user_id, limit=limit)
+    return jsonify({"logins": logins})
+
+
+@education_bp.get("/admin/api/sessions/current")
+def admin_api_current_sessions():
+    """Get all current active sessions"""
+    _require_admin_token()
+    sessions = education_store.get_current_sessions()
+    return jsonify({"sessions": sessions})
+
+
+@education_bp.get("/admin/api/logins/summary")
+def admin_api_logins_summary():
+    """Get login statistics summary"""
+    _require_admin_token()
+    with _connect_education_db() as conn:
+        # Total users
+        total_users = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+        # Active sessions
+        active_sessions = conn.execute("SELECT COUNT(*) FROM login_tracking WHERE logout_at IS NULL").fetchone()[0]
+        # Logins today
+        from datetime import datetime, timedelta
+        today = datetime.now().date()
+        logins_today = conn.execute(
+            "SELECT COUNT(*) FROM login_tracking WHERE DATE(login_at) = ?", 
+            (today,)
+        ).fetchone()[0]
+        # Avg session duration
+        avg_duration = conn.execute(
+            """
+            SELECT AVG((julianday(logout_at) - julianday(login_at)) * 24 * 60)
+            FROM login_tracking WHERE logout_at IS NOT NULL
+            """
+        ).fetchone()[0]
+    
+    return jsonify({
+        "total_users": total_users,
+        "active_sessions": active_sessions,
+        "logins_today": logins_today,
+        "avg_session_duration_minutes": round(avg_duration, 2) if avg_duration else None
+    })
+
+
+@education_bp.delete("/admin/api/users/<int:user_id>")
+def admin_api_delete_user(user_id):
+    """Delete a user and all related data"""
+    _require_admin_token()
+    success = education_store.delete_user(user_id)
+    if success:
+        return jsonify({"status": "deleted", "user_id": user_id})
+    else:
+        return jsonify({"error": "User not found"}), 404
+
+
+@education_bp.post("/admin/api/users/bulk-delete")
+def admin_api_bulk_delete_users():
+    """Delete multiple users"""
+    _require_admin_token()
+    data = request.json
+    user_ids = data.get("user_ids", [])
+    result = education_store.bulk_delete_users(user_ids)
+    return jsonify(result)
+
+
+@education_bp.post("/admin/api/users/<int:user_id>/reset-progress")
+def admin_api_reset_user_progress(user_id):
+    """Reset user progress"""
+    _require_admin_token()
+    education_store.reset_user_progress(user_id)
+    return jsonify({"status": "progress_reset", "user_id": user_id})
 
 
 # ============= FUNDAMENTAL CONCEPTS ROUTES =============

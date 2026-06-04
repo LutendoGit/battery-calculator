@@ -213,6 +213,23 @@ def ensure_db() -> None:
         conn.execute("CREATE INDEX IF NOT EXISTS idx_user_events_id ON user_events(id)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_user_events_user ON user_events(user_id)")
 
+        # `login_tracking`: track user logins and sessions
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS login_tracking (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                login_at TEXT NOT NULL,
+                logout_at TEXT,
+                session_id TEXT,
+                ip_address TEXT,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            )
+            """
+        )
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_login_tracking_user ON login_tracking(user_id)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_login_tracking_login_at ON login_tracking(login_at)")
+
         # Content versioning (wipes progress when content changes).
         _ensure_content_version(conn)
 
@@ -736,3 +753,149 @@ def get_total_quiz_attempts(user_id: int) -> int:
         ).fetchone()
 
     return int(row["total_attempts"]) if row and row["total_attempts"] else 0
+
+
+# ============= USER MANAGEMENT & LOGIN TRACKING =============
+
+
+def track_login(user_id: int, session_id: str = None, ip_address: str = None) -> int:
+    """Track a user login event. Returns login record ID."""
+    import uuid
+    session_id = session_id or str(uuid.uuid4())
+    ip_address = ip_address or ""
+    
+    with _connect() as conn:
+        cursor = conn.execute(
+            """INSERT INTO login_tracking (user_id, login_at, session_id, ip_address)
+               VALUES (?, ?, ?, ?)""",
+            (int(user_id), _utc_now_iso(), session_id, ip_address)
+        )
+        login_id = cursor.lastrowid
+        conn.commit()
+    return login_id
+
+
+def track_logout(login_id: int) -> None:
+    """Record logout time for a login session."""
+    with _connect() as conn:
+        conn.execute(
+            "UPDATE login_tracking SET logout_at = ? WHERE id = ?",
+            (_utc_now_iso(), int(login_id))
+        )
+        conn.commit()
+
+
+def get_user_login_history(user_id: int, limit: int = 50) -> list[dict]:
+    """Get login history for a user."""
+    with _connect() as conn:
+        rows = conn.execute(
+            """SELECT id, login_at, logout_at, session_id, ip_address 
+               FROM login_tracking 
+               WHERE user_id = ? 
+               ORDER BY login_at DESC 
+               LIMIT ?""",
+            (int(user_id), limit)
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def get_current_sessions() -> list[dict]:
+    """Get all currently active sessions (where logout_at is NULL)."""
+    with _connect() as conn:
+        rows = conn.execute(
+            """SELECT lt.id, lt.user_id, u.username, u.email, lt.login_at, lt.session_id, lt.ip_address
+               FROM login_tracking lt
+               JOIN users u ON lt.user_id = u.id
+               WHERE lt.logout_at IS NULL
+               ORDER BY lt.login_at DESC"""
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def get_all_users_list() -> list[dict]:
+    """Get list of all users."""
+    with _connect() as conn:
+        rows = conn.execute(
+            "SELECT id, username, email, created_at, avatar_filename FROM users ORDER BY id DESC"
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def delete_user(user_id: int) -> bool:
+    """Delete a user and all related data (cascades)."""
+    with _connect() as conn:
+        # Check if user exists
+        user = conn.execute("SELECT id FROM users WHERE id = ?", (int(user_id),)).fetchone()
+        if not user:
+            return False
+        
+        # Delete all related data (cascades)
+        conn.execute("DELETE FROM progress WHERE user_id = ?", (int(user_id),))
+        conn.execute("DELETE FROM quiz_attempts WHERE user_id = ?", (int(user_id),))
+        conn.execute("DELETE FROM login_tracking WHERE user_id = ?", (int(user_id),))
+        conn.execute("DELETE FROM user_events WHERE user_id = ?", (int(user_id),))
+        conn.execute("DELETE FROM password_resets WHERE user_id = ?", (int(user_id),))
+        conn.execute("DELETE FROM users WHERE id = ?", (int(user_id),))
+        conn.commit()
+    return True
+
+
+def bulk_delete_users(user_ids: list[int]) -> dict:
+    """Delete multiple users. Returns {deleted, failed, total}."""
+    deleted = 0
+    failed = 0
+    
+    for user_id in user_ids:
+        try:
+            if delete_user(int(user_id)):
+                deleted += 1
+            else:
+                failed += 1
+        except Exception:
+            failed += 1
+    
+    return {"deleted": deleted, "failed": failed, "total": len(user_ids)}
+
+
+def reset_user_progress(user_id: int) -> None:
+    """Clear user's progress and quiz attempts."""
+    with _connect() as conn:
+        conn.execute("DELETE FROM progress WHERE user_id = ?", (int(user_id),))
+        conn.execute("DELETE FROM quiz_attempts WHERE user_id = ?", (int(user_id),))
+        conn.commit()
+
+
+def get_user_stats(user_id: int) -> dict:
+    """Get comprehensive statistics for a user."""
+    with _connect() as conn:
+        # Logins
+        logins = conn.execute(
+            "SELECT COUNT(*) as count FROM login_tracking WHERE user_id = ?",
+            (int(user_id),)
+        ).fetchone()["count"]
+        
+        # Progress items
+        progress = conn.execute(
+            "SELECT COUNT(*) as count FROM progress WHERE user_id = ?",
+            (int(user_id),)
+        ).fetchone()["count"]
+        
+        # Quizzes taken
+        quizzes = conn.execute(
+            "SELECT COUNT(*) as count FROM quiz_attempts WHERE user_id = ?",
+            (int(user_id),)
+        ).fetchone()["count"]
+        
+        # Total events
+        events = conn.execute(
+            "SELECT COUNT(*) as count FROM user_events WHERE user_id = ?",
+            (int(user_id),)
+        ).fetchone()["count"]
+    
+    return {
+        "user_id": int(user_id),
+        "logins": int(logins),
+        "progress_items": int(progress),
+        "quizzes_taken": int(quizzes),
+        "total_events": int(events)
+    }

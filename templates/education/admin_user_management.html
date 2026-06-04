@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card h3 {
+            color: #667eea;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="password"],
+        input[type="email"],
+        select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #ee5a52;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        thead {
+            background: #f8f9fa;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-buttons button {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .error-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #721c24;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab-button {
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👥 User Management Dashboard</h1>
+            <p>Manage users, track logins, and monitor activity</p>
+        </div>
+        
+        <div class="alert alert-info">
+            <strong>Admin Token Required:</strong> Add <code>?token=YOUR_ADMIN_TOKEN</code> to access this page or set the <code>X-Admin-Token</code> header.
+        </div>
+        
+        <!-- Stats Section -->
+        <div class="stats-grid" id="stats-grid">
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <div class="value" id="stat-total-users">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Sessions</h3>
+                <div class="value" id="stat-active-sessions">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Logins Today</h3>
+                <div class="value" id="stat-logins-today">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Avg Session Duration</h3>
+                <div class="value" id="stat-avg-duration">-</div>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="section">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="users">All Users</button>
+                <button class="tab-button" data-tab="sessions">Active Sessions</button>
+                <button class="tab-button" data-tab="user-details">User Details</button>
+            </div>
+            
+            <!-- Users Tab -->
+            <div class="tab-content active" id="tab-users">
+                <div class="controls">
+                    <input type="text" id="search-users" placeholder="Search username or email...">
+                    <button class="btn-primary" onclick="loadUsers()">Refresh</button>
+                    <button class="btn-danger" onclick="bulkDeleteUsers()">Delete Selected</button>
+                </div>
+                <div class="table-responsive" id="users-container">
+                    <div class="loading">Loading users...</div>
+                </div>
+            </div>
+            
+            <!-- Sessions Tab -->
+            <div class="tab-content" id="tab-sessions">
+                <div class="controls">
+                    <button class="btn-primary" onclick="loadSessions()">Refresh</button>
+                </div>
+                <div class="table-responsive" id="sessions-container">
+                    <div class="loading">Loading sessions...</div>
+                </div>
+            </div>
+            
+            <!-- User Details Tab -->
+            <div class="tab-content" id="tab-user-details">
+                <div class="controls">
+                    <input type="number" id="detail-user-id" placeholder="Enter User ID" min="1">
+                    <button class="btn-primary" onclick="loadUserDetails()">Load Details</button>
+                </div>
+                <div id="details-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const token = new URLSearchParams(window.location.search).get('token') || '';
+        
+        const headers = {
+            'Content-Type': 'application/json',
+            ...(token && { 'X-Admin-Token': token })
+        };
+        
+        // Tab switching
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.dataset.tab;
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`tab-${tab}`).classList.add('active');
+                
+                // Load data for the selected tab
+                if (tab === 'users') loadUsers();
+                else if (tab === 'sessions') loadSessions();
+            });
+        });
+        
+        // Initial load
+        Promise.all([
+            loadStats(),
+            loadUsers(),
+        ]).catch(err => console.error('Load error:', err));
+        
+        async function loadStats() {
+            try {
+                const res = await fetch('/learn/admin/api/logins/summary', { headers });
+                const data = await res.json();
+                document.getElementById('stat-total-users').textContent = 'Loading...';
+                document.getElementById('stat-active-sessions').textContent = data.active_sessions || 0;
+                document.getElementById('stat-logins-today').textContent = data.logins_today || 0;
+                document.getElementById('stat-avg-duration').textContent = (data.avg_session_duration_minutes || 0).toFixed(1) + ' min';
+                
+                // Load total users
+                const usersRes = await fetch('/learn/admin/api/users/list', { headers });
+                const usersData = await usersRes.json();
+                document.getElementById('stat-total-users').textContent = usersData.users?.length || 0;
+            } catch (err) {
+                console.error('Stats error:', err);
+            }
+        }
+        
+        async function loadUsers() {
+            try {
+                const res = await fetch('/learn/admin/api/users/list', { headers });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                const users = data.users || [];
+                const search = document.getElementById('search-users')?.value?.toLowerCase() || '';
+                
+                const filtered = users.filter(u => 
+                    !search || u.username?.toLowerCase().includes(search) || u.email?.toLowerCase().includes(search)
+                );
+                
+                let html = `<table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                
+                filtered.forEach(u => {
+                    html += `<tr>
+                        <td><input type="checkbox" class="user-checkbox" value="${u.id}"></td>
+                        <td>${u.id}</td>
+                        <td><strong>${u.username}</strong></td>
+                        <td>${u.email || '-'}</td>
+                        <td>${new Date(u.created_at).toLocaleDateString()}</td>
+                        <td class="action-buttons">
+                            <button class="btn-secondary" onclick="viewUserDetails(${u.id})">View</button>
+                            <button class="btn-danger" onclick="deleteUser(${u.id})">Delete</button>
+                        </td>
+                    </tr>`;
+                });
+                
+                html += '</tbody></table>';
+                document.getElementById('users-container').innerHTML = html;
+            } catch (err) {
+                document.getElementById('users-container').innerHTML = `<div class="alert alert-danger">Error loading users: ${err.message}</div>`;
+            }
+        }
+        
+        async function loadSessions() {
+            try {
+                const res = await fetch('/learn/admin/api/sessions/current', { headers });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                const sessions = data.sessions || [];
+                
+                if (sessions.length === 0) {
+                    document.getElementById('sessions-container').innerHTML = '<div class="alert alert-info">No active sessions</div>';
+                    return;
+                }
+                
+                let html = `<table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Login Time</th>
+                            <th>IP Address</th>
+                            <th>Session ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                
+                sessions.forEach(s => {
+                    html += `<tr>
+                        <td>${s.user_id}</td>
+                        <td><strong>${s.username || 'Unknown'}</strong></td>
+                        <td>${s.email || '-'}</td>
+                        <td>${new Date(s.login_at).toLocaleString()}</td>
+                        <td>${s.ip_address || '-'}</td>
+                        <td><code style="font-size: 11px;">${(s.session_id || '').substring(0, 20)}...</code></td>
+                    </tr>`;
+                });
+                
+                html += '</tbody></table>';
+                document.getElementById('sessions-container').innerHTML = html;
+            } catch (err) {
+                document.getElementById('sessions-container').innerHTML = `<div class="alert alert-danger">Error loading sessions: ${err.message}</div>`;
+            }
+        }
+        
+        function viewUserDetails(userId) {
+            document.getElementById('detail-user-id').value = userId;
+            loadUserDetails();
+            document.querySelector('[data-tab="user-details"]').click();
+        }
+        
+        async function loadUserDetails() {
+            const userId = document.getElementById('detail-user-id').value;
+            if (!userId) {
+                alert('Please enter a User ID');
+                return;
+            }
+            
+            try {
+                // Fetch stats and logins in parallel
+                const [statsRes, loginsRes, usersRes] = await Promise.all([
+                    fetch(`/learn/admin/api/users/${userId}/stats`, { headers }),
+                    fetch(`/learn/admin/api/users/${userId}/logins?limit=10`, { headers }),
+                    fetch(`/learn/admin/api/users/list`, { headers })
+                ]);
+                
+                if (!statsRes.ok) throw new Error('User not found');
+                
+                const stats = await statsRes.json();
+                const logins = await loginsRes.json();
+                const users = await usersRes.json();
+                
+                // Find the user in the users list
+                const user = users.users.find(u => u.id == userId);
+                if (!user) throw new Error('User not found');
+                
+                let html = `<div class="alert alert-success">User Found</div>
+                    <h3>${user.username}</h3>
+                    <table>
+                        <tr><td><strong>User ID:</strong></td><td>${user.id}</td></tr>
+                        <tr><td><strong>Email:</strong></td><td>${user.email || '-'}</td></tr>
+                        <tr><td><strong>Total Logins:</strong></td><td>${stats.logins || 0}</td></tr>
+                        <tr><td><strong>Progress Items:</strong></td><td>${stats.progress_items || 0}</td></tr>
+                        <tr><td><strong>Quizzes Taken:</strong></td><td>${stats.quizzes_taken || 0}</td></tr>
+                        <tr><td><strong>Total Events:</strong></td><td>${stats.total_events || 0}</td></tr>
+                    </table>
+                    <h4 style="margin-top: 30px; margin-bottom: 15px;">Recent Logins</h4>`;
+                
+                if (logins.logins && logins.logins.length > 0) {
+                    html += `<table>
+                        <thead>
+                            <tr>
+                                <th>Login Time</th>
+                                <th>Logout Time</th>
+                                <th>IP Address</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+                    
+                    logins.logins.forEach(l => {
+                        const start = new Date(l.login_at);
+                        const end = l.logout_at ? new Date(l.logout_at) : new Date();
+                        const duration = Math.floor((end - start) / 60000);
+                        
+                        html += `<tr>
+                            <td>${start.toLocaleString()}</td>
+                            <td>${l.logout_at ? new Date(l.logout_at).toLocaleString() : 'Still logged in'}</td>
+                            <td>${l.ip_address || '-'}</td>
+                            <td>${duration} min</td>
+                        </tr>`;
+                    });
+                    
+                    html += '</tbody></table>';
+                } else {
+                    html += '<div class="alert alert-info">No login history</div>';
+                }
+                
+                html += `<div style="margin-top: 20px;">
+                    <button class="btn-secondary" onclick="resetUserProgress(${userId})">Reset Progress</button>
+                    <button class="btn-danger" onclick="deleteUser(${userId})">Delete User</button>
+                </div>`;
+                
+                document.getElementById('details-container').innerHTML = html;
+            } catch (err) {
+                document.getElementById('details-container').innerHTML = `<div class="alert alert-danger">Error loading user details: ${err.message}</div>`;
+            }
+        }
+        
+        async function deleteUser(userId) {
+            if (!confirm(`Delete user ${userId} and all their data? This cannot be undone!`)) return;
+            
+            try {
+                const res = await fetch(`/learn/admin/api/users/${userId}`, { 
+                    method: 'DELETE',
+                    headers 
+                });
+                
+                if (res.ok) {
+                    alert('User deleted successfully');
+                    loadUsers();
+                    loadStats();
+                } else {
+                    alert('Error deleting user');
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+        
+        async function bulkDeleteUsers() {
+            const checkboxes = document.querySelectorAll('.user-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert('Please select users to delete');
+                return;
+            }
+            
+            if (!confirm(`Delete ${checkboxes.length} users and all their data? This cannot be undone!`)) return;
+            
+            const userIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+            
+            try {
+                const res = await fetch('/learn/admin/api/users/bulk-delete', {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ user_ids: userIds })
+                });
+                
+                const data = await res.json();
+                alert(`Deleted: ${data.deleted}, Failed: ${data.failed}`);
+                loadUsers();
+                loadStats();
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+        
+        async function resetUserProgress(userId) {
+            if (!confirm(`Reset all progress for user ${userId}? Their account will remain active.`)) return;
+            
+            try {
+                const res = await fetch(`/learn/admin/api/users/${userId}/reset-progress`, {
+                    method: 'POST',
+                    headers
+                });
+                
+                if (res.ok) {
+                    alert('Progress reset successfully');
+                    loadUserDetails();
+                } else {
+                    alert('Error resetting progress');
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+        
+        function toggleSelectAll(checkbox) {
+            document.querySelectorAll('.user-checkbox').forEach(cb => {
+                cb.checked = checkbox.checked;
+            });
+        }
+        
+        // Auto-refresh stats every 30 seconds
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>

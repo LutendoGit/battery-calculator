@@ -1,0 +1,53 @@
+# Render Configuration
+# This file enables Infrastructure as Code deployment to Render
+# See: https://render.com/docs/infrastructure-as-code
+
+services:
+  - type: web
+    name: battery-calculator
+    env: python
+    plan: starter
+    
+    # Build configuration
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 3 --threads 2 --bind 0.0.0.0:$PORT --timeout 300
+    
+    # Release command runs after build but before web service starts
+    # This ensures database is initialized on deployment
+    preDeployCommand: python scripts/init_db_render.py
+    
+    # Python version
+    pythonVersion: 3.11
+    
+    # Persistent volume for SQLite database
+    disk:
+      name: education-database
+      mountPath: /data
+      sizeGB: 1
+    
+    # Environment variables
+    # IMPORTANT: SECRET_KEY and ADMIN_STREAM_TOKEN should be set in Render dashboard,
+    # not in this file, to keep sensitive data out of version control
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: DATABASE_URL
+        value: /data/education.db
+      - key: SECRET_KEY
+        sync: false  # Set in Render dashboard
+      - key: ADMIN_STREAM_TOKEN
+        sync: false  # Set in Render dashboard
+      - key: MAINTENANCE_MODE
+        value: "false"
+      - key: MAINTENANCE_RETRY_AFTER
+        value: "300"
+    
+    # Health check
+    healthCheckPath: /
+    healthCheckTimeout: 10
+    
+    # Auto-scale (optional, for Pro plan)
+    # maxInstances: 3
+    # minInstances: 1
