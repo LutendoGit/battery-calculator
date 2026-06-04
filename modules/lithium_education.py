@@ -1682,7 +1682,7 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
             ],
              "images": [
                     {
-                        "src": "images/comparing defferences in batteries.png",
+                        "src": "images/COMPARING DEFFERENT TYPES OF BATTERIES.png",
                         "alt": "images of battery comparisons",
                     },
                     
@@ -1713,7 +1713,7 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
             ],
              "images": [
                     {
-                        "src": "images/battery is not there just to add backup.png",
+                        "src": "images/BATTERY IS NOT THERE JUST TO ADD BACKUP.png",
                         "alt": "images of battery is not there just to add backup",
                     },
                     
@@ -1930,7 +1930,7 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                             "alt" : "image of so in simple terms energy(kwh) tells.",
                         },
                         {
-                            "src":"images/factors, what it meants.png,",
+                            "src":"images/factors, what it meants.png",
                             "alt" : "image of so in simple terms energy(kwh) tells.",
                         },
                     ],
@@ -2501,7 +2501,7 @@ MODULE_4_BMS = {
             ],
                 "images": [
                                 {
-                                "src":"images/if bms unhappy.png",
+                                "src":"images/if the bms is unhappy.png",
                                 "alt": "image if bms unhappy.png.",
                                 },
                                
@@ -2539,13 +2539,13 @@ MODULE_4_BMS = {
             "images": [
                                 {
                                 
-                                "src":"images/what the bms monitor.png",
+                                "src":"images/what the bms monitors.png",
                                 "alt": "image of what the bms monitor.png.",
                                 },
                                 
                                 
                                 {
-                                "src":"images/the bms sess problems before.png",
+                                "src":"images/the bms sees problems before you do.png",
                                 "alt": "image of the bms sess problems before.png.",
                                 },
                                
@@ -2701,7 +2701,7 @@ MODULE_4_BMS = {
             ],
             "images": [
                 {
-                    "src": "images/bms will always choose safety over c.png.",
+                    "src": "images/the bms will always choose.png",
                     "alt": "image of bms will always choose safety over c.png",
                 },
             ],
@@ -7462,6 +7462,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "to:",
                 "✔ proactively managing system health",
             ],
+            "images" :    [
+                {
+                    "src"  : "images/think like a professional.png",
+                    "alt"  : "",
+                },
+            ],
         },
         {
             "title": "8.3 What Monitoring Actually Shows You",
@@ -7492,6 +7498,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "optimisation",
                 "maintenance",
                 "customer support",
+            ],
+             "images" :    [
+                {
+                    "src"  : "images/monitoring data alone is not.png",
+                    "alt"  : "",
+                },
             ],
         },
         {
@@ -7543,6 +7555,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
             "bullets_after": [
                 "installers often misdiagnose healthy systems",
             ],
+              "images" :    [
+                {
+                    "src"  : "images/daily stytem behaviuo.png",
+                    "alt"  : "",
+                },
+            ],
         },
         {
             "title": "8.5 What \"Normal\" Looks Like",
@@ -7591,24 +7609,30 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "Before:",
             ],
             "bullets": [
-                "replacing equipment",
-                "changing settings randomly",
-                "disconnecting components",
+                "❌replacing equipment",
+                "❌changing settings randomly",
+                "❌disconnecting components",
             ],
             "paragraphs_after": [
                 "first:",
             ],
             "bullets_after": [
-                "review system behaviour",
-                "check historical trends",
-                "analyse charging behaviour",
-                "review fault history",
+                "✔ review system behaviour",
+                "✔ check historical trends",
+                "✔ analyse charging behaviour",
+                "✔ review fault history",
             ],
             "paragraphs_extra": [
                 "Good monitoring often reveals:",
             ],
             "bullets_extra": [
                 "the actual cause quickly",
+            ],
+             "images" :    [
+                {
+                    "src"  : "images/using monitoring to diag.png",
+                    "alt"  : "",
+                },
             ],
         },
         {
@@ -7622,6 +7646,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "isolates sections logically",
                 "verifies before acting",
             ],
+             "images" :    [
+                {
+                    "src"  : "images/most system failure are.png",
+                    "alt"  : "",
+                },
+            ],
         },
         {
             "title": "8.8 Break the System Into Sections",
@@ -7630,11 +7660,23 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "",
                 "This prevents confusion and unnecessary part replacement.",
             ],
+              "images" :    [
+                {
+                    "src"  : "images/trouble shooting logic flow.png",
+                    "alt"  : "",
+                },
+            ],
         },
         {
             "title": "8.9 The 5-Step Troubleshooting Flow",
             "paragraphs": [
                 "Professional troubleshooting should always follow a structured process.",
+            ],
+              "images" :    [
+                {
+                    "src"  : "images/5-step troubleshotting.png",
+                    "alt"  : "",
+                },
             ],
         },
         {
@@ -7645,6 +7687,60 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
             "title": "8.10 Using Symptoms to Read the System",
             "paragraphs": [
                 "Symptoms provide clues.  Professional installers learn to \"read\" the system.",
+            ],
+            "images" :    [
+                {
+                    "src"  : "images/charging and soc faults.png",
+                    "alt"  : "",
+                },
+                  {
+                    "src"  : "images/load and run time.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/communication and firmware fault.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/installation and electrical faults.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/behavior and logic problems.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/bms and protection faults.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/pv and solar problems.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/firmware update problems.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/parallel system problem.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/environmental problems.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/environmental problems.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/monitoring problems and pos.png",
+                    "alt"  : "",
+                },
+                 {
+                    "src"  : "images/mechanical and installation problems.png",
+                    "alt"  : "",
+                },
             ],
         },
         {
@@ -7706,6 +7802,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "avoid excessive discharge",
                 "use correct operating modes",
                 "avoid excessive heat",
+            ],
+            "images"  : [
+                {
+                  "src"  : "images/bms can only balance.png",
+                  "alt"  :  "",
+                },
             ],
         },
         {
@@ -7777,6 +7879,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "identifying abnormal patterns",
                 "reducing unnecessary call-outs",
             ],
+              "images"  : [
+                {
+                  "src"  : "images/wrapping up module 8.png",
+                  "alt"  :  "",
+                },
+            ]
         },
     ],
 }
