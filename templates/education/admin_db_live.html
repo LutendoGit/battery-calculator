@@ -39,6 +39,7 @@
                 <option value="quiz_failures">Quiz failures (below pass %)</option>
                 <option value="events">Events (stream)</option>
                 <option value="user_reports">User reports</option>
+                <option value="user_reports">User reports</option>
               </select>
             </div>
             <div class="form-group col-md-3">
@@ -80,86 +81,120 @@
       </div>
     </div>
 
-    <script>
-      const token = {{ token|tojson }};
-      const tokState = document.getElementById('tokState');
-      tokState.textContent = token ? 'present' : 'missing';
+   <script>
+  const token = {{ token|tojson }};
+  const tokState = document.getElementById('tokState');
+  tokState.textContent = token ? 'present' : 'missing';
 
-      const out = document.getElementById('out');
-      const updated = document.getElementById('updated');
-      const cursorEl = document.getElementById('cursor');
+  const out = document.getElementById('out');
+  const updated = document.getElementById('updated');
+  const cursorEl = document.getElementById('cursor');
 
-      let timer = null;
-      let paused = false;
-      let eventsCursor = 0;
+  let timer = null;
+  let paused = false;
+  let eventsCursor = 0;
 
-      function getInt(el, fallback) {
-        const v = parseInt((el.value || '').trim(), 10);
-        return Number.isFinite(v) ? v : fallback;
-      }
+  function getInt(el, fallback) {
+    const v = parseInt((el.value || '').trim(), 10);
+    return Number.isFinite(v) ? v : fallback;
+  }
 
-      function buildUrl() {
-        const query = document.getElementById('query').value;
-        const userId = (document.getElementById('user_id').value || '').trim();
-        const limit = getInt(document.getElementById('limit'), 200);
-        const passPct = getInt(document.getElementById('pass_pct'), 75);
+  function buildUrl() {
+    const query = document.getElementById('query').value;
+    const userId = (document.getElementById('user_id').value || '').trim();
+    const limit = getInt(document.getElementById('limit'), 200);
+    const passPct = getInt(document.getElementById('pass_pct'), 75);
 
-        const params = new URLSearchParams();
-        if (token) params.set('token', token);
-        params.set('limit', String(limit));
+    const params = new URLSearchParams();
+    if (token) params.set('token', token);
+    params.set('limit', String(limit));
 
-        if (userId) params.set('user_id', userId);
-        if (query === 'events') params.set('since', String(eventsCursor));
-        if (query === 'quiz_failures') params.set('pass_pct', String(passPct));
+    if (userId) params.set('user_id', userId);
+    if (query === 'events') params.set('since', String(eventsCursor));
+    if (query === 'quiz_failures' || query === 'user_reports') params.set('pass_pct', String(passPct));
 
-        return `/learn/admin/db/api/${query}?${params.toString()}`;
-      }
+    return `/learn/admin/db/api/${query}?${params.toString()}`;
+  }
 
-      async function runOnce() {
-        if (paused) return;
-        const url = buildUrl();
-        try {
-          const res = await fetch(url, { headers: token ? { 'X-Admin-Token': token } : {} });
-          const data = await res.json();
-          if (!res.ok) {
-            out.textContent = JSON.stringify({ error: res.status, data }, null, 2);
-            return;
-          }
+  function badgeReady(v) {
+    return Number(v) === 1 ? "✅ Ready" : "❌ Not ready";
+  }
 
-          if (data && typeof data.last_id === 'number') {
-            eventsCursor = data.last_id;
-            cursorEl.textContent = String(eventsCursor);
-          }
+  function renderData(query, data) {
+    // Pretty, human-friendly view for the new user_reports endpoint
+    if (query === 'user_reports' && data && Array.isArray(data.rows)) {
+      const rows = data.rows;
+      if (!rows.length) return "No user report rows found.";
 
-          out.textContent = JSON.stringify(data, null, 2);
-          updated.textContent = new Date().toLocaleTimeString();
-        } catch (e) {
-          out.textContent = String(e);
-        }
-      }
+      const meta = data.meta || {};
+      const header = [
+        `User reports (pass >= ${meta.pass_pct ?? '75'}%)`,
+        `Lessons total: ${meta.lessons_total ?? '-'} | Quizzes total: ${meta.quizzes_total ?? '-'}`,
+        ""
+      ].join("\n");
 
-      function schedule() {
-        if (timer) clearInterval(timer);
-        const ms = getInt(document.getElementById('refresh_ms'), 2000);
-        timer = setInterval(runOnce, Math.max(250, ms));
-      }
-
-      document.getElementById('btnRun').addEventListener('click', () => { runOnce(); });
-      document.getElementById('btnPause').addEventListener('click', () => {
-        paused = !paused;
-        document.getElementById('btnPause').textContent = paused ? 'Resume' : 'Pause';
+      const lines = rows.map(r => {
+        return [
+          `User #${r.user_id} — ${r.username || '(no username)'} (${r.email || 'no-email'})`,
+          `  Modules: completed ${r.modules_completed ?? 0}, in progress ${r.modules_in_progress ?? 0}`,
+          `  Quizzes: passed ${r.quizzes_passed ?? 0} / attempted ${r.quizzes_attempted ?? 0} | overall ${r.overall_pct ?? 0}%`,
+          `  Certificate: ${badgeReady(r.certificate_ready)}`,
+        ].join("\n");
       });
 
-      document.getElementById('query').addEventListener('change', () => {
-        if (document.getElementById('query').value !== 'events') {
-          eventsCursor = 0;
-          cursorEl.textContent = '0';
-        }
-        runOnce();
-      });
-      document.getElementById('refresh_ms').addEventListener('change', schedule);
+      return header + lines.join("\n\n");
+    }
 
-      schedule();
-    </script>
-  </body>
-</html>
+    // default raw JSON rendering for other endpoints
+    return JSON.stringify(data, null, 2);
+  }
+
+  async function runOnce() {
+    if (paused) return;
+    const query = document.getElementById('query').value;
+    const url = buildUrl();
+
+    try {
+      const res = await fetch(url, { headers: token ? { 'X-Admin-Token': token } : {} });
+      const data = await res.json();
+
+      if (!res.ok) {
+        out.textContent = JSON.stringify({ error: res.status, data }, null, 2);
+        return;
+      }
+
+      if (data && typeof data.last_id === 'number') {
+        eventsCursor = data.last_id;
+        cursorEl.textContent = String(eventsCursor);
+      }
+
+      out.textContent = renderData(query, data);
+      updated.textContent = new Date().toLocaleTimeString();
+    } catch (e) {
+      out.textContent = String(e);
+    }
+  }
+
+  function schedule() {
+    if (timer) clearInterval(timer);
+    const ms = getInt(document.getElementById('refresh_ms'), 2000);
+    timer = setInterval(runOnce, Math.max(250, ms));
+  }
+
+  document.getElementById('btnRun').addEventListener('click', () => { runOnce(); });
+  document.getElementById('btnPause').addEventListener('click', () => {
+    paused = !paused;
+    document.getElementById('btnPause').textContent = paused ? 'Resume' : 'Pause';
+  });
+
+  document.getElementById('query').addEventListener('change', () => {
+    if (document.getElementById('query').value !== 'events') {
+      eventsCursor = 0;
+      cursorEl.textContent = '0';
+    }
+    runOnce();
+  });
+  document.getElementById('refresh_ms').addEventListener('change', schedule);
+
+  schedule();
+</script>
