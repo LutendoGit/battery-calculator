@@ -1645,6 +1645,25 @@ def admin_api_user_stats(user_id):
     stats = education_store.get_user_stats(user_id)
     return jsonify(stats)
 
+@education_bp.get("/admin/api/module-progress/user/<int:user_id>")
+def admin_api_module_progress_user(user_id: int):
+    """Backward-compatible endpoint expected by admin_user_management frontend."""
+    _require_admin_token()
+    stats = education_store.get_user_stats(user_id)
+
+    # Frontend-safe payload with aliases
+    return jsonify({
+        "user_id": user_id,
+        "modules_completed": int(stats.get("modules_completed") or 0),
+        "modules_in_progress": int(stats.get("modules_in_progress") or 0),
+        "quizzes_passed": int(stats.get("quizzes_passed") or 0),
+        "quizzes_attempted": int(stats.get("quizzes_attempted") or 0),
+        "certificate_modules": int(stats.get("certificate_modules") or 0),
+        "certificate_awarded": bool(stats.get("certificate_awarded")),
+        "module_progress_available": bool(stats.get("module_progress_available", True)),
+        "error": stats.get("error"),
+    })
+
 
 @education_bp.get("/admin/api/users/<int:user_id>/logins")
 def admin_api_user_logins(user_id):
