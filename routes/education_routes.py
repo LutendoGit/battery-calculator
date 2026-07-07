@@ -1213,10 +1213,37 @@ def admin_db_users():
     limit = _int_param("limit", 50, min_value=1, max_value=500)
     with _connect_education_db() as conn:
         rows = conn.execute(
-            "SELECT id, username, created_at, avatar_filename FROM users ORDER BY id DESC LIMIT ?",
+            """
+            SELECT
+                u.id,
+                u.username,
+                u.email,
+                u.created_at,
+                u.avatar_filename,
+                CASE WHEN lt_active.user_id IS NOT NULL THEN 1 ELSE 0 END AS is_active,
+                lt_last.last_login_at,
+                lt_last.last_logout_at
+            FROM users u
+            LEFT JOIN (
+                SELECT DISTINCT user_id
+                FROM login_tracking
+                WHERE logout_at IS NULL
+            ) lt_active ON lt_active.user_id = u.id
+            LEFT JOIN (
+                SELECT
+                    user_id,
+                    MAX(login_at) AS last_login_at,
+                    MAX(logout_at) AS last_logout_at
+                FROM login_tracking
+                GROUP BY user_id
+            ) lt_last ON lt_last.user_id = u.id
+            ORDER BY u.id DESC
+            LIMIT ?
+            """,
             (limit,),
         ).fetchall()
     return jsonify({"rows": [dict(r) for r in rows]})
+
 
 
 @education_bp.get("/admin/db/api/progress")
@@ -1320,77 +1347,74 @@ def admin_db_events():
 
 @education_bp.get("/admin/db/api/users_summary")
 def admin_db_users_summary():
-        """Per-user completion + score summary.
+    """Per-user completion + score summary."""
+    _require_admin_token()
+    limit = _int_param("limit", 200, min_value=1, max_value=2000)
 
-        Computes:
-        - lessons_completed: count of `progress.item_key` like 'lesson:%'
-        - quizzes_attempted: count of rows in `quiz_attempts`
-        - overall_pct: avg(best_score/total)*100 across attempted quizzes
-        """
-        _require_admin_token()
-        limit = _int_param("limit", 200, min_value=1, max_value=2000)
+    with _connect_education_db() as conn:
+        rows = conn.execute(
+            """
+            SELECT
+                u.id AS user_id,
+                u.username,
+                u.email,
+                u.created_at,
+                COALESCE(p.lessons_completed, 0) AS lessons_completed,
+                COALESCE(q.quizzes_attempted, 0) AS quizzes_attempted,
+                ROUND(COALESCE(q.overall_pct, 0), 1) AS overall_pct,
+                COALESCE(a.last_activity, u.created_at) AS last_activity
+            FROM users u
+            LEFT JOIN (
+                -- Count distinct fully-completed lesson keys only (lesson:fundamentals, lesson:fundamentals-2, ...)
+                SELECT user_id, COUNT(DISTINCT item_key) AS lessons_completed
+                FROM progress
+                WHERE item_key LIKE 'lesson:%'
+                  AND item_key NOT LIKE '%:step:%'
+                GROUP BY user_id
+            ) p ON p.user_id = u.id
+            LEFT JOIN (
+                SELECT
+                    user_id,
+                    COUNT(*) AS quizzes_attempted,
+                    AVG(CAST(best_score AS REAL) / NULLIF(total, 0)) * 100.0 AS overall_pct,
+                    MAX(completed_at) AS last_quiz_at
+                FROM quiz_attempts
+                GROUP BY user_id
+            ) q ON q.user_id = u.id
+            LEFT JOIN (
+                SELECT
+                    u2.id AS user_id,
+                    MAX(
+                        COALESCE(q2.last_quiz_at, ''),
+                        COALESCE(p2.last_progress_at, ''),
+                        COALESCE(e2.last_event_at, ''),
+                        COALESCE(u2.created_at, '')
+                    ) AS last_activity
+                FROM users u2
+                LEFT JOIN (
+                    SELECT user_id, MAX(completed_at) AS last_progress_at
+                    FROM progress
+                    GROUP BY user_id
+                ) p2 ON p2.user_id = u2.id
+                LEFT JOIN (
+                    SELECT user_id, MAX(completed_at) AS last_quiz_at
+                    FROM quiz_attempts
+                    GROUP BY user_id
+                ) q2 ON q2.user_id = u2.id
+                LEFT JOIN (
+                    SELECT user_id, MAX(created_at) AS last_event_at
+                    FROM user_events
+                    GROUP BY user_id
+                ) e2 ON e2.user_id = u2.id
+                GROUP BY u2.id
+            ) a ON a.user_id = u.id
+            ORDER BY last_activity DESC
+            LIMIT ?
+            """,
+            (limit,),
+        ).fetchall()
 
-        with _connect_education_db() as conn:
-                rows = conn.execute(
-                        """
-                        SELECT
-                            u.id AS user_id,
-                            u.username,
-                            u.created_at,
-                            COALESCE(p.lessons_completed, 0) AS lessons_completed,
-                            COALESCE(q.quizzes_attempted, 0) AS quizzes_attempted,
-                            ROUND(COALESCE(q.overall_pct, 0), 1) AS overall_pct,
-                            COALESCE(a.last_activity, u.created_at) AS last_activity
-                        FROM users u
-                        LEFT JOIN (
-                            SELECT user_id, COUNT(*) AS lessons_completed
-                            FROM progress
-                            WHERE item_key LIKE 'lesson:%'
-                            GROUP BY user_id
-                        ) p ON p.user_id = u.id
-                        LEFT JOIN (
-                            SELECT
-                                user_id,
-                                COUNT(*) AS quizzes_attempted,
-                                AVG(CAST(best_score AS REAL) / NULLIF(total, 0)) * 100.0 AS overall_pct,
-                                MAX(completed_at) AS last_quiz_at
-                            FROM quiz_attempts
-                            GROUP BY user_id
-                        ) q ON q.user_id = u.id
-                        LEFT JOIN (
-                            SELECT
-                                u2.id AS user_id,
-                                MAX(
-                                    COALESCE(q2.last_quiz_at, ''),
-                                    COALESCE(p2.last_progress_at, ''),
-                                    COALESCE(e2.last_event_at, ''),
-                                    COALESCE(u2.created_at, '')
-                                ) AS last_activity
-                            FROM users u2
-                            LEFT JOIN (
-                                SELECT user_id, MAX(completed_at) AS last_progress_at
-                                FROM progress
-                                GROUP BY user_id
-                            ) p2 ON p2.user_id = u2.id
-                            LEFT JOIN (
-                                SELECT user_id, MAX(completed_at) AS last_quiz_at
-                                FROM quiz_attempts
-                                GROUP BY user_id
-                            ) q2 ON q2.user_id = u2.id
-                            LEFT JOIN (
-                                SELECT user_id, MAX(created_at) AS last_event_at
-                                FROM user_events
-                                GROUP BY user_id
-                            ) e2 ON e2.user_id = u2.id
-                            GROUP BY u2.id
-                        ) a ON a.user_id = u.id
-                        ORDER BY last_activity DESC
-                        LIMIT ?
-                        """,
-                        (limit,),
-                ).fetchall()
-
-        return jsonify({"rows": [dict(r) for r in rows]})
+    return jsonify({"rows": [dict(r) for r in rows]})
 
 
 @education_bp.get("/admin/db/api/latest_quiz")
