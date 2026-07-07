@@ -444,6 +444,31 @@
                     document.getElementById('sessions-container').innerHTML = '<div class="alert alert-info">No active sessions</div>';
                     return;
                 }
+
+     function getAdminToken() {
+                     const u = new URL(window.location.href);
+                     return u.searchParams.get('token') || '';
+}
+
+function withToken(url) {
+  const t = getAdminToken();
+  if (!t) return url;
+  const u = new URL(url, window.location.origin);
+  u.searchParams.set('token', t);
+  return u.pathname + u.search;
+}
+
+async function adminFetch(path) {
+  const token = getAdminToken();
+  const res = await fetch(withToken(path), {
+    headers: token ? { 'X-Admin-Token': token } : {}
+  });
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`HTTP ${res.status}: ${txt}`);
+  }
+  return res.json();
+}
                 
                 let html = `<table>
                     <thead>
@@ -509,6 +534,7 @@
                 let moduleData = { modules_status: {}, certificates: {} };
                 let moduleDataAvailable = false;
                 try {
+                   const stats = await adminFetch(`/learn/admin/api/users/${userId}/stats`);
                    const moduleRes = await fetch(`/learn/admin/api/users/${userId}/stats`, { headers });
                     if (moduleRes.ok) {
                         moduleData = await moduleRes.json();
