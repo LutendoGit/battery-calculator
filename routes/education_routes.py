@@ -1451,6 +1451,127 @@ def admin_db_latest_quiz():
 
         return jsonify({"rows": [dict(r) for r in rows]})
 
+@education_bp.get("/admin/db/api/user_reports")
+def admin_db_user_reports():
+    """Per-user training report summary for admin dashboards.
+
+    Returns:
+    - modules_completed
+    - modules_in_progress
+    - quizzes_attempted
+    - quizzes_passed
+    - overall_pct
+    - certificate_ready
+    """
+    _require_admin_token()
+    user_id = _int_param("user_id", 0, min_value=0)
+    limit = _int_param("limit", 200, min_value=1, max_value=2000)
+    pass_pct = _int_param("pass_pct", 75, min_value=1, max_value=100)
+
+    # Keep these aligned with active curriculum config in this file.
+    lesson_keys = [item.key for item in _LESSON_ITEMS]
+    quiz_ids = [str(q.get("id")) for q in _QUIZZES if q.get("id")]
+    lessons_total = len(lesson_keys)
+    quizzes_total = len(quiz_ids)
+
+    sql = """
+        SELECT
+            u.id AS user_id,
+            u.username,
+            u.email,
+            u.created_at,
+
+            COALESCE(lc.modules_completed, 0) AS modules_completed,
+            COALESCE(lp.modules_in_progress, 0) AS modules_in_progress,
+
+            COALESCE(qa.quizzes_attempted, 0) AS quizzes_attempted,
+            COALESCE(qp.quizzes_passed, 0) AS quizzes_passed,
+
+            ROUND(COALESCE(qa.overall_pct, 0), 1) AS overall_pct,
+
+            CASE
+                WHEN COALESCE(lc.modules_completed, 0) >= ?
+                 AND COALESCE(qp.quizzes_passed, 0) >= ?
+                THEN 1 ELSE 0
+            END AS certificate_ready
+
+        FROM users u
+
+        -- Completed modules: explicit final lesson keys only
+        LEFT JOIN (
+            SELECT user_id, COUNT(DISTINCT item_key) AS modules_completed
+            FROM progress
+            WHERE item_key LIKE 'lesson:%'
+              AND item_key NOT LIKE '%:step:%'
+            GROUP BY user_id
+        ) lc ON lc.user_id = u.id
+
+        -- Modules in progress: has step records but no final lesson completion key
+        LEFT JOIN (
+            SELECT t.user_id, COUNT(*) AS modules_in_progress
+            FROM (
+                SELECT DISTINCT
+                    p.user_id,
+                    SUBSTR(p.item_key, 1, INSTR(p.item_key, ':step:') - 1) AS lesson_key
+                FROM progress p
+                WHERE p.item_key LIKE 'lesson:%:step:%'
+                  AND INSTR(p.item_key, ':step:') > 0
+            ) t
+            LEFT JOIN progress done
+              ON done.user_id = t.user_id
+             AND done.item_key = t.lesson_key
+            WHERE done.item_key IS NULL
+            GROUP BY t.user_id
+        ) lp ON lp.user_id = u.id
+
+        -- Quiz attempts and overall avg %
+        LEFT JOIN (
+            SELECT
+                user_id,
+                COUNT(*) AS quizzes_attempted,
+                AVG(CAST(best_score AS REAL) / NULLIF(total, 0)) * 100.0 AS overall_pct
+            FROM quiz_attempts
+            GROUP BY user_id
+        ) qa ON qa.user_id = u.id
+
+        -- Quiz passes using threshold
+        LEFT JOIN (
+            SELECT
+                user_id,
+                COUNT(*) AS quizzes_passed
+            FROM quiz_attempts
+            WHERE (CASE WHEN total > 0 THEN (CAST(best_score AS REAL) / total) * 100.0 ELSE 0 END) >= ?
+            GROUP BY user_id
+        ) qp ON qp.user_id = u.id
+    """
+
+    params: list[object] = [lessons_total, quizzes_total, pass_pct]
+
+    if user_id:
+        sql += " WHERE u.id = ?"
+        params.append(user_id)
+
+    sql += " ORDER BY u.id DESC LIMIT ?"
+    params.append(limit)
+
+    with _connect_education_db() as conn:
+        rows = conn.execute(sql, tuple(params)).fetchall()
+
+    return jsonify(
+        {
+            "rows": [dict(r) for r in rows],
+            "meta": {
+                "lessons_total": lessons_total,
+                "quizzes_total": quizzes_total,
+                "pass_pct": pass_pct,
+                "lesson_keys": lesson_keys,
+                "quiz_ids": quiz_ids,
+            },
+        }
+    )
+
+
+
 
 @education_bp.get("/admin/db/api/quiz_failures")
 def admin_db_quiz_failures():
