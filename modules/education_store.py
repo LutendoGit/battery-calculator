@@ -866,36 +866,87 @@ def reset_user_progress(user_id: int) -> None:
 
 
 def get_user_stats(user_id: int) -> dict:
-    """Get comprehensive statistics for a user."""
-    with _connect() as conn:
-        # Logins
-        logins = conn.execute(
-            "SELECT COUNT(*) as count FROM login_tracking WHERE user_id = ?",
-            (int(user_id),)
-        ).fetchone()["count"]
-        
-        # Progress items
-        progress = conn.execute(
-            "SELECT COUNT(*) as count FROM progress WHERE user_id = ?",
-            (int(user_id),)
-        ).fetchone()["count"]
-        
-        # Quizzes taken
-        quizzes = conn.execute(
-            "SELECT COUNT(*) as count FROM quiz_attempts WHERE user_id = ?",
-            (int(user_id),)
-        ).fetchone()["count"]
-        
-        # Total events
-        events = conn.execute(
-            "SELECT COUNT(*) as count FROM user_events WHERE user_id = ?",
-            (int(user_id),)
-        ).fetchone()["count"]
-    
-    return {
-        "user_id": int(user_id),
-        "logins": int(logins),
-        "progress_items": int(progress),
-        "quizzes_taken": int(quizzes),
-        "total_events": int(events)
+    import sqlite3
+    from modules import education_store
+
+    uid = int(user_id)
+    out = {
+        "user_id": uid,
+        "modules_completed": 0,
+        "modules_in_progress": 0,
+        "quizzes_passed": 0,
+        "quizzes_attempted": 0,
+        "certificate_modules": 0,
+        "certificate_awarded": False,
+        "module_progress_available": True,
+        "error": None,
     }
+
+    try:
+        conn = sqlite3.connect(education_store.db_path())
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+        # Completed modules: explicit lesson keys (not step keys)
+        row = cur.execute(
+            """
+            SELECT COUNT(DISTINCT item_key) AS n
+            FROM progress
+            WHERE user_id = ?
+              AND item_key LIKE 'lesson:%'
+              AND item_key NOT LIKE '%:step:%'
+            """,
+            (uid,),
+        ).fetchone()
+        out["modules_completed"] = int((row["n"] if row and row["n"] is not None else 0))
+
+        # In-progress modules: step keys with no final lesson key yet
+        row = cur.execute(
+            """
+            SELECT COUNT(*) AS n
+            FROM (
+                SELECT DISTINCT SUBSTR(item_key, 1, INSTR(item_key, ':step:') - 1) AS lesson_key
+                FROM progress
+                WHERE user_id = ?
+                  AND item_key LIKE 'lesson:%:step:%'
+                  AND INSTR(item_key, ':step:') > 0
+            ) s
+            WHERE NOT EXISTS (
+                SELECT 1 FROM progress p2
+                WHERE p2.user_id = ?
+                  AND p2.item_key = s.lesson_key
+            )
+            """,
+            (uid, uid),
+        ).fetchone()
+        out["modules_in_progress"] = int((row["n"] if row and row["n"] is not None else 0))
+
+        # Quiz attempted / passed
+        row = cur.execute(
+            """
+            SELECT
+              COUNT(*) AS attempted,
+              SUM(CASE WHEN total > 0 AND (CAST(best_score AS REAL)/total)*100.0 >= 75 THEN 1 ELSE 0 END) AS passed
+            FROM quiz_attempts
+            WHERE user_id = ?
+            """,
+            (uid,),
+        ).fetchone()
+        out["quizzes_attempted"] = int((row["attempted"] if row and row["attempted"] is not None else 0))
+        out["quizzes_passed"] = int((row["passed"] if row and row["passed"] is not None else 0))
+
+        # Certificate metrics
+        lessons_total = 10   # aligned with your active modules
+        quizzes_total = 8    # aligned with your active assessments
+        out["certificate_modules"] = out["modules_completed"]
+        out["certificate_awarded"] = (
+            out["modules_completed"] >= lessons_total and out["quizzes_passed"] >= quizzes_total
+        )
+
+        conn.close()
+        return out
+
+    except Exception as e:
+        out["module_progress_available"] = False
+        out["error"] = str(e)
+        return out
