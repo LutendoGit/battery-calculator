@@ -490,32 +490,63 @@
             }
             
             try {
-                // Fetch stats and logins in parallel
-                const [statsRes, loginsRes, usersRes] = await Promise.all([
-                    fetch(`/learn/admin/api/users/${userId}/stats`, { headers }),
+                // Fetch user details, module progress, active sessions and logins in parallel.
+                const [loginsRes, usersRes, moduleRes, sessionsRes] = await Promise.all([
                     fetch(`/learn/admin/api/users/${userId}/logins?limit=10`, { headers }),
-                    fetch(`/learn/admin/api/users/list`, { headers })
+                    fetch(`/learn/admin/api/users/list`, { headers }),
+                    fetch(`/learn/admin/api/module-progress/user/${userId}`, { headers }),
+                    fetch('/learn/admin/api/sessions/current', { headers })
                 ]);
                 
-                if (!statsRes.ok) throw new Error('User not found');
+                if (!usersRes.ok) throw new Error('Unable to load users');
+                if (!moduleRes.ok) throw new Error('Unable to load module progress');
+                if (!loginsRes.ok) throw new Error('Unable to load login history');
+                if (!sessionsRes.ok) throw new Error('Unable to load active sessions');
                 
-                const stats = await statsRes.json();
                 const logins = await loginsRes.json();
                 const users = await usersRes.json();
+                const moduleData = await moduleRes.json();
+                const sessionsData = await sessionsRes.json();
                 
                 // Find the user in the users list
                 const user = users.users.find(u => u.id == userId);
                 if (!user) throw new Error('User not found');
+
+                const modulesStatus = moduleData.modules_status || {};
+                const certificates = moduleData.certificates || {};
+                const sessions = sessionsData.sessions || [];
+
+                const completedModules = Object.entries(modulesStatus)
+                    .filter(([, data]) => data && data.status === 'completed')
+                    .map(([moduleId]) => moduleId)
+                    .sort();
+
+                const inProgressModules = Object.entries(modulesStatus)
+                    .filter(([, data]) => data && data.status === 'in_progress')
+                    .map(([moduleId]) => moduleId)
+                    .sort();
+
+                const passedQuizzes = Object.values(certificates)
+                    .map(c => c && c.quiz_id)
+                    .filter(Boolean)
+                    .sort();
+
+                const certificateModules = Object.keys(certificates).sort();
+                const isLoggedIn = sessions.some(s => Number(s.user_id) === Number(userId));
+
+                const formatList = (items) => (items.length ? items.join(', ') : '-');
                 
                 let html = `<div class="alert alert-success">User Found</div>
                     <h3>${user.username}</h3>
                     <table>
                         <tr><td><strong>User ID:</strong></td><td>${user.id}</td></tr>
                         <tr><td><strong>Email:</strong></td><td>${user.email || '-'}</td></tr>
-                        <tr><td><strong>Total Logins:</strong></td><td>${stats.logins || 0}</td></tr>
-                        <tr><td><strong>Progress Items:</strong></td><td>${stats.progress_items || 0}</td></tr>
-                        <tr><td><strong>Quizzes Taken:</strong></td><td>${stats.quizzes_taken || 0}</td></tr>
-                        <tr><td><strong>Total Events:</strong></td><td>${stats.total_events || 0}</td></tr>
+                        <tr><td><strong>Current Login Status:</strong></td><td>${isLoggedIn ? 'Logged In' : 'Logged Out'}</td></tr>
+                        <tr><td><strong>Modules Completed:</strong></td><td>${formatList(completedModules)}</td></tr>
+                        <tr><td><strong>Modules In Progress:</strong></td><td>${formatList(inProgressModules)}</td></tr>
+                        <tr><td><strong>Quizzes Passed:</strong></td><td>${formatList(passedQuizzes)}</td></tr>
+                        <tr><td><strong>Certificates Awarded:</strong></td><td>${certificateModules.length > 0 ? 'Yes' : 'No'}</td></tr>
+                        <tr><td><strong>Certificate Modules:</strong></td><td>${formatList(certificateModules)}</td></tr>
                     </table>
                     <h4 style="margin-top: 30px; margin-bottom: 15px;">Recent Logins</h4>`;
                 
@@ -548,11 +579,6 @@
                 } else {
                     html += '<div class="alert alert-info">No login history</div>';
                 }
-                
-                html += `<div style="margin-top: 20px;">
-                    <button class="btn-secondary" onclick="resetUserProgress(${userId})">Reset Progress</button>
-                    <button class="btn-danger" onclick="deleteUser(${userId})">Delete User</button>
-                </div>`;
                 
                 document.getElementById('details-container').innerHTML = html;
             } catch (err) {
