@@ -490,23 +490,33 @@
             }
             
             try {
-                // Fetch user details, module progress, active sessions and logins in parallel.
-                const [loginsRes, usersRes, moduleRes, sessionsRes] = await Promise.all([
+                // Fetch core user details first.
+                const [loginsRes, usersRes, sessionsRes] = await Promise.all([
                     fetch(`/learn/admin/api/users/${userId}/logins?limit=10`, { headers }),
                     fetch(`/learn/admin/api/users/list`, { headers }),
-                    fetch(`/learn/admin/api/module-progress/user/${userId}`, { headers }),
                     fetch('/learn/admin/api/sessions/current', { headers })
                 ]);
                 
                 if (!usersRes.ok) throw new Error('Unable to load users');
-                if (!moduleRes.ok) throw new Error('Unable to load module progress');
                 if (!loginsRes.ok) throw new Error('Unable to load login history');
                 if (!sessionsRes.ok) throw new Error('Unable to load active sessions');
                 
                 const logins = await loginsRes.json();
                 const users = await usersRes.json();
-                const moduleData = await moduleRes.json();
                 const sessionsData = await sessionsRes.json();
+
+                // Module progress endpoint is optional in some deployments; do not fail entire user details view.
+                let moduleData = { modules_status: {}, certificates: {} };
+                let moduleDataAvailable = false;
+                try {
+                    const moduleRes = await fetch(`/learn/admin/api/module-progress/user/${userId}`, { headers });
+                    if (moduleRes.ok) {
+                        moduleData = await moduleRes.json();
+                        moduleDataAvailable = true;
+                    }
+                } catch (_) {
+                    moduleDataAvailable = false;
+                }
                 
                 // Find the user in the users list
                 const user = users.users.find(u => u.id == userId);
@@ -535,6 +545,9 @@
                 const isLoggedIn = sessions.some(s => Number(s.user_id) === Number(userId));
 
                 const formatList = (items) => (items.length ? items.join(', ') : '-');
+                const moduleUnavailableNote = moduleDataAvailable
+                    ? ''
+                    : '<div class="alert alert-info" style="margin-top: 12px;">Module progress data is currently unavailable on this deployment.</div>';
                 
                 let html = `<div class="alert alert-success">User Found</div>
                     <h3>${user.username}</h3>
@@ -548,6 +561,7 @@
                         <tr><td><strong>Certificates Awarded:</strong></td><td>${certificateModules.length > 0 ? 'Yes' : 'No'}</td></tr>
                         <tr><td><strong>Certificate Modules:</strong></td><td>${formatList(certificateModules)}</td></tr>
                     </table>
+                    ${moduleUnavailableNote}
                     <h4 style="margin-top: 30px; margin-bottom: 15px;">Recent Logins</h4>`;
                 
                 if (logins.logins && logins.logins.length > 0) {
