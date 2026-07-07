@@ -444,10 +444,9 @@
                     document.getElementById('sessions-container').innerHTML = '<div class="alert alert-info">No active sessions</div>';
                     return;
                 }
-
-     function getAdminToken() {
-                     const u = new URL(window.location.href);
-                     return u.searchParams.get('token') || '';
+function getAdminToken() {
+    const u = new URL(window.location.href);
+    return u.searchParams.get('token') || '';
 }
 
 function withToken(url) {
@@ -507,124 +506,93 @@ async function adminFetch(path) {
             document.querySelector('[data-tab="user-details"]').click();
         }
         
-        async function loadUserDetails() {
-            const userId = document.getElementById('detail-user-id').value;
-            if (!userId) {
-                alert('Please enter a User ID');
-                return;
-            }
-            
-            try {
-                // Fetch core user details first.
-                const [loginsRes, usersRes, sessionsRes] = await Promise.all([
-                    fetch(`/learn/admin/api/users/${userId}/logins?limit=10`, { headers }),
-                    fetch(`/learn/admin/api/users/list`, { headers }),
-                    fetch('/learn/admin/api/sessions/current', { headers })
-                ]);
-                
-                if (!usersRes.ok) throw new Error('Unable to load users');
-                if (!loginsRes.ok) throw new Error('Unable to load login history');
-                if (!sessionsRes.ok) throw new Error('Unable to load active sessions');
-                
-                const logins = await loginsRes.json();
-                const users = await usersRes.json();
-                const sessionsData = await sessionsRes.json();
+      async function loadUserDetails() {
+  const userId = document.getElementById('detail-user-id').value;
+  if (!userId) {
+    alert('Please enter a User ID');
+    return;
+  }
 
-                // Module progress endpoint is optional in some deployments; do not fail entire user details view.
-                let moduleData = { modules_status: {}, certificates: {} };
-                let moduleDataAvailable = false;
-                try {
-                   const stats = await adminFetch(`/learn/admin/api/users/${userId}/stats`);
-                   const moduleRes = await fetch(`/learn/admin/api/users/${userId}/stats`, { headers });
-                    if (moduleRes.ok) {
-                        moduleData = await moduleRes.json();
-                        moduleDataAvailable = true;
-                    }
-                } catch (_) {
-                    moduleDataAvailable = false;
-                }
-                
-                // Find the user in the users list
-                const user = users.users.find(u => u.id == userId);
-                if (!user) throw new Error('User not found');
+  try {
+    const [logins, users, sessionsData, stats] = await Promise.all([
+      adminFetch(`/learn/admin/api/users/${userId}/logins?limit=10`),
+      adminFetch(`/learn/admin/api/users/list`),
+      adminFetch('/learn/admin/api/sessions/current'),
+      adminFetch(`/learn/admin/api/users/${userId}/stats`)
+    ]);
 
-                const modulesStatus = moduleData.modules_status || {};
-                const certificates = moduleData.certificates || {};
-                const sessions = sessionsData.sessions || [];
+    const user = (users.users || []).find(u => Number(u.id) === Number(userId));
+    if (!user) throw new Error('User not found');
 
-                const completedModules = Object.entries(modulesStatus)
-                    .filter(([, data]) => data && data.status === 'completed')
-                    .map(([moduleId]) => moduleId)
-                    .sort();
+    const sessions = sessionsData.sessions || [];
+    const isLoggedIn = sessions.some(s => Number(s.user_id) === Number(userId));
 
-                const inProgressModules = Object.entries(modulesStatus)
-                    .filter(([, data]) => data && data.status === 'in_progress')
-                    .map(([moduleId]) => moduleId)
-                    .sort();
+    // New backend flat fields
+    const modulesCompleted = Number(stats.modules_completed ?? 0);
+    const modulesInProgress = Number(stats.modules_in_progress ?? 0);
+    const quizzesPassed = Number(stats.quizzes_passed ?? 0);
+    const quizzesAttempted = Number(stats.quizzes_attempted ?? 0);
+    const certificateModules = Number(stats.certificate_modules ?? modulesCompleted);
+    const certificateAwarded = Boolean(stats.certificate_awarded);
+    const moduleDataAvailable = stats.module_progress_available !== false;
 
-                const passedQuizzes = Object.values(certificates)
-                    .map(c => c && c.quiz_id)
-                    .filter(Boolean)
-                    .sort();
+    const moduleUnavailableNote = moduleDataAvailable
+      ? ''
+      : `<div class="alert alert-info" style="margin-top:12px;">Module progress data is currently unavailable on this deployment.${stats.error ? ` (${stats.error})` : ''}</div>`;
 
-                const certificateModules = Object.keys(certificates).sort();
-                const isLoggedIn = sessions.some(s => Number(s.user_id) === Number(userId));
+    let html = `
+      <div class="alert alert-success">User Found</div>
+      <h3>${user.username}</h3>
+      <table>
+        <tr><td><strong>User ID:</strong></td><td>${user.id}</td></tr>
+        <tr><td><strong>Email:</strong></td><td>${user.email || '-'}</td></tr>
+        <tr><td><strong>Current Login Status:</strong></td><td>${isLoggedIn ? 'Logged In' : 'Logged Out'}</td></tr>
+        <tr><td><strong>Modules Completed:</strong></td><td>${modulesCompleted}</td></tr>
+        <tr><td><strong>Modules In Progress:</strong></td><td>${modulesInProgress}</td></tr>
+        <tr><td><strong>Quizzes Passed:</strong></td><td>${quizzesPassed} / ${quizzesAttempted}</td></tr>
+        <tr><td><strong>Certificates Awarded:</strong></td><td>${certificateAwarded ? 'Yes' : 'No'}</td></tr>
+        <tr><td><strong>Certificate Modules:</strong></td><td>${certificateModules}</td></tr>
+      </table>
+      ${moduleUnavailableNote}
+      <h4 style="margin-top: 30px; margin-bottom: 15px;">Recent Logins</h4>
+    `;
 
-                const formatList = (items) => (items.length ? items.join(', ') : '-');
-                const moduleUnavailableNote = moduleDataAvailable
-                    ? ''
-                    : '<div class="alert alert-info" style="margin-top: 12px;">Module progress data is currently unavailable on this deployment.</div>';
-                
-                let html = `<div class="alert alert-success">User Found</div>
-                    <h3>${user.username}</h3>
-                    <table>
-                        <tr><td><strong>User ID:</strong></td><td>${user.id}</td></tr>
-                        <tr><td><strong>Email:</strong></td><td>${user.email || '-'}</td></tr>
-                        <tr><td><strong>Current Login Status:</strong></td><td>${isLoggedIn ? 'Logged In' : 'Logged Out'}</td></tr>
-                        <tr><td><strong>Modules Completed:</strong></td><td>${formatList(completedModules)}</td></tr>
-                        <tr><td><strong>Modules In Progress:</strong></td><td>${formatList(inProgressModules)}</td></tr>
-                        <tr><td><strong>Quizzes Passed:</strong></td><td>${formatList(passedQuizzes)}</td></tr>
-                        <tr><td><strong>Certificates Awarded:</strong></td><td>${certificateModules.length > 0 ? 'Yes' : 'No'}</td></tr>
-                        <tr><td><strong>Certificate Modules:</strong></td><td>${formatList(certificateModules)}</td></tr>
-                    </table>
-                    ${moduleUnavailableNote}
-                    <h4 style="margin-top: 30px; margin-bottom: 15px;">Recent Logins</h4>`;
-                
-                if (logins.logins && logins.logins.length > 0) {
-                    html += `<table>
-                        <thead>
-                            <tr>
-                                <th>Login Time</th>
-                                <th>Logout Time</th>
-                                <th>IP Address</th>
-                                <th>Duration</th>
-                            </tr>
-                        </thead>
-                        <tbody>`;
-                    
-                    logins.logins.forEach(l => {
-                        const start = new Date(l.login_at);
-                        const end = l.logout_at ? new Date(l.logout_at) : new Date();
-                        const duration = Math.floor((end - start) / 60000);
-                        
-                        html += `<tr>
-                            <td>${start.toLocaleString()}</td>
-                            <td>${l.logout_at ? new Date(l.logout_at).toLocaleString() : 'Still logged in'}</td>
-                            <td>${l.ip_address || '-'}</td>
-                            <td>${duration} min</td>
-                        </tr>`;
-                    });
-                    
-                    html += '</tbody></table>';
-                } else {
-                    html += '<div class="alert alert-info">No login history</div>';
-                }
-                
-                document.getElementById('details-container').innerHTML = html;
-            } catch (err) {
-                document.getElementById('details-container').innerHTML = `<div class="alert alert-danger">Error loading user details: ${err.message}</div>`;
-            }
-        }
+    if (logins.logins && logins.logins.length > 0) {
+      html += `<table>
+        <thead>
+          <tr>
+            <th>Login Time</th>
+            <th>Logout Time</th>
+            <th>IP Address</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      logins.logins.forEach(l => {
+        const start = new Date(l.login_at);
+        const end = l.logout_at ? new Date(l.logout_at) : new Date();
+        const duration = Math.floor((end - start) / 60000);
+
+        html += `<tr>
+          <td>${start.toLocaleString()}</td>
+          <td>${l.logout_at ? new Date(l.logout_at).toLocaleString() : 'Still logged in'}</td>
+          <td>${l.ip_address || '-'}</td>
+          <td>${duration} min</td>
+        </tr>`;
+      });
+
+      html += '</tbody></table>';
+    } else {
+      html += '<div class="alert alert-info">No login history</div>';
+    }
+
+    document.getElementById('details-container').innerHTML = html;
+  } catch (err) {
+    document.getElementById('details-container').innerHTML =
+      `<div class="alert alert-danger">Error loading user details: ${err.message}</div>`;
+  }
+}
         
         async function deleteUser(userId) {
             if (!confirm(`Delete user ${userId} and all their data? This cannot be undone!`)) return;
