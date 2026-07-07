@@ -509,7 +509,7 @@
                 let moduleData = { modules_status: {}, certificates: {} };
                 let moduleDataAvailable = false;
                 try {
-                    const moduleRes = await fetch(`/learn/admin/api/module-progress/user/${userId}`, { headers });
+                   const moduleRes = await fetch(`/learn/admin/api/users/${userId}/stats`, { headers });
                     if (moduleRes.ok) {
                         moduleData = await moduleRes.json();
                         moduleDataAvailable = true;
