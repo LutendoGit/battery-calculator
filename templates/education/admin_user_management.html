@@ -367,6 +367,17 @@
     const d = new Date(v);
     return Number.isNaN(d.getTime()) ? '-' : d.toLocaleString();
   }
+  async function fetchUserStats(userId) {
+  try {
+    return await adminFetch(`/learn/admin/api/users/${userId}/stats`);
+  } catch (e1) {
+    try {
+      return await adminFetch(`/learn/admin/api/users/stats/${userId}`);
+    } catch (e2) {
+      return await adminFetch(`/learn/admin/api/module-progress/user/${userId}`);
+    }
+  }
+}
 
   // Tab switching
   document.querySelectorAll('.tab-button').forEach(btn => {
