@@ -1645,6 +1645,12 @@ def admin_api_user_stats(user_id):
     stats = education_store.get_user_stats(user_id)
     return jsonify(stats)
 
+@education_bp.get("/admin/api/users/stats/<int:user_id>")
+def admin_api_user_stats_alias(user_id):
+    _require_admin_token()
+    stats = education_store.get_user_stats(user_id)
+    return jsonify(stats)
+
 @education_bp.get("/admin/api/module-progress/user/<int:user_id>")
 def admin_api_module_progress_user(user_id: int):
     """Backward-compatible endpoint expected by admin_user_management frontend."""
