@@ -44,6 +44,12 @@ from modules.education_store import (
     mark_progress,
     record_event,
     record_quiz_attempt,
+    update_module_status,
+    get_module_status,
+    record_module_certificate,
+    get_module_certificates,
+    get_all_users_module_progress,
+    get_user_module_progress_summary,
 )
 from modules.lithium_education import (
     LithiumBatteryFundamentals, 
@@ -341,6 +347,27 @@ def _quiz_pass_mark(quiz_id: str) -> int | None:
     if val_int is None:
         return None
     return max(0, min(100, val_int))
+
+
+def _quiz_id_to_module_id(quiz_id: str) -> str | None:
+    """Map quiz_id to module_id for certificate tracking.
+    
+    Examples:
+    - "capacity-dod" -> "module_1"
+    - "module-2-assessment" -> "module_2"
+    - "module-3-assessment" -> "module_3"
+    """
+    quiz_id = str(quiz_id or "").strip().lower()
+    
+    if quiz_id == "capacity-dod":
+        return "module_1"
+    elif quiz_id.startswith("module-") and quiz_id.endswith("-assessment"):
+        # Extract number from "module-X-assessment"
+        parts = quiz_id.split("-")
+        if len(parts) >= 2 and parts[1].isdigit():
+            return f"module_{parts[1]}"
+    
+    return None
 
 
 def _lesson_step_progress_key(lesson_key: str, step_number: int) -> str:
@@ -870,6 +897,18 @@ def api_quiz_complete():
 
     if passed:
         mark_progress(user.id, f"quiz:{quiz_id}")
+        
+        # Record module certificate if quiz is passed (75%+)
+        try:
+            module_id = _quiz_id_to_module_id(quiz_id)
+            if module_id:
+                record_module_certificate(user.id, module_id, quiz_id, score, total)
+                # Also update module status to completed
+                update_module_status(user.id, module_id, 'completed')
+        except Exception as e:
+            # Log but don't fail the quiz completion
+            record_event("module_certificate_error", user_id=user.id, payload={"error": str(e), "quiz_id": quiz_id})
+    
     return jsonify({"ok": True, "passed": passed, "required_pct": required, "pct": pct})
 
 
@@ -1200,11 +1239,15 @@ def admin_users_page():
     return render_template("education/admin_user_management.html", token=token)
 
 
-@education_bp.get("/admin/db")
-def admin_db_live_page():
+@education_bp.get("/admin/module-progress")
+def admin_module_progress_page():
+    """Admin dashboard for module progress tracking"""
     _require_admin_token()
     token = request.args.get("token", "")
-    return render_template("education/admin_db_live.html", token=token)
+    return render_template("education/admin_module_progress.html", token=token)
+
+
+@education_bp.get("/admin/db")
 
 
 @education_bp.get("/admin/db/api/users")
@@ -1501,6 +1544,80 @@ def admin_api_user_stats(user_id):
     return jsonify(stats)
 
 
+@education_bp.get("/admin/api/users/<int:user_id>/full-details")
+def admin_api_user_full_details(user_id):
+    """Return lesson completion, quiz results and certificate status for a user.
+
+    Derives lesson completion from the progress table (same logic as the live
+    dashboard), quiz results from quiz_attempts, and certificates from
+    module_certificates. This endpoint always returns accurate data regardless
+    of whether module_progress is populated.
+    """
+    _require_admin_token()
+
+    completed_items = education_store.get_completed_items(int(user_id))
+
+    # --- Lessons ---
+    lesson_titles = {item.key: item.title for item in _LESSON_ITEMS}
+    completed_lessons = []
+    in_progress_lessons = []
+
+    for item in _LESSON_ITEMS:
+        required_steps = _TRACKED_LESSON_STEP_COUNTS.get(item.key)
+        if required_steps:
+            steps_done = sum(
+                1 for s in range(1, required_steps + 1)
+                if _lesson_step_progress_key(item.key, s) in completed_items
+            )
+            if steps_done == required_steps:
+                completed_lessons.append(item.title)
+            elif steps_done > 0:
+                in_progress_lessons.append(f"{item.title} ({steps_done}/{required_steps} steps)")
+        else:
+            if item.key in completed_items:
+                completed_lessons.append(item.title)
+
+    # --- Quizzes ---
+    quiz_titles = {q["id"]: q["title"] for q in _QUIZZES}
+    quiz_results = []
+    with _connect_education_db() as conn:
+        rows = conn.execute(
+            "SELECT quiz_id, best_score, total FROM quiz_attempts WHERE user_id = ? ORDER BY quiz_id",
+            (int(user_id),),
+        ).fetchall()
+    for r in rows:
+        pct = round((r["best_score"] / r["total"]) * 100, 1) if r["total"] else 0
+        passed = pct >= 75
+        title = quiz_titles.get(r["quiz_id"], r["quiz_id"])
+        quiz_results.append({
+            "quiz_id": r["quiz_id"],
+            "title": title,
+            "score": r["best_score"],
+            "total": r["total"],
+            "pct": pct,
+            "passed": passed,
+        })
+
+    passed_quizzes = [q["title"] for q in quiz_results if q["passed"]]
+
+    # --- Certificates ---
+    certificates = education_store.get_module_certificates(int(user_id))
+    cert_list = [
+        {"module_id": mid, "quiz_id": c["quiz_id"], "pct": c["percentage"], "awarded_at": c["awarded_at"]}
+        for mid, c in certificates.items()
+    ]
+
+    return jsonify({
+        "user_id": user_id,
+        "completed_lessons": completed_lessons,
+        "in_progress_lessons": in_progress_lessons,
+        "quiz_results": quiz_results,
+        "passed_quizzes": passed_quizzes,
+        "certificates": cert_list,
+        "has_certificates": len(cert_list) > 0,
+    })
+
+
 @education_bp.get("/admin/api/users/<int:user_id>/logins")
 def admin_api_user_logins(user_id):
     """Get user login history"""
@@ -1577,6 +1694,106 @@ def admin_api_reset_user_progress(user_id):
     _require_admin_token()
     education_store.reset_user_progress(user_id)
     return jsonify({"status": "progress_reset", "user_id": user_id})
+
+
+# ============= ADMIN: MODULE PROGRESS TRACKING =============
+
+@education_bp.get("/admin/api/module-progress/all-users")
+def admin_api_all_users_module_progress():
+    """Get module progress for all users (admin summary view)"""
+    _require_admin_token()
+    users_progress = education_store.get_all_users_module_progress()
+    return jsonify({"users": users_progress})
+
+
+@education_bp.get("/admin/api/module-progress/user/<int:user_id>")
+def admin_api_user_module_progress(user_id):
+    """Get complete module progress summary for a specific user"""
+    _require_admin_token()
+    summary = education_store.get_user_module_progress_summary(user_id)
+    if not summary:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify(summary)
+
+
+@education_bp.get("/admin/api/module-progress/certificates")
+def admin_api_module_certificates():
+    """Get all module certificates awarded (who passed which module quizzes at 75%+)"""
+    _require_admin_token()
+    with _connect_education_db() as conn:
+        rows = conn.execute(
+            """
+            SELECT 
+                mc.user_id,
+                u.username,
+                mc.module_id,
+                mc.quiz_id,
+                mc.score,
+                mc.total,
+                mc.percentage,
+                mc.awarded_at
+            FROM module_certificates mc
+            LEFT JOIN users u ON u.id = mc.user_id
+            WHERE mc.passed = TRUE
+            ORDER BY mc.awarded_at DESC
+            LIMIT 500
+            """
+        ).fetchall()
+    
+    certificates = [dict(r) for r in rows]
+    return jsonify({"certificates": certificates})
+
+
+@education_bp.get("/admin/api/module-progress/statistics")
+def admin_api_module_progress_statistics():
+    """Get overall module progress statistics"""
+    _require_admin_token()
+    with _connect_education_db() as conn:
+        # Total users
+        total_users = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+        
+        # Module completion stats
+        module_stats = conn.execute(
+            """
+            SELECT 
+                module_id,
+                status,
+                COUNT(*) as count
+            FROM module_progress
+            GROUP BY module_id, status
+            ORDER BY module_id, status
+            """
+        ).fetchall()
+        
+        # Certificate awards
+        total_certificates = conn.execute(
+            "SELECT COUNT(*) FROM module_certificates WHERE passed = TRUE"
+        ).fetchone()[0]
+        
+        # Users with at least one certificate
+        users_with_certificates = conn.execute(
+            "SELECT COUNT(DISTINCT user_id) FROM module_certificates WHERE passed = TRUE"
+        ).fetchone()[0]
+    
+    stats_by_module = {}
+    for r in module_stats:
+        module_id = str(r['module_id'])
+        if module_id not in stats_by_module:
+            stats_by_module[module_id] = {
+                'not_started': 0,
+                'in_progress': 0,
+                'completed': 0
+            }
+        status = str(r['status'])
+        stats_by_module[module_id][status] = int(r['count'])
+    
+    return jsonify({
+        "total_users": total_users,
+        "module_progress_by_status": stats_by_module,
+        "total_certificates_awarded": total_certificates,
+        "users_with_certificates": users_with_certificates,
+        "average_certificates_per_user": round(total_certificates / max(1, users_with_certificates), 2) if users_with_certificates > 0 else 0
+    })
 
 
 # ============= FUNDAMENTAL CONCEPTS ROUTES =============

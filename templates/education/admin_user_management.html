@@ -490,79 +490,80 @@
             }
             
             try {
-                // Fetch core user details first.
-                const [loginsRes, usersRes, sessionsRes] = await Promise.all([
+                // Fetch all user detail data in parallel using the dedicated full-details endpoint.
+                const [loginsRes, usersRes, sessionsRes, detailsRes] = await Promise.all([
                     fetch(`/learn/admin/api/users/${userId}/logins?limit=10`, { headers }),
                     fetch(`/learn/admin/api/users/list`, { headers }),
-                    fetch('/learn/admin/api/sessions/current', { headers })
+                    fetch('/learn/admin/api/sessions/current', { headers }),
+                    fetch(`/learn/admin/api/users/${userId}/full-details`, { headers })
                 ]);
-                
+
                 if (!usersRes.ok) throw new Error('Unable to load users');
                 if (!loginsRes.ok) throw new Error('Unable to load login history');
                 if (!sessionsRes.ok) throw new Error('Unable to load active sessions');
-                
+                if (!detailsRes.ok) throw new Error('Unable to load user details');
+
                 const logins = await loginsRes.json();
                 const users = await usersRes.json();
                 const sessionsData = await sessionsRes.json();
+                const details = await detailsRes.json();
 
-                // Module progress endpoint is optional in some deployments; do not fail entire user details view.
-                let moduleData = { modules_status: {}, certificates: {} };
-                let moduleDataAvailable = false;
-                try {
-                    const moduleRes = await fetch(`/learn/admin/api/module-progress/user/${userId}`, { headers });
-                    if (moduleRes.ok) {
-                        moduleData = await moduleRes.json();
-                        moduleDataAvailable = true;
-                    }
-                } catch (_) {
-                    moduleDataAvailable = false;
-                }
-                
                 // Find the user in the users list
                 const user = users.users.find(u => u.id == userId);
                 if (!user) throw new Error('User not found');
 
-                const modulesStatus = moduleData.modules_status || {};
-                const certificates = moduleData.certificates || {};
                 const sessions = sessionsData.sessions || [];
-
-                const completedModules = Object.entries(modulesStatus)
-                    .filter(([, data]) => data && data.status === 'completed')
-                    .map(([moduleId]) => moduleId)
-                    .sort();
-
-                const inProgressModules = Object.entries(modulesStatus)
-                    .filter(([, data]) => data && data.status === 'in_progress')
-                    .map(([moduleId]) => moduleId)
-                    .sort();
-
-                const passedQuizzes = Object.values(certificates)
-                    .map(c => c && c.quiz_id)
-                    .filter(Boolean)
-                    .sort();
-
-                const certificateModules = Object.keys(certificates).sort();
                 const isLoggedIn = sessions.some(s => Number(s.user_id) === Number(userId));
 
-                const formatList = (items) => (items.length ? items.join(', ') : '-');
-                const moduleUnavailableNote = moduleDataAvailable
-                    ? ''
-                    : '<div class="alert alert-info" style="margin-top: 12px;">Module progress data is currently unavailable on this deployment.</div>';
-                
+                const completedLessons = details.completed_lessons || [];
+                const inProgressLessons = details.in_progress_lessons || [];
+                const passedQuizzes = details.passed_quizzes || [];
+                const quizResults = details.quiz_results || [];
+                const certificates = details.certificates || [];
+                const hasCerts = details.has_certificates || false;
+
+                const formatList = (items) => (items.length ? items.join('<br>') : '-');
+
+                // Build quiz results table rows
+                let quizRowsHtml = '';
+                if (quizResults.length > 0) {
+                    quizRowsHtml = quizResults.map(q => {
+                        const badge = q.passed
+                            ? '<span class="status-badge status-active">Passed</span>'
+                            : '<span class="status-badge status-inactive">Not passed yet</span>';
+                        return `<tr>
+                            <td>${q.title}</td>
+                            <td>${q.score}/${q.total} (${q.pct}%)</td>
+                            <td>${badge}</td>
+                        </tr>`;
+                    }).join('');
+                }
+
                 let html = `<div class="alert alert-success">User Found</div>
                     <h3>${user.username}</h3>
                     <table>
-                        <tr><td><strong>User ID:</strong></td><td>${user.id}</td></tr>
+                        <tr><td style="width:200px"><strong>User ID:</strong></td><td>${user.id}</td></tr>
                         <tr><td><strong>Email:</strong></td><td>${user.email || '-'}</td></tr>
-                        <tr><td><strong>Current Login Status:</strong></td><td>${isLoggedIn ? 'Logged In' : 'Logged Out'}</td></tr>
-                        <tr><td><strong>Modules Completed:</strong></td><td>${formatList(completedModules)}</td></tr>
-                        <tr><td><strong>Modules In Progress:</strong></td><td>${formatList(inProgressModules)}</td></tr>
+                        <tr><td><strong>Current Login Status:</strong></td><td>${isLoggedIn
+                            ? '<span class="status-badge status-active">Logged In</span>'
+                            : '<span class="status-badge status-inactive">Logged Out</span>'}</td></tr>
+                        <tr><td><strong>Modules Completed:</strong></td><td>${formatList(completedLessons)}</td></tr>
+                        <tr><td><strong>Modules In Progress:</strong></td><td>${formatList(inProgressLessons)}</td></tr>
                         <tr><td><strong>Quizzes Passed:</strong></td><td>${formatList(passedQuizzes)}</td></tr>
-                        <tr><td><strong>Certificates Awarded:</strong></td><td>${certificateModules.length > 0 ? 'Yes' : 'No'}</td></tr>
-                        <tr><td><strong>Certificate Modules:</strong></td><td>${formatList(certificateModules)}</td></tr>
-                    </table>
-                    ${moduleUnavailableNote}
-                    <h4 style="margin-top: 30px; margin-bottom: 15px;">Recent Logins</h4>`;
+                        <tr><td><strong>Certificates Awarded:</strong></td><td>${hasCerts
+                            ? '<span class="status-badge status-active">Yes</span>'
+                            : 'No'}</td></tr>
+                    </table>`;
+
+                if (quizResults.length > 0) {
+                    html += `<h4 style="margin-top:24px;margin-bottom:10px;">Quiz Results</h4>
+                    <table>
+                        <thead><tr><th>Quiz</th><th>Best Score</th><th>Status</th></tr></thead>
+                        <tbody>${quizRowsHtml}</tbody>
+                    </table>`;
+                }
+
+                html += `<h4 style="margin-top: 30px; margin-bottom: 15px;">Recent Logins</h4>`;
                 
                 if (logins.logins && logins.logins.length > 0) {
                     html += `<table>
