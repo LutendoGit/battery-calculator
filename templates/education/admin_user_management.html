@@ -337,339 +337,220 @@
             </div>
         </div>
     </div>
-    
     <script>
-        const token = new URLSearchParams(window.location.search).get('token') || '';
-        
-        const headers = {
-            'Content-Type': 'application/json',
-            ...(token && { 'X-Admin-Token': token })
-        };
-        
-        // Tab switching
-        document.querySelectorAll('.tab-button').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tab = btn.dataset.tab;
-                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(`tab-${tab}`).classList.add('active');
-                
-                // Load data for the selected tab
-                if (tab === 'users') loadUsers();
-                else if (tab === 'sessions') loadSessions();
-            });
-        });
-        
-        // Initial load
-        Promise.all([
-            loadStats(),
-            loadUsers(),
-        ]).catch(err => console.error('Load error:', err));
-        
-        async function loadStats() {
-            try {
-                const res = await fetch('/learn/admin/api/logins/summary', { headers });
-                const data = await res.json();
-                document.getElementById('stat-total-users').textContent = 'Loading...';
-                document.getElementById('stat-active-sessions').textContent = data.active_sessions || 0;
-                document.getElementById('stat-logins-today').textContent = data.logins_today || 0;
-                document.getElementById('stat-avg-duration').textContent = (data.avg_session_duration_minutes || 0).toFixed(1) + ' min';
-                
-                // Load total users
-                const usersRes = await fetch('/learn/admin/api/users/list', { headers });
-                const usersData = await usersRes.json();
-                document.getElementById('stat-total-users').textContent = usersData.users?.length || 0;
-            } catch (err) {
-                console.error('Stats error:', err);
-            }
-        }
-        
-        async function loadUsers() {
-            try {
-                const res = await fetch('/learn/admin/api/users/list', { headers });
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                
-                const data = await res.json();
-                const users = data.users || [];
-                const search = document.getElementById('search-users')?.value?.toLowerCase() || '';
-                
-                const filtered = users.filter(u => 
-                    !search || u.username?.toLowerCase().includes(search) || u.email?.toLowerCase().includes(search)
-                );
-                
-                let html = `<table>
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-                
-                filtered.forEach(u => {
-                    html += `<tr>
-                        <td><input type="checkbox" class="user-checkbox" value="${u.id}"></td>
-                        <td>${u.id}</td>
-                        <td><strong>${u.username}</strong></td>
-                        <td>${u.email || '-'}</td>
-                        <td>${new Date(u.created_at).toLocaleDateString()}</td>
-                        <td class="action-buttons">
-                            <button class="btn-secondary" onclick="viewUserDetails(${u.id})">View</button>
-                            <button class="btn-danger" onclick="deleteUser(${u.id})">Delete</button>
-                        </td>
-                    </tr>`;
-                });
-                
-                html += '</tbody></table>';
-                document.getElementById('users-container').innerHTML = html;
-            } catch (err) {
-                document.getElementById('users-container').innerHTML = `<div class="alert alert-danger">Error loading users: ${err.message}</div>`;
-            }
-        }
-        
-        async function loadSessions() {
-            try {
-                const res = await fetch('/learn/admin/api/sessions/current', { headers });
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                
-                const data = await res.json();
-                const sessions = data.sessions || [];
-                
-                if (sessions.length === 0) {
-                    document.getElementById('sessions-container').innerHTML = '<div class="alert alert-info">No active sessions</div>';
-                    return;
-                }
-function getAdminToken() {
-    const u = new URL(window.location.href);
-    return u.searchParams.get('token') || '';
-}
+  const token = new URLSearchParams(window.location.search).get('token') || '';
 
-function withToken(url) {
-  const t = getAdminToken();
-  if (!t) return url;
-  const u = new URL(url, window.location.origin);
-  u.searchParams.set('token', t);
-  return u.pathname + u.search;
-}
+  function withToken(path) {
+    if (!token) return path;
+    const u = new URL(path, window.location.origin);
+    u.searchParams.set('token', token);
+    return u.pathname + u.search;
+  }
 
-async function adminFetch(path) {
-  const token = getAdminToken();
-  const res = await fetch(withToken(path), {
-    headers: token ? { 'X-Admin-Token': token } : {}
+  async function adminFetch(path, options = {}) {
+    const res = await fetch(withToken(path), {
+      ...options,
+      headers: {
+        ...(options.headers || {}),
+        ...(token ? { 'X-Admin-Token': token } : {})
+      }
+    });
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error(`HTTP ${res.status}: ${txt}`);
+    }
+    return res.json();
+  }
+
+  function fmtDate(v) {
+    if (!v) return '-';
+    const d = new Date(v);
+    return Number.isNaN(d.getTime()) ? '-' : d.toLocaleString();
+  }
+
+  // Tab switching
+  document.querySelectorAll('.tab-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`tab-${tab}`).classList.add('active');
+      if (tab === 'users') loadUsers();
+      else if (tab === 'sessions') loadSessions();
+    });
   });
-  if (!res.ok) {
-    const txt = await res.text();
-    throw new Error(`HTTP ${res.status}: ${txt}`);
-  }
-  return res.json();
-}
-                
-                let html = `<table>
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Login Time</th>
-                            <th>IP Address</th>
-                            <th>Session ID</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-                
-                sessions.forEach(s => {
-                    html += `<tr>
-                        <td>${s.user_id}</td>
-                        <td><strong>${s.username || 'Unknown'}</strong></td>
-                        <td>${s.email || '-'}</td>
-                        <td>${new Date(s.login_at).toLocaleString()}</td>
-                        <td>${s.ip_address || '-'}</td>
-                        <td><code style="font-size: 11px;">${(s.session_id || '').substring(0, 20)}...</code></td>
-                    </tr>`;
-                });
-                
-                html += '</tbody></table>';
-                document.getElementById('sessions-container').innerHTML = html;
-            } catch (err) {
-                document.getElementById('sessions-container').innerHTML = `<div class="alert alert-danger">Error loading sessions: ${err.message}</div>`;
-            }
-        }
-        
-        function viewUserDetails(userId) {
-            document.getElementById('detail-user-id').value = userId;
-            loadUserDetails();
-            document.querySelector('[data-tab="user-details"]').click();
-        }
-        
-      async function loadUserDetails() {
-  const userId = document.getElementById('detail-user-id').value;
-  if (!userId) {
-    alert('Please enter a User ID');
-    return;
+
+  Promise.all([loadStats(), loadUsers()]).catch(console.error);
+
+  async function loadStats() {
+    try {
+      const [summary, usersData] = await Promise.all([
+        adminFetch('/learn/admin/api/logins/summary'),
+        adminFetch('/learn/admin/api/users/list')
+      ]);
+      document.getElementById('stat-total-users').textContent = (usersData.users || []).length;
+      document.getElementById('stat-active-sessions').textContent = summary.active_sessions || 0;
+      document.getElementById('stat-logins-today').textContent = summary.logins_today || 0;
+      document.getElementById('stat-avg-duration').textContent =
+        ((summary.avg_session_duration_minutes || 0).toFixed(1)) + ' min';
+    } catch (err) {
+      console.error('Stats error:', err);
+    }
   }
 
-  try {
-    const [logins, users, sessionsData, stats] = await Promise.all([
-      adminFetch(`/learn/admin/api/users/${userId}/logins?limit=10`),
-      adminFetch(`/learn/admin/api/users/list`),
-      adminFetch('/learn/admin/api/sessions/current'),
-      adminFetch(`/learn/admin/api/users/${userId}/stats`)
-    ]);
+  async function loadUsers() {
+    try {
+      const data = await adminFetch('/learn/admin/api/users/list');
+      const users = data.users || [];
+      const search = document.getElementById('search-users')?.value?.toLowerCase() || '';
+      const filtered = users.filter(u =>
+        !search || (u.username || '').toLowerCase().includes(search) || (u.email || '').toLowerCase().includes(search)
+      );
 
-    const user = (users.users || []).find(u => Number(u.id) === Number(userId));
-    if (!user) throw new Error('User not found');
+      let html = `<table><thead><tr>
+        <th><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th>
+        <th>ID</th><th>Username</th><th>Email</th><th>Created</th><th>Actions</th>
+      </tr></thead><tbody>`;
 
-    const sessions = sessionsData.sessions || [];
-    const isLoggedIn = sessions.some(s => Number(s.user_id) === Number(userId));
-
-    // New backend flat fields
-    const modulesCompleted = Number(stats.modules_completed ?? 0);
-    const modulesInProgress = Number(stats.modules_in_progress ?? 0);
-    const quizzesPassed = Number(stats.quizzes_passed ?? 0);
-    const quizzesAttempted = Number(stats.quizzes_attempted ?? 0);
-    const certificateModules = Number(stats.certificate_modules ?? modulesCompleted);
-    const certificateAwarded = Boolean(stats.certificate_awarded);
-    const moduleDataAvailable = stats.module_progress_available !== false;
-
-    const moduleUnavailableNote = moduleDataAvailable
-      ? ''
-      : `<div class="alert alert-info" style="margin-top:12px;">Module progress data is currently unavailable on this deployment.${stats.error ? ` (${stats.error})` : ''}</div>`;
-
-    let html = `
-      <div class="alert alert-success">User Found</div>
-      <h3>${user.username}</h3>
-      <table>
-        <tr><td><strong>User ID:</strong></td><td>${user.id}</td></tr>
-        <tr><td><strong>Email:</strong></td><td>${user.email || '-'}</td></tr>
-        <tr><td><strong>Current Login Status:</strong></td><td>${isLoggedIn ? 'Logged In' : 'Logged Out'}</td></tr>
-        <tr><td><strong>Modules Completed:</strong></td><td>${modulesCompleted}</td></tr>
-        <tr><td><strong>Modules In Progress:</strong></td><td>${modulesInProgress}</td></tr>
-        <tr><td><strong>Quizzes Passed:</strong></td><td>${quizzesPassed} / ${quizzesAttempted}</td></tr>
-        <tr><td><strong>Certificates Awarded:</strong></td><td>${certificateAwarded ? 'Yes' : 'No'}</td></tr>
-        <tr><td><strong>Certificate Modules:</strong></td><td>${certificateModules}</td></tr>
-      </table>
-      ${moduleUnavailableNote}
-      <h4 style="margin-top: 30px; margin-bottom: 15px;">Recent Logins</h4>
-    `;
-
-    if (logins.logins && logins.logins.length > 0) {
-      html += `<table>
-        <thead>
-          <tr>
-            <th>Login Time</th>
-            <th>Logout Time</th>
-            <th>IP Address</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>`;
-
-      logins.logins.forEach(l => {
-        const start = new Date(l.login_at);
-        const end = l.logout_at ? new Date(l.logout_at) : new Date();
-        const duration = Math.floor((end - start) / 60000);
-
+      filtered.forEach(u => {
         html += `<tr>
-          <td>${start.toLocaleString()}</td>
-          <td>${l.logout_at ? new Date(l.logout_at).toLocaleString() : 'Still logged in'}</td>
-          <td>${l.ip_address || '-'}</td>
-          <td>${duration} min</td>
+          <td><input type="checkbox" class="user-checkbox" value="${u.id}"></td>
+          <td>${u.id}</td>
+          <td><strong>${u.username || '-'}</strong></td>
+          <td>${u.email || '-'}</td>
+          <td>${fmtDate(u.created_at)}</td>
+          <td class="action-buttons">
+            <button class="btn-secondary" onclick="viewUserDetails(${u.id})">View</button>
+            <button class="btn-danger" onclick="deleteUser(${u.id})">Delete</button>
+          </td>
         </tr>`;
       });
 
       html += '</tbody></table>';
-    } else {
-      html += '<div class="alert alert-info">No login history</div>';
+      document.getElementById('users-container').innerHTML = html;
+    } catch (err) {
+      document.getElementById('users-container').innerHTML =
+        `<div class="alert alert-danger">Error loading users: ${err.message}</div>`;
     }
-
-    document.getElementById('details-container').innerHTML = html;
-  } catch (err) {
-    document.getElementById('details-container').innerHTML =
-      `<div class="alert alert-danger">Error loading user details: ${err.message}</div>`;
   }
-}
-        
-        async function deleteUser(userId) {
-            if (!confirm(`Delete user ${userId} and all their data? This cannot be undone!`)) return;
-            
-            try {
-                const res = await fetch(`/learn/admin/api/users/${userId}`, { 
-                    method: 'DELETE',
-                    headers 
-                });
-                
-                if (res.ok) {
-                    alert('User deleted successfully');
-                    loadUsers();
-                    loadStats();
-                } else {
-                    alert('Error deleting user');
-                }
-            } catch (err) {
-                alert('Error: ' + err.message);
-            }
-        }
-        
-        async function bulkDeleteUsers() {
-            const checkboxes = document.querySelectorAll('.user-checkbox:checked');
-            if (checkboxes.length === 0) {
-                alert('Please select users to delete');
-                return;
-            }
-            
-            if (!confirm(`Delete ${checkboxes.length} users and all their data? This cannot be undone!`)) return;
-            
-            const userIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
-            
-            try {
-                const res = await fetch('/learn/admin/api/users/bulk-delete', {
-                    method: 'POST',
-                    headers,
-                    body: JSON.stringify({ user_ids: userIds })
-                });
-                
-                const data = await res.json();
-                alert(`Deleted: ${data.deleted}, Failed: ${data.failed}`);
-                loadUsers();
-                loadStats();
-            } catch (err) {
-                alert('Error: ' + err.message);
-            }
-        }
-        
-        async function resetUserProgress(userId) {
-            if (!confirm(`Reset all progress for user ${userId}? Their account will remain active.`)) return;
-            
-            try {
-                const res = await fetch(`/learn/admin/api/users/${userId}/reset-progress`, {
-                    method: 'POST',
-                    headers
-                });
-                
-                if (res.ok) {
-                    alert('Progress reset successfully');
-                    loadUserDetails();
-                } else {
-                    alert('Error resetting progress');
-                }
-            } catch (err) {
-                alert('Error: ' + err.message);
-            }
-        }
-        
-        function toggleSelectAll(checkbox) {
-            document.querySelectorAll('.user-checkbox').forEach(cb => {
-                cb.checked = checkbox.checked;
-            });
-        }
-        
-        // Auto-refresh stats every 30 seconds
-        setInterval(loadStats, 30000);
-    </script>
+
+  async function loadSessions() {
+    try {
+      const data = await adminFetch('/learn/admin/api/sessions/current');
+      const sessions = data.sessions || [];
+      if (!sessions.length) {
+        document.getElementById('sessions-container').innerHTML = '<div class="alert alert-info">No active sessions</div>';
+        return;
+      }
+
+      let html = `<table><thead><tr>
+        <th>User ID</th><th>Username</th><th>Email</th><th>Login Time</th><th>IP Address</th><th>Session ID</th>
+      </tr></thead><tbody>`;
+
+      sessions.forEach(s => {
+        html += `<tr>
+          <td>${s.user_id}</td>
+          <td><strong>${s.username || 'Unknown'}</strong></td>
+          <td>${s.email || '-'}</td>
+          <td>${fmtDate(s.login_at)}</td>
+          <td>${s.ip_address || '-'}</td>
+          <td><code style="font-size:11px;">${(s.session_id || '').substring(0, 20)}...</code></td>
+        </tr>`;
+      });
+
+      html += '</tbody></table>';
+      document.getElementById('sessions-container').innerHTML = html;
+    } catch (err) {
+      document.getElementById('sessions-container').innerHTML =
+        `<div class="alert alert-danger">Error loading sessions: ${err.message}</div>`;
+    }
+  }
+
+  function viewUserDetails(userId) {
+    document.getElementById('detail-user-id').value = userId;
+    document.querySelector('[data-tab="user-details"]').click();
+    loadUserDetails();
+  }
+
+  async function loadUserDetails() {
+    const userId = document.getElementById('detail-user-id').value;
+    if (!userId) return alert('Please enter a User ID');
+
+    try {
+      const [logins, usersData, sessionsData, stats] = await Promise.all([
+        adminFetch(`/learn/admin/api/users/${userId}/logins?limit=10`),
+        adminFetch('/learn/admin/api/users/list'),
+        adminFetch('/learn/admin/api/sessions/current'),
+        adminFetch(`/learn/admin/api/users/${userId}/stats`)
+      ]);
+
+      const user = (usersData.users || []).find(u => Number(u.id) === Number(userId));
+      if (!user) throw new Error('User not found');
+
+      const isLoggedIn = (sessionsData.sessions || []).some(s => Number(s.user_id) === Number(userId));
+
+      const modulesCompleted = Number(stats.modules_completed ?? 0);
+      const modulesInProgress = Number(stats.modules_in_progress ?? 0);
+      const quizzesPassed = Number(stats.quizzes_passed ?? 0);
+      const quizzesAttempted = Number(stats.quizzes_attempted ?? 0);
+      const certificateModules = Number(stats.certificate_modules ?? modulesCompleted);
+      const certificateAwarded = !!stats.certificate_awarded;
+      const moduleDataAvailable = stats.module_progress_available !== false;
+
+      let html = `<div class="alert alert-success">User Found</div>
+        <h3>${user.username}</h3>
+        <table>
+          <tr><td><strong>User ID:</strong></td><td>${user.id}</td></tr>
+          <tr><td><strong>Email:</strong></td><td>${user.email || '-'}</td></tr>
+          <tr><td><strong>Current Login Status:</strong></td><td>${isLoggedIn ? 'Logged In' : 'Logged Out'}</td></tr>
+          <tr><td><strong>Modules Completed:</strong></td><td>${modulesCompleted}</td></tr>
+          <tr><td><strong>Modules In Progress:</strong></td><td>${modulesInProgress}</td></tr>
+          <tr><td><strong>Quizzes Passed:</strong></td><td>${quizzesPassed} / ${quizzesAttempted}</td></tr>
+          <tr><td><strong>Certificates Awarded:</strong></td><td>${certificateAwarded ? 'Yes' : 'No'}</td></tr>
+          <tr><td><strong>Certificate Modules:</strong></td><td>${certificateModules}</td></tr>
+        </table>`;
+
+      if (!moduleDataAvailable) {
+        html += `<div class="alert alert-info" style="margin-top:12px;">
+          Module progress data is currently unavailable${stats.error ? `: ${stats.error}` : ''}.
+        </div>`;
+      }
+
+      html += `<h4 style="margin-top:30px;margin-bottom:15px;">Recent Logins</h4>`;
+
+      if (logins.logins && logins.logins.length) {
+        html += `<table><thead><tr>
+          <th>Login Time</th><th>Logout Time</th><th>IP Address</th><th>Duration</th>
+        </tr></thead><tbody>`;
+        logins.logins.forEach(l => {
+          const start = new Date(l.login_at);
+          const end = l.logout_at ? new Date(l.logout_at) : new Date();
+          const duration = Math.floor((end - start) / 60000);
+          html += `<tr>
+            <td>${fmtDate(l.login_at)}</td>
+            <td>${l.logout_at ? fmtDate(l.logout_at) : 'Still logged in'}</td>
+            <td>${l.ip_address || '-'}</td>
+            <td>${duration} min</td>
+          </tr>`;
+        });
+        html += `</tbody></table>`;
+      } else {
+        html += `<div class="alert alert-info">No login history</div>`;
+      }
+
+      document.getElementById('details-container').innerHTML = html;
+    } catch (err) {
+      document.getElementById('details-container').innerHTML =
+        `<div class="alert alert-danger">Error loading user details: ${err.message}</div>`;
+    }
+  }
+
+  function toggleSelectAll(checkbox) {
+    document.querySelectorAll('.user-checkbox').forEach(cb => cb.checked = checkbox.checked);
+  }
+
+  setInterval(loadStats, 30000);
+</script>
 </body>
 </html>
