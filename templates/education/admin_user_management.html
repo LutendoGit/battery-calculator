@@ -337,13 +337,12 @@
             </div>
         </div>
     </div>
-    <script>
+  <script>
   const token = new URLSearchParams(window.location.search).get('token') || '';
 
   function withToken(path) {
-    if (!token) return path;
     const u = new URL(path, window.location.origin);
-    u.searchParams.set('token', token);
+    if (token) u.searchParams.set('token', token);
     return u.pathname + u.search;
   }
 
@@ -355,11 +354,32 @@
         ...(token ? { 'X-Admin-Token': token } : {})
       }
     });
+
     if (!res.ok) {
       const txt = await res.text();
       throw new Error(`HTTP ${res.status}: ${txt}`);
     }
+
     return res.json();
+  }
+
+  async function fetchUserStats(userId) {
+    try {
+      return await adminFetch(`/learn/admin/api/users/${userId}/stats`);
+    } catch (e1) {
+      console.warn('primary stats route failed:', e1.message);
+      try {
+        return await adminFetch(`/learn/admin/api/users/stats/${userId}`);
+      } catch (e2) {
+        console.warn('alias stats route failed:', e2.message);
+        try {
+          return await adminFetch(`/learn/admin/api/module-progress/user/${userId}`);
+        } catch (e3) {
+          console.warn('legacy stats route failed:', e3.message);
+          throw new Error(`All stats routes failed for user ${userId}`);
+        }
+      }
+    }
   }
 
   function fmtDate(v) {
@@ -367,19 +387,8 @@
     const d = new Date(v);
     return Number.isNaN(d.getTime()) ? '-' : d.toLocaleString();
   }
-  async function fetchUserStats(userId) {
-  try {
-    return await adminFetch(`/learn/admin/api/users/${userId}/stats`);
-  } catch (e1) {
-    try {
-      return await adminFetch(`/learn/admin/api/users/stats/${userId}`);
-    } catch (e2) {
-      return await adminFetch(`/learn/admin/api/module-progress/user/${userId}`);
-    }
-  }
-}
 
-  // Tab switching
+  // Tabs
   document.querySelectorAll('.tab-button').forEach(btn => {
     btn.addEventListener('click', () => {
       const tab = btn.dataset.tab;
@@ -387,12 +396,14 @@
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById(`tab-${tab}`).classList.add('active');
+
       if (tab === 'users') loadUsers();
-      else if (tab === 'sessions') loadSessions();
+      if (tab === 'sessions') loadSessions();
     });
   });
 
-  Promise.all([loadStats(), loadUsers()]).catch(console.error);
+  // Initial load
+  Promise.all([loadStats(), loadUsers()]).catch(err => console.error('Initial load failed:', err));
 
   async function loadStats() {
     try {
@@ -400,11 +411,12 @@
         adminFetch('/learn/admin/api/logins/summary'),
         adminFetch('/learn/admin/api/users/list')
       ]);
+
       document.getElementById('stat-total-users').textContent = (usersData.users || []).length;
       document.getElementById('stat-active-sessions').textContent = summary.active_sessions || 0;
       document.getElementById('stat-logins-today').textContent = summary.logins_today || 0;
       document.getElementById('stat-avg-duration').textContent =
-        ((summary.avg_session_duration_minutes || 0).toFixed(1)) + ' min';
+        `${(summary.avg_session_duration_minutes || 0).toFixed(1)} min`;
     } catch (err) {
       console.error('Stats error:', err);
     }
@@ -414,15 +426,26 @@
     try {
       const data = await adminFetch('/learn/admin/api/users/list');
       const users = data.users || [];
-      const search = document.getElementById('search-users')?.value?.toLowerCase() || '';
+      const search = (document.getElementById('search-users')?.value || '').toLowerCase();
+
       const filtered = users.filter(u =>
-        !search || (u.username || '').toLowerCase().includes(search) || (u.email || '').toLowerCase().includes(search)
+        !search ||
+        (u.username || '').toLowerCase().includes(search) ||
+        (u.email || '').toLowerCase().includes(search)
       );
 
-      let html = `<table><thead><tr>
-        <th><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th>
-        <th>ID</th><th>Username</th><th>Email</th><th>Created</th><th>Actions</th>
-      </tr></thead><tbody>`;
+      let html = `<table>
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>`;
 
       filtered.forEach(u => {
         html += `<tr>
@@ -450,14 +473,25 @@
     try {
       const data = await adminFetch('/learn/admin/api/sessions/current');
       const sessions = data.sessions || [];
+
       if (!sessions.length) {
-        document.getElementById('sessions-container').innerHTML = '<div class="alert alert-info">No active sessions</div>';
+        document.getElementById('sessions-container').innerHTML =
+          '<div class="alert alert-info">No active sessions</div>';
         return;
       }
 
-      let html = `<table><thead><tr>
-        <th>User ID</th><th>Username</th><th>Email</th><th>Login Time</th><th>IP Address</th><th>Session ID</th>
-      </tr></thead><tbody>`;
+      let html = `<table>
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Login Time</th>
+            <th>IP Address</th>
+            <th>Session ID</th>
+          </tr>
+        </thead>
+        <tbody>`;
 
       sessions.forEach(s => {
         html += `<tr>
@@ -485,8 +519,11 @@
   }
 
   async function loadUserDetails() {
-    const userId = document.getElementById('detail-user-id').value;
-    if (!userId) return alert('Please enter a User ID');
+    const userId = Number(document.getElementById('detail-user-id').value);
+    if (!Number.isInteger(userId) || userId < 1) {
+      alert('Please enter a valid User ID');
+      return;
+    }
 
     try {
       const [logins, usersData, sessionsData, stats] = await Promise.all([
@@ -496,17 +533,17 @@
         fetchUserStats(userId)
       ]);
 
-      const user = (usersData.users || []).find(u => Number(u.id) === Number(userId));
+      const user = (usersData.users || []).find(u => Number(u.id) === userId);
       if (!user) throw new Error('User not found');
 
-      const isLoggedIn = (sessionsData.sessions || []).some(s => Number(s.user_id) === Number(userId));
+      const isLoggedIn = (sessionsData.sessions || []).some(s => Number(s.user_id) === userId);
 
       const modulesCompleted = Number(stats.modules_completed ?? 0);
       const modulesInProgress = Number(stats.modules_in_progress ?? 0);
       const quizzesPassed = Number(stats.quizzes_passed ?? 0);
       const quizzesAttempted = Number(stats.quizzes_attempted ?? 0);
       const certificateModules = Number(stats.certificate_modules ?? modulesCompleted);
-      const certificateAwarded = !!stats.certificate_awarded;
+      const certificateAwarded = Boolean(stats.certificate_awarded);
       const moduleDataAvailable = stats.module_progress_available !== false;
 
       let html = `<div class="alert alert-success">User Found</div>
@@ -531,13 +568,22 @@
       html += `<h4 style="margin-top:30px;margin-bottom:15px;">Recent Logins</h4>`;
 
       if (logins.logins && logins.logins.length) {
-        html += `<table><thead><tr>
-          <th>Login Time</th><th>Logout Time</th><th>IP Address</th><th>Duration</th>
-        </tr></thead><tbody>`;
+        html += `<table>
+          <thead>
+            <tr>
+              <th>Login Time</th>
+              <th>Logout Time</th>
+              <th>IP Address</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
         logins.logins.forEach(l => {
           const start = new Date(l.login_at);
           const end = l.logout_at ? new Date(l.logout_at) : new Date();
           const duration = Math.floor((end - start) / 60000);
+
           html += `<tr>
             <td>${fmtDate(l.login_at)}</td>
             <td>${l.logout_at ? fmtDate(l.logout_at) : 'Still logged in'}</td>
@@ -545,9 +591,10 @@
             <td>${duration} min</td>
           </tr>`;
         });
-        html += `</tbody></table>`;
+
+        html += '</tbody></table>';
       } else {
-        html += `<div class="alert alert-info">No login history</div>`;
+        html += '<div class="alert alert-info">No login history</div>';
       }
 
       document.getElementById('details-container').innerHTML = html;
@@ -557,8 +604,44 @@
     }
   }
 
+  async function deleteUser(userId) {
+    if (!confirm(`Delete user ${userId} and all their data? This cannot be undone!`)) return;
+    try {
+      await adminFetch(`/learn/admin/api/users/${userId}`, { method: 'DELETE' });
+      alert('User deleted successfully');
+      loadUsers();
+      loadStats();
+    } catch (err) {
+      alert(`Error deleting user: ${err.message}`);
+    }
+  }
+
+  async function bulkDeleteUsers() {
+    const checkboxes = document.querySelectorAll('.user-checkbox:checked');
+    if (checkboxes.length === 0) return alert('Please select users to delete');
+
+    if (!confirm(`Delete ${checkboxes.length} users and all their data? This cannot be undone!`)) return;
+
+    const userIds = Array.from(checkboxes).map(cb => parseInt(cb.value, 10)).filter(Boolean);
+
+    try {
+      const data = await adminFetch('/learn/admin/api/users/bulk-delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_ids: userIds })
+      });
+      alert(`Deleted: ${data.deleted ?? 0}, Failed: ${data.failed ?? 0}`);
+      loadUsers();
+      loadStats();
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
+  }
+
   function toggleSelectAll(checkbox) {
-    document.querySelectorAll('.user-checkbox').forEach(cb => cb.checked = checkbox.checked);
+    document.querySelectorAll('.user-checkbox').forEach(cb => {
+      cb.checked = checkbox.checked;
+    });
   }
 
   setInterval(loadStats, 30000);
