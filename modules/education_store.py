@@ -230,6 +230,44 @@ def ensure_db() -> None:
         conn.execute("CREATE INDEX IF NOT EXISTS idx_login_tracking_user ON login_tracking(user_id)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_login_tracking_login_at ON login_tracking(login_at)")
 
+        # `module_progress`: track which modules users have started, are in progress, or completed
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS module_progress (
+                user_id INTEGER NOT NULL,
+                module_id TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'not_started',
+                started_at TEXT,
+                completed_at TEXT,
+                updated_at TEXT NOT NULL,
+                PRIMARY KEY (user_id, module_id),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            )
+            """
+        )
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_module_progress_user ON module_progress(user_id)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_module_progress_status ON module_progress(status)")
+
+        # `module_certificates`: track which module quizzes the user passed (75%+) for certificate eligibility
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS module_certificates (
+                user_id INTEGER NOT NULL,
+                module_id TEXT NOT NULL,
+                quiz_id TEXT NOT NULL,
+                score INTEGER NOT NULL,
+                total INTEGER NOT NULL,
+                percentage REAL NOT NULL,
+                passed BOOLEAN NOT NULL,
+                awarded_at TEXT NOT NULL,
+                PRIMARY KEY (user_id, module_id),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            )
+            """
+        )
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_module_certificates_user ON module_certificates(user_id)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_module_certificates_passed ON module_certificates(passed)")
+
         # Content versioning (wipes progress when content changes).
         _ensure_content_version(conn)
 
@@ -899,3 +937,216 @@ def get_user_stats(user_id: int) -> dict:
         "quizzes_taken": int(quizzes),
         "total_events": int(events)
     }
+
+
+# ============= MODULE PROGRESS TRACKING =============
+
+
+def update_module_status(user_id: int, module_id: str, status: str) -> None:
+    """Update a user's progress status for a module.
+    
+    Status can be: 'not_started', 'in_progress', 'completed'
+    """
+    user_id = int(user_id)
+    module_id = str(module_id).strip()
+    status = str(status).strip().lower()
+    
+    if not module_id or status not in ('not_started', 'in_progress', 'completed'):
+        return
+    
+    now = _utc_now_iso()
+    started_at = None
+    completed_at = None
+    
+    with _connect() as conn:
+        # Get current record if exists
+        existing = conn.execute(
+            "SELECT started_at, completed_at FROM module_progress WHERE user_id = ? AND module_id = ?",
+            (user_id, module_id)
+        ).fetchone()
+        
+        if status == 'in_progress':
+            started_at = now if not existing or not existing['started_at'] else existing['started_at']
+        elif status == 'completed':
+            started_at = now if not existing or not existing['started_at'] else existing['started_at']
+            completed_at = now
+        
+        conn.execute(
+            """INSERT OR REPLACE INTO module_progress 
+               (user_id, module_id, status, started_at, completed_at, updated_at) 
+               VALUES (?, ?, ?, ?, ?, ?)""",
+            (user_id, module_id, status, started_at, completed_at, now)
+        )
+        conn.commit()
+    
+    # Log the update
+    record_event(
+        "module_status_updated",
+        user_id=user_id,
+        payload={
+            "module_id": module_id,
+            "status": status,
+            "timestamp": now
+        }
+    )
+
+
+def get_module_status(user_id: int) -> dict[str, dict]:
+    """Get module progress status for a user.
+    
+    Returns dict keyed by module_id with status, started_at, completed_at, updated_at.
+    """
+    user_id = int(user_id)
+    
+    with _connect() as conn:
+        rows = conn.execute(
+            "SELECT module_id, status, started_at, completed_at, updated_at FROM module_progress WHERE user_id = ?",
+            (user_id,)
+        ).fetchall()
+    
+    result = {}
+    for r in rows:
+        result[str(r['module_id'])] = {
+            'status': str(r['status']),
+            'started_at': str(r['started_at']) if r['started_at'] else None,
+            'completed_at': str(r['completed_at']) if r['completed_at'] else None,
+            'updated_at': str(r['updated_at']) if r['updated_at'] else None,
+        }
+    return result
+
+
+def record_module_certificate(user_id: int, module_id: str, quiz_id: str, score: int, total: int) -> bool:
+    """Record a module quiz completion and award certificate if score >= 75%.
+    
+    Returns True if certificate was awarded, False otherwise.
+    """
+    user_id = int(user_id)
+    module_id = str(module_id).strip()
+    quiz_id = str(quiz_id).strip()
+    score = int(score)
+    total = int(total)
+    
+    if not module_id or not quiz_id or total <= 0:
+        return False
+    
+    percentage = (score / total) * 100 if total else 0
+    passed = percentage >= 75.0
+    now = _utc_now_iso()
+    
+    if not passed:
+        return False
+    
+    try:
+        with _connect() as conn:
+            conn.execute(
+                """INSERT OR REPLACE INTO module_certificates 
+                   (user_id, module_id, quiz_id, score, total, percentage, passed, awarded_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                (user_id, module_id, quiz_id, score, total, percentage, True, now)
+            )
+            conn.commit()
+        
+        # Log certificate award
+        record_event(
+            "certificate_awarded",
+            user_id=user_id,
+            payload={
+                "module_id": module_id,
+                "quiz_id": quiz_id,
+                "score": score,
+                "total": total,
+                "percentage": percentage,
+                "awarded_at": now
+            }
+        )
+        return True
+    except Exception:
+        return False
+
+
+def get_module_certificates(user_id: int) -> dict[str, dict]:
+    """Get all module certificates earned by a user (75%+ scores).
+    
+    Returns dict keyed by module_id with quiz_id, score, total, percentage, awarded_at.
+    """
+    user_id = int(user_id)
+    
+    with _connect() as conn:
+        rows = conn.execute(
+            """SELECT module_id, quiz_id, score, total, percentage, awarded_at 
+               FROM module_certificates 
+               WHERE user_id = ? AND passed = TRUE
+               ORDER BY awarded_at DESC""",
+            (user_id,)
+        ).fetchall()
+    
+    result = {}
+    for r in rows:
+        result[str(r['module_id'])] = {
+            'quiz_id': str(r['quiz_id']),
+            'score': int(r['score']),
+            'total': int(r['total']),
+            'percentage': float(r['percentage']),
+            'awarded_at': str(r['awarded_at']) if r['awarded_at'] else None,
+        }
+    return result
+
+
+def get_all_users_module_progress() -> list[dict]:
+    """Admin view: Get module progress for all users.
+    
+    Returns list of dicts with user_id, username, module progress summary.
+    """
+    with _connect() as conn:
+        rows = conn.execute(
+            """SELECT u.id, u.username, u.email, 
+                      COUNT(DISTINCT CASE WHEN mp.status = 'completed' THEN mp.module_id END) as modules_completed,
+                      COUNT(DISTINCT CASE WHEN mp.status = 'in_progress' THEN mp.module_id END) as modules_in_progress,
+                      COUNT(DISTINCT mc.module_id) as certificates_earned
+               FROM users u
+               LEFT JOIN module_progress mp ON u.id = mp.user_id
+               LEFT JOIN module_certificates mc ON u.id = mc.user_id
+               GROUP BY u.id
+               ORDER BY u.id DESC"""
+        ).fetchall()
+    
+    result = []
+    for r in rows:
+        result.append({
+            'user_id': int(r['id']),
+            'username': str(r['username']),
+            'email': str(r['email']) if r['email'] else None,
+            'modules_completed': int(r['modules_completed']) or 0,
+            'modules_in_progress': int(r['modules_in_progress']) or 0,
+            'certificates_earned': int(r['certificates_earned']) or 0,
+        })
+    return result
+
+
+def get_user_module_progress_summary(user_id: int) -> dict:
+    """Get comprehensive module progress summary for a user.
+    
+    Returns dict with:
+    - modules_status: dict of all modules and their status
+    - certificates: dict of earned certificates
+    - summary: {completed, in_progress, not_started, certificates_count}
+    """
+    user_id = int(user_id)
+    
+    modules_status = get_module_status(user_id)
+    certificates = get_module_certificates(user_id)
+    
+    summary = {
+        'completed': sum(1 for m in modules_status.values() if m['status'] == 'completed'),
+        'in_progress': sum(1 for m in modules_status.values() if m['status'] == 'in_progress'),
+        'not_started': sum(1 for m in modules_status.values() if m['status'] == 'not_started'),
+        'certificates_count': len(certificates),
+    }
+    
+    return {
+        'user_id': user_id,
+        'modules_status': modules_status,
+        'certificates': certificates,
+        'summary': summary,
+    }
+
