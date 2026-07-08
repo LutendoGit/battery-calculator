@@ -205,9 +205,9 @@
         }
         
         .alert-info {
-            background: #black;
-            color: #black;
-            border: None;
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
         }
         
         .alert-success {
@@ -493,7 +493,7 @@
         adminFetch(`/learn/admin/api/users/${userId}/logins?limit=10`),
         adminFetch('/learn/admin/api/users/list'),
         adminFetch('/learn/admin/api/sessions/current'),
-        adminFetch(`/learn/admin/api/users/${userId}/stats`)
+        fetchUserStats(userId)
       ]);
 
       const user = (usersData.users || []).find(u => Number(u.id) === Number(userId));
