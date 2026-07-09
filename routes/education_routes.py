@@ -9,7 +9,7 @@ from __future__ import annotations
 
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime,timedelta,timezone
 from functools import wraps
 from io import BytesIO
 import csv
@@ -476,6 +476,97 @@ def _current_user():
     return get_user(int(user_id))
 
 
+INACTIVITY_TIMEOUT = timedelta(hours=24)
+_PUBLIC_AUTH_ENDPOINTS = {
+    "education.login",
+    "education.register",
+    "education.forgot_password",
+    "education.reset_password",
+    "education.logout",
+}
+
+
+def _utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _parse_session_ts(raw: str | None) -> datetime | None:
+    if not raw:
+        return None
+    try:
+        ts = str(raw).strip()
+        if ts.endswith("Z"):
+            ts = ts[:-1] + "+00:00"
+        dt = datetime.fromisoformat(ts)
+        if dt.tzinfo is None:
+            return dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc)
+    except Exception:
+        return None
+
+
+def _clear_auth_session() -> None:
+    session.pop("edu_user_id", None)
+    session.pop("edu_username", None)
+    session.pop("edu_avatar", None)
+    session.pop("login_id", None)
+    session.pop("edu_last_activity_at", None)
+
+
+def _is_api_request() -> bool:
+    p = request.path or ""
+    return p.startswith("/learn/api/") or p.startswith("/learn/admin/api/")
+
+
+@education_bp.before_request
+def _enforce_inactivity_timeout():
+    user_id = session.get("edu_user_id")
+    if not user_id:
+        return None
+
+    # Avoid timeout processing on auth endpoints.
+    if request.endpoint in _PUBLIC_AUTH_ENDPOINTS:
+        return None
+
+    now = _utc_now()
+    last_raw = session.get("edu_last_activity_at")
+    last_dt = _parse_session_ts(last_raw)
+
+    # First request with old session shape.
+    if last_dt is None:
+        session["edu_last_activity_at"] = now.isoformat()
+        return None
+
+    if now - last_dt >= INACTIVITY_TIMEOUT:
+        login_id = session.get("login_id")
+        try:
+            if login_id:
+                education_store.track_logout(int(login_id))
+        except Exception:
+            pass
+
+        try:
+            record_event(
+                "auto_logout_inactive",
+                user_id=int(user_id),
+                payload={"inactive_hours": 24},
+            )
+        except Exception:
+            pass
+
+        _clear_auth_session()
+
+        if _is_api_request():
+            return jsonify({"error": "session_expired_inactive"}), 401
+
+        flash("You were logged out due to 24 hours of inactivity.", "warning")
+        return redirect(url_for("education.login", next=request.path))
+
+    # Session still active -> refresh activity timestamp.
+    session["edu_last_activity_at"] = now.isoformat()
+    return None
+
+
 def _user_has_progress(user_id: int) -> bool:
     """Return True if the user has any saved learning/quiz activity."""
     try:
@@ -609,6 +700,7 @@ def login():
         session["edu_user_id"] = user.id
         session["edu_username"] = user.username
         session["edu_avatar"] = user.avatar_filename
+        session["edu_last_activity_at"] = _utc_now().isoformat()
         
         # Track login
         session_id = str(uuid.uuid4())
@@ -657,6 +749,7 @@ def register():
         session["edu_user_id"] = user.id
         session["edu_username"] = user.username
         session["edu_avatar"] = user.avatar_filename
+        session["edu_last_activity_at"] = _utc_now().isoformat()
         flash("Account created.", "success")
 
         # First login after registration should always land on the Training Hub.
@@ -811,6 +904,7 @@ def logout():
     session.pop("edu_username", None)
     session.pop("edu_avatar", None)
     session.pop("login_id", None)
+    session.pop("edu_last_activity_at", None)
 
     flash("Logged out.", "success")
     return redirect(url_for("education.login"))
