@@ -22,6 +22,7 @@ from __future__ import annotations
 import os
 import secrets
 import sqlite3
+from urllib.parse import unquote, urlparse
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from email.utils import parseaddr
@@ -85,8 +86,40 @@ def _project_root() -> str:
 
 
 def db_path() -> str:
-    """Return the absolute path to the SQLite database file."""
-    return os.path.join(_project_root(), "data", "education.db")
+    """Return the absolute path to the SQLite database file.
+
+    Resolution order:
+    1) DATABASE_URL environment variable, supporting:
+       - Plain file paths (e.g. /data/education.db, data/education.db)
+       - sqlite:///... URLs
+    2) Project-local fallback: <project>/data/education.db
+    """
+    default_path = os.path.join(_project_root(), "data", "education.db")
+    raw = (os.getenv("DATABASE_URL") or "").strip()
+    if not raw:
+        return default_path
+
+    if raw.startswith("sqlite://"):
+        parsed = urlparse(raw)
+        if parsed.scheme != "sqlite":
+            return default_path
+
+        # sqlite URLs represent file paths in parsed.path.
+        path = unquote(parsed.path or "").strip()
+        if not path:
+            return default_path
+
+        # On Windows, sqlite:///C:/... parses as /C:/..., so strip leading /.
+        if os.name == "nt" and len(path) >= 3 and path[0] == "/" and path[2] == ":":
+            path = path[1:]
+        return path
+
+    if "://" in raw:
+        return default_path
+
+    if os.path.isabs(raw):
+        return raw
+    return os.path.abspath(os.path.join(_project_root(), raw))
 
 
 # Module-level cache so I only run CREATE TABLE statements once per process.

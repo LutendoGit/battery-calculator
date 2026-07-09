@@ -13,3 +13,6 @@ build/
 # Local test/output artifacts
 test_output.pdf
 fix_test_output.pdf
+
+# Local SQLite runtime data
+data/*.db
