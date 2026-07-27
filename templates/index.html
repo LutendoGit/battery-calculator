@@ -9,30 +9,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
       :root {
-        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      }
-      
-      body {
-        background: var(--primary-gradient);
-        min-height: 100vh;
-        padding: 40px 20px !important;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
-      
-      .container {
-        max-width: 700px;
+        --bg-dark: #666868; /* primary dark grey */
+        --bg-light: #CBCBCB; /* light grey */
+        --accent-red: #7f3636; /* button and icon red */
+        --card-surface: rgba(255,255,255,0.92);
+        --muted-text: rgba(0,0,0,0.7);
       }
 
-      /* Strong portrait-style constraints */
+      body {
+        background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+        min-height: 100vh;
+        padding: 36px 18px !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--muted-text);
+      }
+
+      .container {
+        max-width: 820px;
+      }
+
       .portrait-container {
-        max-width: 700px !important;
+        max-width: 820px !important;
         margin-left: auto !important;
         margin-right: auto !important;
       }
 
       .portrait-card, .tab-content .card {
-        max-width: 680px !important;
+        max-width: 800px !important;
         margin-left: auto !important;
         margin-right: auto !important;
       }
@@ -41,150 +44,112 @@
         body { padding: 20px 10px !important; }
         .portrait-container { padding: 0 8px !important; }
       }
-      
+
       h1 {
         color: white;
-        font-weight: 700;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        margin-bottom: 30px !important;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        margin-bottom: 22px !important;
+        text-shadow: 0 3px 10px rgba(0,0,0,0.45);
       }
-      
+
       .card {
         border: none;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.20);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        /* Background image for the form card. Replace the URL with an external link or
-           place an image at static/images/form-bg.jpg for local serving via Flask. */
-        background-image: linear-gradient(rgba(255,255,255,0.88), rgba(240, 244, 255, 0.90)),
-          url("/static/images/Unleashing-Solar-Power-Illuminate-Your-Life-with-Solar-Panels-in-Poquoson-700x441.png");
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
+        border-radius: 14px;
+        background: var(--card-surface);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
       }
-      
+
       .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.30);
+        transform: translateY(-6px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.28);
       }
-      
+
       .card-title {
-        color: #667eea;
-        font-weight: 600;
-        font-size: 1.3rem;
+        color: var(--accent-red);
+        font-weight: 700;
+        font-size: 1.15rem;
       }
-      
+
       .form-group label {
-        font-weight: 600;
+        font-weight: 700;
         color: #333;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
       }
-      
+
       .form-control {
-        border: 2px solid #e0e0e0;
+        border: 1px solid rgba(0,0,0,0.12);
         border-radius: 8px;
-        padding: 10px 15px;
-        transition: border-color 0.3s ease;
-        background: #ffffff !important;
-        color: #333333 !important;
+        padding: 10px 14px;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        background: #fff !important;
+        color: #222 !important;
       }
 
-      /* Ensure select/options and placeholders are readable */
       select.form-control, textarea.form-control {
-        background: #ffffff !important;
-        color: #333333 !important;
-        -webkit-text-fill-color: #333333 !important;
+        background: #fff !important;
+        color: #222 !important;
       }
 
-      .form-control::placeholder {
-        color: #888888 !important;
-        opacity: 1;
-      }
-
-      .form-control option {
-        color: #333333 !important;
-        background: #ffffff !important;
-        -webkit-text-fill-color: #333333 !important;
-      }
+      .form-control::placeholder { color: #999 !important; }
 
       .form-control:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-        background: #ffffff !important;
-        color: #333333 !important;
+        border-color: var(--accent-red);
+        box-shadow: 0 0 0 0.12rem rgba(127,54,54,0.12);
+        background: #fff !important;
+        color: #222 !important;
       }
-      
+
+      /* Buttons and interactive accents in red */
       .btn-primary {
-        background: var(--primary-gradient);
-        border: none;
+        background-color: var(--accent-red) !important;
+        border-color: var(--accent-red) !important;
+        color: #fff !important;
         border-radius: 8px;
-        padding: 10px 25px;
-        font-weight: 600;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      
-      .btn-primary:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        color: white;
-      }
-      
-      .alert {
-        border-radius: 10px;
-        border: none;
-        margin-bottom: 20px;
-      }
-      
-      .alert-danger {
-        background: #fee;
-        color: #c33;
-      }
-      
-      .alert-success {
-        background: #efe;
-        color: #3c3;
-      }
-
-      .site-footer {
-        width: 100%;
-        margin-top: 30px;
-        background: transparent;
-        color: rgba(255,255,255,0.85);
-        text-align: center;
-        padding: 28px 20px 20px;
-        font-size: 0.85em;
-        line-height: 1.6;
-      }
-
-      .site-footer .footer-brand {
+        padding: 10px 22px;
         font-weight: 700;
-        font-size: 1.05em;
-        margin-bottom: 4px;
+        transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+      }
+
+      .btn-primary:hover, .btn-primary:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(127,54,54,0.28);
+        filter: brightness(1.03);
+        color: #fff !important;
+      }
+
+      .btn-outline-light {
         color: #fff;
+        border: 1px solid rgba(255,255,255,0.35);
       }
 
-      .site-footer-links {
-        margin-top: 6px;
+      /* Make icons and tab indicators red to match brand */
+      .nav-link .fa, .nav-tabs .nav-link.active .fa, .nav-link.active {
+        color: var(--accent-red) !important;
       }
 
-      .site-footer a,
-      .site-footer-link {
+      .nav-tabs .nav-link {
         color: rgba(255,255,255,0.95);
-        text-decoration: none;
-        font-weight: 600;
+        background: transparent;
+        border: none;
+        font-weight: 700;
       }
 
-      .site-footer a:hover,
-      .site-footer-link:hover {
+      .nav-tabs .nav-link.active {
+        background: rgba(255,255,255,0.06);
+        border-radius: 8px;
         color: #fff;
-        text-decoration: none;
       }
 
-      .site-footer-copy {
-        margin-top: 8px;
-        font-size: 0.9em;
-        color: rgba(255,255,255,0.6);
-      }
+      .alert { border-radius: 10px; border: none; margin-bottom: 18px; }
+      .alert-danger { background: rgba(127,54,54,0.08); color: var(--accent-red); }
+      .alert-success { background: rgba(0,128,0,0.06); color: #136713; }
+
+      .site-footer { width: 100%; margin-top: 28px; background: transparent; color: rgba(255,255,255,0.9); text-align: center; padding: 18px 10px 10px; font-size: 0.9em; }
+      .site-footer .footer-brand { font-weight: 800; font-size: 1.02em; color: #fff; }
+      .site-footer a, .site-footer-link { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 700; }
+      .site-footer-copy { margin-top: 8px; font-size: 0.88em; color: rgba(255,255,255,0.65); }
     </style>
   </head>
   <body>
