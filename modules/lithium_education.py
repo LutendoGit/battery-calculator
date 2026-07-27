@@ -1570,17 +1570,20 @@ class LithiumBatteryFundamentals:
                              "alt":"image of a series vs parallel connections" 
                           },
                       ],
-                      "paragraphs_after":[
-                       "<br>Study the comparison carefully and note the key differences between the two connection methods. ",
-                       "As an installer, this information will help you determine the correct battery configuration based on the inverter requirements and the customer's backup needs."   
-                      ],
-                      "images":[
-                          {
-                           "src":"images/series and parallel are not better or wor.png",
-                           "alt": "image of series and parallel are not better or worse"   
-                          },
-                      ],
+                     
 
+                    },
+                    { "heading":"",
+                         "paragraphs_after":[
+                        "<br>Study the comparison carefully and note the key differences between the two connection methods. ",
+                        "As an installer, this information will help you determine the correct battery configuration based on the inverter requirements and the customer's backup needs."   
+                    ],
+                    "images":[
+                        {
+                        "src":"images/series and parallel are not better or wor.png",
+                        "alt": "image of series and parallel are not better or worse"   
+                        },
+                    ],
                     },
 
                     ],
@@ -1590,64 +1593,218 @@ class LithiumBatteryFundamentals:
         {
             "title": "2.5 Electrical Components",
             "paragraphs": [
-                "Every electrical system needs to move power, control power, protect equipment, protect people, manage voltage and current, switch things on and off, and communicate between devices.",
+                "Every electrical system needs to:",
+                
+                
+               
+            ],
+            "bullets":[
+                "move power,",
+                "control power",
+                "protect equipment",
+                "protect people",
+                "manage voltage and current",
+                "switch things on and off",
+                "and communicate between devices"
+
+            ],
+            "paragraphs_after":[
                 "Electrical components make all this possible.",
-                "Without the correct components, electricity would simply flow uncontrolled from the batteries to the equipment, which can lead to overheating, damaged equipment, poor performance, fires, system failures, and serious safety risks.",
-                "A good battery or solar system is not only about the batteries. The cables, lugs, isolators, fuses, breakers, and connections are just as important."
+                "<br>Without the correct components, electricity would simply flow uncontrolled from the batteries to ",
+                "the equipment-which can lead to:"
             ],
-            "paragraphs_before": [
-                "Think of the system like the plumbing in a building:",
+            "bullets_after":[
+                "overheating",
+                "damaged equipment",
+                "poor performance",
+                "fires",
+                "system failures",
+                "and serious safety risks"
             ],
-            "bullets_before": [
+            "paragraphs_footer": [
+                "A good battery or solar system is not only about the batteries. The cables, lugs, isolators, fuses, breakers, and connections are just as important.",
+                "<br>Think of the system like the plumbing in a building:",
+            ],
+            "bullets_footer": [
                 "The battery is the water tank",
                 "The cables are the pipes",
                 "The isolators and breakers are the valves",
                 "The fuses are the emergency safety devices",
                 "The lugs and terminations are the joints connecting everything together"
             ],
-            "paragraphs_after": [
+            "paragraphs_extra": [
                 "If any one of these parts is poor quality or installed incorrectly, the whole system can fail.",
-                "Every electrical component in a battery and solar system has a specific purpose. Some components carry electricity, others control it, while others protect the system and the people using it.",
-                "As an installer, it is essential to understand not only what each component is, but also why it is used, how it works, and the role it plays in ensuring a safe, reliable, and efficient installation."
+                            
             ],
-            "bullets": [
-                "The purpose of the component",
-                "Where it is used in the system",
-                "Why it is important",
-                "What could happen if it is incorrectly selected or installed"
+            "subsections":[
+                { "heading":"Understanding the Key Electrical Components",
+                  "paragraphs": [
+                                  
+                     "Every electrical component in a battery and solar system has a specific purpose. Some components carry electricity, others control it, while others protect the system and the people using it.",
+                     "As an installer, it is essential to understand not only what each component is, but also why it is used, how it works, and the role it plays in ensuring a safe, reliable, and efficient installation.",
+                     "<br>The following diagrams introduce the most common electrical components found in battery and solar systems. As you work through each one, pay particular attention to:"
+                ],
+                "bullets": [
+                    "The purpose of the component",
+                    "Where it is used in the system",
+                    "Why it is important",
+                    "What could happen if it is incorrectly selected or installed"
+                ],
+                "paragraphs_after": [
+                        "Although these components may appear simple on their own, together they form the foundation of every safe and reliable energy storage system.",
+                               
+                ],
+                "images":[
+                    {
+                        "src":"images/Cables carry current.png",
+                        "alt":"images of current carry cables"
+                    },
+                    {
+                        "src":"images/Lugs and terminations.png",
+                        "alt":"image of lugs and terminations"
+                    },
+                    {
+                        "src":"images/isolators.png",
+                        "alt":"image of an isolators"
+                    },
+                    {
+                        "src":"images/isolators.png",
+                        "alt":"image of a fuse"
+                    },
+                    {
+                        "src":"images/circuit breaker.png",
+                        "alt":"image of a circuit breaker"
+                    },
+                ],
+
+            },
+            { "heading": "A battery system is only as strong as its weakest connection.",
+                "paragraphs":[
+                    "Even the best battery can fail if:"
+                ],
+                 "bullets": [
+                    "cables are undersized",
+                    "lugs are loose",
+                    "breakers are incorrect",
+                    "fuses are missing",
+                    "or isolators are not installed properly."
+               ],
+
+                "paragraphs_after": [
+                     "Good electrical design is about:",   
+                ],
+                "bullets_after":[
+                    "safety",
+                    "reliability",
+                    "efficiency, ",
+                    "and long equipment life."
+                ],
+                "images":[
+                    {
+                        "src":"images/simple summary.module 2.5.png",
+                        "alt":"image of a simple summary",
+                    },
+                ],
+               
+            },
             ],
-            "notes": [
-                "A battery system is only as strong as its weakest connection."
-            ],
-            "paragraphs_middle": [
-                "Even the best battery can fail if cables are undersized, lugs are loose, breakers are incorrect, fuses are missing, or isolators are not installed properly."
-            ],
-            "paragraphs_end": [
-                "Good electrical design is about safety, reliability, efficiency, and long equipment life."
-            ],
+            
+            
+            
+
+          
         },
         {
             "title": "2.6 Earthing & Bonding — The Safety Backbone",
             "paragraphs": [
                 "Earthing and bonding are two of the most important safety principles in any battery and solar installation. Although they perform different functions, they work together to protect people, equipment, and property by reducing the risk of electric shock, equipment damage, and fire.",
-                "Correct earthing and bonding help protect people, equipment, buildings, batteries, and inverters.",
-                "Without proper earthing and bonding, electric shocks can occur, equipment can become damaged, systems can behave unpredictably, lightning damage can become worse, faults may not trip correctly, and fire risks increase.",
-                "A simple way to understand the difference is that earthing gives dangerous electricity a safe path to the ground, while bonding keeps metal parts at the same electrical level so they cannot become dangerous."
+                "Correct earthing and bonding help protect:",
+                
+               
             ],
-            "paragraphs_after": [
-                "Both are essential for a safe and compliant electrical installation. One does not replace the other—they work together to protect the entire system.",
-                "Earthing provides a safe path for fault current to flow into the ground. Bonding ensures exposed metal parts remain at the same electrical potential.",
-                "Together they help protective devices operate correctly, minimise electric shock hazards, reduce the risk of fire, and improve the overall safety of the installation.",
-                "Remember: a properly designed battery or solar system is not only efficient—it is also safe. Correct earthing and bonding are fundamental requirements for every professional installation."
+            "bullets":[
+                "people",
+                " equipment",
+                "buildings",
+                " batteries",
+                "and inverters.",
             ],
+            "paragraphs_after":[
+                "Without proper earthing and bonding:"
+            ],
+            "bullets_after":[
+                "electric shocks can occur",
+                "equipment can become damaged",
+                "systems can behave unpredictably",
+                "lightning damage can become worse",
+                "faults may not trip correctly",
+                "and fire risks increase."
+            ],
+            "paragraphs_footer": [
+                "A simple way to understand the difference is:"
+                
+            ],
+            "bullets_footer":[
+                "<strong>Earthing</strong> gives dangerous electricity a safe path to the ground",
+                "<strong>Bonding</strong> keeps metal parts at the same electrical level so they cannot become dangerous"
+            ],
+            "paragraphs_extra":[
+               "Both are essential for a safe and compliant electrical installation. One does not replace the other—they work together to protect the entire system.",
+            ],
+            "subsections":[
+                {"heading":"Understanding Earthing & Bonding",
+                 "paragraphs":[
+                     "Although earthing and bonding are closely related, they perform different safety functions within an electrical installation. Understanding the difference is essential for every installer",
+                     "<br>The following diagrams explain what earthing is, what bonding is, why each is important, and how they work together to create a safer battery and solar system. ",
+                     "<br>As you review each diagram, pay attention to:"
+                 ],
+                 "bullets":[
+                     "the purpose of earthing and bonding, ",
+                     "how they protect people and equipment, ",
+                     "where they are used within the system, ",
+                     "and what can happen if they are omitted or installed incorrectly. "
+                 ],
+                 "images":[
+                     {
+                         "src": "images/earthing.png",
+                         "alt":"image of Earthing"
+                     },
+                     {
+                         "src":"images/Bonding.png",
+                         "alt":"image of Bonding"
+                     },
+                 ],
+                 "paragraphs_footer":[
+                     "Although earthing and bonding perform different functions, they are most effective when used together.",
+                     
+                 ],
+                 "bullets_footer":[
+                     "<strong>Earthing</strong>provides a safe path for fault current to flow into the ground.",
+                     "<strong>Bonding</strong> ensures exposed metal parts remain at the same electrical potential. "
+                 ],
+                 "paragraphs_extra":[
+                     "Together they help protective devices operate correctly, minimise electric shock hazards, reduce the risk of fire, and improve the overall safety of the installation. ",
+                     "<br><strong>Remember:</strong> A properly designed battery or solar system is not only efficient—it is also safe. Correct earthing and bonding are fundamental requirements for every professional installation."
+                 ],
+
+
+
+                },
+            ]
         },
         {
             "title": "2.7 Electrical Safety — Non-Negotiable Rules",
             "paragraphs": [
                 "Electrical safety is non-negotiable because electricity is invisible, extremely powerful, and can cause serious injury, death, fires, or catastrophic equipment damage in seconds if handled incorrectly.",
-                "Unlike many other hazards, you often do not get a warning before something goes wrong. A loose connection, incorrect polarity, missing fuse, poor earthing, or accidental contact with live conductors can instantly create dangerous heat, electric shock, arc flash, or system failure.",
-                "In battery and solar systems especially, large amounts of stored energy are always present, even when grid power is off, which means safe isolation, proper PPE, correct tools, testing procedures, and compliant installation practices are absolutely essential.",
+                "<br>Unlike many other hazards, you often do not get a warning before something goes wrong. A loose connection, incorrect polarity, missing fuse, poor earthing, or accidental contact with live conductors can instantly create dangerous heat, electric shock, arc flash, or system failure.",
+                "<br>In battery and solar systems especially, large amounts of stored energy are always present, even when grid power is off, which means safe isolation, proper PPE, correct tools, testing procedures, and compliant installation practices are absolutely essential.",
                 "Good electrical safety is not about slowing the job down, it is about ensuring that everyone goes home safely, equipment remains protected, and systems operate reliably for years to come."
+            ],
+            "images":[
+                {
+                    "src":"images/electrical safety.png",
+                    "alt":"image of electrical safety"
+                },
             ],
         },
         {
@@ -1656,12 +1813,69 @@ class LithiumBatteryFundamentals:
                 "Up to this point, you have learned the theory behind electrical components, cable sizing, battery connections, and system protection. While understanding the theory is essential, professional installers must also recognise what happens when these principles are not applied correctly.",
                 "Many system faults are not caused by defective equipment; they are caused by poor installation practices.",
                 "Something as simple as using the wrong cable size, making a poor crimp, or leaving a loose terminal can lead to overheating, nuisance trips, damaged equipment, expensive call-backs, and even serious safety hazards.",
-                "The following examples are based on real installation scenarios that installers encounter every day. Each example demonstrates what went wrong, why it happened, what problems it caused, and how the issue can be prevented or corrected.",
-                "As you work through each example, think beyond simply fixing the fault. Ask yourself why it occurred in the first place and what could have been done during installation to prevent it.",
-                "Most installation problems are preventable. Good installers do not just fix faults; they install systems correctly the first time.",
-                "Every fault shown in this section has one thing in common: it could have been prevented during installation.",
-                "A correctly sized cable, a properly crimped lug, a securely tightened connection, and careful attention to detail may seem like small tasks, but together they make the difference between a system that operates reliably for years and one that generates repeated faults and customer complaints.",
-                "Remember: the best fault is the one that never happens because the installation was done correctly the first time."
+                "The following examples are based on real installation scenarios that installers encounter every day. Each example demonstrates:",
+                
+                
+                
+                
+            ],
+            "bullets":[
+                "what went wrong,",
+                "why it happened,",
+                "what problems it caused,",
+                "and how the issue can be prevented or corrected"
+            ],
+            "paragraphs_after":[
+               "As you work through each example, think beyond simply fixing the fault. Ask yourself <strong>why it occurred in the first place</strong> and what could have been done during installation to prevent it.",
+               "<br>Remember:",
+               "<strong>Most installation problems are preventable.</strong> Good installers do not just fix faults; they install systems correctly the first time.",
+
+            ],
+            "images":[
+                {
+                    "src":"images/incorrect cable size.png",
+                    "alt":"image of incorrect cable size.png"
+                },
+                {
+                    "src":"images/swopped-reverse polarity.png",
+                    "alt":"image of swopped-reverse polarity.png"
+                },
+                {
+                    "src":"images/poor crimping lug.png",
+                    "alt":"image of poor crimping lug.png"
+                },
+                {
+                    "src":"images/no dc isolator installed.png",
+                    "alt":"image of no dc isolator installed.png"
+                },
+                {                                                
+                    "src":"images/unequal parallel cables.png",
+                    "alt":"image of unequal parallel cables.png"
+                }, 
+            ],
+            "paragraphs_footer":[
+                  "Every fault shown in this section has one thing in common: it could have been prevented during installation.",
+            ],
+            "subsections":[
+
+                { "heading":"It could have been prevented during installation.",
+                  "paragraphs":[
+                      "Professional installers understand that system reliability is not determined only by the quality of the batteries or inverter—it is determined by the quality of the installation",
+                      "<br>A correctly sized cable, a properly crimped lug, a securely tightened connection, and careful attention to detail may seem like small tasks, but together they make the difference between a system that operates reliably for years and one that generates repeated faults and customer complaints.",
+                      "<br><strong>Remember:</strong> the best fault is the one that never happens because the installation was done correctly the first time."
+                  ],
+
+                },
+                
+            ],
+        },
+        {
+            "title": "Wrapping Up Module 2",
+            "images":[
+                {
+                  "src":"images/wrapping up module 2.png",
+                  "alt":"image of wrapping up module 2"  
+                },
             ],
         },
     ],
