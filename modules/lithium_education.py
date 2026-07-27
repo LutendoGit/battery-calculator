@@ -5,7 +5,6 @@ from enum import Enum
 from typing import Dict, List, Tuple
 
 
-
 class LithiumBatteryFundamentals:
     """Educational content about lithium batteries"""
 
