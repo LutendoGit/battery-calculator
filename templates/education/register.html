@@ -6,22 +6,95 @@
     <title>Register — Battery Education</title>
     {% include '_favicon.html' %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+      :root {
+        --color-primary: #00B5AD;
+        --color-indigo: #1E3A8A;
+        --color-accent: #A3E635;
+        --color-light: #F5F6FA;
+        --color-dark: #2E2E2E;
+        --color-white: #FFFFFF;
+      }
+
       body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background:
+          radial-gradient(circle at top left, rgba(0, 181, 173, 0.20), transparent 24%),
+          radial-gradient(circle at top right, rgba(30, 58, 138, 0.18), transparent 32%),
+          linear-gradient(180deg, #edf6ff 0%, var(--color-light) 44%, #e7f8f6 100%);
         min-height: 100vh;
-        padding: 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 28px 20px;
+        font-family: 'Roboto', sans-serif;
+        color: var(--color-dark);
       }
       .card {
         max-width: 520px;
-        margin: 60px auto;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        margin: 40px auto;
+        border: 1px solid rgba(30,58,138,0.10);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(16,24,40,0.14);
+        overflow: hidden;
       }
-      h1 { color: #667eea; font-weight: 700; }
-      .small-help { color: #555; }
+      h1 {
+        font-family: 'Montserrat', sans-serif;
+        color: var(--color-indigo);
+        font-weight: 700;
+      }
+      .small-help { color: #4d5c76; }
+
+      .card-body {
+        background: var(--color-white);
+      }
+
+      .btn-primary {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        border-radius: 8px;
+        padding: 12px 24px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus {
+        background-color: var(--color-accent);
+        border-color: var(--color-accent);
+        color: var(--color-dark);
+        transform: scale(1.02);
+      }
+
+      .btn-outline-secondary {
+        color: var(--color-primary);
+        border-color: var(--color-primary);
+      }
+
+      .btn-outline-secondary:hover,
+      .btn-outline-secondary:focus {
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+        color: var(--color-dark);
+      }
+
+      .btn-link {
+        color: var(--color-indigo);
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+      }
+
+      .btn-link:hover {
+        color: var(--color-primary);
+      }
+
+      .form-control {
+        border-radius: 8px;
+        border-color: rgba(30,58,138,0.16);
+      }
+
+      .form-control:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 0.2rem rgba(0,181,173,0.18);
+      }
 
       .pw-toggle-btn {
         min-width: 38px;
@@ -86,6 +159,59 @@
         width: 16px;
         height: 16px;
       }
+
+      @media (min-width: 768px) {
+        .hero h1 {
+          font-size: 40px;
+        }
+
+        .hero p {
+          font-size: 18px;
+        }
+
+        .footer {
+          text-align: left;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 32px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .hero {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          text-align: left;
+          padding: 120px 40px;
+        }
+
+        .hero h1 {
+          font-size: 48px;
+        }
+
+        .hero p {
+          font-size: 20px;
+        }
+
+        .footer {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      @media (min-width: 1440px) {
+        .container {
+          max-width: 1400px;
+        }
+
+        .hero h1 {
+          font-size: 56px;
+        }
+
+        .hero p {
+          font-size: 22px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -110,18 +236,18 @@
           <input type="hidden" name="next" value="{{ request.args.get('next', '') }}">
           <div class="form-group">
             <label>Username</label>
-            <input class="form-control" name="username" autocomplete="username" required>
+            <input class="form-control" name="username" placeholder="Choose a username" title="Username" autocomplete="username" required>
             <small class="form-text text-muted">At least 3 characters.</small>
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input class="form-control" name="email" type="email" autocomplete="email" required>
+            <input class="form-control" name="email" type="email" placeholder="you@example.com" title="Email address" autocomplete="email" required>
             <small class="form-text text-muted">Used for password resets.</small>
           </div>
           <div class="form-group">
             <label>Password</label>
             <div class="password-input-container">
-              <input id="password" class="form-control" name="password" type="password" autocomplete="new-password" required>
+              <input id="password" class="form-control" name="password" type="password" placeholder="Create a password" title="Password" autocomplete="new-password" required>
               <button class="pw-toggle-btn" type="button" data-toggle-password="#password" aria-label="Show password" title="Show password"></button>
             </div>
             <small class="form-text text-muted">At least 6 characters.</small>
@@ -129,7 +255,7 @@
 
           <div class="form-group">
             <label>Profile picture (optional)</label>
-            <input class="form-control" type="file" name="avatar" accept="image/png,image/jpeg,image/webp">
+            <input class="form-control" type="file" name="avatar" title="Profile picture upload" accept="image/png,image/jpeg,image/webp">
             <small class="form-text text-muted">PNG/JPG/WEBP. If you skip this, we’ll use the first letter of your username.</small>
           </div>
 
@@ -175,5 +301,7 @@
         });
       })();
     </script>
+
+    {% include '_site_footer.html' %}
   </body>
 </html>

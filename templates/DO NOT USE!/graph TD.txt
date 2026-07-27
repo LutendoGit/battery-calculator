@@ -1,0 +1,11 @@
+graph TD
+    A[Solar Panels<br/>306 kW] --> B[MPPT Controllers<br/>300 kW]
+    B --> C[Battery Bank<br/>2MW LiFePO4]
+    C --> D[Inverters<br/>300 kW 3-Phase]
+    D --> E[Main Distribution Panel<br/>Powers Rooms & Common Areas]
+    E --> F[120 Rooms<br/>(Stoves/Heaters/etc.)]
+    E --> G[Downlights<br/>Building-Wide]
+    H[Dedicated Solar Sub-Array<br/>2-3 kW] --> I[DC Pump Controller] --> J[Borehole Pump<br/>1 kW]
+    J --> K[Water Tanks/Supply<br/>To Building]
+    C -.-> I[Backup Power for Pump]
+    

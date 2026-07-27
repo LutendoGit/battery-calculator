@@ -14,8 +14,8 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #ffffff;
-            color: #333;
+            background: #666868;
+            color: black;
             min-height: 100vh;
             padding: 0;
         }
@@ -27,27 +27,28 @@
             min-height: 100vh;
             display: grid;
             grid-template-rows: auto 1fr auto;
-            background: #ffffff;
+            background: #666868;
         }
         
         header {
-            background: white;
+            background: #666868;
             padding: 20px;
             border-radius: 0;
             margin-bottom: 0;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-            border-bottom: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+            border-bottom: 1px solid rgba(255,255,255,0.18);
+            color: white;
         }
         
         h1 {
-            color: #667eea;
+            color: white;
             margin-bottom: 10px;
         }
         
         .lesson-stage {
             padding: 20px;
             min-height: 0;
-            background: #ffffff;
+            background: #666868;
         }
 
         .step-card {
@@ -57,11 +58,14 @@
         
         .card {
             background: white;
+            color: #333;
+            
             border-radius: 8px;
             padding: 25px;
             border: 1px solid rgba(0,0,0,0.08);
             box-shadow: 0 1px 6px rgba(0,0,0,0.06);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
+            font-size: 15px;
         }
         
         .card:hover {
@@ -70,24 +74,37 @@
         }
         
         .card h2 {
-            color: #667eea;
+            color: black;
             margin-bottom: 15px;
-            font-size: 1.5em;
-            border-bottom: 3px solid #667eea;
+            font-size: 18px;
+            border-bottom: 3px #7f3636 solid;
             padding-bottom: 10px;
         }
         
         .card ul, .card ol {
             margin-left: 20px;
-            line-height: 1.8;
+            margin-top: 10px;
+            margin-bottom: 28px;
+            padding-left: 22px;
+            line-height: 1.5;
         }
         
         .card li {
-            margin-bottom: 10px;
+            margin-bottom: 1.5px;
+            font-size: 20px;
+        }
+
+        .card ul + p,
+        .card ol + p,
+        .card ul + .content-image,
+        .card ol + .content-image,
+        .card ul + .highlight-box,
+        .card ol + .highlight-box {
+            margin-top: 10px;
         }
         
         .card li strong {
-            color: #667eea;
+            color: black;
         }
         
         .icon {
@@ -97,8 +114,8 @@
         
         .badge {
             display: inline-block;
-            background: #667eea;
-            color: white;
+            background: #7f3636;
+            color: #fff;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.85em;
@@ -106,11 +123,22 @@
         }
         
         .highlight-box {
-            background: #f0f4ff;
-            border-left: 4px solid #667eea;
+            background: white;
+            border-left: 4px solid #A0615F;
             padding: 15px;
             margin: 15px 0;
             border-radius: 4px;
+            color: #333;
+            font-size: 1.12em;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .formula-highlight {
+            display: inline-block;
+            font-size: 1.45em;
+            font-weight: 800;
+            color: #A0615F;
         }
         
         .comparison-table {
@@ -128,7 +156,7 @@
         }
         
         .comparison-table th {
-            background-color: #667eea;
+            background-color: #A0615F;
             color: white;
             font-weight: bold;
         }
@@ -138,7 +166,7 @@
         }
 
         .installer-example {
-            background: rgba(144, 238, 175, 0.25);
+            background: #CBCBCB;
             border: none;
             border-radius: 8px;
             padding: 14px;
@@ -186,27 +214,60 @@
         }
 
         .text-block p {
-            margin: 10px 0;
-            line-height: 1.7;
-            color: #444;
+            margin: 20px 0;
+            line-height: 1.1;
+            color: black;
+            font-size: 20px;
+        }
+
+        .text-block .underline-text {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .text-block .normal-weight {
+            font-weight: 400;
         }
 
         .text-block h3 {
-            color: #667eea;
-            margin-top: 18px;
-            margin-bottom: 8px;
+            color: black;
+            margin-top: 38px;
+            margin-bottom: 18px;
+            font-size: 20px;
         }
 
         .text-block h4 {
-            color: #667eea;
-            margin-top: 14px;
-            margin-bottom: 6px;
+            color: black;
+            margin-top: 38px;
+            margin-bottom: 18px;
             font-size: 1.05em;
+            font-size: 22px;
+        }
+
+        .section-1-8 .text-block h3,
+        .section-1-8 .text-block h4 {
+            margin-top: 44px;
+        }
+
+        .section-1-8 .content-image {
+            margin-top: 32px;
+            margin-bottom: 32px;
+        }
+
+        .text-block .content-image,
+        .text-block .example-image {
+            margin-top: 24px;
+            margin-bottom: 28px;
+        }
+
+        .page-break-section {
+            page-break-before: always;
+            break-before: page;
         }
 
         .pre {
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
+            background: #CBCBCB;
+            border: 1px white;
             border-radius: 6px;
             padding: 12px;
             white-space: pre-wrap;
@@ -224,7 +285,7 @@
         
         .nav-links a {
             display: inline-block;
-            background: #667eea;
+            background: #7f3636;
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
@@ -233,13 +294,14 @@
         }
         
         .nav-links a:hover {
-            background: #764ba2;
+            background: #7f3636;
         }
 
         .pager {
-            background: #ffffff;
-            border-top: 1px solid rgba(0,0,0,0.08);
-            padding: 12px 20px;
+            background: #666868;
+            border-top: 1px  white;
+            border-bottom: 1px  white;
+            padding: 18px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -247,13 +309,15 @@
         }
 
         .pager .btn {
-            background: #667eea;
+            background: #A0615F;
             color: white;
             padding: 10px 16px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.95em;
+            min-width: 90px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.12);
         }
 
         .pager .btn[disabled] {
@@ -269,7 +333,7 @@
         }
 
         .pager a {
-            color: #667eea;
+            color: #ffffff;
             text-decoration: none;
             font-weight: 600;
         }
@@ -279,7 +343,7 @@
         }
 
         .pager .meta {
-            color: #555;
+            color: #666868;
             font-size: 0.95em;
         }
 
@@ -299,7 +363,7 @@
 
         .header-actions a {
             display: inline-block;
-            background: #667eea;
+            background: #A0615F;
             color: white;
             padding: 8px 12px;
             border-radius: 6px;
@@ -309,7 +373,7 @@
         }
 
         .header-actions a:hover {
-            background: #764ba2;
+            background: #8B5352;
         }
 
         .avatar {
@@ -317,13 +381,13 @@
             height: 32px;
             border-radius: 999px;
             border: none;
-            background: rgba(102, 126, 234, 0.12);
+            background: #7f3636;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             font-weight: 900;
-            color: #667eea;
+            color: white;
             text-transform: uppercase;
         }
 
@@ -353,7 +417,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: #7f3636;
             z-index: 9999;
             justify-content: center;
             align-items: center;
@@ -393,6 +457,7 @@
             height: auto;
             object-fit: contain;
             cursor: zoom-out;
+            -webkit-user-select: none;
             user-select: none;
             transition: transform 0.2s ease;
         }
@@ -402,7 +467,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
+            background: #7f3636;
             border-radius: 8px;
             padding: 12px 16px;
             display: flex;
@@ -412,7 +477,7 @@
         }
 
         .image-viewer-btn {
-            background: #667eea;
+            background: #A0615F;
             color: white;
             border: none;
             padding: 8px 14px;
@@ -427,7 +492,7 @@
         }
 
         .image-viewer-btn:hover {
-            background: #764ba2;
+            background: #8B5352;
         }
 
         .image-viewer-btn:disabled {
@@ -448,7 +513,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #CBCBCB;
             color: white;
             border: 2px solid white;
             width: 40px;
@@ -482,12 +547,14 @@
         .site-footer {
             width: 100%;
             margin-top: 30px;
-            background: transparent;
-            color: rgba(255,255,255,0.85);
+            background: #666868;
+            color: rgba(255,255,255,0.95);
             text-align: center;
             padding: 28px 20px 20px;
             font-size: 0.85em;
             line-height: 1.6;
+            border-top: 1px solid #7f3636;
+            
         }
 
         .site-footer .footer-brand {
@@ -526,9 +593,14 @@
         <header>
             <div class="header-row">
                 <div>
-                    <h1>⚡ {{ content.module_title }}</h1>
-                    <p style="margin-bottom: 6px;">{{ content.module_subtitle }}</p>
-                    <div class="meta"><strong data-lesson-title>Contents</strong> · <span data-lesson-counter>1 / {{ content.sections|length + 1 }}</span></div>
+                    <h1>{{ content.module_title|replace('🔋','')|replace('⚡','')|replace('💡','')|replace('🔌','')|trim }}</h1>
+                    {% if content.module_title and ('MODULE 4' in content.module_title or 'MODULE 5' in content.module_title) %}
+                        {% if content.module_subtitle %}
+                            <div style="margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95em; font-weight: 500;">
+                                {{ content.module_subtitle }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 </div>
                 {% if session.get('edu_user_id') %}
                 <div class="header-actions">
@@ -581,28 +653,246 @@
 
                     {% if block.heading %}
                         {% if level == 3 %}
-                            <h3>{{ block.heading }}</h3>
+                            {% set heading_text = block.heading|markdown_to_html %}
+                            {% if block.heading and 'AC (Alternating Current)' in block.heading and block.paragraphs and block.heading == '🔌 AC (Alternating Current)' %}
+                                <h3 style="font-weight: 700;">
+                                    🔌 <span style="font-weight: 700;">AC (Alternating Current)</span>
+                                    <span style="display: block; font-weight: 400; margin-top: 4px;">{{ block.paragraphs[0] }}</span>
+                                </h3>
+                            {% elif block.heading and 'DC (Direct Current)' in block.heading and block.paragraphs and block.heading == '🔋 DC (Direct Current)' %}
+                                <h3 style="font-weight: 700;">
+                                    🔋 <span style="font-weight: 700;">DC (Direct Current)</span>
+                                    <span style="display: block; font-weight: 400; margin-top: 4px;">{{ block.paragraphs[0] }}</span>
+                                </h3>
+                            {% else %}
+                                <h3 style="font-weight: 700;">{{ heading_text }}</h3>
+                            {% endif %}
                         {% else %}
-                            <h4>{{ block.heading }}</h4>
+                            {% set heading_text = block.heading|markdown_to_html %}
+                            {% if block.heading and 'AC (Alternating Current)' in block.heading and block.paragraphs and block.heading == '🔌 AC (Alternating Current)' %}
+                                <h4 style="font-weight: 700; margin-bottom: 10px;">
+                                    🔌 <span style="font-weight: 700;">AC (Alternating Current)</span>
+                                    <span style="display: block; font-weight: 400; margin-top: 4px;">{{ block.paragraphs[0] }}</span>
+                                </h4>
+                            {% elif block.heading and 'DC (Direct Current)' in block.heading and block.paragraphs and block.heading == '🔋 DC (Direct Current)' %}
+                                <h4 style="font-weight: 700; margin-bottom: 10px;">
+                                    🔋 <span style="font-weight: 700;">DC (Direct Current)</span>
+                                    <span style="display: block; font-weight: 400; margin-top: 4px;">{{ block.paragraphs[0] }}</span>
+                                </h4>
+                            {% else %}
+                                <h4 style="font-weight: 700; margin-bottom: 10px;">{{ heading_text }}</h4>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
 
-                    {% if block.paragraphs %}
-                        {% for p in block.paragraphs %}
-                            <p>{{ p }}</p>
+                    {% set paragraph_items = block.paragraphs or [] %}
+                    {% if block.paragraph %}
+                        {% set paragraph_items = block.paragraph %}
+                    {% endif %}
+
+                    {% if paragraph_items %}
+                        {% for p in paragraph_items %}
+                            {% if (block.heading == '🔌 AC (Alternating Current)' or block.heading == '🔋 DC (Direct Current)') and loop.index0 == 0 %}
+                                {# skip the first paragraph because it is already rendered inline above #}
+                            {% else %}
+                                {% set p_formatted = p %}
+                                {% if block.title == '3.9 Key Battery Concepts Installers Must Know' %}
+                                    {% set p_formatted = p_formatted|replace('how the battery is used, how it is monitored, how efficiently it stores and delivers energy, and how long it is likely to last', '**how the battery is used, how it is monitored, how efficiently it stores and delivers energy, and how long it is likely to last**') %}
+                                {% endif %}
+                                <p{% if block.title == '3.3 What the Battery Actually Does in the System' and 'in practical terms:' in (p|trim|lower) %} class="underline-text"{% endif %}>{{ p_formatted|markdown_to_html }}</p>
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
 
                     {% if block.highlights %}
                         {% for h in block.highlights %}
-                            <div class="highlight-box"><strong>{{ h }}</strong></div>
+                            <div class="highlight-box"><strong>{{ h|markdown_to_html }}</strong></div>
                         {% endfor %}
                     {% endif %}
 
                     {% if block.bullets %}
                         <ul>
                             {% for b in block.bullets %}
-                            <li>{{ b }}</li>
+                            {% set b_formatted = b|replace('In series', '**In series**')|replace('In parallel', '**In parallel**') %}
+                            {% if block.title == '3.8 What Is C-Rate?' and (b.startswith('1C Explained') or b.startswith('0.5C Explained')) %}
+                                {% set b_formatted = '**' ~ b_formatted.split(' = ', 1)[0] ~ '** = ' ~ b_formatted.split(' = ', 1)[1] %}
+                            {% endif %}
+                            <li>{{ b_formatted|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.paragraphs_after %}
+                        {% for p in block.paragraphs_after %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_after %}
+                        <ul>
+                            {% for b in block.bullets_after %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.paragraphs_before %}
+                        {% for p in block.paragraphs_before %}
+                            <p{% if 'examples of revov cell configuration' in (p|trim|lower) %} class="underline-text"{% endif %}>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_before %}
+                        <ul>
+                            {% for b in block.bullets_before %}
+                            {% set b_formatted = b|replace('R100 Battery', '**R100 Battery**')|replace('R200 Battery', '**R200 Battery**')|replace('C8 Module', '**C8 Module**') %}
+                            <li>{{ b_formatted|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.paragraphs_under %}
+                        {% for p in block.paragraphs_under %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_under %}
+                        <ul>
+                            {% for b in block.bullets_under %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.images %}
+                        {% for img in block.images %}
+                            {% if is_installer_example %}
+                                <img class="example-image" src="{{ url_for('static', filename=img.src) }}" alt="{{ img.alt }}">
+                            {% else %}
+                                <div style="margin-top: 20px;"></div>
+                                <img class="content-image" src="{{ url_for('static', filename=img.src) }}" alt="{{ img.alt }}">
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if is_installer_example and block.image %}
+                        <img class="example-image" src="{{ url_for('static', filename=block.image.src) }}" alt="{{ block.image.alt }}">
+                    {% endif %}
+
+                    {% if (not is_installer_example) and block.image %}
+                        <img class="content-image" src="{{ url_for('static', filename=block.image.src) }}" alt="{{ block.image.alt }}">
+                    {% endif %}
+
+                    {% if block.paragraphs_step2 %}
+                        {% for p in block.paragraphs_step2 %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_step2 %}
+                        <ul>
+                            {% for b in block.bullets_step2 %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.paragraphs_step3 %}
+                        {% for p in block.paragraphs_step3 %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_step3 %}
+                        <ul>
+                            {% for b in block.bullets_step3 %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.paragraphs_step3_extra %}
+                        {% for p in block.paragraphs_step3_extra %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_step3_extra %}
+                        <ul>
+                            {% for b in block.bullets_step3_extra %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.paragraphs_step3_final %}
+                        {% for p in block.paragraphs_step3_final %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_communication %}
+                        <ul>
+                            {% for b in block.bullets_communication %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.paragraphs_communication %}
+                        {% for p in block.paragraphs_communication %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.paragraphs_middle %}
+                        {% for p in block.paragraphs_middle %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.paragraphs_mid %}
+                        {% for p in block.paragraphs_mid %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.description_bullets %}
+                        {% for group in block.description_bullets %}
+                            <div style="margin: 12px 0 16px; padding: 12px 14px; background: whitesmoke; border-left: 4px solid #7f3636; border-radius: 6px;">
+                                {% if group.condition %}
+                                    <p style="margin: 0 0 8px; font-weight: 700;">{{ group.condition|markdown_to_html }}</p>
+                                {% endif %}
+                                {% if group.get('items') %}
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        {% for item in group.get('items') %}
+                                            <li>{{ item|markdown_to_html }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_middle %}
+                        <ul>
+                            {% for b in block.bullets_middle %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.paragraphs_section %}
+                        {% for p in block.paragraphs_section %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_final %}
+                        <ul>
+                            {% for b in block.bullets_final %}
+                            <li>{{ b|markdown_to_html }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
@@ -618,7 +908,7 @@
                     {% if block.notes %}
                         <ul>
                             {% for n in block.notes %}
-                            <li><strong>Note:</strong> {{ n }}</li>
+                            <li><strong>Note:</strong> {{ n|markdown_to_html }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
@@ -631,33 +921,115 @@
                         {{ render_table(block.table) }}
                     {% endif %}
 
-                    {% if block.paragraphs_after %}
-                        {% for p in block.paragraphs_after %}
-                            <p>{{ p }}</p>
+                    {% if block.lifepo4_heading %}
+                        <h3>{{ block.lifepo4_heading }}</h3>
+
+                        {% if block.lifepo4_intro %}
+                            {% for p in block.lifepo4_intro %}
+                                <p>{{ p|markdown_to_html }}</p>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if block.lifepo4_comparison_image %}
+                            <img class="content-image" src="{{ url_for('static', filename=block.lifepo4_comparison_image.src) }}" alt="{{ block.lifepo4_comparison_image.alt }}">
+                        {% endif %}
+
+                        {% if block.lifepo4_comparison_caption %}
+                            <p>{{ block.lifepo4_comparison_caption|markdown_to_html }}</p>
+                        {% endif %}
+
+                        {% if block.lifepo4_advantages_title %}
+                            <h4>{{ block.lifepo4_advantages_title }}</h4>
+                        {% endif %}
+
+                        {% if block.lifepo4_advantages %}
+                            {% for item in block.lifepo4_advantages %}
+                                <p>• {{ item|markdown_to_html }}</p>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if block.lifepo4_summary %}
+                            {% for p in block.lifepo4_summary %}
+                                {% if p.startswith('Remember:') %}
+                                    <p><strong>Remember:</strong>{{ p[9:]|markdown_to_html }}</p>
+                                {% else %}
+                                    <p>{{ p|markdown_to_html }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    {% if block.paragraphs_footer %}
+                        {% for p in block.paragraphs_footer %}
+                            <p>{{ p|markdown_to_html }}</p>
                         {% endfor %}
                     {% endif %}
 
-                    {% if is_installer_example and block.image %}
-                        <img class="example-image" src="{{ url_for('static', filename=block.image.src) }}" alt="{{ block.image.alt }}">
+                    {% if block.bullets_footer %}
+                        <ul>
+                            {% for b in block.bullets_footer %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
 
-                    {% if (not is_installer_example) and block.image %}
-                        <img class="content-image" src="{{ url_for('static', filename=block.image.src) }}" alt="{{ block.image.alt }}">
-                    {% endif %}
-
-                    {% if block.images %}
-                        {% for img in block.images %}
-                            {% if is_installer_example %}
-                                <img class="example-image" src="{{ url_for('static', filename=img.src) }}" alt="{{ img.alt }}">
-                            {% else %}
-                                <img class="content-image" src="{{ url_for('static', filename=img.src) }}" alt="{{ img.alt }}">
-                            {% endif %}
+                    {% if block.paragraphs_extra or block.get('paragraphs_Extra') %}
+                        {% for p in (block.paragraphs_extra or block.get('paragraphs_Extra')) %}
+                            <p>{{ p|markdown_to_html }}</p>
                         {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_extra or block.get('bullets_Extra') %}
+                        <ul>
+                            {% for b in (block.bullets_extra or block.get('bullets_Extra')) %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.paragraphs_end or block.get('paragraphs_End') %}
+                        {% for p in (block.paragraphs_end or block.get('paragraphs_End')) %}
+                            <p>{{ p|markdown_to_html }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if block.bullets_end or block.get('bullets_End') %}
+                        <ul>
+                            {% for b in (block.bullets_end or block.get('bullets_End')) %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.bullets_extra2 %}
+                        <ul>
+                            {% for b in block.bullets_extra2 %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.bullets_extra3 %}
+                        <ul>
+                            {% for b in block.bullets_extra3 %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {% if block.bullets_extra4 %}
+                        <ul>
+                            {% for b in block.bullets_extra4 %}
+                            <li>{{ b|markdown_to_html }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
 
                     {% if block.subsections %}
                         {% for sub in block.subsections %}
-                            {{ render_block(sub, level=4) }}
+                            <div>
+                                {{ render_block(sub, level=4) }}
+                            </div>
                         {% endfor %}
                     {% endif %}
 
@@ -668,7 +1040,8 @@
             {%- endmacro %}
 
             {% for section in content.sections %}
-            <section data-lesson-step data-step-title="{{ section.title }}">
+            {% if section.title and section.title|trim|lower != 'contents' %}
+            <section data-lesson-step data-step-title="{{ section.title }}" class="{% if section.page_break %}page-break-section {% endif %}{% if section.title and '1.8' in section.title %}section-1-8{% endif %}">
                 <div class="card step-card">
                     {% if section.icon %}
                         <div class="icon">{{ section.icon }}</div>
@@ -713,6 +1086,7 @@
                     {{ render_block(section, level=3) }}
                 </div>
             </section>
+            {% endif %}
             {% endfor %}
 
             {% if continue_card %}

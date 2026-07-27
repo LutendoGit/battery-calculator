@@ -93,7 +93,7 @@ class LithiumBatteryFundamentals:
                 "paragraphs": [
                     "Before you start working with systems, it's important to understand the \"language\" of energy storage. This module lays the foundation for everything that follows — from system design to installation and troubleshooting.",
                     "Think of this as your baseline knowledge. If you understand this module well, the rest of the training becomes much easier and far more practical.",
-                    "By the end of this module, you will be able to:",
+                    "<br><strong>By the end of this module, you will be able to:</strong>",
                 ],
                 "bullets": [
                     "Explain why energy storage is critical in South Africa",
@@ -112,8 +112,10 @@ class LithiumBatteryFundamentals:
                 "paragraphs": [
                     "To understand why battery systems are growing so fast, you need to look at the real conditions on the ground. In South Africa, electricity supply is not always stable or predictable, and this directly affects daily life and business operations.",
                     "Loadshedding, voltage instability, and rising electricity costs have changed the way people think about power. Energy is no longer something you simply \"use\" — it's something you need to manage, control, and protect.",
+                    "",
                     "Battery storage solves real problems:",
                 ],
+               
                 "bullets": [
                     "It keeps essential systems running during outages",
                     "It protects equipment from unstable supply",
@@ -140,7 +142,8 @@ class LithiumBatteryFundamentals:
                 "paragraphs": [
                     "This is one of the most important concepts you will learn as an installer. Many system design mistakes happen because this is misunderstood.",
                     "Power and energy are related, but they are not the same — and each one plays a different role in system design.",
-                    "Power (kW) — What is happening right now",
+                    "",
+                    "<br><u><strong>Power (kW) — What is happening right now</strong></u>",
                     "Power tells you how much electricity is being used at a specific moment.",
                     "If too many appliances run at the same time and exceed the inverter capacity, the system will trip or shut down.",
                     "Think of power like the width of a water pipe – how much water can flow at one moment.",
@@ -162,8 +165,9 @@ class LithiumBatteryFundamentals:
                 ],
                 "subsections": [
                     {
-                        "heading": "Energy (kWh) — What happens over time",
+                        "heading": "",
                         "paragraphs": [
+                            "<br><u><strong>Energy (kWh) —What happens over time</strong></u>",
                             "Energy tells you how much electricity is used over a period of time. Even small loads can drain a battery if they run long enough.",
                             "Think of energy like the size of a water tank – how much water you have stored.",
                             "A 10 kWh REVOV battery can supply",
@@ -217,7 +221,7 @@ class LithiumBatteryFundamentals:
                             "Basic plug loads",
                         ],
                         "paragraphs_after": [
-                            "This gives you your total power requirement (kW)",
+                            "This gives you your <strong>total power requirement (kW)</strong>",
                         ],
                         "images": [
                         {
@@ -245,7 +249,7 @@ class LithiumBatteryFundamentals:
                             "Multiply load by time:",
                         ],
                         "highlights": [
-                            "Load (kW) × Hours = Battery Size (kWh)",
+                            "<span class=\"formula-highlight\">Load (kW) × Hours = Battery Size (kWh)</span>",
                         
                         ],
                         "images" :[
@@ -279,15 +283,21 @@ class LithiumBatteryFundamentals:
                 "paragraphs": [
                     "Every system you install will contain both AC and DC electricity. Understanding how these interact is essential for installation, configuration, and troubleshooting.",
                     "These are not just technical terms — they represent two completely different electrical environments.",
-                    "🔌 AC (Alternating Current) - AC is the electricity used by most homes and businesses. It",
                 ],
-                "bullets": [
-                    "Comes from Eskom/grid",
-                    "Powers household plugs and appliances",
-                    "Must comply with electrical standards",
-                ],
-                
                 "subsections": [
+                    {
+                        "heading": "🔌 AC (Alternating Current)",
+                        "paragraphs": [
+                            "AC is the electricity used by most homes and businesses. It",
+                            "Key Characteristics:",
+                        ],
+                        "bullets": [
+                            "Supplied by Eskom/grid",
+                            "Powers household plugs, lighting, and appliances",
+                            "Operates at 230V/50Hz in most South African installations",
+                            "Must comply with electrical standards",
+                        ],
+                    },
                     {
                         "heading": "🔋 DC (Direct Current)",
                         "paragraphs": [
@@ -306,9 +316,8 @@ class LithiumBatteryFundamentals:
                         ],
                     },
                     {
-                        
                         "paragraphs": [
-                            "This is why the inverter is essential. The Inverter's connects these two worlds. It doesn't just convert power — it manages:",
+                            "This is why the inverter is essential. The inverter connects these two worlds. It doesn't just convert power — it manages:",
                         ],
                         "bullets": [
                             "Energy flow",
@@ -344,7 +353,7 @@ class LithiumBatteryFundamentals:
                     {
                         "heading": "PV Array — Generation",
                         "paragraphs": [
-                            "Function: Converts sunlight into direct current (DC) electricity.",
+                            "<strong>Function: Converts sunlight into direct current (DC) electricity.</strong>",
                             "Key Points:",
                         ],
                         "bullets": [
@@ -356,7 +365,7 @@ class LithiumBatteryFundamentals:
                     {
                         "heading": "Battery Bank — Storage",
                         "paragraphs": [
-                            "Function: Stores electrical energy for later use.",
+                            "<strong>Function: Stores electrical energy for later use.</strong>",
                             "Key Points:",
                         ],
                         "bullets": [
@@ -368,19 +377,21 @@ class LithiumBatteryFundamentals:
                     {
                         "heading": "Inverter — Conversion & Control",
                         "paragraphs": [
-                            "Function: Converts DC power from PV or batteries into AC power for use by appliances and the grid.",
-                            "Key Points:",
+                            "<strong>Function: Converts DC power from PV or batteries into AC power for use by appliances and the grid.</strong>",
+                            "Role: Acts as the system's power electronics and control centre, providing protection, monitoring, and management features required for safe, efficient operation."
                         ],
                         "bullets": [
-                            "Acts as the system's control hub, balancing energy flow between PV, battery, and loads.",
-                            "Types include string, hybrid, and off-grid inverters.",
-                            "Modern inverters also manage data monitoring, safety isolation, and firmware control.",
+                            "Manages charging and discharging priorities between PV, battery, and loads",
+                            "Provides essential protections (anti-islanding, overcurrent, thermal) and isolation",
+                            "Available types: string inverters, hybrid inverter-chargers, and off-grid inverter systems",
+                            "Includes data monitoring, logging, firmware updates, and remote management in modern models",
+                            "Selection affects cable sizing, protection devices, and integration complexity"
                         ],
                     },
                     {
                         "heading": "Load — Energy Consumption",
                         "paragraphs": [
-                            "Function: Represents devices and appliances that consume electrical power.",
+                            "<strong>Function: Represents devices and appliances that consume electrical power.</strong>",
                             "Key Points:",
                         ],
                         "bullets": [
@@ -392,7 +403,7 @@ class LithiumBatteryFundamentals:
                     {
                         "heading": "Grid / Generator",
                         "paragraphs": [
-                            "Function: Provides supplemental or backup power when solar or battery capacity is insufficient.",
+                            "<strong>Function: Provides supplemental or backup power when solar or battery capacity is insufficient.</strong>",
                             "Key Points:",
                         ],
                         "bullets": [
@@ -414,7 +425,7 @@ class LithiumBatteryFundamentals:
                 "paragraphs": [
                     "At this stage, it's important to keep things simple and focus on function rather than internal design.",
                     "The battery acts as the system's energy reserve. It allows energy to be stored when available and used when needed.",
-                    "This changes how energy is used:",
+                    "<br><strong>This changes how energy is used:</strong>",
                 ],
                 "bullets": [
                     "Solar energy is no longer limited to daylight",
@@ -427,7 +438,7 @@ class LithiumBatteryFundamentals:
                                 "alt": "images/Tip battery gives the system flex.png",
                             },
                         ],
-                "paragraphs_after": [
+                "paragraphs_footer": [
                     "We will break down exactly how lithium batteries work, how cells behave, and how battery performance is managed in Module 3.",
                 ],
             },
@@ -446,6 +457,9 @@ class LithiumBatteryFundamentals:
                 "subsections": [
                     {
                         "heading": "Backup System (No Solar)",
+                        "paragraphs": [
+                            "A backup system stores energy in batteries and uses an inverter to supply power during outages or when needed.",
+                        ],
                         "images": [
                             {
                                 "src": "images/Backup System.png",
@@ -455,6 +469,9 @@ class LithiumBatteryFundamentals:
                     },
                     {
                         "heading": "Grid-Tied Solar (No Batteries)",
+                        "paragraphs": [
+                            "A grid-tied solar system generates electricity from solar panels and feeds it directly to the grid to power your home or business.",
+                        ],
                         "images": [
                             {
                                 "src": "images/Grid-tied solar Sytem.png",  
@@ -464,6 +481,9 @@ class LithiumBatteryFundamentals:
                     },
                     {
                         "heading": "Hybrid System (Solar + Battery + Grid)",
+                        "paragraphs": [
+                            "A hybrid system uses solar panels, batteries, and the grid together to provide reliable, efficient power day and night.",
+                        ],
                         "images": [
                             {
                                 "src": "images/Hybrid Solar System.png",
@@ -473,6 +493,9 @@ class LithiumBatteryFundamentals:
                     },
                     {
                         "heading": "Fully Off-Grid System",
+                        "paragraphs": [
+                            "A fully off-grid solar system generates and stores all the energy you need, completely independent of the utility grid.",
+                        ],
                         "images": [
                             {
                                 "src": "images/Fully OFF-GRID.png",
@@ -539,12 +562,9 @@ class LithiumBatteryFundamentals:
                 "subsections": [
                     {
                         "heading": "How to Minimise Losses",
-                        "numbered": [
-                            "Correct Cable Sizing",
-                            "Shorter Cable Runs",
-                            "High-Quality Components",
-                            "System Design Optimisation",
-                            "Regular Maintenance",
+                        "paragraphs": [
+                            "<br>While some system losses are unavoidable, a well-designed and professionally installed system can significantly reduce unnecessary energy losses. As an installer, many of the factors that affect efficiency are within your control. Correct cable sizing, quality workmanship, appropriate component selection, and ongoing maintenance all contribute to improved system performance, greater reliability, and better long-term energy yield.",
+                            "The following best practices will help minimise losses and ensure the system operates as efficiently as possible.",
                         ],
                         "subsections": [
                             {
@@ -601,7 +621,7 @@ class LithiumBatteryFundamentals:
                 "title": "1.11 Where REVOV Fits into these Systems",
                 "paragraphs": [
                     "REVOV batteries form the storage part of the system, and their performance depends heavily on correct installation and configuration.",
-                    "A high-quality battery will only perform well if:",
+                    "<br>A high-quality battery will only perform well if:",
                 ],
                 "bullets": [
                     "It is correctly sized",
@@ -617,11 +637,18 @@ class LithiumBatteryFundamentals:
                         "src": "images/Revov batteries Benefits.png",
                         "alt": "images/Revov batteries Benefits.png",
                     },
-                    {
+                   
+                ],
+            },
+            {
+              "title": "Wrapping Up Module 1",
+              "page_break": True,
+              "images": [
+                   {
                         "src": "images/wrapping up module 1.png",
                         "alt": "images/wrapping up module 1.png",
                     },
-                ],
+              ],
             },
 
            
@@ -889,19 +916,7 @@ class LithiumBatteryFundamentals:
     "module_title": "MODULE 2 – Electrical Fundamentals",
     "module_subtitle": "Electrical basics needed to wire safely, size correctly, and troubleshoot faster.",
     "sections": [
-        {
-            "title": "Contents",
-            "bullets": [
-                "2.1 Module 2 Learning Outcomes",
-                "2.2 The Core Electrical Terms You Must Be Comfortable With",
-                "2.3 AC vs DC in Practice",
-                "2.4 Series & Parallel Connections Explained",
-                "2.5 Electrical Components",
-                "2.6 Earthing & Bonding — The Safety Backbone",
-                "2.7 Electrical Safety — Non-Negotiable Rules",
-                "2.8 Practical Installer Examples (What Can Go Wrong + How to Fix It)",
-            ],
-        },
+       
         {
             "title": "2.1 Module 2 Learning Outcomes",
             "paragraphs": [
@@ -920,11 +935,16 @@ class LithiumBatteryFundamentals:
         {
             "title": "2.2 The Core Electrical Terms You Must Be Comfortable With",
             "paragraphs": [
-                "These are the terms you will use every day when sizing, wiring, testing and fault finding.",
+                "These are the terms you will use every day when sizing, wiring, testing, commissioning, and fault-finding energy systems.",
+                "Understanding what each term means—and how they relate to one another is essential for designing safe, efficient, and reliable installations. ",
+                "Before we look at more advanced concepts, let's first understand the five fundamental electrical principles that form the foundation of every battery and solar system.",
             ],
             "subsections": [
                 {
                     "heading": "Voltage (V) — “Electrical Pressure”",
+                    "paragraphs": [
+                        "Voltage is the electrical pressure that drives electricity through a system.",
+                    ],
                     "images": [
                         {
                             "src": "images/Voltage v electrical pressure.png",
@@ -935,6 +955,9 @@ class LithiumBatteryFundamentals:
                 },
                 {
                     "heading": "Current (A) — “How Much is Flowing”",
+                    "paragraphs": [
+                        "Current is the amount of electricity flowing through a conductor.",
+                    ],
                     "images": [
                         {
                             "src": "images/Current A.png",
@@ -944,6 +967,9 @@ class LithiumBatteryFundamentals:
                 },
                 {
                     "heading": "Resistance (Ω) — “Opposition to Flow”",
+                    "paragraphs": [
+                        "Resistance is anything that restricts or opposes the flow of energy."
+                    ],
                     "images": [
                         {
                             "src": "images/resistance oms.png",
@@ -954,6 +980,9 @@ class LithiumBatteryFundamentals:
                 },
                 {
                     "heading": "Power (W / kW) — “How Fast Energy is Used”",
+                    "paragraphs": [
+                        "Power is how much electricity is being used or supplied at a specific moment.",
+                    ],
                     "images": [
                         {
                             "src": "images/Power w,kw.png",
@@ -964,16 +993,40 @@ class LithiumBatteryFundamentals:
                 },
                 {
                     "heading": "Energy (Wh / kWh) — “Power Over Time”",
+                    "paragraphs": [
+                        "Energy is the total amount of electricity used or stored over a period of time ."
+                    ],
                     "images": [
                         {
                             "src": "images/energy wh,kwh.png",
                             "alt": "images/energy wh,kwh.png",
                         },
-                         {
-                            "src": "images/Electrical Fundamental.png",
-                            "alt": "images/Electrical Fundamental.png",
+                    ],
+                    "paragraphs_footer": [
+                        "**Summary:**",
+                        "",
+                        "Understanding the relationship between voltage, current, resistance, power, and energy is essential for correctly sizing systems, selecting equipment, troubleshooting faults, and ensuring safe operation.",
+                        "",
+                        "<strong>Remember:</strong>",
+                        "",
+                        "**Power (kW) = what is happening right now**",
+                        "",
+                        "**Energy (kWh) = what happens over time**",
+                        "",
+                        "The summary below provides a quick-reference guide to the key electrical terms.",
+                    ],
+                    "subsections": [
+                        {
+                            "images": [
+                                {
+                                    "src": "images/Electrical Fundamental.png",
+                                    "alt": "images/Electrical Fundamental.png",
+                                },
+                            ],
                         },
                     ],
+                        
+                    
                     
                 },
             ],
@@ -982,31 +1035,27 @@ class LithiumBatteryFundamentals:
             "title": "2.3 AC vs DC in Practice",
             "paragraphs": [
                 "This section explains what AC and DC do in the system, why they behave differently, and what that means for wiring, protection and fault finding.",
+                "In every system, you’re dealing with two completely different electrical environments:",
             ],
             "subsections": [
+
                 {
-                    "heading": "In every system",
+                    "heading": "",
                     "paragraphs": [
-                        "You’re dealing with two completely different electrical environments:",
+                        "<strong>🔌 AC (Alternating Current):</strong>Household power and comes from Eskom or generator.",
                     ],
                 },
                 {
-                    "heading": "🔌 AC (Alternating Current)",
+                    "heading": "",
                     "paragraphs": [
-                        "Household power and comes from Eskom or generator.",
-                    ],
-                },
-                {
-                    "heading": "🔋 DC (Direct Current)",
-                    "paragraphs": [
-                        "Comes from solar panels and batteries.",
+                        "<strong>🔋 DC (Direct Current):</strong>Comes from solar panels and batteries.",
                     ],
                 },
                 {
                     "heading": "🔋 DC (Direct Current) — “High Current, High Consequence”",
                     "paragraphs": [
                         "DC flows in one direction. Simple in theory… but in practice, it demands respect.",
-                        "In our systems, DC is used for:",
+                        "<u>In our systems, DC is used for:</u>",
                     ],
                     "bullets": [
                         "PV strings feeding the inverter",
@@ -1016,85 +1065,129 @@ class LithiumBatteryFundamentals:
                     ],
                     "subsections": [
                         {
-                            "heading": "DC does not forgive mistakes",
+                            "paragraph": ["<u>Here’s the important part, DC does not forgive mistakes.</u>"],
                             "bullets": [
                                 "Polarity matters — reverse it and you can damage equipment instantly.",
                                 "DC arcs don’t “let go” easily like AC does. If something sparks, it can keep sparking.",
                                 "High battery currents mean heat becomes a real issue if cables or lugs are undersized.",
                                 "Small mistakes (loose lug, wrong torque, bad crimp) show up quickly under load.",
                             ],
-                            "images":[
-                            {
-                                "src": "images/if system rumdomly shut.png",
-                                "alt": "images/if system rumdomly shut.png",
-                            },
-                        ],
-                        },
-                        
-                    ],
-                },
-                {
-                    "heading": "🔌 AC (Alternating Current) — Where Compliance and Stability Matter",
-                    "paragraphs": [
-                        "AC changes direction 50 times per second (50 Hz). That constant switching is what allows it to travel long distances efficiently and power homes safely.",
-                        "On your installs, AC is used for:",
-                    ],
-                    "bullets": [
-                        "Inverter output to essential loads",
-                        "Grid input",
-                        "Generator connection (where applicable)",
-                    ],
-                    "subsections": [
-                        {
-                            "heading": "AC brings a different set of considerations",
-                            "bullets": [
-                                "The inverter must match the grid’s voltage and frequency before connecting.",
-                                "Neutral and earth must be handled correctly — this is where many nuisance trips start.",
-                                "Earth leakage placement matters.",
-                                "Protection must comply with SANS wiring standards.",
-                            ],
-                            "images":[
-                            {
-                                "src": "images/if customer complains.png",
-                                "alt": "images/if customer complains.png",
-                            },
-                            ]
+                            "subsections": [
+                                {
+                                    "heading": "",
+                                    "paragraphs": [
+                                        
+                                    ],
+                                
+                                    
+                                    "images": [
+                                        {
+                                            "src": "images/if a system randomly shuts down.png",
+                                            "alt": "image of if a system randomly shuts down.png",
+                                        },
+                                    ],
+                                },
+                                {
+                                    "heading": "🔌 AC (Alternating Current) — Where Compliance and Stability Matter",
+                                    "paragraphs": [
+                                        "AC changes direction 50 times per second (50 Hz). That constant switching is what allows it to travel long distances efficiently and power homes safely."
+                                        "<br><u>On your installs, AC is used for:</u>",
+                                    ],
+                                    "bullets": [
+                                        "Inverter output to essential loads",
+                                        "Grid input",
+                                        "Generator connection (where applicable)",
+                                        
+                                    ],
 
-                        },
+                                },
+                                {
+                                    "heading": "Key Principle",
+                                    "paragraphs": [
+                                        "For the same amount of power, increasing the system voltage reduces the amount of current flowing through the system.",
+                                        "This is one of the main reasons why modern residential systems commonly use 48V battery architectures, while larger commercial and industrial systems increasingly use high-voltage (HV) battery systems."
+                                    ]
+                                },
+                                {
+                                    "heading": "Understanding the Different System Voltages",
+                                    "paragraphs": [
+                                        "Different voltage architectures are used for different applications. The choice of system voltage depends on factors such as the amount of power required, the size of the installation, installation cost, scalability, and overall system efficiency.",
+                                        "As energy demands increase, systems generally move from lower voltages to higher voltages to reduce current, improve efficiency, and simplify installation."
+                                    ],
+                                    "paragraphs_after": [
+                                         "<u>AC brings a different set of considerations:</u>",
+
+                                    ],
+                                    "bullets": [
+                                            "The inverter must match the grid’s voltage and frequency before connecting.",
+                                            "Neutral and earth must be handled correctly — this is where many nuisance trips start.",
+                                            "Earth leakage placement matters.",
+                                            "Protection must comply with SANS wiring standards."
+                                    ],
+                                    "images": [
+                                            {
+                                                "src": "images/if customers complain.png",
+                                                "alt": "image of if customers complain.png",
+                                            },
+                                ],
+                                },
+                                {
+                                    "heading": "The Inverter — The Electrical Traffic Controller",
+                                    "paragraphs": [
+                                        "The inverter is one of the most important components in any battery and solar system. While many people think its only job is to convert DC electricity into AC electricity, it actually performs a much more important role.",
+                                        "",
+                                        "The inverter sits between two completely different electrical environments:",
+                                        "",
+                                        "<br><strong>On the DC side, it receives electricity generated by the solar panels and stored in the batteries.</strong>",
+                                        "<br><strong>On the AC side, it supplies electricity to the loads and interacts with the utility grid.</strong>",
+                                    ],
+                                    "paragraphs_after": [
+                                           "The inverter continuously monitors the system and makes intelligent decisions about how energy should flow. It controls:" 
+                                    ],
+                                    "bullets_after":[
+                                            "Where power is supplied from ",
+                                            "When batteries should charge or discharge ",
+                                            "When to prioritise solar, battery, or grid power ",
+                                            "How energy is distributed to the loads ",
+                                            "When to activate protection functions to keep the system safe"
+                                    ],
+                                    "paragraphs_footer":[
+                                       "Think of the inverter as a traffic controller standing at a busy intersection. It constantly decides where electricity should come from, where it should go, and how to keep everything moving safely ",
+                                       "and efficiently. Without the inverter managing these energy pathways, the different parts of the system would not be able to work together effectively."      
+                                    ]
+
+                                },
+                                { "heading": "What This Looks Like in Real Life",
+                                    "images": [
+                                        {
+                                            "src": "images/AC,DC ROLE.png",
+                                            "alt": "image of AC,DC ROLE.png",
+                                        },
+                                    ], 
+
+                                },
+                              
+                               
+                               
+                               
+                            ],
+                    },   
                     ],
-                },
-                {
-                    "heading": "The Inverter — The Electrical Traffic Controller",
-                    "paragraphs": [
-                        "The inverter isn’t just converting power. It’s managing two completely different electrical environments at the same time.",
-                        "On one side: DC from PV and battery.",
-                        "On the other side: AC for loads and grid.",
-                    ],
-                    "bullets": [
-                        "Where power goes",
-                        "When batteries charge/discharge",
-                        "When to use grid vs solar",
-                        "When to protect the system",
-                    ],
-                },
-                {
-                    "heading": "What This Looks Like in Real Life",
-                    "images": [
-                        {
-                            "src": "images/AC,DC ROLE.png",
-                            "alt": "images/AC,DC ROLE.png",
-                        }
-                    ],
+
+
                     
                 },
+                
+              
                 {
                     "heading": "What You Should Be Checking on Site",
                     "paragraphs": [
-                        "When you’re troubleshooting, think in two halves. If you can mentally separate AC and DC while diagnosing a fault, your troubleshooting becomes much faster.",
+                        "When you’re troubleshooting, think in two halves.  If you can mentally separate AC and DC while",
+                        "diagnosing a fault, your troubleshooting becomes much faster.", 
                     ],
                     "subsections": [
                         {
-                            "heading": "DC Side Checks (heat, polarity, voltage drop, high current)",
+                            "heading": "DC is where you deal with heat, polarity, voltage drop and high current - DC Side Checks:",
                             "bullets": [
                                 "Polarity correct",
                                 "Cable size correct",
@@ -1105,7 +1198,7 @@ class LithiumBatteryFundamentals:
                             ],
                         },
                         {
-                            "heading": "AC Side Checks (compliance, synchronisation, bonding, protection)",
+                            "heading": "AC is where you deal with compliance, synchronisation, bonding and protection rules - AC Side Checks:",
                             "bullets": [
                                 "Essential and non-essential loads separated correctly",
                                 "Neutral correctly installed",
@@ -1118,6 +1211,10 @@ class LithiumBatteryFundamentals:
                                     "src": "images/TIP IF YOU SAPARATE AC AND DC MENTALLY.png",
                                     "alt": "images/TIP IF YOU SAPARATE AC AND DC MENTALLY.png",
                                 },
+                                {
+                                    "src": "images/Think like an Installer.png",
+                                    "alt": "images/Think like an Installer.png",
+                                },
                             ],
                         },
                     ],
@@ -1125,273 +1222,736 @@ class LithiumBatteryFundamentals:
             ],
         },
         {
-            "title": "2.4 Series & Parallel Connections Explained",
+            "title": "2.4 Understanding Battery System Voltage Architectures",
             "paragraphs": [
-                "One battery is often not enough for a full solar or backup system. Batteries are connected together in series or parallel when a single battery is not enough to meet the voltage or energy requirements of a system.",
-                "Sometimes you need:",
+                "As energy systems become larger and more powerful, selecting the correct system voltage ",
+                "becomes one of the most important design decisions an installer will make. The operating voltage ",
+                "of a system influences its performance, efficiency, safety, and scalability. ",
+                "Understanding why different voltage architectures are used will help you design better systems, select the correct equipment, and troubleshoot installations more effectively.",
+                "System voltage directly affects:",
             ],
             "bullets": [
-                "a higher voltage for the inverter to operate properly",
-                "more energy storage",
-                "longer backup time",
-                "the ability to run bigger appliances",
+                    "current flow ",
+                "cable size ",
+                "heat generation ",
+                "efficiency ",
+                "inverter compatibility ",
+                "battery configuration ",
+                "system cost ",
+                "installation complexity ",
+            ],
+            "paragraphs_after": [
+                "Understanding why systems operate at different voltages is an important step towards thinking like a professional installer.",
+                
             ],
             "subsections": [
                 {
-                    "heading": "Series Connection – Voltage Adds",
+                    "heading": "What Does “System Voltage” Mean?",
                     "paragraphs": [
-                        "In a series connection, the batteries are connected positive to negative like a chain.",
-                        "The voltage increases, but the storage capacity (Ah) stays the same.",
-                        "Think of it like stacking batteries end-to-end to create more push for the electrical system.",
+                        "System voltage refers to the normal operating voltage of the battery and inverter system. It ",
+                        "determines how electricity is transferred between the batteries, inverter, and other system components",
+                        "Common system voltages include:"
                     ],
                     "bullets": [
-                        "You use series when:",
-                        "the inverter needs 24V, 48V, etc.",
-                        "you need higher system voltage",
-                        "you want lower current and more efficient power transfer",
+                        "12V ",
+                        "24V ",
+                        "48V ",
+                        "High-voltage (HV) battery systems ",
                     ],
-                    "images": [
-                        {
-                            "src": "images/SERIES CONNECTION.png",
-                            "alt": "images/SERIES CONNECTION.png",
-                        },
+                    "paragraphs_after": [
+                        "The inverter and battery must always operate at compatible voltages for the system to function safely and correctly.",
+                        "Think of voltage as the electrical pressure that pushes electricity through a circuit.  The higher the voltage, the less current is required to deliver the same amount of power.",
+                        "This principle is one of the key reasons why modern battery systems increasingly operate at higher voltages.",
                     ],
                 },
                 {
-                    "heading": "Parallel Connection – Capacity Adds",
+                    "heading": "Why Current Matters So Much in Battery Systems",
                     "paragraphs": [
-                        "In a parallel connection, all positives connect together and all negatives connect together.",
-                        "The voltage stays the same, but the storage capacity increases.",
-                        "Imagine two water tanks feeding the same house. The water pressure stays the same, but there is now twice as much water available.",
+                        "While voltage is important, current is often the biggest challenge in battery installations. Most ",
+                        "installation problems are not caused by voltage itself, but by excessive current flowing through cables, connectors, and electrical equipment.",
+                        "High current can result in:",
                     ],
                     "bullets": [
-                        "You use parallel when:",
-                        "you want longer backup time",
-                        "you need more energy storage",
-                        "your inverter already works on 12V",
+                        "heat generation ",
+                        "voltage drop ",
+                        "cable losses ",
+                        "overheated terminals ",
+                        "breaker stress ",
+                        "increased fire risk "
                     ],
-                    "images": [
+
+                    "paragraphs_after": [
+                        "This is why installers must understand the relationship between:",
+                    ],
+                    "bullets_after": [
+                        "Voltage",
+                       
+                        "Current",
+                        "Power"
+                    ],
+                    "subsections": [
+                        { "heading": "The Relationship Between Voltage, Current, and Power",
+                            "paragraphs": [
+                                "These three electrical concepts are directly connected. When designing a battery system, changing one of these values affects the others.",
+                                "The relationship is shown by the following formula:Where:",
+                            ],
+                            "bullets": [
+                                    "P = Power (Watts) ",
+                                    "V = Voltage (Volts) ",
+                                    "I = Current (Amps) "
+                            ],
+                            "paragraphs_after": [
+                                "This formula tells us that power is equal to voltage multiplied by current.",
+                                "However, for installers, the most important lesson is not the formula itself—it is understanding what happens when the system voltage changes."
+                            ],
+
+                        },
                         {
-                            "src": "images/parallel connection.png",
-                            "alt": "images/parallel connection.png",
+                            "heading": "Why Higher Voltage Means Lower Current",
+                            "paragraphs": [
+                                "Imagine two systems that both need to deliver exactly the same amount of power (5 kW). ",
+                                "",
+                                "The only difference is their operating voltage. ",
+                                "The comparison below demonstrates how increasing the system voltage dramatically reduces the amount of current required to deliver the same power."
+                            ],
+                            "images": [
+                                {
+                                    "src": "images/why Higher voltage chages everything.png",
+                                    "alt": "why Higher voltage chages everything.png"
+                                },
+                            ],
                         },
-                         {
-                            "src": "images/TIP WHEN CONNECTING.png",
-                            "alt": "images/TIP WHEN CONNECTING.png",
-                        },
-                         {
-                            "src": "images/series vs parallel.png",
-                            "alt": "images/series vs parallel.png",
-                        },
-                    ],
-                },
-                {
-                    "heading": "Understanding the Difference",
-                    "paragraphs": [
-                        "Imagine you have a small backup system with an inverter and two 12V batteries. Depending on how you connect the batteries, the system will behave very differently.",
-                    ],
-                    "images": [
                         {
-                            "src": "images/EXAMPLE, ONE SETUP,TWO WAYS.png",
-                            "alt": "images/EXAMPLE, ONE SETUP,TWO WAYS.png",
+                            "heading": "",
+                            "paragraphs": [
+                                "What Does This Comparison Show?",
+                                "",
+                                "Both systems produce exactly the same amount of power—5 kW. ",
+                                "",
+                                "However, because the operating voltages are different, the amount of current flowing through the system is very different.",
+
+                            ],
+                            "bullets":[
+                                "A <strong>48V system requires</strong> approximately <strong>104A</strong> of current to deliver 5 kW. ",
+                                "A <strong>400V system requires</strong> only <strong>12.5A</strong> of current to deliver the same 5 kW. ",
+                            ],
+                            "paragraphs_after": [
+                                "Although the power delivered is identical, the higher-voltage system requires significantly less current.",
+                                "This reduction in current has several important advantages for installers:"
+                            ],
+                            "bullets_after":[
+                                "Smaller cable sizes ",
+                                "Less heat generation ",
+                                "Reduced voltage drop ",
+                                "Improved system efficiency ",
+                                "Easier installation ",
+                                "Better scalability "
+                            ],
+                            "paragraphs_footer":[
+                                "This simple comparison illustrates one of the most important principles in battery and energy storage system design:"
+                            ],
                         },
-                         {
-                            "src": "images/series and parallel are not better or wor.png",
-                            "alt": "images/series and parallel are not better or wor.png",
+                        { "heading": "For the same amount of power, increasing the system voltage reduces the amount of current flowing through the system.",
+                            "paragraphs":[
+                                "This is one of the main reasons why modern residential systems commonly use 48V battery architectures, while larger commercial and industrial systems increasingly use high-voltage (HV) battery systems.",
+                                "",
+                                "",
+                                "<strong>Understanding the Different System Voltages</strong>",
+                                "Now that you understand why increasing the system voltage reduces current, let's look at how this principle is applied in real-world energy storage systems.",
+                                "",
+                                "",
+                                "Different voltage architectures are used for different applications. The choice of system voltage depends on factors such as the amount of power required, the size of the installation, installation cost, scalability, and overall system efficiency.",
+                                "",
+                                "As energy demands increase, systems generally move from lower voltages to higher voltages to reduce current, improve efficiency, and simplify installation.",
+                                "",
+                                "The following sections introduce the four most common battery system voltage architectures and explain where each is typically used, together with their advantages and limitations."
+                            ],
+
                         },
-                    ]
+                        { "heading":"12V Systems – Small Backup Applications",
+                         "paragraphs":[
+                             "Although 12V systems are simple and cost-effective, they become less practical as power requirements increase because the current rises significantly. ",
+                             "",
+                             "This means larger cables, heavier protection devices, and greater installation challenges.",
+                         ],
+                         "images":[
+                             {
+                                 "src":"images/12v system-small backup.png",
+                                 "alt": "image of a 12v system small backup",
+                             },
+                         ],
+
+                        },
+                        { "heading":"24V Systems – Medium Backup Systems",
+                            "paragraphs":[
+                                "Moving from 12V to 24V immediately reduces the current required for the same power output. This makes cable sizing more manageable and improves overall system efficiency.",
+                                "",
+                                "While 24V systems are still used in some residential and light commercial applications, most modern lithium systems have progressed to 48V architectures."
+                            ],
+                            "images":[
+                                {
+                                    "src":"images/24v system-medium backup systems.png",
+                                    "alt":"image of a 24v system medium backup"
+                                },
+                            ],
+
+                        },
+                         { "heading":"48V Systems – The Modern Residential Standard",
+                            "paragraphs":[
+                                "Today, 48V has become the preferred voltage architecture for most residential and light commercial lithium battery systems.",
+                                                        "",
+                                "It provides an excellent balance between safety, efficiency, manageable current levels, installation practicality, and future expansion, making it the standard for most modern hybrid energy systems."
+                        ],
+                        "images":[
+                            {
+                            "src":"images/48v systems-the modern residential.png",
+                            "alt":"image of a 48 system medium backup"
+                            },
+                        ],
+                        
+                    },
+                     { "heading":"High Voltage (HV) Systems – Large Commercial Installations",
+                        "paragraphs":[
+                            "As energy requirements continue to increase, even 48V systems become impractical due to the very high currents required.",
+                                                                            "",
+                            "High Voltage (HV) battery systems solve this by operating at much higher voltages, dramatically reducing current and making large commercial and industrial energy storage systems more efficient and scalable.",
+                                                    "",
+                            "Because of the higher voltages involved, these systems require specialised equipment, additional protection measures, and experienced installers."
+                        ],
+                        "images":[
+                                {
+                                    "src":"images/High voltage (HV).png",
+                                    "alt":"image of a High Voltage(HV) system medium backup"
+                                },
+                       ],
+                                            
+                    },
+                    { "heading":"What This Means for Installers",
+                        "paragraphs":[
+                            "Understanding system voltage architecture is about much more than knowing the difference between 12V, 24V, 48V and high-voltage (HV) systems. ",
+                            "",
+                            "As an installer, the operating voltage influences almost every design and installation decision you make.",
+                            "",
+                            "",
+                            "<br><u>System voltage directly affects:</u>"
+                        ],
+                        "bullets":[
+                            "Cable sizing ",
+                            "Breaker and fuse selection ",
+                            "Inverter compatibility "
+                            "Battery configuration ",
+                            "Installation layout ",
+                            "Voltage drop ",
+                            "Heat generation ",
+                            "System efficiency ",
+                            "Future scalability "
+                        ],
+                        "paragraphs_after":[
+                             "As energy demands have increased, the industry has steadily moved towards higher-voltage systems because they deliver the same amount of power with significantly lower current. This allows installers to design systems that are more efficient, easier to install, more scalable, and better suited to modern residential and commercial energy requirements.",
+                             "",
+                             "Understanding these principles will help you select the correct system architecture, design safer installations, and explain to customers why different applications require different voltage systems.",
+                             "",
+                             "Remember: Choosing the correct system voltage is not simply about selecting a battery—it is about designing an energy system that is safe, efficient, reliable, and capable of meeting the customer's current and future energy needs."
+                        ],
+                        "images":[
+                            {
+                                "src":"images/higher voltage does not mean.png",
+                                "alt": "image of higher voltage does not mean more dangerous only"
+                            },
+                        ],
+                    },
+                    {"heading": "Series & Parallel Connections Explained",
+                        "paragraphs":[
+                            "One battery is often not enough to meet the voltage or energy requirements of a solar or backup system. As systems become larger, multiple batteries are connected together to create a battery bank that can deliver the required voltage, storage capacity, and runtime.",
+                            "",
+                            "Depending on the system requirements, batteries are connected in either series or parallel.",
+                            "",
+                            "The type of connection determines whether the system gains:"
+                        ],
+                        "bullets":[
+                            "Higher voltage ",
+                            "More energy storage ",
+                            "Longer backup time ",
+                            "Greater current capability "
+                        ],
+                        "paragraphs_after":[
+                            "",
+                            "Understanding the difference between these two connection methods is essential for correctly designing, installing, and expanding battery systems."
+                        ],
+                    },
+                    { "heading":"Remember: There are only two ways to connect batteries together—series or parallel. Each changes the electrical characteristics of the battery bank in a different way.",
+                       "paragraphs":[
+                           "<br><strong>Series Connection – Voltage Adds</strong>",
+                           "<br>A series connection is used when the system requires a higher operating voltage.",
+                           "<br>In a series connection, the batteries are connected:"
+                       ],
+                       "bullets":[
+                           "positive to negative ",
+                           "like a chain "
+                       ],
+                       "paragraphs_after":[
+                           "The voltage increases, but the storage capacity (Ah) stays the same.",
+                           "Think of it like adding more pressure to a water pipe. The pressure increases, allowing the system to operate at a higher voltage, while the amount of stored energy in each battery (Ah) remains unchanged.",
+                           "",
+                           "Series connections are commonly used when:"
+                       ],
+                       "bullets_after":[
+                           "the inverter requires a higher DC voltage (24V, 48V, etc.) ",
+                           "lower current is required ",
+                           "improved system efficiency is desired"
+                       ],
+                       "images":[
+                           {
+                               "src":"images/SERIES CONNECTION.png",
+                               "alt": "image of the series Connection"
+                           },
+                       ],
+                       "paragraphs_footer":[
+                           "After studying the diagram, notice that every additional battery increases the system voltage, while the battery capacity remains the same.",
+                           "This allows installers to build battery banks that meet the voltage requirements of different inverter systems without changing the individual battery capacity.",
+                           "",
+                           "<strong>Parallel Connection – Capacity Adds</strong>",
+                           "A parallel connection is used when the system already operates at the correct voltage but requires additional energy storage and longer backup time.",
+                           "In a parallel connection, all positives connect together and all negatives connect together.",
+                           "The voltage stays the same, but the storage capacity increases.",
+                           "Imagine two water tanks feeding the same house. The water pressure stays the same, but: .",
+
+
+                          
+                           
+                           
+                           "After reviewing the diagram, notice that adding batteries in parallel increases the total battery capacity (Ah) and available runtime, while the operating voltage remains unchanged.",
+                           "",
+                           
+                           "Imagine you have the same equipment: a small inverter and two identical 12V batteries.",
+                           
+                           "Using the same two batteries, you can build two completely different battery banks.",   
+                       ],
+                       "bullets_footer":[
+                         " there is now twice as much water available",
+                         "the house can run longer before the tanks are empty"  
+                       ],
+                    },
+                    { "heading":"",
+                       "paragraphs":[
+                            "Battery systems work in much the same way.",
+                            "Parallel connections are commonly used when:",
+
+                       ],
+                       "bullets":[
+                         "longer backup time is required",
+                         "additional battery capacity is needed",
+                         "the inverter already operates at the correct battery voltage", 
+                       ],
+                       "images":[
+                           {
+                              "src": "images/Parallel connection in battery.png",
+                              "alt":  "image of parallel connection",
+
+                           },
+                       ],
+                       "paragraphs_footer":[
+                           "After reviewing the diagram, notice that adding batteries in parallel increases the total battery capacity (Ah) and available runtime, while the operating voltage remains unchanged.",
+                           ""
+                       ],
+                        },
+                        {
+                       "images":[
+                           {
+                             "src":"images/TIP WHEN CONNECTING BATTERIES ALWAYS FOLLOW PRODUCT RULES.png",
+                              "alt":"image of always follow product rules",   
+                           },
+                          
+                       ],
+                    },
+                    { "heading":"Real-World Example – One Setup, Two Ways",
+                      "paragraphs":[
+                          "Understanding the theory behind series and parallel connections is important, but professional installers must also know when to use each configuration in practice.",
+
+                          "Imagine you have the same equipment:",
+                          ""
+                      ],
+                      "bullets":[
+                          "A small inverter ",
+                          "Two identical 12V batteries ",   
+                      ],
+                       "paragraphs_after":[
+                           "Although the equipment is exactly the same, the way you connect the batteries completely changes how the system operates.",
+                           "",
+                           "The following example demonstrates how choosing either a series or parallel connection produces two very different battery systems, each designed for a different purpose."    
+                       ],
+                       "images":[
+                           {
+                             "src":"images/ONE SETUP,TWO WAYS.png",
+                             "alt": "image of one setup, two ways",
+                           },
+                       ],
+                       "paragraphs_footer":[
+                           "Using the same two batteries, you can build two completely different battery banks.",
+                           ""
+                           "<strong>Option 1 – Series Connection</strong>",
+                           "Connecting the batteries in <strong>series</strong> increases the battery bank voltage from <strong>12V to 24V</strong>, while the battery capacity (Ah) remains the same.",
+                            "This configuration is used when: the inverter requires a higher DC voltage, lower current is preferred, or larger loads need to be supplied efficiently.",
+                       ],
+                       "bullets_footer":[
+                            "The inverter requires a higher DC voltage",
+                            "lower current is preferred",
+                            "larger loads need to be supplied efficiently"
+                       ],
+                    },
+                    { "heading":"Option 2 – Parallel Connection",
+                      "paragraphs":[
+                          "Connecting the batteries in <strong>parallel</strong> keeps the battery bank at <strong>12V</strong>, but doubles the available battery capacity.",
+                         "This configuration is used when:"
+                      ],
+                      "bullets":[
+                          "longer backup time is required",
+                          "more stored energy is needed",
+                          "the inverter already operates at the correct battery voltage"
+                      ],
+
+                    },
+                    {"heading":"The Key Lesson",
+                     "paragraphs":[
+                         "The batteries themselves have not changed.",
+                         "The inverter has not changed.",
+                         "Only the way the batteries are connected has changed.",
+                         "Yet the result is two completely different battery systems.",
+                         "This is why installers must never connect batteries based on guesswork or convenience. The correct connection method is always determined by: "
+                     ],
+                     "bullets":[
+                         "the inverter's voltage requirements",
+                         "the customer's backup requirements",
+                         "the required runtime",
+                         "and the overall system design"
+                     ],
+                     "paragraphs_after":[
+                        "<strong>Remember</strong>: A battery bank should always be designed to match both the inverter specifications and the customer's energy requirements—not simply by adding more batteries.",
+                     ],
+
+                    },
+                    { "heading":"Comparing Series and Parallel Connections",
+                      "paragraphs":[
+                           "Although both methods connect multiple batteries together, they achieve completely different objectives.",
+                           "<br>A<strong> series connection</strong> increases the system voltage while maintaining the same battery capacity.",
+                           "<br>A<strong> parallel connection</strong> increases the battery capacity and available runtime while maintaining the same system voltage.",
+                            "Understanding this difference is one of the most important skills for designing battery banks correctly."
+                      ],
+                      "images":[
+                          {
+                             "src":"images/series vs parallel.png",
+                             "alt":"image of a series vs parallel connections" 
+                          },
+                      ],
+                    },
+                    { "heading":"",
+                      "paragraphs":[
+                            "<br>Study the comparison carefully and note the key differences between the two connection methods. ",
+                            "As an installer, this information will help you determine the correct battery configuration based on the inverter requirements and the customer's backup needs."   
+                    ],
+                    "images":[
+                        {
+                        "src":"images/series and parallel are not better or wor.png",
+                        "alt": "image of series and parallel are not better or worse"   
+                        },
+                    ],
+
+                    },
+
+                    ],
                 },
             ],
         },
         {
             "title": "2.5 Electrical Components",
             "paragraphs": [
-                "Every electrical system needs to:",
+                "Every electrical system needs to:",  
+                "A good battery or solar system is not only about the batteries. The cables, lugs, isolators, fuses, breakers, and connections are just as important."
             ],
-            "bullets": [
+            "bullets":[
                 "move power",
                 "control power",
                 "protect equipment",
                 "protect people",
                 "manage voltage and current",
                 "switch things on and off",
-                "communicate between devices",
+                "and communicate between devices"
             ],
             "paragraphs_after": [
                 "Electrical components make all this possible.",
-                "Without the correct components, electricity would simply flow uncontrolled from the batteries to the equipment — which can lead to overheating, damaged equipment, poor performance, fires, system failures and serious safety risks.",
-                "A good battery or solar system is not only about the batteries. The cables, lugs, isolators, fuses, breakers, and connections are just as important.",
+                "",
+                "",
+                "Without the correct components, electricity would simply flow uncontrolled from the batteries to ",
+                "the equipment — which can lead to:"
             ],
-            "subsections": [
+            "bullets_after": [
+                "overheating ",
+                "damaged equipment ",
+                "poor performance ",
+                "fires",
+                "system failures ",
+                "serious safety risks "
+            ],
+            "subsections":[
+                { 
+                    "paragraphs": [
+                                    "A good battery or solar system is not only about the batteries.  The cables, lugs, isolators, fuses, breakers, and connections are just as important.",
+                                    "Think of the system like the plumbing in a building:",
+                                    
+                   ],
+                   "bullets": [
+                        "The battery is the water tank ",
+                        "he cables are the pipes ",
+                        "The isolators and breakers are the valves ",
+                        "The fuses are the emergency safety devices ",
+                        "The lugs and terminations are the joints connecting everything together "
+                   ],
+                   "paragraphs_after": [
+                     "If any one of these parts is poor quality or installed incorrectly, the whole system can fail."
+                  ],
+
+                },
+                {  "heading": "Understanding the Key Electrical Components",
+                    "paragraphs":[
+                      "Every electrical component in a battery and solar system has a specific purpose. Some components carry electricity, others control it, while others protect the system and the people using it. ",
+                      "<br>As an installer, it is essential to understand not only what each component is, but also why it is used, how it works, and the role it plays in ensuring a safe, reliable, and efficient installation.",
+                      "The following diagrams introduce the most common electrical components found in battery and ",
+                      "solar systems. As you work through each one, pay particular attention to:"
+                    ],
+                     "bullets": [
+                        "the purpose of the component, ",
+                        "where it is used in the system, ",
+                        "why it is important, ",
+                        "and what could happen if it is incorrectly selected or installed. "
+                    ],
+                     "paragraphs_after": [
+                        "Although these components may appear simple on their own, together they form the foundation of every safe and reliable energy storage system."
+                    ],
+                    "images":[
+                        {
+                            "src":"images/Cable.png",
+                            "alt":"image of a cable size",
+                        },
+                         {
+                            "src":"images/Lugs.png",
+                            "alt":"image of a lugs"
+                        },
+                        {
+                            "src":"images/isolators.png",
+                            "alt":"image of isolators",
+                        },
+                        {
+                            "src":"images/fuses.png",
+                            "alt":"image of fuses"
+                        },
+                        {
+                            "src":"images/circuit breaker.png",
+                            "alt":"image of a circuit breaker"
+                        }
+                    ],
+                    
+                },
                 {
-                    "heading": "Think of the system like the plumbing in a building",
-                    "bullets": [
-                        "The battery is the water tank",
-                        "The cables are the pipes",
-                        "The isolators and breakers are the valves",
-                        "The fuses are the emergency safety devices",
-                        "The lugs and terminations are the joints connecting everything together",
-                    ],
-                    "paragraphs_after": [
-                        "If any one of these parts is poor quality or installed incorrectly, the whole system can fail.",
-                    ],
-                    "images": [
-                        {
-                            "src": "images/Cables carry current.png",
-                            "alt": "images/Cables carry current.png",
-                        },
-                        {
-                            "src": "images/Lugs and terminations.png",
-                            "alt": "images/Lugs and terminations.png",
-                        },
-                        {
-                            "src": "images/isolators.png",
-                            "alt": "images/isolators.png",
-                        },
-                        {
-                            "src": "images/fuses.png",
-                            "alt": "images/fuses.png",
-                        },
-                        {
-                            "src": "images/circuit breaker.png",
-                            "alt": "images/circuit breaker.png",
-                        },
-                    ],
+                    "paragraphs":[
+                            "<br><strong>A battery system is only as strong as its weakest connection.</strong>",
+                            "<br>Even the best battery can fail if:"
+                        ],
+                        "bullets":[
+                           "cables are undersized ",
+                           "lugs are loose ",
+                           "breakers are incorrect ",
+                           "fuses are missing ",
+                           "isolators are not installed properly "
+                        ],
+                        "paragraphs_after":[
+                            "<br>Good electrical design is about:"
+                        ],
+                        "bullets_after":[
+                            "safety ",
+                            "reliability",
+                            "efficiency",
+                            "long equipment life "
+                        ],
+                        "images":[
+                            {
+                                "src":"images/simple summary.module 2.5.png",
+                                "alt":"image of a simple summary",
+                            },
+                        ],
+
                 },
             ],
-            "notes": [
-                "A battery system is only as strong as its weakest connection.",
-            ],
-            "paragraphs_before": [
-                "Even the best battery can fail if:",
-            ],
-            "bullets_before": [
-                "cables are undersized",
-                "lugs are loose",
-                "breakers are incorrect",
-                "fuses are missing",
-                "isolators are not installed properly",
-            ],
-            "paragraphs_after": [
-                "Good electrical design is about:",
-            ],
-            "bullets": [
-                "safety",
-                "reliability",
-                "efficiency",
-                "long equipment life",
-            ],
-            "images": [
-                {
-                    "src": "images/simple summary.png",
-                    "alt": "simple summary diagram",
-                }
-            ],
+            
+           
+            
+           
+           
         },
         {
             "title": "2.6 Earthing & Bonding — The Safety Backbone",
             "paragraphs": [
-                "Earthing and bonding are some of the most important safety parts of any electrical system.",
+                "Earthing and bonding are two of the most important safety principles in any battery and solar installation. Although they perform different functions, they work together to protect people, equipment, and property by reducing the risk of electric shock, equipment damage, and fire.",
+                "Correct earthing and bonding help protect:",
+                
             ],
-            "paragraphs_before": [
-                "They help protect:",
-            ],
-            "bullets_before": [
+            "bullets":[
                 "people",
-                "equipment",
+                " equipment",
                 "buildings",
                 "batteries",
-                "inverters",
+                "and inverters."
             ],
-            "paragraphs_middle": [
-                "Without proper earthing and bonding:",
+            "paragraphs_after":[
+                "Without proper earthing and bonding:"
             ],
-            "bullets_middle": [
-                "electric shocks can occur",
+            "bullets_after":[
+                "electric: shocks can occur",
                 "equipment can become damaged",
                 "systems can behave unpredictably",
-                "lightning damage becomes worse",
+                "lightning damage can become worse",
                 "faults may not trip correctly",
-                "fire risks increase",
+                "and fire risks increase."
             ],
-            "paragraphs_after": [
-                "A good way to understand this is:",
+            "paragraphs_footer":[
+                "A simple way to understand the difference is:"
             ],
-            "bullets": [
-                "Earthing gives dangerous electricity a safe path to the ground",
-                "Bonding keeps metal parts at the same electrical level so they cannot become dangerous",
+            "bullets_footer":[
+                "<strong>Earthing</strong> gives dangerous electricity a safe path to the ground ",
+                "<strong>Bonding</strong> keeps metal parts at the same electrical level so they cannot become dangerous "
             ],
-            "notes": [
-                "They work together to make electrical systems safe.",
+            "paragraphs_extra": [
+                "Both are essential for a safe and compliant electrical installation. One does not replace the other—they work together to protect the entire system.",
+               
             ],
-                "images": [
-                    {
-                        "src": "images/Earthing safety first.png",
-                        "alt": "images/earthing and bonding.png",
-                    },
+            "subsections":[
+                { "heading": "Understanding Earthing & Bonding",
+                  "paragraphs":[
+                      "Although earthing and bonding are closely related, they perform different safety functions within an electrical installation. Understanding the difference is essential for every installer.",
+                      "",
+                      "<br>The following diagrams explain what earthing is, what bonding is, why each is important, and how they work together to create a safer battery and solar system. ",
+                      "<br>As you review each diagram, pay attention to:"
+                  ],
+                  "bullets":[
+                      "the purpose of earthing and bonding, ",
+                      "how they protect people and equipment, ",
+                      "where they are used within the system, ",
+                      "and what can happen if they are omitted or installed incorrectly."
+                  ],
+                  "images":[
                       {
-                        "src": "images/Bonding.png",
-                        "alt": "images/Bonding.png",
-                    },
-                    
-                ],
+                          "src":"images/earthing.png",
+                          "alt":"image of earthing",
+                      },
+                      {
+                          "src":"images/bonding.2.6.png",
+                          "alt":"image of bonding",
+                     },
+                  ],
+                  "paragraphs_footer":[
+                     "<br>Although earthing and bonding perform different functions, they are most effective when used together." 
+                  ],
+                  "bullets_footer":[
+                      "<strong>Earthing</strong> provides a safe path for fault current to flow into the ground. ",
+                      "<strong>Bonding</strong> ensures exposed metal parts remain at the same electrical potential."
+                  ],
+                  "paragraphs_extra":[
+                       "Together they help protective devices operate correctly, minimise electric shock hazards, reduce the risk of fire, and improve the overall safety of the installation.  ",
+                       "<br><strong>Remember:</strong> A properly designed battery or solar system is not only efficient—it is also safe. ",
+                       "Correct earthing and bonding are fundamental requirements for every professional installation."
+                  ],
+
+                },
+            ],
         },
         {
             "title": "2.7 Electrical Safety — Non-Negotiable Rules",
             "paragraphs": [
                 "Electrical safety is non-negotiable because electricity is invisible, extremely powerful, and can cause serious injury, death, fires, or catastrophic equipment damage in seconds if handled incorrectly.",
-                "Unlike many other hazards, you often do not get a warning before something goes wrong, a loose connection, incorrect polarity, missing fuse, poor earthing, or accidental contact with live conductors can instantly create dangerous heat, electric shock, arc flash, or system failure.",
-                "In battery and solar systems especially, large amounts of stored energy are always present, even when grid power is off, which means safe isolation, proper PPE, correct tools, testing procedures, and compliant installation practices are absolutely essential. Good electrical safety is not about slowing the job down, it is about ensuring that everyone goes home safely, equipment remains protected, and systems operate reliably for years to come.",
+                "",
+                "<br>Unlike many other hazards, you often do not get a warning before something goes wrong. A loose connection, incorrect polarity, missing fuse, poor earthing, or accidental contact with live conductors can instantly create dangerous heat, electric shock, arc flash, or system failure.",
+                "",
+                "<br>In battery and solar systems especially, large amounts of stored energy are always present, even when grid power is off, which means safe isolation, proper PPE, correct tools, testing procedures, and compliant installation practices are absolutely essential.",
+                "Good electrical safety is not about slowing the job down, it is about ensuring that everyone goes home safely, equipment remains protected, and systems operate reliably for years to come."
             ],
-            "images": [
-                    {
-                        "src": "images/electrical safety.png",
-                        "alt": "images of electrical safety",
-                    },
-                    
-            ],    
+            "images":[
+                {
+                    "src": "images/electrical safe.png",
+                    "alt":"image of electrical safety rule"
+                },
+            ],
         },
         {
-            "title": "2.8 Practical Installer Examples (What Can Go Wrong + How to Fix It)",
+            "title": "2.8 Real-World Installer Scenarios (What Can Go Wrong + How to Fix It)",
             "paragraphs": [
-                "This is where electrical theory becomes real-world consequences.",
-                "On paper, these are formulas. On site, they become heat, trips, damage and call-backs.",
-                "Let’s walk through real scenarios installers face every day.",
+                "Up to this point, you have learned the theory behind electrical components, cable sizing, battery connections, and system protection. While understanding the theory is essential, professional installers must also recognise what happens when these principles are not applied correctly.",
+                "Many system faults are not caused by defective equipment; they are caused by poor installation practices.",
+                "Something as simple as using the wrong cable size, making a poor crimp, or leaving a loose terminal can lead to overheating, nuisance trips, damaged equipment, expensive call-backs, and even serious safety hazards.",
+                "The following examples are based on real installation scenarios that installers encounter every day. ",
+                "Each example demonstrates:"
+               
+                
+               
             ],
-            "images": [
-                    {
-                        "src": "images/incorrect cable sizing.png",
-                        "alt": "images of electrical safety",
-                    },
-
-                    {
-                        "src": "images/swapped-reversed.png",
-                        "alt": "images of electrical safety",
-                    },
-
-                    {
-                        "src": "images/poor crimping.png",
-                        "alt": "images of electrical safety",
-                    },
-
-                    {
-                        "src": "images/no dc isolator installed.png",
-                        "alt": "images of electrical safety",
-                    },
-
-                    {
-                        "src": "images/unequal parallel cables.png",
-                        "alt": "images of electrical safety",
-                    },
-
-
-                    {
-                        "src": "images/wrapping up module 2.png",
-                        "alt": "images of electrical safety",
-                    },
-
+            "bullets":[
+                "<strong>what went wrong,</strong>",
+                "<strong>why it happened,</strong>",
+                "<strong>what problems it caused,</strong>",
+                "<strong>and how the issue can be prevented or corrected.</strong>"
+            ],
+            "paragraphs_after":[
+                 "As you work through each example, think beyond simply fixing the fault. Ask yourself <strong>why it occurred in the first place</strong> and what could have been done during installation to prevent it.",
+                "<br>Remember:",
+                "<br><strong>Most installation problems are preventable</strong>. Good installers do not just fix faults; they install systems correctly the first time.",
+            ],
+            "images":[
+                {
+                    "src":"images/incorrect cable size.png",
+                    "alt":"image of incorrect cable sizing",
+                },
+                 {
+                    "src":"images/swopped-reverse polarity.png",
+                    "alt":"image of reverse polarity",
+                },
+                {
+                    "src":"images/poor crimping lug.png",
+                    "alt":"image of poor crimping",
+                },
+                {
+                    "src":"images/no dc isolator installed.2.8.png",
+                    "alt":"image of no dc isolator installed",
+                },
+                {
+                    "src":"images/unequal paralleling.png",
+                    "alt":"image of having unequal paralleling in a system",
+                },
+            ],
+            "paragraphs_footer":[
+                "Every fault shown in this section has one thing in common: "
+                
+               
+            ],
+            "subsections":[
+                { "heading":"it could have been prevented during installation.",
+                    "paragraphs":[
+                        "<br>Professional installers understand that system reliability is not determined only by the quality of the batteries or inverter—it is determined by the quality of the installation.",
+                        "<br>A correctly sized cable, a properly crimped lug, a securely tightened connection, and careful attention to detail may seem like small tasks, but together they make the difference between a system that operates reliably for years and one that generates repeated faults and customer complaints.",
+                        "<br><strong>Remember:</strong>  the best fault is the one that never happens because the installation was done correctly the first time.",
+                        ""
+                    ],
                     
-            ],    
+
+                },
+            ],
+
+        },
+        { "title":"Wrapping Up Module 2",
+            "heading":"",
+           "images":[
+               {
+                "src":"images/wrapping up module2.png",
+                "alt":"Wrapping up module 2"
+            },
+        ],
 
         },
     ],
@@ -1671,6 +2231,20 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                 "This module takes you inside the battery — not just what it does, but how it actually works and behaves on site.",
                 "By the end of this module, you will be able to:",
             ],
+            "bullets": [ 
+                        "Explain what a lithium-ion battery is and how it works internally",
+                        "Understand how energy is stored and released at the cell level",
+                        "Correctly interpret voltage, capacity, power, and energy",
+                        "Apply C-rate in real system design",
+                        "Understand how SOC, DoD, cycle life, and temperature affect performance",
+                        "Identify battery-related problems early",
+                        "Make better decisions when selecting and installing batteries",
+
+
+                        
+                        
+
+            ],
         },
         {
             "title": "3.2 Understanding Different Battery Types",
@@ -1698,6 +2272,7 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                 "A battery is a storage device that holds electrical energy chemically and releases it again when the system needs it.",
                 "In a solar-battery system, energy is not always used at the same time it is produced.  During the day, solar panels may produce more power than the loads need.  At night, during bad weather, or during outages, there may be little or no solar available. That is where the battery becomes essential.",
                 "The battery acts as the system’s energy reserve.",
+                "In practical terms:",
             ],
             "bullets": [
                 "Solar panels generate DC energy",
@@ -1706,6 +2281,7 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                 "The loads use battery power when solar is not available or when backup is needed",
             ],
             "paragraphs_after": [
+                "",
                 "A simple way to think about it is this:",
                 "The battery is what allows the system to “save power for later.”",
                 "Without storage, solar can only help while the sun is shining.",
@@ -1723,6 +2299,8 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
             "title": "3.4 What Is a Lithium-Ion Battery",
             "paragraphs": [
                 "A lithium-ion battery is not just a box that holds power.  It is a controlled energy storage system made up of several parts working together.",
+                "",
+                "",
                 "Inside a typical lithium battery are:",
             ],
             "bullets": [
@@ -1744,6 +2322,9 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                 {
                     "heading": None,
                     "paragraphs": [
+                        "",
+                        "",
+                        "",
                         "REVOV uses Lithium Iron Phosphate (LiFePO₄) chemistry because it offers the right balance of:",
                     ],
                     "bullets": [
@@ -1757,6 +2338,9 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                 {
                     "heading": None,
                     "paragraphs": [
+                        "",
+                        "",
+                        "",
                         "That is why lithium, and specifically LiFePO₄, has become the preferred choice in modern residential, commercial and industrial storage systems.",
                     ]
                 }
@@ -1767,6 +2351,9 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
             "paragraphs": [
                 "Now that we understand the battery’s role in the system, the next step is to look at what is happening inside the battery during charging and discharge.",
                 "Inside each cell, lithium ions move back and forth. That movement is what allows the battery to store and release energy.",
+                "",
+                "",
+                "",
             ],
             "subsections": [
                 {
@@ -1797,11 +2384,15 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                              },
 
                     ],
+                     "paragraphs_footer": [
+                         "",
+                         "",
+                         "",
+                       "That is what makes lithium systems powerful — but also why settings, communication and installation quality matter so much.",
+            ],
                 },
             ],
-            "paragraphs_after": [
-                "That is what makes lithium systems powerful — but also why settings, communication and installation quality matter so much.",
-            ],
+            
         },
         {
             "title": "3.6 Inside the Cell",
@@ -1826,66 +2417,116 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                              },
 
                     ],
-        },
-        {
-            "title": "REVOV Cell Configuration",
-            "paragraphs": [
-                "Each LiFePO₄ cell provides a nominal voltage of about 3.2 V. REVOV combine these cells in series and, where required, in parallel to build battery systems suitable for real inverter applications.",
-            ],
-            "paragraphs_before": [
-                "Examples:",
-            ],
-            "bullets_before": [
-                "R100 → ~5.12 kWh (16 cells in series)",
-                "R200 → ~10.24 kWh (2 × 16 cell packs in parallel)",
-                "C8 Module → high-density rack unit for scalable BESS installations",
-            ],
-            "paragraphs_middle": [
-                "This modular design allows REVOV batteries to deliver:",
-            ],
-            "bullets_middle": [
-                "Stable voltage",
-                "Good scalability",
-                "Balanced performance",
-                "Strong compatibility with modern systems",
-            ],
-            "paragraphs_section": [
-                "Why LiFePO₄?",
-            ],
-            "paragraphs_after": [
-                "Not all lithium chemistries behave the same. The LiFePO₄ composition used by REVOV offers the safest and most durable option available in the market today.",
-                "Compared with other battery types or less stable lithium chemistries, LiFePO₄ offers clear practical advantages.",
-            ],
-            "images": [
-                            {
-                            "src":"images/feature explanation benefits.png",
-                            "alt": "image of feature explanation benefits.",
-        
-                            },
+                    "subsections":[
+                        {
+                            "heading":"REVOV Cell Configuration",
+                              "paragraphs": [
+                                 "Every lithium battery starts with individual battery cells. These cells are the basic building blocks ",
+                                 "of the battery and determine its voltage, capacity, and overall performance.",
+                                 "",
+                                 "Each LiFePO₄ (Lithium Iron Phosphate) cell provides a nominal voltage of approximately 3.2 V. To ",
+                                 "produce the voltage and energy required by modern inverter systems, REVOV combines multiple cells in carefully engineered configurations.",
+                                  "Cells are connected:"
+                                            
+                            ],
+                             "bullets": [
+                                "In series to increase voltage",
+                                "In parallel to increase the battery capacity and available energy",
+                           ],
+                           "paragraphs_after": [
+                                           
+                                "This modular design enables REVOV to manufacture battery systems suitable for a wide range of residential, commercial, and industrial energy storage applications.",
+                                
+                            ],
+                            "paragraphs_before":[
+                                    "Examples of REVOV Cell Configuration:",
+                            ],
+                            "bullets_before": [
+                                "R100 Battery – Approximately 5.12 kWh, consisting of 16 LiFePO₄ cells connected in series ",
+                                           
+                                "R200 Battery – Approximately 10.24 kWh, consisting of two 16-cell battery packs connected in parallel, doubling the available energy while maintaining the same operating voltage. ",
+                                           
+                                "C8 Module – A high-density rack-mounted battery module designed for scalable commercial and BESS installations, allowing multiple modules to be combined into large energy storage systems",
+                             ],
+                            "images": [
+                                {
+                                    "src":"images/Revov cell Configuration.png",
+                                    "alt": "image of revov cell configuration.",
                            
-    
-                    ],
-            "notes": [
-                "That is why LiFePO₄ has become the preferred chemistry for serious backup and hybrid systems.",
-            ],
+                                },
+                            ],
+
+                        },
+                        {"heading": "Why LiFePO₄?",
+                          "paragraphs": [
+                            "Not all lithium battery chemistries are the same.",
+                            "While several lithium technologies are available, REVOV uses Lithium Iron Phosphate (LiFePO₄) because it offers an excellent combination of safety, reliability, long service life, and performance.",
+                            "Compared with traditional lead-acid batteries and other lithium chemistries, LiFePO₄ provides significant advantages for residential, commercial, and industrial energy storage applications.",
+                        ],
+                        "images": [
+                                {
+                                  "src": "images/FEATURE,EXPLANATION, BENEFITS....2.png",
+                                  "alt": "Comparison of LiFePO₄ and other battery technologies",
+                               },
+                        ],
+                            "paragraphs_after":[
+                                "This diagram compares LiFePO₄ with other common battery technologies and highlights why it has become the preferred choice for modern backup and hybrid energy systems.",
+                            ],
+                             
+                        },
+                        {  "heading": "Key Advantages of LiFePO₄",
+                            "paragraphs":[
+                               "LiFePO₄ batteries offer:"
+                        ],
+                        "bullets": [
+                            "Excellent thermal and chemical stability",
+                            "Improved safety and reduced fire risk",
+                            "Long cycle life and extended service life",
+                            "High charging and discharging efficiency",
+                            "Consistent performance throughout the battery's life",
+                            "Low maintenance requirements",
+                            "Reliable operation under frequent cycling",
+                        ],
+                        "paragraphs_after": [
+                            "These characteristics make LiFePO₄ the preferred battery chemistry for demanding backup, hybrid, and energy storage applications.",
+                            "Remember: The performance of a battery is determined not only by its capacity, but also by the quality of its cell configuration and the chemistry used. REVOV combines high-quality LiFePO₄ cells with a modular design to deliver battery systems that are safe, reliable, scalable, and built for long-term performance.",
+                        ],
+                        "notes": [],
+                },
+
+             ],
         },
         {
             "title": "3.7 Battery Voltage, Capacity, Power and Energy",
             "paragraphs": [
-                "When installers read a battery datasheet, four terms come up again and again: Voltage, Capacity, Energy, Power. These values are related, but they do not mean the same thing.  And if they are confused, batteries are often sized incorrectly.",
+                "When installers read a battery datasheet, four terms come up again and again:",
+            ],
+            "bullets": [
+                "Voltage",
+                "Capacity",
+                "Energy",
+                "Power",
+            ],
+            "paragraphs_after": [
+                "These values are related, but they do not mean the same thing. And if they are confused, batteries are often sized incorrectly.",
             ],
             "subsections": [
                 {
                     "heading": "Battery Voltage (V)",
                     "paragraphs": [
                         "Voltage is the electrical pressure of the battery.  Most REVOV low-voltage batteries operate around 48 V / 51.2 V nominal, which makes them suitable for common residential and commercial inverter systems.",
-                        "Higher voltage allows the battery to deliver the same power at lower current, which reduces heat and cable sizing.",
+                        "Why this matters:",
+                        " Higher voltage allows the battery to deliver the same power at lower current.",
+                        "Lower current means:",
                     ],
                     "bullets": [
                         "Less heat",
                         "Smaller cable requirements",
                         "Lower losses",
                         "Better efficiency",
+                    ],
+                    "paragraphs_after": [
+                        "This links directly to Module 2, where you learned that current is one of the main reasons cables overheat and systems trip under load.",
                     ],
                 },
                 {
@@ -1904,37 +2545,66 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                     "heading": "Battery Energy (kWh)",
                     "paragraphs": [
                         "Energy, measured in kilowatt-hours (kWh), tells you how much total work the battery can do over time.",
-                        "Formula: Energy (kWh) = Voltage (V) × Capacity (Ah) ÷ 1000",
+                        "This is the most useful number for system design because it tells you how much backup time or stored energy is actually available."      
+                        
+                    ],    
+                    
+                },
+                {  "heading": "Formula: ",
+                    "paragraphs": [
+                        "Energy (kWh) = Voltage (V) × Capacity (Ah) ÷ 1000"
                     ],
                     "images" : [
                         {
                             "src":"images/formula Energy(kwh) =.png",
                             "alt" : "image of formula Energy(kwh).",
-                        }
+                        },
+                                        ],
+                    "paragraphs_footer": [
+                        "This links directly back to Module 1: Energy determines battery sizing and backup duration.",
                     ],
                 },
                 {
                     "heading": "Battery Power (kW)",
                     "paragraphs": [
                         "Power tells you how fast the battery can deliver that stored energy.  This is not the same as capacity.",
+                        "A battery may store a lot of energy, but that does not automatically mean it can supply a very large load all at once.",
+                        
                     ],
-                    "images" : [
+                    "images": [
                         {
-                            "src":"images/a battery may have enough stored energy.png",
-                            "alt" : "image of a battery may have enough stored energy.",
-                        }
+                            "src": "images/a battery may have enough stored energy.png",
+                            "alt": "image of a battery may have enough stored energy.",
+                        },
                     ],
-                    "images" : [
+                    "paragraphs_footer": [
+                        "That limit is controlled by the battery’s C-rate, which we cover next."
+                    ],
+                   
+                },
+                { "heading":"",
+                 "paragraphs": [],
+                  "images" : [
                         {
                             "src":"images/so in simple terms energy(kwh) tells.png",
-                            "alt" : "image of so in simple terms energy(kwh) tells.",
-                        },
-                        {
-                            "src":"images/factors, what it meants.png",
-                            "alt" : "image of so in simple terms energy(kwh) tells.",
+                            "alt" : "image explaining energy (kWh) in simple terms.",
                         },
                     ],
 
+                },
+                {
+                    "heading": "Understanding Battery Specifications",
+                    "paragraphs": [
+                        "When selecting or comparing batteries, installers will encounter four key specifications: voltage, capacity, energy, and power.",
+                        "Although these terms are often confused, each describes a different aspect of battery performance.",
+                        "Understanding what they mean, and how they work together is essential for choosing the correct battery, sizing a system accurately, and explaining battery performance to customers.",
+                        "The summary below provides a practical comparison of these four characteristics and highlights why each one is important in real-world battery and solar installations.",
+                    ],
+                    "images": [
+                        {
+                            "src": "images/summary below.png"
+                        },
+                    ],
                 },
             ],
         },
@@ -1948,41 +2618,62 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                 "1C Explained = A 1C battery can be charged or discharged fully in 1 hour.",
                 "0.5C Explained = A 0.5C battery takes 2 hours to charge or discharge fully.",
             ],
-             "images" : [
-                        {
-                            "src":"images/if battery stores 5kwh and is rated at 1C.png",
-                            "alt" : "image of if battery stores 5kwh and is rated at 1C.",
-                        }
-                    ],
+            "image": {
+                "src":"images/if battery stores 5kwh and is rated at 1C.png",
+                "alt" : "image of if battery stores 5kwh and is rated at 1C.",
+            },
 
-            "paragraphs_after": [
+            "paragraphs_footer": [
                 "So even if two batteries have the same storage capacity, they may not support the same load.",
                 "That is a very important installer point. A battery must not only be large enough — it must also be fast enough.",
             ],
-            "paragraphs_section": [
-                "Why C-Rate Matters",
-            ],
-            "notes": [
-                "If battery demand exceeds its C-rate:",
-            ],
-            "bullets_final": [
-                "The BMS may limit output",
-                "The battery may trip on overcurrent",
-                "SOC may become unstable or inaccurate",
-                "Battery life may reduce",
-                "Warranty may be affected",
-            ],
-            "images" : [
+            "subsections": [
                 {
-                    "src":"images/Alaways check both energy capcity and power capabilty.png",
-                    "alt": " image of capcity check and warnings"
+                    "heading": "Why C-Rate Matters",
+                    "paragraphs": [
+                        "If battery demand exceeds its C-rate:",
+                    ],
+                    "bullets": [
+                        "The BMS may limit output",
+                        "The battery may trip on overcurrent",
+                        "SOC may become unstable or inaccurate",
+                        "Battery life may reduce",
+                        "Warranty may be affected",
+                    ],
+                    "images": [
+                        {
+                            "src":"images/Alaways check both energy capcity and power capabilty.png",
+                            "alt": "image of capacity check and warnings",
+                        }
+                    ],
                 },
             ],
         },
         {
             "title": "3.9 Key Battery Concepts Installers Must Know",
             "paragraphs": [
-                "Now that the main ratings make sense, the next step is to understand the core concepts that affect battery behaviour, lifespan and performance in real installations.",
+                "Now that you understand the main battery ratings—such as voltage, capacity, energy, and power the next step is to understand the key concepts that determine how a battery performs throughout its life.",
+                "",
+                "",
+                "",
+                "These concepts explain how the battery is used, how it is monitored, how efficiently it stores and delivers energy, and how long it is likely to last. They are fundamental to correctly designing, installing, commissioning, and troubleshooting modern lithium battery systems.",
+                "",
+                "As an installer, you will encounter these terms regularly in battery specifications, inverter settings, BMS data, monitoring software, and technical support discussions. Understanding what they ",
+                "mean will help you optimise system performance, maximise battery lifespan, and explain battery behaviour confidently to customers.",
+                "The following sections introduce five key battery concepts that every installer should understand:",
+
+            ],
+            "bullets": [
+                "Cycle – How battery lifespan is measured. ",
+                "State of Charge (SOC) – The current charge level of the battery as a percentage of its total capacity.",
+                "Depth of Discharge (DOD) – The percentage of the battery that has been discharged relative to its total capacity.",
+                "Efficiency – How effectively the battery stores and delivers energy.",
+                "Battery Management System (BMS) – The system that monitors and manages the battery's performance and safety.",
+
+            ],
+            "paragraphs_after": [
+                "As you work through each concept, think about how it affects the customer's daily experience, including backup time, battery lifespan, system reliability, and overall performance",
+                "Together, these concepts explain why two batteries with the same capacity may perform very differently depending on how they are installed, configured, and operated."
             ],
             "subsections": [
                 {
@@ -2034,6 +2725,11 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                             "alt": "Battery Management System diagram",
                         },
                     ],
+                    "paragraphs_footer": [
+                        "Although each of these concepts measures a different aspect of battery performance, they are all closely connected.",
+                        "The Battery Management System (BMS) continuously monitors the battery's State of Charge (SOC), manages the Depth of Discharge (DoD), tracks charge and discharge cycles, and helps maintain safe and efficient operation throughout the battery's life.",
+                        "The summary below provides a quick reference to these key concepts, what they mean, and why they matter in everyday battery and solar installations",
+                    ],
                 },
                 {
                     "heading": "Summary",
@@ -2054,22 +2750,30 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                 "Lithium batteries do not like excessive heat.",
                 "Heat speeds up degradation, reduces cycle life and may force the BMS to protect the battery by limiting current or shutting the system down.",
                 "A practical operating range is usually around 15°C to 35°C",
+                 "",
+                 "",
+                 "",
+                 
             ],
-            "paragraphs_before": [
-                "If temperatures rise too high:",
-            ],
-            "bullets": [
-                "Cycle life shortens",
-                "BMS may reduce charging/discharge current",
-                "Battery may alarm or shut down",
-                "Performance becomes inconsistent",
-            ],
-            "images": [
-                        {
-                            "src": "images/DO NOT INSTALL BATTERIES, IN CEILING SPACES.png",
-                            "alt": "DO NOT INSTALL BATTERIES, IN CEILING SPACES diagram",
-                        },
-                    ],
+            "subsections": [
+                { "heading": "If temperatures rise too high:",
+                  "bullets": [
+                     "Cycle life shortens",
+                     "BMS may reduce charging/discharge current",
+                     "Battery may alarm or shut down",
+                     "Performance becomes inconsistent",
+                ],
+                 "images": [
+                    {
+                        "src": "images/DO NOT INSTALL BATTERIES, IN CEILING SPACES.png",
+                        "alt": "DO NOT INSTALL BATTERIES, IN CEILING SPACES diagram",
+                    },
+                ],
+
+                },
+
+            ], 
+           
         },
         {
             "title": "3.11 How REVOV Batteries Are Designed",
@@ -2121,24 +2825,85 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
             ],
         },
         {
-            "title": "3.12 Practical Installer Examples",
+            "title": "3.12 Applying Battery Concepts in Real-World Installations",
             "paragraphs": [
-                "Battery theory can look simple on paper. In the field, though, problems usually start when ratings, settings or installation quality do not match the real application.",
+                "Understanding battery concepts such as power, capacity, State of Charge (SOC), Depth of Discharge (DoD), efficiency, and the Battery Management System (BMS) is only the first step.",
+                "The real challenge is recognising how these concepts affect the performance of a battery system once it has been installed.",
+                "Many customer complaints are not caused by faulty batteries. More often, they result from incorrect battery selection, poor system design, incorrect settings, installation errors, or unrealistic customer expectations.",
+                "The following examples are based on common situations encountered by installers in the field. Each scenario demonstrates:",
+
             ],
-            "images": [
-                {
-                    "src":"images/a wrong battery for the load.png",
-                    "alt": "image for what happens if using wrong battery for the load",
-                },
-                 {
-                    "src":"images/SOC DROPS TOO FAST.png",
-                    "alt": "image for what causes soc to trop fast",
-                },
-                 {
-                    "src":"images/BATTERY NEVER REACHES 100%.png",
-                    "alt": "image for what makes battery not reach 100%",
-                },
+             "bullets": [
+                 "what happened, ",
+                 "why it happened, ",
+                 "what problems it caused, ",
+                 "and how the issue can be prevented or corrected. ",
+             ],
+             "paragraphs_before": [
+                "As you work through each example, think beyond fixing the immediate fault. Ask yourself which battery concept explains the behaviour and what could have been done during system design or installation to prevent the problem.",
+                "Remember: A battery that appears to be faulty is often operating exactly as it was designed to. The key is understanding how battery characteristics, system design, inverter settings, and installation quality work together to determine system performance.",
+                ""
             ],
+            "subsections": [
+               { "heading":"Example 1 - Wrong Battery for the Load",
+                    "paragraphs": [
+                        "This example demonstrates why battery selection involves more than choosing the correct storage capacity (kWh). A battery must also be capable of delivering the required output power (kW) and discharge current (C-rate). Even if a battery stores enough energy, it may not be able to safely supply the power demanded by the connected loads, resulting in BMS protection, inverter alarms, or system shutdowns.",
+                    ],
+                    "images": [
+                                    {
+                                        "src":"images/a wrong battery for the load.png",
+                                        "alt": "image for what happens if using wrong battery for the load",
+                                    },
+                ],
+               }, 
+               {
+                    "heading":"Example 2 - State of Charge (SOC) Drops Too Quickly",
+                    "paragraphs": [
+                        "This example shows that rapid SOC reduction does not automatically indicate a faulty battery. High loads, incorrect inverter settings, poor cable connections, incorrect battery configuration, or inaccurate SOC calibration can all cause the battery percentage to fall faster than expected.",
+                    ],
+                    "images": [
+                        {
+                            "src":"images/SOC DROPS TOO FAST.png",
+                            "alt": "image for what causes soc to drop fast",
+                        }
+                    ]
+               },
+               { "heading":"Example 3 - Battery Never Reaches 100%",
+                    "paragraphs": [
+                        "This example explains why a battery that never reaches a full charge may gradually develop inaccurate SOC readings and reduced backup performance. In many cases, the cause is not the battery itself, but incorrect charging settings, insufficient PV generation, excessive daytime loads, communication issues, or system configuration.",
+                    ],
+                    "images": [
+                        {
+                            "src":"images/BATTERY NEVER REACHES 100%.png",
+                            "alt": "image for what makes battery not reach 100%",
+                        }
+                    ]
+               },
+               {
+                    "heading":"Key Installer Lesson",
+                    "paragraphs": [
+                        "Every example in this section demonstrates the same principle:",
+                    ],
+               },
+               {
+                 "heading": "A battery can only perform as well as the system around it.",
+                 "paragraphs": [
+                     "Battery performance depends not only on the battery itself, but also on:",
+                 ],
+                  "bullets": [
+                        "Selecting the correct battery for the application",
+                        "Matching the battery to the inverter and expected loads",
+                        "Applying the correct settings",
+                        "Ensuring reliable communication between devices",
+                        "Maintaining a high-quality installation",
+                ],
+                "paragraphs_after": [
+                        "Professional installers do not immediately assume the battery is faulty. Instead, they understand how battery concepts such as SOC, DoD, C-rate, efficiency, and the BMS influence system behaviour and use this knowledge to diagnose the root cause of a problem.",
+                        "Remember: The best installers do not just replace components - they understand why the system is behaving the way it is and resolve the underlying cause. A well-designed, correctly configured, and professionally installed system delivers reliable performance, maximises battery lifespan, and results in satisfied customers.",
+                ],
+               },
+
+            ],    
            
         },
         {
@@ -2155,12 +2920,18 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                     "src":"images/BATTERY DOES NOT NEED TO BE ON TO BE DANGEROUS.png",
                     "alt": "image (BATTERY DOES NOT NEED TO BE ON TO BE DANGEROUS.png) for battery can be dangerous even when off.",
                 },
+                
+            ],
+           
+        },
+        {
+            "title": " Wrapping Up Module 3",
+            "images": [
                  {
                     "src":"images/WRAPPING UP MODULE 3.png",
                     "alt": "image (WRAPPING UP MODULE 3).",
                 },
             ],
-           
         },
     ],
 }
@@ -2519,14 +3290,20 @@ MODULE_4_BMS = {
                 "",
                 "In simple terms, the BMS exists to keep the battery safe, stable, efficient, and reliable while maximizing its performance and lifespan.",
                 "",
-                "Think of the BMS as a combination of:",
+               
             ],
-            "bullets": [
-                "A doctor (health monitoring)",
-                "A security guard (blocking danger)",
-                "A manager (controlling limits)",
-                "A translator (communicating with the inverter)",
-            ],
+            "subsections":[
+              {
+                 "heading": "Think of the BMS as a combination of:",
+                 "bullets": [
+                     "A doctor (health monitoring)",
+                    "A security guard (blocking danger)",
+                    "A manager (controlling limits)",
+                    "A translator (communicating with the inverter)",
+                ],  
+              },  
+            ]
+           
         },
         {
             "title": "4.4 What the BMS Monitors",
@@ -2585,7 +3362,7 @@ MODULE_4_BMS = {
                             ],
                         },
                     ],
-                    "paragraphs_mid": [
+                    "paragraphs_footer": [
                         "Cell balancing works the same way inside the battery.",
                         "The BMS constantly checks each cell and helps ensure that no individual cell moves too far away from the others.",
                     ],
@@ -2684,21 +3461,20 @@ MODULE_4_BMS = {
             "paragraphs": [
                 "When the BMS trips, it’s not a fault — it’s protection.",
                 "The BMS will shut down if it detects:",
-            ],
-            "bullets": [
-                "❗ Overvoltage",
-                "Charging pushed too high (wrong inverter settings).",
+                 "❗ Overvoltage",
+                                "Charging pushed too high (wrong inverter settings).",
                 "❗ Undervoltage",
                 "Battery drained too far.",
                 "❗ Overtemperature",
-                "Hot environment or poor airflow ",
-                "❗ Undertemperature",
-                "Charging at sub-zero temperatures.",
-                "❗ Overcurrent",
+                 "Hot environment or poor airflow ",
+                 "❗ Undertemperature",
+                 "Charging at sub-zero temperatures.",
+                 "❗ Overcurrent",
                 "Load exceeds battery capability ",
                 "❗ Short circuit",
                 "Instant disconnect for safety.",
             ],
+           
             "images": [
                 {
                     "src": "images/the bms will always choose.png",
@@ -2781,7 +3557,7 @@ MODULE_4_BMS = {
                         "nuisance alarms, or",
                         "unstable system behaviour.",
                     ],
-                    "paragraphs_final": [
+                    "paragraphs_before": [
                         "Proper protocol compatibility ensures that all devices in the system can communicate effectively and operate safely, efficiently, and reliably together.",
                     ],
                     "images": [
@@ -2816,7 +3592,7 @@ MODULE_4_BMS = {
                         "improve system stability",
                         "prevent one battery from working harder than the others",
                     ],
-                    "paragraphs_final": [
+                    "paragraphs_before": [
                         "In most parallel battery systems, one battery is automatically assigned as the master battery. The master battery communicates with the inverter and coordinates the operation of the other batteries, commonly referred to as slave batteries.",
                         "The slave batteries then follow the instructions and operating parameters of the master battery so that the entire battery bank functions as one unified system.",
                         "Without proper battery-to-battery communication, the batteries may not share load evenly, charging may become inconsistent, alarms may occur more frequently, and overall system performance and battery lifespan may be reduced.",
@@ -2837,51 +3613,61 @@ MODULE_4_BMS = {
                 "State of Charge, or SOC, is the battery’s estimated “fuel level”, similar to the fuel gauge in a vehicle. It tells the user approximately how much usable energy remains in the battery, usually shown as a percentage from 0% to 100%.",
                 "Calculating SOC accurately in a lithium battery is actually quite complex.  Unlike a fuel tank, you cannot simply “look inside” the battery to see how full it is.  Instead, the BMS uses a combination of measurements, calculations, and historical data to estimate the battery’s charge level as accurately as possible.",
             ],
-            "paragraphs_after": [
-                "The BMS Uses Multiple Factors",
-                "The BMS constantly monitors and calculates:",
-            ],
-            "bullets_after": [
-                "voltage ",
-                "current flow ",
-                "charging and discharge activity ",
-                "battery temperature ",
-                "cell behaviour ",
-                "historical energy usage ",
-            ],
-            "paragraphs_after2": [
-                "It then combines all this information to estimate the remaining battery capacity.",
-                "",
-                "Coulomb Counting – Tracking Energy In and Out",
-                "One of the main methods used is called coulomb counting.",
-            ],
-            "paragraphs_after3": [
-                "This means the BMS continuously measures:",
-                "• how much energy goes into the battery during charging ",
-                "• how much energy leaves during discharge ",
-            ],
+
+            
             "subsections": [
+                {"heading": "The BMS Uses Multiple Factors",
+                 "paragraphs": [
+                                 
+                    "The BMS constantly monitors and calculates:",
+                 ],
+                  "bullets": [
+                    "voltage ",
+                    "current flow ",
+                    "charging and discharge activity ",
+                    "battery temperature ",
+                    "cell behaviour ",
+                    "historical energy usage ",
+                ],
+                  "paragraphs_footer": [
+                      "It then combines all this information to estimate the remaining battery capacity."
+                  ],
+                },
                 {
-                    "heading": "Think of it like tracking money in a bank account:",
-                    "bullets": [
-                        "deposits increase the balance",
-                        "withdrawals reduce the balance",
+                    "heading": "Coulomb Counting – Tracking Energy In and Out",
+                    "paragraphs": [
+                        "One of the main methods used is called coulomb counting.",
                     ],
-                    "paragraphs_after": [
-                        "The BMS does something very similar with battery energy.",
+                    "paragraphs_after":[
+                        "This means the BMS continuously measures:"
+                    ],
+                    "bullets_after": [
+                        "how much energy goes into the battery during charging ",
+                        "how much energy leaves during discharge ",
+                    ],
+                    "paragraphs_before": [
+                        "Think of it like tracking money in a bank account:"
+                    ],
+                    "bullets_before":[
+                        "deposits increase the balance ",
+                        "withdrawals reduce the balance "
+                    ],
+                    "paragraphs_under":[
+                        "The BMS does something very similar with battery energy."
                     ],
                     "images": [
                         {
                             "src": "images/imagine a 100ah.png",
                             "alt": "image of imagine a 100ah battery.png",
                         },
-                    ]
+                    ],
                 },
                 {
                     "heading": "Why Voltage Alone Cannot Determine SOC",
                     "paragraphs": [
                         "Many people assume battery voltage directly indicates how full the battery is, but lithium batteries behave differently from older battery technologies.",
-                        "A lithium battery can maintain a very similar voltage across a large portion of its charge range. This means:",
+                        "A lithium battery can maintain a very similar voltage across a large portion of its charge range. ",
+                        "This means:"
                     ],
                     "bullets": [
                         "a battery at 80% SOC",
@@ -2947,7 +3733,7 @@ MODULE_4_BMS = {
                         "charging problems",
                         "poor system behaviour",
                     ],
-                    "paragraphs_final": [
+                    "paragraphs_before": [
                         "The BMS therefore plays a critical role in ensuring the SOC displayed to the user is as accurate and reliable as possible.",
                     ],
                 },
@@ -2989,7 +3775,7 @@ MODULE_4_BMS = {
             ],
             "subsections": [
                 {
-                    "heading": "Key First Step",
+                    "heading": "",
                     "paragraphs": [
                         "When a protection event occurs, the first step is always to identify and correct the cause of the fault before attempting to reset the battery.",
                     ],
@@ -3130,52 +3916,84 @@ MODULE_4_BMS = {
         {
             "title": "4.11 Practical Installer Examples",
             "paragraphs": [
+                "Understanding what the Battery Management System (BMS) does in theory is only the first step. ",
+                "Professional installers must also understand how the BMS behaves in real installations and why it responds the way it does.",
                 "",
+                "Many installers assume that a warning, alarm or shutdown means the battery has failed. In reality, the opposite is often true. ",
+                "",
+                "Most BMS warnings and protective actions indicate that the BMS is doing exactly what it was designed to do, protecting the battery from unsafe operating conditions before permanent damage occurs.",
+                "",
+                "The following examples are based on common situations encountered in the field. Each example ",
+                "explains:"
+                
+                
             ],
-             "images": [
-                        {
-                            "src": "images/over c trip.png",
-                            "alt": "image of important installer considerations.png",
-                        },
-                        {
-                            "src": "images/soc drop trip.png",
-                            "alt": "image of important installer considerations.png",
-                        },
-                        {
-                            "src": "images/overvoltage warning.png",
-                            "alt": "image of important installer considerations.png",
-                        },
-                        {
-                            "src": "images/temperature shutdown.png",
-                            "alt": "image of important installer considerations.png",
-                        },
-                        {
-                            "src": "images/low voltage protec.png",
-                            "alt": "image of important installer considerations.png",
-                        },
-                        {
-                            "src": "images/short circuit.png",
-                            "alt": "image of important installer considerations.png",
-                        },
-                    ],
+            "bullets": [
+                "the operating scenario ",
+                "how the BMS detects the problem ",
+                "why the protection was triggered ",
+                "the most likely causes ",
+                "what to inspect during fault-finding ",
+                "how to resolve the issue correctly. "
+            ],
+            "paragraphs_before": [
+                'As you work through these examples, think like a professional installer. Rather than asking, "Why did the battery shut down?", ask "What condition did the BMS detect that required it to protect the battery?" ',
+                "",
+                "",
+                "Understanding this difference will help you diagnose faults more accurately, reduce unnecessary battery replacements, and build safer, more reliable energy storage systems.",
+                ""
+            ],
+            "images": [
+                {
+                    "src": "images/over c trip.png",
+                    "alt": "image of important installer considerations.png",
+                },
+                {
+                    "src": "images/soc drop trip.png",
+                    "alt": "image of important installer considerations.png",
+                },
+                {
+                    "src": "images/overvoltage warning.png",
+                    "alt": "image of important installer considerations.png",
+                },
+                {
+                    "src": "images/temperature shutdown.png",
+                    "alt": "image of important installer considerations.png",
+                },
+                {
+                    "src": "images/low voltage protec.png",
+                    "alt": "image of important installer considerations.png",
+                },
+                {
+                    "src": "images/short circuit.png",
+                    "alt": "image of important installer considerations.png",
+                },
+            ],
         },
         {
             "title": "4.12 Installer Rules When Working With BMS-Based Batteries",
             "paragraphs": [
                 "",
             ],
-               "images": [
-                   {
-                      "src": "images/installer rule when working with bms.png",
-                      "alt": "image of installer rules when working with bms based batteries.png",
-                   },
-                   {
-                      "src": "images/wrapping up module 4.png",
-                      "alt": "image of installer rules when working with bms based batteries.png",
-                   },
-
-               ],
+            "images": [
+                {
+                    "src": "images/installer rule when working with bms.png",
+                    "alt": "image of installer rules when working with bms based batteries.png",
+                },
+                
+            ],
         },
+        {
+            "title": "Wrapping Up Module 4",
+            "images": [
+                {
+                    "src": "images/wrapping up module 4.png",
+                    "alt": "image of wrapping up module 4.png", 
+                },
+            ],
+            
+        },
+
     ],
 }
 
@@ -3500,7 +4318,11 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                 "efficient energy usage",
                 "reduced faults and downtime",
             ],
-            "bullets_after": [
+            "paragraphs_before": [
+                "Poor system design can lead to:"
+
+            ],
+            "bullets_before": [
                 "nuisance tripping",
                 "overheating",
                 "incorrect charging",
@@ -3520,9 +4342,24 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                 {
             "title": "5.3 Step 1 — Load Assessment: Understanding What Must Be Powered",
             "paragraphs": [
+                "",
                 "The first and most important step in designing any battery or solar system is understanding exactly what the system needs to power. This process is called a load assessment.",
-                "A load assessment helps determine how much power the system must supply, how long the system must run, which appliances are critical, and how large the inverter and battery bank need to be.",
+                "A load assessment helps determine:",
             ],
+            "bullets": [
+                "how much power the system must supply",
+                "how long the system must run",
+                "which appliances are critical",
+                "how large the inverter and battery bank need to be"
+            ],
+            "paragraphs_before": [
+                "Without a proper load assessment, the system may end up:"
+            ],
+            "bullets_before": [
+                "too small and unable to support the required loads ",
+                "or unnecessarily oversized and far more expensive than needed"
+            ],
+            
             "subsections": [
                 {
                     "heading": "What is a 'Load'?",
@@ -3609,8 +4446,14 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                             "bullets_after": [
                                 "150W",
                             ],
+                            "paragraphs_before": [
+                                "But during startup: ",
+                                
+                            ],
+                            "bullets_before": [
+                                "it may briefly draw 600W or more."
+                            ],
                             "paragraphs_footer": [
-                                "But during startup it may briefly draw 600W or more.",
                                 "The inverter must be able to handle these short startup surges.",
                             ],
                         },
@@ -3671,10 +4514,10 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                                 "pool pumps",
                                 "large air conditioners",
                             ],
-                            "paragraphs_after": [
+                            "paragraphs_before": [
                                 "Excluding unnecessary loads helps:",
                             ],
-                            "bullets_after": [
+                            "bullets_before": [
                                 "reduce system cost",
                                 "improve runtime",
                                 "reduce battery stress",
@@ -3715,7 +4558,7 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "solar expansion",
                         "changing customer needs",
                     ],
-                    "paragraphs_after": [
+                    "paragraphs_before": [
                         "A system designed too tightly may become limiting later.",
                     ],
                     "images": [
@@ -3747,126 +4590,173 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
             "paragraphs_after": [
                 "While inverter sizing is mainly based on power (kW), battery sizing is mainly based on energy storage capacity, usually measured in kilowatt-hours (kWh).",
             ],
-            "subsections": {
-                "Understanding the Difference Between kW and kWh": {
+            "subsections": [
+                 {
+                   "heading": "Understanding the Difference Between kW and kWh",
+                   "paragraphs": [
+                       "This is one of the most important concepts in battery system design.",
+                   ],
+                 },
+                 {
+                   "heading": "KW(Kilowatts) =Power",
+                   "paragraphs": [
+                       "This refers to:",
+                   ],
+                   "bullets": [
+                       "how much power is being used at a specific moment "     
+                       
+                   ],
+                   "paragraphs_after": [
+                       "Think of it like:"
+                   ],
+                   "bullets_after": [
+                       "the speed of a vehicle ",
+                       "or how hard the engine is working"
+                   ],
+                 },
+                  {
+                   "heading": "kWh (Kilowatt-hours) = Energy",
+                   "paragraphs": [
+                       "This refers to:",
+                   ],
+                   "bullets": [
+                       "how much energy is used over time "     
+                       
+                   ],
+                   "paragraphs_before": [
+                       "Think of it like:"
+                   ],
+                   "bullets_before": [
+                       
+                       "how much fuel the vehicle uses during the trip"
+                   ],
+                   "images": [ 
+                        {
+                            "src": "images/energy usage explained.png",
+                            "alt": "",
+                        },
+                   ],
+
+                 },
+                 {
+                  "heading": "Simple Formula",
                     "paragraphs": [
-                        "This is one of the most important concepts in battery system design.",
+                        "Backup energy requirement is calculated as:"
                     ],
-                    "subsections": {
-                        "kW (Kilowatts) = Power": {
-                            "paragraphs": [
-                                "This refers to how much power is being used at a specific moment.",
-                            ],
-                            "bullets": [
-                                "Think of it like the speed of a vehicle",
-                                "or how hard the engine is working",
-                            ],
-                        },
-                        "kWh (Kilowatt-hours) = Energy": {
-                            "paragraphs": [
-                                "This refers to how much energy is used over time.",
-                            ],
-                            "bullets": [
-                                "Think of it like how much fuel the vehicle uses during the trip",
-                            ],
-                        },
-                    },
-                },
-                "Simple Formula": {
+                 },
+                 {
+                  "heading": "Power (kW) × Time (Hours) = Energy Required (kWh)",
                     "paragraphs": [
-                        "Backup energy requirement is calculated as:",
+                        ""
+                    ],
+                    "images": [
+                        {
+                            "src": "images/load,runtime,enrgy used.png",
+                            "alt": ""
+                        },
+                         {
+                            "src": "images/example system sizing.png",
+                            "alt": ""
+                        },
+                    ],
+                 },
+                 {
+                    "heading": "Why Backup Time Requirements Are So Important",
+                    "paragraphs": [
+                        "",
+                        "Two customers may have exactly the same loads but completely different battery requirements depending on how long they want backup power.",
+                        "Customer A – Required backup time of 2 hours for a 1kW load",
+                        "Customer B – Required backup time of 10 hours for a 1kW load",
+                        "",
+                        "Even though the load is identical:"
                     ],
                     "bullets": [
-                        "Power (kW) × Time (Hours) = Energy Required (kWh)",
+                        "Customer B needs a much larger battery bank "
                     ],
-                },
-                "Why Backup Time Requirements Are So Important": {
-                    "paragraphs": [
-                        "Two customers may have exactly the same loads but completely different battery requirements depending on how long they want backup power.",
-                    ],
-                    "subsections": {
-                        "Example Comparison": {
-                            "paragraphs": [
-                                "Customer A requires 2 hours of backup for a 1kW load",
-                                "Customer B requires 10 hours of backup for a 1kW load",
-                                "Even though the load is identical, Customer B needs a much larger battery bank",
-                            ],
+                    "images": [
+                        {
+                            "src":"images/this is why backup time directly.png",
+                            "alt":""
                         },
-                    },
-                },
-            },
+                    ],
+                 },
+             ],
+            
         },
         {
             "title": "5.5 Step 3 — Select the Correct Battery Size",
             "paragraphs": [
                 "Once the load assessment and backup time requirements have been calculated, the next step is selecting the correct battery size.",
                 "This is one of the most important parts of system design because the battery determines how much energy the system can store and how long the loads can operate during a power outage.",
-                "The battery must be correctly sized to:",
+                "The battery must be correctly sized to:"
             ],
             "bullets": [
                 "support the required loads",
                 "provide the required backup time",
                 "operate safely within its limits",
                 "allow for future expansion where necessary",
-                "avoid excessive battery stress",
+                "avoid excessive battery stress"
             ],
             "subsections": [
                 {
-                    "heading": "Battery Size Scenarios",
-                    "subsections": [
-                        {
-                            "heading": "If the battery is too small:",
-                            "bullets": [
-                                "runtime will be shorter than expected",
-                                "the battery may discharge too quickly",
-                                "the system may shut down prematurely",
-                                "battery lifespan may reduce due to excessive cycling",
-                            ],
-                        },
-                        {
-                            "heading": "If the battery is too large:",
-                            "bullets": [
-                                "system cost increases unnecessarily",
-                                "charging times may become longer",
-                                "the customer may pay for unused capacity",
-                            ],
-                        },
+                    
+                    "paragraphs":[
+                        "If the battery is too small:",
                     ],
-                    "paragraphs_after": [
-                        "The goal is therefore to select a battery size that is practical, efficient, reliable, and suitable for the customer's actual needs.",
+                    "bullets": [
+                        "runtime will be shorter than expected",
+                        "the battery may discharge too quickly",
+                        "the system may shut down prematurely",
+                        "battery lifespan may reduce due to excessive cycling"
+                    ]
+                },
+                {
+                    
+                    "paragraphs":[
+                        "If the battery is too large:"
                     ],
+                    "bullets": [
+                        "system cost increases unnecessarily",
+                        "charging times may become longer",
+                        "the customer may pay for unused capacity"
+                    ]
+                },
+                {
+                    "paragraphs": [
+                        "The goal is therefore to select a battery size that is practical, efficient, reliable, and suitable for the customer’s actual needs."
+                    ]
                 },
                 {
                     "heading": "Battery Capacity is Measured in kWh",
                     "paragraphs": [
-                        "Battery size is usually measured in:",
+                        "Battery size is usually measured in:"
                     ],
                     "bullets": [
-                        "kilowatt-hours (kWh)",
+                        "kilowatt-hours (kWh)"
                     ],
                     "paragraphs_after": [
-                        "This represents:",
+                        "This represents:"
                     ],
                     "bullets_after": [
-                        "how much energy the battery can store",
+                        "how much energy the battery can store"
                     ],
-                    "paragraphs_footer": [
-                        "The larger the kWh rating:",
+                    "paragraphs_before": [
+                        "The larger the kWh rating:"
                     ],
-                    "bullets_footer": [
-                        "the longer the system can run the loads",
+                    "bullets_before": [
+                        "the longer the system can run the loads"
                     ],
-                    "images": [
+                    "images" : [
                         {
                             "src" : "images/load assesment requred runtime.png",
-                            "alt" : "",
+                            "alt" : "the image of load assesment",
                         },
                     ],
                 },
                 {
                     "heading": "Why Additional Capacity is Important",
                     "paragraphs": [
-                        "Real-world systems must account for:",
+                        "Real-world systems must account for:"
                     ],
                     "bullets": [
                         "inverter losses",
@@ -3875,57 +4765,58 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "battery aging",
                         "temperature effects",
                         "future expansion",
-                        "depth of discharge limits",
+                        "depth of discharge limits"
                     ],
                     "paragraphs_after": [
-                        "This means installers usually recommend a slightly larger battery than the minimum calculated requirement.",
+                        "This means installers usually recommend a slightly larger battery than the minimum calculated requirement."
+                    ]
+                },
+                {
+                    "heading": "",
+                    "paragraphs": [
+                        "Although the calculation shows:"
                     ],
-                    "subsections": [
-                        {
-                            "heading": "Example: From Calculation to Real-World Recommendation",
-                            "paragraphs": [
-                                "Although the calculation shows:",
-                            ],
-                            "bullets": [
-                                "approximately 2kWh required",
-                            ],
-                            "paragraphs_after": [
-                                "An installer may recommend:",
-                            ],
-                            "bullets_after": [
-                                "a 5kWh battery",
-                            ],
-                            "paragraphs_footer": [
-                                "Why? Because the larger battery:",
-                            ],
-                            "bullets_footer": [
-                                "reduces battery stress",
-                                "improves runtime stability",
-                                "allows for future load growth",
-                                "provides reserve capacity",
-                                "improves battery lifespan",
-                            ],
-                        },
+                    "bullets": [
+                        "approximately 2kWh required"
                     ],
+                    "paragraphs_after": [
+                        "An installer may recommend:"
+                    ],
+                    "bullets_after": [
+                        "a 5kWh battery"
+                    ],
+                    "paragraphs_footer": [
+                        "Why?"
+                    ],
+                    "paragraphs_extra": [
+                        "Because the larger battery:"
+                    ],
+                    "bullets_extra": [
+                        "reduces battery stress",
+                        "improves runtime stability",
+                        "allows for future load growth",
+                        "provides reserve capacity",
+                        "improves battery lifespan"
+                    ]
                 },
                 {
                     "heading": "Matching Battery Size to Inverter Size",
                     "paragraphs": [
-                        "The battery must also be suitable for the inverter's power requirements.",
-                        "A very large inverter connected to a very small battery may:",
+                        "The battery must also be suitable for the inverter’s power requirements.",
+                        "A very large inverter connected to a very small battery may:"
                     ],
                     "bullets": [
                         "overload the battery",
                         "exceed discharge limits",
-                        "trigger BMS protection events",
+                        "trigger BMS protection events"
                     ],
                     "paragraphs_after": [
-                        "The battery and inverter must therefore be correctly matched.",
-                    ],
-                },
+                        "The battery and inverter must therefore be correctly matched."
+                    ]
+                }
             ],
         },
-                {
+        {
             "title": "5.6 Step 4 — Select the Correct Inverter Size",
             "paragraphs": [
                 "Once the battery size has been determined, the next step is selecting the correct inverter size.",
@@ -3941,10 +4832,12 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
             ],
             "subsections": [
                 {
-                    "heading": "Inverter Size Scenarios",
+                    "heading": "",
                     "subsections": [
                         {
-                            "heading": "If the inverter is too small:",
+                            "paragraphs":[
+                                "If the inverter is too small:"
+                            ],
                             "bullets": [
                                 "it may overload",
                                 "trip during operation",
@@ -3953,17 +4846,20 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                             ],
                         },
                         {
-                            "heading": "If the inverter is too large:",
+                             "paragraphs":[
+                                "If the inverter is too large:"
+                             ],
                             "bullets": [
                                 "system cost increases unnecessarily",
                                 "efficiency at low loads may reduce",
                                 "the battery may not be able to support the inverter properly",
                             ],
+                              "paragraphs_footer": [
+                                  "The goal is to select an inverter that matches the real power requirements of the system while allowing reasonable operating headroom.",
+                    ],
                         },
                     ],
-                    "paragraphs_after": [
-                        "The goal is to select an inverter that matches the real power requirements of the system while allowing reasonable operating headroom.",
-                    ],
+                  
                 },
                 {
                     "heading": "Understanding Inverter Size",
@@ -3980,13 +4876,13 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                     "bullets_after": [
                         "how much power the inverter can supply at a specific moment",
                     ],
-                    "paragraphs_footer": [
+                    "paragraphs_before": [
                         "Unlike battery sizing, which is mainly based on runtime and energy storage (kWh), inverter sizing is mainly based on instantaneous power demand.",
                     ],
                     "images" : [
                         {
                             "src" : "images/example inverter size.png",
-                            "alt" : "",
+                            "alt" : "image of inveter sizing",
                         },
                     ],
                 },
@@ -4010,6 +4906,11 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                             "heading": "Surge Rating",
                             "paragraphs": [
                                 "Some appliances draw much higher power when starting than during normal operation.",
+                                
+                            ],
+                        },   
+                        {
+                            "paragraphs":[
                                 "Examples include:",
                             ],
                             "bullets": [
@@ -4025,19 +4926,25 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                             "bullets_after": [
                                 "150W",
                             ],
-                            "paragraphs_footer": [
-                                "But during startup it may briefly draw 600W or more.",
+                            "paragraphs_before": [
+                                "But during startup:",
+                                
+                            ],
+                            "bullets_before": [
+                                "it may briefly draw 600W or more", 
+                            ],
+                            "paragraphs_under": [
                                 "This is called a surge load or startup current.",
                                 "The inverter must be capable of handling these short bursts of power without tripping or shutting down.",
-                            ],
+                                ],
                              "images" : [
                                  {
                                    "src" : "images/inverter may be rated.png",
-                                   "alt" : "",
+                                   "alt" : "image of inverter may be rated......",
                                  },
                             ],
 
-                        },
+                       },
                     ],
                 },
                 {
@@ -4134,10 +5041,12 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
             ],
             "subsections": [
                 {
-                    "heading": "Solar Array Size Scenarios",
+                    "heading": "",
                     "subsections": [
-                        {
-                            "heading": "If the solar array is too small:",
+                        { 
+                            "paragraphs":[
+                                "If the solar array is too small:",
+                            ],
                             "bullets": [
                                 "batteries may not fully recharge",
                                 "backup time may reduce",
@@ -4146,17 +5055,23 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                             ],
                         },
                         {
-                            "heading": "If the solar array is too large:",
+                             "paragraphs":[
+                                  "If the solar array is too large:",
+                             ],
                             "bullets": [
                                 "equipment limits may be exceeded",
                                 "unnecessary costs may increase",
                                 "the inverter or charge controller may limit excess production",
                             ],
                         },
-                    ],
-                    "paragraphs_after": [
+                        {  "paragraphs": [
                         "The goal is therefore to design a solar array that provides sufficient energy generation while remaining within the safe operating limits of the system.",
+                        ],
+
+                        }
+                       
                     ],
+                   
                 },
                 {
                     "heading": "Understanding Solar Panel Power",
@@ -4200,6 +5115,9 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "recharge the battery for nighttime use",
                         "compensate for system losses",
                     ],
+                   
+                },
+                {
                     "paragraphs_extra": [
                         "In practice, the solar array must therefore generate more than the exact daily usage figure.",
                     ],
@@ -4219,7 +5137,7 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                     "images" : [
                         {
                             "src" : "images/SOLAR SIZING EXAMPLE.png",
-                            "alt" : "",
+                            "alt" : "image of solar sizing examples ",
                         },
                     ],
                 },
@@ -4244,7 +5162,7 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                     "images" : [
                         {
                             "src" : "images/ALTHOUGH THE CALCULATIONS.png",
-                            "alt" : "",
+                            "alt" : "image:ALTHOUGH THE CALCULATIONS ",
                         },
                     ],
                 },
@@ -4305,13 +5223,13 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "reduce efficiency",
                         "trigger faults",
                     ],
-                    "paragraphs_footer": [
+                    "paragraphs_before": [
                         "This is why solar design calculations are extremely important.",
                     ],
                     "images": [
                         {
                             "src" : "images/EXAMPLE SOLAR SIZING.png",
-                            "alt" : "",
+                            "alt" : "image of solar sizing examples",
                         },
                     ],
                 },
@@ -4490,8 +5408,9 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                 "damaged terminals",
                 "fire risks",
             ],
-            "subsections": {
-                "Understanding Voltage Drop": {
+            "subsections": [
+                {
+                    "heading": "What is Voltage Drop?",
                     "paragraphs": [
                         "Voltage drop is the reduction in voltage that occurs as electricity travels through a cable.",
                         "As current flows through a cable:",
@@ -4502,12 +5421,16 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "some voltage is lost along the cable",
                     ],
                 },
-                "Impact of Cable Length and Current": {
+                {
                     "paragraphs": [
-                        "The longer the cable or the higher the current, the greater the voltage drop becomes.",
+                        "The longer the cable or the higher the current:",
+                    ],
+                    "bullets": [
+                        "the greater the voltage drop becomes."
                     ],
                 },
-                "Effects of Excessive Voltage Drop": {
+                {
+                    "heading": "Effects of Excessive Voltage Drop",
                     "paragraphs": [
                         "Excessive voltage drop can cause:",
                     ],
@@ -4520,7 +5443,8 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "unstable system operation",
                     ],
                 },
-                "Special Considerations for Battery Systems": {
+                {
+                    "heading": "Special Considerations for Battery Systems",
                     "paragraphs": [
                         "In battery systems, this becomes especially important because battery systems often operate at:",
                         "These conditions make proper cable sizing critical for reliable operation.",
@@ -4529,18 +5453,18 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "high current",
                         "relatively low voltage",
                     ],
-                    "images" : [
+                    "images": [
                         {
-                            "src" : "images/EVEN SMALL VOLTAGE LOSSES.png",
-                            "alt" : "Cable Sizing Illustration",
+                            "src": "images/EVEN SMALL VOLTAGE LOSSES.png",
+                            "alt": "Cable Sizing Illustration",
                         },
-                         {
-                            "src" : "images/EXAMPLE VOLTAGE DROP.png",
-                            "alt" : "Cable Sizing Illustration",
+                        {
+                            "src": "images/EXAMPLE VOLTAGE DROP.png",
+                            "alt": "Cable Sizing Illustration",
                         },
                     ],
                 },
-            },
+            ],
         },
         {
             "title": "5.10 Step 8 — Designing for Performance and Long Battery Life",
@@ -4560,8 +5484,9 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
             "paragraphs_after": [
                 "A poorly designed system may still function initially, but excessive stress, incorrect settings, or poor operating conditions can significantly shorten battery life over time.",
             ],
-            "subsections": {
-                "Batteries Perform Best Within Safe Operating Conditions": {
+            "subsections": [
+            {
+                "heading": "Batteries Perform Best Within Safe Operating Conditions", 
                     "paragraphs": [
                         "Lithium batteries are designed to operate within specific limits.",
                         "The BMS continuously protects the battery against:",
@@ -4576,8 +5501,9 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                     "paragraphs_after": [
                         "However, good system design aims to avoid these conditions altogether rather than relying on the BMS to constantly intervene.",
                     ],
-                },
-                "Avoid Constant High Stress": {
+            },
+            {
+                "heading": "Avoid Constant High Stress",
                     "paragraphs": [
                         "Batteries last longer when they are not constantly pushed to their limits.",
                         "A system designed too tightly may cause:",
@@ -4593,7 +5519,8 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "Over time, this increases battery wear and reduces lifespan.",
                     ],
                 },
-                "Depth of Discharge (DoD) Affects Lifespan": {
+                {
+                "heading": "Depth of Discharge (DoD) Affects Lifespan", 
                     "paragraphs": [
                         "Although lithium batteries support deep discharge, constantly operating at maximum depth of discharge increases stress on the cells.",
                         "For example:",
@@ -4614,7 +5541,8 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "to improve long-term performance.",
                     ],
                 },
-                "Temperature Has a Major Impact": {
+                {
+                    "heading": "Temperature Has a Major Impact",
                     "paragraphs": [
                         "Battery temperature significantly affects:",
                     ],
@@ -4642,7 +5570,8 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "suitable operating temperatures",
                     ],
                 },
-                "Proper Charging is Critical": {
+                {
+                    "heading": "Proper Charging is Critical",
                     "paragraphs": [
                         "Correct charging settings are essential for battery health.",
                         "Incorrect:",
@@ -4666,7 +5595,8 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "Good system design always follows manufacturer charging specifications.",
                     ],
                 },
-                "Correct Solar Sizing Improves Battery Health": {
+                {
+                "heading": "Correct Solar Sizing Improves Battery Health", 
                     "paragraphs": [
                         "A solar array that is too small may:",
                     ],
@@ -4685,7 +5615,8 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "stable system operation",
                     ],
                 },
-                "Cable Quality and Voltage Stability Matter": {
+                {
+                    "heading": "Cable Quality and Voltage Stability Matter",
                     "paragraphs": [
                         "Undersized cables and poor terminations can cause:",
                     ],
@@ -4704,7 +5635,8 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "system efficiency",
                     ],
                 },
-                "Communication Improves Long-Term Performance": {
+                {
+                    "heading": "Communication Improves Long-Term Performance",
                     "paragraphs": [
                         "Modern lithium systems rely heavily on proper communication between:",
                     ],
@@ -4722,7 +5654,7 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                         "accurate SOC calculations",
                         "stable system control",
                     ],
-                    "paragraphs_footer": [
+                    "paragraphs_before": [
                         "Poor communication can reduce overall system performance and battery lifespan.",
                     ],
                     "images": [
@@ -4733,42 +5665,183 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                     ],
                 },
                
-            },
+            ],
         },
         {
             "title": "5.11 Real-World System Design Examples",
             "paragraphs": [
                 "Understanding the theory behind system design is important, but seeing how these principles are applied in real-world situations makes the concepts far easier to understand.",
-                "Every installation is different, and factors such as load requirements, backup time expectations, budget, available space, and future expansion all influence the final system design.",
-                "The following examples demonstrate how system sizing and component selection may differ depending on the application, while highlighting the practical thinking and decision-making that goes into designing safe, reliable, and efficient battery and solar systems.",
+                "Every battery energy storage system is designed around the customer's specific needs. While the design process remains the same, the final system can vary significantly depending on factors ",
+                "such as:",
+
             ],
-            "images": [
-                {
-                    "src": "images/SMALL HOUSE BACKUP.png",
-                    "alt": "Real-World System Design Example",
+            "bullets":[
+               "the type of application ",
+               "the loads that must be powered ",
+               "required backup time ",
+               "available solar generation ",
+               "budget ",
+               "installation space ",
+               "future expansion requirements. "
+            ],
+            "paragraphs_after":[
+                 "A professional installer does not simply select a battery and inverter. They analyse the customer's energy requirements, calculate the expected loads, determine the required runtime, and then ",
+                 "select components that work together safely, efficiently and reliably.",
+                 "The following examples demonstrate how the same design principles are applied across a variety of residential, commercial and industrial applications. As you review each example, pay attention ",
+                 "to:"
+                
+            ],
+            "bullets_after":[
+                "the design goals ",
+                "the critical loads being supported ",
+                "how the battery, inverter and solar array have been sized ",
+                "the expected system performance ",
+                "the practical design considerations ",
+                "how the system could be expanded in the future. "
+            ],
+            "paragraphs_before":[
+                "These examples are intended to demonstrate the design process rather than provide fixed system ",
+                "templates. Every installation is unique, but the engineering principles remain the same."
+            ],
+            "subsections":[
+                {"heading": "Example 1 – Small Home Backup System",
+                 "paragraphs":[
+                    "This example illustrates a basic residential backup system designed to keep essential household appliances operating during power outages. The emphasis is on simplicity, reliability and cost-",
+                    "effective backup for everyday loads.",
+                    "As you study this design, notice how the battery capacity, inverter size and solar array are matched to relatively small continuous loads and longer runtime requirements.",  
+                 ],
+                  "images": [
+                                 {
+                                     "src": "images/SMALL HOUSE BACKUP.png",
+                                     "alt": "Real-World System Design Example",
+                                 },
+                  ],
+
                 },
-                 {
-                    "src": "images/MEDIUM HOME BACKUP.png",
-                    "alt": "Real-World System Design Example",
+                { "heading":"Example 2 – Medium Home Backup System",
+                  "paragraphs":[
+                      "This example demonstrates a larger residential installation supporting additional household appliances and higher daily energy demand. Compared with the previous example, larger battery ",
+                      "storage and inverter capacity are required while maintaining efficient system operation.",
+                      "",
+                      "",
+                      "Observe how increasing the number of appliances affects every major design decision."
+                      
+                  ],
+                  "images": [
+                      {
+                        "src": "images/MEDIUM HOME BACKUP.png",
+                        "alt": "Real-World System Design Example",
+                    },
+                  ],
+
                 },
-                 {
-                    "src": "images/LARGE HOME BACKUP.png",
-                    "alt": "Real-World System Design Example",
+                { "heading": "Example 3 – Large Home Backup System",
+                  "paragraphs":[
+                      "This example shows a whole-home backup solution designed for larger properties with higher energy consumption. Multiple high-power appliances and larger surge loads require careful sizing ",
+                      "of the inverter, battery bank and solar array.",
+                      "",
+                      "Notice how the design balances high performance with future scalability and long-term system reliability."
+                  ],
+                  "images":[
+                      {
+                        "src": "images/LARGE HOME BACKUP.png",
+                        "alt": "Real-World System Design Example",
+                    }, 
+                  ],
+
                 },
-                 {
-                    "src": "images/OFFICE BACKUP.png",
-                    "alt": "Real-World System Design Example",
+                { "heading":"Example 4 – Office Backup System",
+                  "paragraphs":[
+                      "Business continuity is the primary objective of this design. Critical office equipment such as computers, servers, networking equipment, lighting and communication systems are prioritised to ",
+                      "minimise downtime during power outages.",
+                      "",
+                      "Consider how commercial installations often focus on protecting productivity rather than powering every electrical load."
+                  ],
+                  "images":[
+                      {
+                        "src": "images/OFFICE BACKUP.png",
+                        "alt": "Real-World System Design Example",
+                     },
+                  ],
+                    
                 },
-                 {
-                    "src": "images/RESTURANT BACKUP.png",
-                    "alt": "Real-World System Design Example",
+                { "heading" :"Example 5 – Restaurant Backup System",
+                  "paragraphs":[
+                      "Restaurants place greater demands on backup systems because refrigeration, food preparation equipment, lighting and point-of-sale systems are business-critical. Larger continuous and surge ",
+                      "loads require careful component selection and appropriate battery capacity.",
+                      "",
+                      "",
+                      "Observe how maintaining operations and protecting refrigerated stock become key design priorities."
+
+                  ],
+                  "images":[
+                     {
+                        "src": "images/RESTURANT BACKUP.png",
+                        "alt": "Real-World System Design Example",
+                    },  
+                  ],
+
                 },
-                 {
-                    "src": "images/COMMERCIAL BESS.png",
-                    "alt": "Real-World System Design Example",
+                { "heading":"Example 6 – Commercial BESS Solution",
+                  "paragraphs":[
+                      "This example introduces a commercial Battery Energy Storage System (BESS) designed for industrial and utility-scale applications. Unlike residential backup systems, these installations may ",
+                      "provide peak shaving, demand management, renewable energy integration, grid support and energy arbitrage in addition to backup power.",
+                      "",
+                      "",
+                      "Notice how the scale of the system changes dramatically, but the same fundamental design principles still apply—correct sizing, system protection, efficiency, reliability and future scalability.",
+                      ""
+                  ],
+                  "images":[
+                      {
+                            "src": "images/COMMERCIAL BESS.png",
+                            "alt": "Real-World System Design Example",
+                    },
+                  ],
+                  
+
                 },
+                { "heading":"Key Design Lessons",
+                  "paragraphs":[
+                        "Although these systems vary greatly in size and application, they all follow the same design process:",
+                 ],
+                 "paragraphs_after":[
+                     "1.Understand the customer's operational requirements. ",
+                     "2.Identify the critical loads. ",
+                     "3.Calculate continuous and surge power demand. ",
+                     "4.Determine the required backup duration. ",
+                     "5.Size the battery bank to provide sufficient usable energy. ",
+                     "6.Select an appropriately rated inverter. ",
+                     "7.Size the solar array to recharge the batteries and support ongoing energy needs. ",
+                     "8.Design for safety, efficiency, reliability and future expansion. ",
+                 ],
+                
+                 
+
+                },
+
+                {"heading":"",
+                  "paragraphs":[
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "The difference between a small residential backup system and a large commercial BESS is not the design methodology—it is the scale of the application. Professional installers apply the same ",
+                        "engineering principles to every installation, regardless of size.",
+                                      "",
+                                      "",
+                                      "",
+                       "Remember: Successful system design is not about installing the biggest battery or the largest inverter. It is about designing a balanced system where every component is correctly matched to ",
+                       "the customer's energy requirements, operational goals and future needs."
+                                      ],
+
+                },
+                 
+                 
             ],
 
+            
+        
         },
         {
             "title": "5.12 Common Mistakes Installers Must Avoid",
@@ -4781,13 +5854,19 @@ MODULE_5_ENERGY_SYSTEM_DESIGN = {
                 {
                     "src": "images/COMMON MISTAKES INSTALLER MUST AVOID.png",
                     "alt": "Common Mistakes in System Design",
-                },
-                 {
+                }, 
+
+            ],
+
+        },
+        { "title": "Wrapping Up Module 5",
+           "images":[
+                {
                     "src": "images/WRAPPING UP MODULE 5.png",
                     "alt": "WRAPPING UP MODULE 5.",
                 },
+           ],
 
-            ],
         },
     ],
 }
@@ -5102,10 +6181,7 @@ MODULE_6_INSTALLATION_WIRING = {
         },
         {
             "title": "SECTION 1 — SITE ASSESSMENT & PRE-INSTALLATION PLANNING",
-            "paragraphs": [],
-        },
-        {
-            "title": "6.3 Why Site Assessment Matters",
+            "heading": "6.2 Why Site Assessment Matters",
             "paragraphs": [
                 "A good installation starts before tools come out.  Many installation problems are actually planning problems.",
                 "Poor site assessment often leads to:",
@@ -5129,7 +6205,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.4 Understanding the Customer Requirement",
+            "title": "6.3 Understanding the Customer Requirement",
             "paragraphs": [
                 "Before selecting equipment, the installer must first understand the customer's real needs.",
                 "Many customers initially say:",
@@ -5152,7 +6228,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.5 Identifying Essential vs Non-Essential Loads",
+            "title": "6.4 Identifying Essential vs Non-Essential Loads",
             "paragraphs": [
                 "One of the most important practical design decisions is identifying which loads require backup power.",
                 "Essential loads are the circuits the customer wants powered during outages e.g lights, TV, WiFi etc",
@@ -5174,7 +6250,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.6 DB Board Assessment",
+            "title": "6.5 DB Board Assessment",
             "paragraphs": [
                 "The DB board should also be checked during this process to confirm how the circuits are currently configured.  A poor DB often creates future problems regardless of how good the battery or inverter is.",
                 "The installer must check:",
@@ -5197,7 +6273,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.7 Battery & Inverter Placement",
+            "title": "6.6 Battery & Inverter Placement",
             "paragraphs": [
                 "Where the equipment is installed is just as important as the equipment itself.",
                 "REVOV lithium batteries perform best in cool, well-ventilated environments where airflow around the battery units is not restricted.",
@@ -5222,10 +6298,10 @@ MODULE_6_INSTALLATION_WIRING = {
                 "allow communication cable access",
                 "allow isolator access",
             ],
-            "paragraphs_extra": [
+            "paragraphs_before": [
                 "Inverter placement should also consider:",
             ],
-            "bullets_extra": [
+            "bullets_before": [
                 "short DC cable lengths",
                 "airflow",
                 "accessibility",
@@ -5235,12 +6311,12 @@ MODULE_6_INSTALLATION_WIRING = {
             "images" :[
                 {
                     "src" : "images/heat is one of the biggest causes.png",
-                    "alt" : "",
+                    "alt" : "image showing how bad heating can be",
                 },
             ],
         },
         {
-            "title": "6.8 Roof Assessment (Solar Systems)",
+            "title": "6.7 Roof Assessment (Solar Systems)",
             "paragraphs": [
                 "If solar is included, roof assessment becomes critical.",
                 "The installer should assess:",
@@ -5268,7 +6344,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.9 Cable Routing & Layout Planning",
+            "title": "6.8 Cable Routing & Layout Planning",
             "paragraphs": [
                 "Good cable routing improves:",
             ],
@@ -5301,7 +6377,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.10 Environmental & Safety Considerations",
+            "title": "6.9 Environmental & Safety Considerations",
             "paragraphs": [
                 "The installation environment directly affects system performance and lifespan.",
                 "The installer must assess:",
@@ -5319,16 +6395,16 @@ MODULE_6_INSTALLATION_WIRING = {
             "images" :[
                 {
                     "src" : "images/high-quality system installed in apoor.png",
-                    "alt" : "",
+                    "alt" : "image of high-quality system poor installation",
                 },
                  {
                     "src" : "images/Children pets and.jpg",
-                    "alt" : "",
+                    "alt" : "image of Children,pets",
                 },
             ],
         },
         {
-            "title": "6.11 Identifying Risks Before Installation",
+            "title": "6.10 Identifying Risks Before Installation",
             "paragraphs": [
                 "Professional installers identify risks before installation starts.  Common risks include:",
             ],
@@ -5349,15 +6425,17 @@ MODULE_6_INSTALLATION_WIRING = {
         },
         {
             "title": "SECTION 2 — INSTALLATION FUNDAMENTALS & BEST PRACTICES",
-            "paragraphs": [],
-        },
-        {
-            "title": "6.12 Installation Sequence",
+            "heading": "6.11 Installation Sequence",
             "paragraphs": [
                 "Professional installers follow a structured installation process.",
-                "Recommended sequence:",
+                "",
+                "",
+                "",
+                "",
+                
             ],
-            "numbered": [
+            "paragraphs_after":[
+                "Recommended sequence:",
                 "1. Confirm site assessment",
                 "2. Mark equipment positions",
                 "3. Install mounting structures",
@@ -5368,17 +6446,18 @@ MODULE_6_INSTALLATION_WIRING = {
                 "8. Terminate cables",
                 "9. Verify wiring",
                 "10. Perform final inspection",
-                "11. Prepare for commissioning",
+                "11. Prepare for commissioning"
             ],
+           
              "images" :[
                 {
                     "src" : "images/very important installer rule.png",
-                    "alt" : "",
+                    "alt" : "image of very important installer rule",
                 },
             ],
         },
         {
-            "title": "6.13 REVOV Battery Installation Best Practices",
+            "title": "6.12 REVOV Battery Installation Best Practices",
             "paragraphs": [
                 "REVOV batteries are intelligent lithium energy storage systems and must be installed correctly to ensure long-term performance and reliability.",
                 "Best practices include:",
@@ -5396,7 +6475,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.14 Inverter Installation Best Practices",
+            "title": "6.13 Inverter Installation Best Practices",
             "paragraphs": [
                 "The inverter is the control centre of the system.",
                 "Correct inverter installation improves:",
@@ -5424,7 +6503,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.15 DC Wiring Fundamentals",
+            "title": "6.14 DC Wiring Fundamentals",
             "paragraphs": [
                 "The DC side of the system is one of the highest-risk areas of the installation.",
                
@@ -5435,10 +6514,10 @@ MODULE_6_INSTALLATION_WIRING = {
                     "alt" : "",
                 },
             ],
-            "paragraphs_after": [
+            "paragraphs_footer": [
                  "Incorrect DC wiring can cause:",
             ],
-            "bullets": [
+            "bullets_footer": [
                 "overheating",
                 "fire risks",
                 "inverter damage",
@@ -5446,10 +6525,10 @@ MODULE_6_INSTALLATION_WIRING = {
                 "BMS trips",
                 "serious safety hazards",
             ],
-            "paragraphs_after": [
+            "paragraphs_extra": [
                 "DC wiring best practices include:",
             ],
-            "bullets_after": [
+            "bullets_extra": [
                 "correct cable sizing",
                 "short cable runs",
                 "correct polarity",
@@ -5457,17 +6536,17 @@ MODULE_6_INSTALLATION_WIRING = {
                 "secure terminations",
                 "correct isolators and breakers",
             ],
-            "paragraphs_extra": [
+            "paragraphs_end": [
                 "Always:",
             ],
-            "bullets_extra": [
+            "bullets_end": [
                 "verify polarity with a meter before connection",
                 "inspect cable quality",
                 "ensure clean contact surfaces",
             ],
         },
         {
-            "title": "6.16 AC Wiring Fundamentals",
+            "title": "6.15 AC Wiring Fundamentals",
             "paragraphs": [
                 "The AC side of the system must comply with electrical standards and safe wiring practices.",
                 "Important considerations include:",
@@ -5489,7 +6568,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.17 Cable Termination & Crimping",
+            "title": "6.16 Cable Termination & Crimping",
             "paragraphs": [
                 "Cable terminations are one of the most important practical skills in battery installations.",
                 "A poor termination creates resistance.  Resistance creates heat.",
@@ -5502,6 +6581,7 @@ MODULE_6_INSTALLATION_WIRING = {
                 "battery shutdowns",
                 "fire risks",
             ],
+            
             "paragraphs_after": [
                 "Best practices include:",
             ],
@@ -5514,14 +6594,15 @@ MODULE_6_INSTALLATION_WIRING = {
                 "post-installation re-checking",
             ],
              "images" :[
-                {
-                    "src" : "images/bad crimp = future failure.png",
-                    "alt" : "",
-                },
-            ],
+                                        {
+                                            "src" : "images/bad crimp = future failure.png",
+                                            "alt" : "image of a bad crimping",
+                                        },
+                                    ],
+            
         },
         {
-            "title": "6.18 Earthing & Bonding",
+            "title": "6.17 Earthing & Bonding",
             "paragraphs": [
                 "Proper earthing and bonding are critical for:",
             ],
@@ -5548,7 +6629,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.19 Protection Devices & Isolation",
+            "title": "6.18 Protection Devices & Isolation",
             "paragraphs": [
                 "Required protection devices may include:",
             ],
@@ -5571,20 +6652,23 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
             "paragraphs_extra": [
                 "If equipment cannot be safely isolated:",
+                
+            ],
+            "bullets_extra":[
                 "the installation is unsafe.",
             ],
         },
         {
             "title": "SECTION 3 — SYSTEM WIRING & INTEGRATION",
-            "paragraphs": [],
-        },
-        {
-            "title": "6.20 Understanding Full System Flow",
+            "heading": "6.20 Understanding Full System Flow",
             "paragraphs": [
-                "Before wiring the system, the installer must understand how energy flows through the installation.",
+                 "Before wiring the system, the installer must understand how energy flows through the installation.",
+                
+            ],
+             "paragraphs_after":[
                 "A typical hybrid system includes:",
             ],
-            "bullets": [
+            "bullets_after": [
                 "solar PV",
                 "battery storage",
                 "inverter",
@@ -5592,17 +6676,17 @@ MODULE_6_INSTALLATION_WIRING = {
                 "grid supply",
                 "optional generator support",
             ],
-            "paragraphs_after": [
+           
+            "paragraphs_before": [
                 "Simplified energy flow:",
-            ],
-            "numbered": [
                 "1. Solar generates DC power",
                 "2. Inverter powers loads",
                 "3. Excess energy charges batteries",
                 "4. Batteries support loads when PV reduces",
                 "5. Grid or generator assists when needed",
             ],
-            "paragraphs_extra": [
+           
+            "paragraphs_footer": [
                 "If the installer understands the energy flow, the wiring process becomes logical and easier to troubleshoot.",
             ],
         },
@@ -5612,16 +6696,20 @@ MODULE_6_INSTALLATION_WIRING = {
                 "Battery wiring must always follow manufacturer recommendations.",
                 "Single battery systems are relatively simple.",
                 "Parallel battery systems require far more attention.",
-                "Important rules for parallel battery systems:",
+                
             ],
-            "bullets": [
+            "paragraphs_after":[
+               "Important rules for parallel battery systems:",
+            ],
+            "bullets_after": [
                 "same cable lengths",
                 "same cable sizes",
                 "same battery models",
                 "correct communication wiring",
                 "balanced load sharing",
             ],
-            "paragraphs_after": [
+            "paragraphs_footer": [
+                "",
                 "Parallel systems must operate as one coordinated battery bank.",
             ],
         },
@@ -5692,32 +6780,32 @@ MODULE_6_INSTALLATION_WIRING = {
             "title": "6.25 Grid & Generator Integration",
             "paragraphs": [
                 "Grid supply normally connects to the inverter AC input.",
+                
+            ],
+            "paragraphs_after":[
                 "Generators may integrate through:",
             ],
-            "bullets": [
+            "bullets_after": [
                 "manual changeover systems",
                 "automatic transfer switches (ATS)",
             ],
-            "paragraphs_after": [
+            "paragraphs_before": [
                 "Important considerations include:",
             ],
-            "bullets_after": [
+            "bullets_before": [
                 "correct switching",
                 "synchronization",
                 "backfeed prevention",
                 "correct generator sizing",
             ],
-            "paragraphs_extra": [
+            "paragraphs_footer": [
                 "Grid and generator supplies must never conflict.",
                 "Incorrect generator integration can create serious safety risks.",
             ],
         },
         {
             "title": "SECTION 4 — PROFESSIONAL INSTALLATION STANDARDS",
-            "paragraphs": [],
-        },
-        {
-            "title": "6.26 Clean Installation Standards",
+            "heading":"6.26 Clean Installation Standards",
             "paragraphs": [
                 "Customers do not only see system performance — they see installation quality.",
                 "Professional installations include:",
@@ -5735,7 +6823,7 @@ MODULE_6_INSTALLATION_WIRING = {
             ],
         },
         {
-            "title": "6.27 Ideal Installation System Examples",
+            "title": "6.26 Ideal Installation System Examples",
             "paragraphs": [
                 "A good installation is not only about making the system work — it is about creating a safe, reliable, efficient, and professional energy solution that will perform well for many years.",
                 "The following examples demonstrate what a properly planned and professionally installed REVOV system should look like in real-world applications.",
@@ -5744,38 +6832,38 @@ MODULE_6_INSTALLATION_WIRING = {
              "images" :[
                 {
                     "src" : "images/ideal installation-small system.png",
-                    "alt" : "",
+                    "alt" : "images about ideal installation-small system",
                 },
             
                 {
                     "src" : "images/ideal installation-medium system.png",
-                    "alt" : "",
+                    "alt" : "images about ideal installation-medium system",
                 },
            
                 {
                     "src" : "images/ideal installtion -large system.png",
-                    "alt" : "",
+                    "alt" : "images about ideal installtion -large system",
                 },
             ],
         },
         {
-            "title": "6.28 Common Installation Mistakes",
+            "title": "6.27 Common Installation Mistakes",
             "paragraphs": [],
             "images" :[
                 {
                     "src" : "images/installer mistake.png",
-                    "alt" : "",
+                    "alt" : "images about common installation mistakes",
                 },
             ],
         },
          
         {
-            "title": "6.29 Wrapping Up Module 6",
+            "title": "6.28 Wrapping Up Module 6",
             "paragraphs": [],
             "images" :[
                 {
                     "src" : "images/wrapping up module 6.png",
-                    "alt" : "",
+                    "alt" : "images about wrapping up module 6",
                 },
             ],
         },
@@ -6066,7 +7154,6 @@ MODULE_6_ASSESSMENT = {
 
 MODULE_7_SYSTEM_CONFIG = {
     "module_title": "MODULE 7 — System Configuration, Communication & Firmware",
-    "module_subtitle": "Getting the system to think, communicate and behave correctly",
     "sections": [
         {
             "title": "7.1 Module Learning Outcomes",
@@ -6090,10 +7177,7 @@ MODULE_7_SYSTEM_CONFIG = {
         },
         {
             "title": "SECTION 1 — UNDERSTANDING SYSTEM BEHAVIOUR",
-            "paragraphs": [],
-        },
-        {
-            "title": "7.2 Why System Setup Matters",
+            "heading": "7.2 Why System Setup Matters",
             "paragraphs": [
                 "A system can be:",
             ],
@@ -6112,11 +7196,12 @@ MODULE_7_SYSTEM_CONFIG = {
                 "wiring",
                 "installation quality",
             ],
-            "paragraphs_extra": [
+            "paragraphs_before": [
                 "But modern lithium systems are intelligent systems. The software, communication and inverter settings now play a major role in how the entire system behaves.",
                 "Poor setup can cause:",
             ],
-            "bullets_extra": [
+            "bullets_before": [
+
                 "inaccurate SOC",
                 "poor battery charging",
                 "battery never reaching 100%",
@@ -6127,10 +7212,10 @@ MODULE_7_SYSTEM_CONFIG = {
                 "customer complaints",
                 "shortened battery lifespan",
             ],
-            "images" : [
+            "images": [
                 {
-                    "src" : "images/not a battery fault.png",
-                    "alt" : "image about inverter to battery installation issues!",
+                    "src": "images/not a battery fault.png",
+                    "alt": "image about inverter to battery installation issues!",
                 },
             ],
         },
@@ -6156,10 +7241,10 @@ MODULE_7_SYSTEM_CONFIG = {
                 "how much current to allow",
                 "which operating mode to follow",
             ],
-            "paragraphs_extra": [
+            "paragraphs_before": [
                 "The BMS continuously monitors:",
             ],
-            "bullets_extra": [
+            "bullets_before": [
                 "cell voltage",
                 "battery temperature",
                 "current flow",
@@ -6168,7 +7253,7 @@ MODULE_7_SYSTEM_CONFIG = {
                 "cell balancing",
                 "battery health",
             ],
-            "paragraphs_final": [
+            "paragraphs_under": [
                 "The BMS then communicates limits and instructions to the inverter.",
             ],
              "images" : [
@@ -6181,9 +7266,8 @@ MODULE_7_SYSTEM_CONFIG = {
         {
             "title": "SECTION 2 — SYSTEM CONFIGURATION & PAIRING",
             "paragraphs": [],
-        },
-        {
-            "title": "7.4 Before You Start Configuration",
+        
+            "heading": "7.4 Before You Start Configuration",
             "paragraphs": [
                 "Before changing any settings, always confirm that the physical installation has been completed correctly.",
             ],
@@ -6230,7 +7314,7 @@ MODULE_7_SYSTEM_CONFIG = {
                 "battery protection becomes less intelligent",
                 "instability increases",
             ],
-            "paragraphs_extra": [
+            "paragraphs_under": [
                 "A system may still \"switch on\" without proper pairing, but it will not behave like a properly integrated lithium system.",
             ],
              "images" : [
@@ -6241,17 +7325,18 @@ MODULE_7_SYSTEM_CONFIG = {
              ],
         },
         {
-            "title": "7.7 Practical Pairing Process — Step by Step",
+            "title": "7.6 Practical Pairing Process — Step by Step",
+            "heading": "Step 1 — Confirm Compatibility",
             "paragraphs": [
-                "Step 1 — Confirm Compatibility",
+                
                 "Before connecting communication cables, first confirm:",
-            ],
-            "bullets": [
-                "inverter supports the battery",
-                "battery supports the inverter",
-                "correct communication protocol available",
-                "firmware versions compatible",
-                "approved battery profile available",
+                "",
+                "",
+                "✔inverter supports the battery",
+                "✔battery supports the inverter",
+                "✔correct communication protocol available",
+                "✔firmware versions compatible",
+                "✔approved battery profile available",
             ],
             "paragraphs_after": [
                 "Always check:",
@@ -6262,432 +7347,481 @@ MODULE_7_SYSTEM_CONFIG = {
                 "supported firmware combinations",
                 "communication protocol requirements",
             ],
-             "images" : [
+            "images": [
                 {
-                    "src" : "images/never assume two devices are compatible.png",
-                    "alt" : "",
-                },
-             ],
-            "paragraphs_extra": [
-                "A battery and inverter may:",
-            ],
-            "bullets_extra": [
-                "physically connect",
-                "switch on successfully",
-            ],
-            "paragraphs_final": [
-                "…but still communicate incorrectly because:",
-                "• firmware versions differ",
-                "• protocol unsupported",
-                "• communication mapping different",
-                "",
-                "Result:",
-                "❌ unstable behaviour",
-                "❌ incorrect SOC",
-                "❌ charging problems",
-                "❌ nuisance trips",
-                "",
-                "Step 2 — Complete the Power Wiring First",
-                "Before communication setup:",
-            ],
-            "bullets_step2": [
-                "complete battery DC wiring",
-                "complete inverter wiring",
-                "install isolators and breakers",
-                "verify polarity carefully",
-            ],
-            "paragraphs_step2": [
-                "Check:",
-            ],
-            "bullets_check": [
-                "positive to positive",
-                "negative to negative",
-                "correct cable sizing",
-                "correct torque on lugs",
-                "secure terminations",
-            ],
-            "images" : [
-                {
-                    "src" : "images/most communication troubleshooting.jpg",
-                    "alt" : "",
+                    "src": "images/never assume.png",
+                    "alt": "image about never assume compatibility between inverter and battery!",
                 },
             ],
-           
-            "paragraphs_step3": [
-                "",
-                "Step 3 — Connect the Communication Cable",
-                "The communication cable allows:",
-            ],
-            "bullets_step3": [
-                "the inverter",
-                "and battery BMS",
-            ],
-            "paragraphs_step3_extra": [
-                "to exchange information continuously.",
-                "",
-                "Most systems use:",
-            ],
-            "bullets_step3_extra": [
-                "CAN Bus",
-                "or RS485 communication",
-            ],
-            "paragraphs_step3_final": [
-                "The cable normally connects:",
-                "• from the battery communication port",
-                "to:",
-                "• the inverter communication port",
-                "",
-                "What Communication Allows",
-                "Once communication is active, the inverter can receive:",
-            ],
-            "bullets_communication": [
-                "SOC",
-                "battery voltage",
-                "current limits",
-                "charge limits",
-                "discharge limits",
-                "battery temperature",
-                "alarms and warnings",
-                "protection instructions",
-            ],
-            "paragraphs_communication": [
-                "This allows the inverter to adjust behaviour dynamically based on real-time battery conditions.",
-            ],
-             "images" : [
+            "subsections": [
                 {
-                    "src" : "images/connect the communication cable.png",
-                    "alt" : "",
+                    "heading": "Step 2 — Complete the Power Wiring First",
+                    "paragraphs": [
+                        "Before communication setup:",
+                    ],
+                    "bullets": [
+                        "complete battery DC wiring",
+                        "complete inverter wiring",
+                        "install isolators and breakers",
+                        "verify polarity carefully",
+                    ],
+                    "paragraphs_before": [
+                        "Check:",
+                    ],
+                    "bullets_before": [
+                        "positive to positive",
+                        "negative to negative",
+                        "correct cable sizing",
+                        "correct torque on lugs",
+                        "secure terminations",
+                    ],
+                    "paragraphs_extra": [
+                        "A battery and inverter may:",
+                    ],
+                    "bullets_extra": [
+                        "physically connect",
+                        "switch on successfully",
+                    ],
+                    "paragraphs_final": [
+                        "…but still communicate incorrectly because:",
+                        "• firmware versions differ",
+                        "• protocol unsupported",
+                        "• communication mapping different",
+                        "",
+                        "Result:",
+                        "❌ unstable behaviour",
+                        "❌ incorrect SOC",
+                        "❌ charging problems",
+                        "❌ nuisance trips",
+                    ],
+                    "images": [
+                        {
+                            "src": "images/most communication troubleshooting.jpg",
+                            "alt": "",
+                        },
+                    ],
                 },
+                {
+                    "heading": "Step 3 — Connect the Communication Cable",
+                    "paragraphs": [
+                        "The communication cable allows:",
+                        "",
+                        "",
+                        "•	the inverter ",
+                        "•	and battery BMS ",
+                        "to exchange information continuously.",
+                        "",
+                        "",
+                        "",
+                        "Most systems use:",
+                    ],
+                    "bullets": [
+                        "CAN Bus",
+                        "or RS485 communication",
+                    ],
+                    "paragraphs_after": [
+                        "The cable normally connects:",
+                        "• from the battery communication port",
+                        "to:",
+                        "• the inverter communication port",
+                        "",
+                        "What Communication Allows",
+                        "Once communication is active, the inverter can receive:",
+                    ],
+                    "bullets_after": [
+                        "SOC",
+                        "battery voltage",
+                        "current limits",
+                        "charge limits",
+                        "discharge limits",
+                        "battery temperature",
+                        "alarms and warnings",
+                        "protection instructions",
+                    ],
+                    "paragraphs_before": [
+                        "This allows the inverter to adjust behaviour dynamically based on real-time battery conditions.",
+                    ],
+                    "images": [
+                        {
+                            "src": "images/connect the communication cable.png",
+                            "alt": "image about connect the communication cable between inverter and battery!",
+                        },
+                    ],
+                },
+                {
+                    "heading": "Step 4 — Select the Correct Communication Port",
+                    "paragraphs": [
+                        "Many batteries and inverters contain multiple communication ports.",
+                        "Examples:",
+                    ],
+                    "bullets": [
+                        "CAN",
+                        "RS485",
+                        "RS232",
+                        "parallel communication ports",
+                        "BMS ports",
+                    ],
+                    "paragraphs_after": [
+                        "Always verify:",
+                    ],
+                    "bullets_after": [
+                        "correct inverter port",
+                        "correct battery port",
+                        "correct cable orientation",
+                        "correct communication direction",
+                    ],
+                },
+                {
+                    "heading": "Step 5 — Configure Battery Addressing & Master/Slave Setup",
+                    "paragraphs": [
+                        "In parallel battery systems:",
+                    ],
+                    "bullets": [
+                        "batteries often require addressing",
+                        "or DIP switch configuration",
+                    ],
+                    "paragraphs_after": [
+                        "",
+                        "",
+                        "This allows the batteries to organise communication correctly.",
+                        "",
+                        "",
+                        "Usually:",
+                    ],
+                        "bullets_after":[
+                        " one battery becomes the master battery",
+                        "the others become slave batteries",
+                        ],
+                       "paragraphs_before":[
+                            "",
+
+                        "The master battery communicates directly with the inverter.",
+                        "The slave batteries communicate through the master battery.",
+                        "",
+                        "Why Master/Slave Communication Matters",
+                        "This helps:",
+                       ],
+                       
+                    
+                    "bullets_before": [
+                        "coordinate charging",
+                        "coordinate discharge behaviour",
+                        "balance battery workload",
+                        "synchronize protection behaviour",
+                        "improve system stability",
+                    ],
+                },
+                {
+                    "heading": "Step 6 — Power Up the System in the Correct Sequence",
+                    "paragraphs": [
+                        "Startup sequence matters.",
+                        "",
+                        "Many communication problems are caused simply by incorrect startup order.",
+                        "",
+                        "Typical startup sequence:",
+                        "1. Turn on batteries first",
+                        "2. Allow BMS startup",
+                        "3. Close battery breaker/isolator",
+                        "4. Turn on inverter",
+                        "5. Allow inverter to detect battery",
+                         "",
+                         "",
+                          "Some systems require:"
+                    ],
+                    "bullets": [
+                        "the battery BMS fully operational before inverter startup",
+                    ],
+                    "paragraphs_after": [
+                        "Otherwise:",
+                        "❌ communication may fail",
+                        "❌ battery detection may fail",
+                        "❌ incorrect startup behaviour may occur",
+                        "",
+                        
+                    ],
+                     "images": [
+                        {
+                            "src": "images/always follow manufacuter.png",
+                            "alt": "image about always follow manufacturer instructions for battery type selection!",
+                        },
+                    ],
+                   
+                  
+                },
+                { "heading": "Step 7 — Configure Battery Type in the Inverter",
+                    "paragraphs": [
+                        "Inside the inverter settings:",
+                    ],
+                    "bullets": [
+                        "select the correct battery type ",
+                        "or approved lithium protocol "
+                    ],
+                    "paragraphs_after": [
+                        "Typical options may include:",
+                    ],
+                    "bullets_after": [
+                        "lead-acid",
+                        "AGM",
+                        "GEL",
+                        "lithium",
+                        "user-defined",
+                        "manufacturer-specific battery profiles",
+                    ],
+                    "paragraphs_before": [
+                        "Always use:",
+                        "✔approved lithium profile",
+                        "✔supported battery protocol",
+                        "where possible.",
+                        "",
+                        "",
+                        "",
+                        "Why Correct Battery Selection Matters",
+                        "Correct battery selection allows:",
+                        "✔ proper communication",
+                        "✔ correct charging behaviour",
+                        "✔ proper protection logic",
+                        "✔ accurate SOC calculation",
+                        "✔ correct balancing behaviour"
+
+                    ],
+                    
+                    "images": [
+                        
+                        {
+                            "src": "images/never gues battery seetings.png",
+                            "alt": "",
+                        },
+                    ],
+                },
+                {
+                    "heading": "Step 8 — Select the Correct Communication Protocol",
+                    "paragraphs": [
+                        "Some inverters allow protocol selection during setup.",
+                        "",
+                        "The selected protocol tells the inverter:",
+                    ],
+                    "bullets": [
+                        "how to interpret battery information correctly",
+                    ],
+                    "paragraphs_after": [
+                        "If the wrong protocol is selected:",
+                    ],
+                    "bullets_after": [
+                        "communication may partially work",
+                        "but information may be interpreted incorrectly",
+                    ],
+                    "paragraphs_extra": [
+                        "This can cause:",
+                        "❌ inaccurate SOC",
+                        "❌ unstable charging",
+                        "❌ incorrect current limits",
+                        "❌ communication alarms",
+                        "",
+
+                    ],
+
+                    },
+                    {  "heading": "Step 9 — Configure Charge & Discharge Settings",
+                        "paragraphs": [
+                        "Some systems configure these automatically through communication and other systems require manual configuration.",
+                        "",
+                        "Important settings include:",
+                        "",
+                        "These settings directly affect:",
+                    ],
+                    "bullets": [
+                        "battery lifespan",
+                        "balancing",
+                        "performance",
+                        "runtime",
+                        "system stability",
+                    ],
+                    },
+                    {  "heading": "Charge Voltage",
+                        "paragraphs": [
+                        "This controls how high the inverter charges the battery.",
+                        "",
+                        "If charge voltage is too high:",
+                        "❌ battery stress increases",
+                        "❌ overvoltage trips may occur",
+                        "❌ battery lifespan may reduce",
+                        "",
+                        "If charge voltage is too low:",
+                        "❌ battery may never fully charge",
+                        "❌ balancing may never complete",
+                        "❌ SOC drift may develop",
+                        "",
+                        ],
+                    },
+                    {  "heading": "Charge Current",
+                        "paragraphs": [
+                            "This controls how fast the inverter charges the battery.",
+                            "",
+                            "If charge current is too high:",
+                            "❌ battery temperature increases",
+                        "❌ BMS trips may occur",
+                        "❌ unnecessary stress increases",
+                        "",
+                        "If too low:",
+                        "❌ charging becomes slow",
+                        "❌ battery may not recover between outages",
+                        "",
+                        ],
+                    },
+                    {  "heading": "Discharge Current",
+                        "paragraphs": [
+                            "This controls how much current the inverter may draw from the battery.",
+                            "",
+                            "If discharge current is too high:",
+                            "❌ battery trips may occur",
+                            "❌ voltage sag increases",
+                            "❌ battery stress increases",
+                            "VERY IMPORTANT",
+                        ],
+                        "images" : [
+                            {
+                                "src": "images/even with manual settings.png",
+                                "alt": "image about even with manual settings, the battery will still limit the current to protect itself!",
+                            }
+                        ],
+                       
+
+                },   
+                
             ],
         },
         {
-            "title": " ",
-            "paragraphs": [
-                "Step 4 — Select the Correct Communication Port",
-                "Many batteries and inverters contain multiple communication ports.",
-                "Examples:",
-            ],
-            "bullets": [
-                "CAN",
-                "RS485",
-                "RS232",
-                "parallel communication ports",
-                "BMS ports",
-            ],
-            "paragraphs_after": [
-                "Always verify:",
-            ],
-            "bullets_after": [
-                "correct inverter port",
-                "correct battery port",
-                "correct cable orientation",
-                "correct communication direction",
-            ],
-            "paragraphs_extra": [
-                "",
-                "Step 5 — Configure Battery Addressing & Master/Slave Setup",
-                "In parallel battery systems:",
-            ],
-            "bullets_extra": [
-                "batteries often require addressing",
-                "or DIP switch configuration",
-            ],
-            "paragraphs_final": [
-                "This allows the batteries to organise communication correctly.",
-                "",
-                "Usually:",
-                "• one battery becomes the master battery",
-                "• the others become slave batteries",
-                "",
-                "The master battery communicates directly with the inverter.",
-                "The slave batteries communicate through the master battery.",
-                "",
-                "Why Master/Slave Communication Matters",
-                "This helps:",
-            ],
-            "bullets_master": [
-                "coordinate charging",
-                "coordinate discharge behaviour",
-                "balance battery workload",
-                "synchronize protection behaviour",
-                "improve system stability",
-            ],
-        },
-        {
-            "title": " ",
-            "paragraphs": [
-                "Step 6 — Power Up the System in the Correct Sequence",
-                "Startup sequence matters.",
-                "",
-                "Many communication problems are caused simply by incorrect startup order.",
-                "",
-                "Typical startup sequence:",
-            ],
-            "numbered": [
-                "1. Turn on batteries first",
-                "2. Allow BMS startup",
-                "3. Close battery breaker/isolator",
-                "4. Turn on inverter",
-                "5. Allow inverter to detect battery",
-            ],
-            "paragraphs_after": [
-                "Some systems require:",
-            ],
-            "bullets_after": [
-                "the battery BMS fully operational before inverter startup",
-            ],
-            "paragraphs_extra": [
-                "Otherwise:",
-                "❌ communication may fail",
-                "❌ battery detection may fail",
-                "❌ incorrect startup behaviour may occur",
-                "",
-                "Step 7 — Configure Battery Type in the Inverter",
-                "Inside the inverter settings:",
-            ],
-            "images" : [
-                {
-                   "src" : "images/always follow manufacuter.png",
-                    "alt" : "",
-                },
-            ],
-            "bullets_extra": [
-                "select the correct battery type",
-                "or approved lithium protocol",
-            ],
-            "paragraphs_step7": [
-                "Typical options may include:",
-            ],
-            "bullets_step7": [
-                "lead-acid",
-                "AGM",
-                "GEL",
-                "lithium",
-                "user-defined",
-                "manufacturer-specific battery profiles",
-            ],
-            "paragraphs_step7_extra": [
-                "Always use:",
-            ],
-            "bullets_step7_extra": [
-                "approved lithium profile",
-                "supported battery protocol",
-            ],
-            "paragraphs_step7_final": [
-                "where possible.",
-                "",
-                "Why Correct Battery Selection Matters",
-                "Correct battery selection allows:",
-            ],
-            "bullets_step7_final": [
-                "proper communication",
-                "correct charging behaviour",
-                "proper protection logic",
-                "accurate SOC calculation",
-                "correct balancing behaviour",
-            ],
-             "images" : [
-                {
-                   "src" : "images/never gues battery seetings.png",
-                    "alt" : "",
-                },
-            ],
-        },
-        {
-            "title": " ",
-            "paragraphs": [
-                "Step 8 — Select the Correct Communication Protocol",
-                "Some inverters allow protocol selection during setup.",
-                "",
-                "The selected protocol tells the inverter:",
-            ],
-            "bullets": [
-                "how to interpret battery information correctly",
-            ],
-            "paragraphs_after": [
-                "If the wrong protocol is selected:",
-            ],
-            "bullets_after": [
-                "communication may partially work",
-                "but information may be interpreted incorrectly",
-            ],
-            "paragraphs_extra": [
-                "This can cause:",
-                "❌ inaccurate SOC",
-                "❌ unstable charging",
-                "❌ incorrect current limits",
-                "❌ communication alarms",
-                "",
-                "Step 9 — Configure Charge & Discharge Settings",
-                "Some systems configure these automatically through communication and other systems require manual configuration.",
-                "",
-                "Important settings include:",
-                "",
-                "These settings directly affect:",
-            ],
-            "bullets_extra": [
-                "battery lifespan",
-                "balancing",
-                "performance",
-                "runtime",
-                "system stability",
-            ],
-            "paragraphs_charge": [
-                "Charge Voltage",
-                "This controls how high the inverter charges the battery.",
-                "",
-                "If charge voltage is too high:",
-                "❌ battery stress increases",
-                "❌ overvoltage trips may occur",
-                "❌ battery lifespan may reduce",
-                "",
-                "If charge voltage is too low:",
-                "❌ battery may never fully charge",
-                "❌ balancing may never complete",
-                "❌ SOC drift may develop",
-                "",
-                "Charge Current",
-                "This controls how fast the inverter charges the battery.",
-                "",
-                "If charge current is too high:",
-                "❌ battery temperature increases",
-                "❌ BMS trips may occur",
-                "❌ unnecessary stress increases",
-                "",
-                "If too low:",
-                "❌ charging becomes slow",
-                "❌ battery may not recover between outages",
-                "",
-                "Discharge Current",
-                "This controls how much current the inverter may draw from the battery.",
-                "",
-                "If discharge current is too high:",
-                "❌ battery trips may occur",
-                "❌ voltage sag increases",
-                "❌ battery stress increases",
-                "VERY IMPORTANT",
-            ],
-            "images" : [
-                {
-                    "src" : "images/even with manual settings.png",
-                    "alt" : "",
-                },
-            ],
-        },
-        {
-            "title": "7.8 SOC Accuracy, Calibration & Full Charge Synchronisation",
+            "title": "7.7 SOC Accuracy, Calibration & Full Charge Synchronisation",
             "paragraphs": [
                 "This is one of the most misunderstood areas in lithium systems.",
                 "",
-                "The BMS calculates SOC using:",
+                "The BMS calculates SOC using:"
             ],
             "bullets": [
                 "voltage",
                 "current flow",
                 "battery history",
                 "balancing information",
-                "charge/discharge behaviour",
+                "charge/discharge behaviour"
             ],
             "paragraphs_after": [
-                "Over time:",
+                "Over time:"
             ],
             "bullets_after": [
-                "small inaccuracies naturally develop",
+                "small inaccuracies naturally develop"
             ],
-            "paragraphs_extra": [
-                "The battery therefore requires:",
+            "paragraphs_before": [
+                "The battery therefore requires:"
             ],
-            "bullets_extra": [
+            "bullets_before": [
                 "full charge cycles",
                 "balancing opportunities",
                 "stable communication",
+                "to maintain accurate SOC."
             ],
-            "paragraphs_final": [
-                "to maintain accurate SOC.",
-                "",
-                "Why Full Charge Matters",
-                "The BMS normally performs balancing near full charge.",
-                "",
-                "If the battery NEVER reaches full charge:",
-                "❌ balancing may not complete",
-                "❌ SOC drift develops",
-                "❌ runtime estimates become inaccurate",
-                "❌ battery behaviour becomes unstable",
-            ],
-             "images" : [
+            "subsections": [
                 {
-                    "src" : "images/many battery complains.png",
-                    "alt" : "",
-                },
-            ],
+                    "heading": "",
+                    "paragraphs": [
+                        "Why Full Charge Matters",
+                        "The BMS normally performs balancing near full charge.",
+                        "",
+                        "If the battery NEVER reaches full charge:"
+                    ],
+                    "bullets": [
+                        "❌ balancing may not complete",
+                        "❌ SOC drift develops",
+                        "❌ runtime estimates become inaccurate",
+                        "❌ battery behaviour becomes unstable"
+                    ],
+                    "images": [
+                        {
+                            "src": "images/many battery complains.png",
+                            "alt": ""
+                        }
+                    ]
+                }
+            ]
         },
         {
-            "title": "7.9 Operating Modes & System Behaviour",
+            "title": "7.8 Operating Modes & System Behaviour",
             "paragraphs": [
                 "Operating mode selection dramatically affects how the system behaves.",
                 "",
-                "Two identical systems can behave completely differently simply because different operating modes are selected.",
                 "",
-                "Backup Priority Mode",
-                "In backup mode:",
+                "Two identical systems can behave completely differently simply because different operating modes are selected.",  
+                
             ],
+            "subsections": [
+                {
+            "heading": "Backup Priority Mode",
+            "paragraphs": [
+                "In backup mode:",
+                ],
             "bullets": [
                 "the battery is preserved mainly for outages",
                 "grid support may be prioritised",
                 "reserve capacity maintained",
-            ],
+                ],
             "paragraphs_after": [
                 "Best for:",
-            ],
-            "bullets_after": [
-                "loadshedding backup",
-                "uptime-focused customers",
-                "critical load protection",
-            ],
-            "paragraphs_extra": [
-                "",
-                "Self-Consumption / Hybrid Mode",
-                "In self-consumption mode:",
-            ],
-            "bullets_extra": [
-                "solar powers loads first",
-                "excess solar charges batteries",
-                "batteries discharge later to reduce grid usage",
-            ],
-            "paragraphs_extra2": [
-                "Best for:",
-            ],
-            "bullets_extra2": [
-                "reducing electricity costs",
-                "maximising solar usage",
-                "hybrid energy management",
-            ],
-            "paragraphs_extra3": [
-                "",
-                "Time-of-Use (TOU) Mode",
-                "In TOU mode:",
-            ],
-            "bullets_extra3": [
-                "Charging and discharging occur according to schedules",
-                "The inverter responds to electricity tariff periods",
-            ],
-            "paragraphs_extra4": [
-                "Best for:",
-            ],
-            "bullets_extra4": [
-                "commercial systems",
-                "tariff optimisation",
-                "scheduled energy management",
-            ],
-             "images" : [
-                {
-                    "src" : "images/the wrong operating mode.png",
-                    "alt" : "",
+                "✔loadshedding backup",
+                "✔uptime-focused customers",
+                "✔critical load protection",
+                ],
+               
+
                 },
-            ],
-        },
+                {
+                    "heading": "Self-Consumption / Hybrid Mode",
+                    "paragraphs": [        
+                    "In self-consumption mode:",
+                    ],
+                    "bullets": [
+                        "solar powers loads first",
+                        "excess solar charges batteries",
+                        "batteries discharge later to reduce grid usage",
+                    ],
+                    "paragraphs_after": [
+                        "Best for:",
+                        "✔reducing electricity costs",
+                        "✔maximising solar usage",
+                        "✔hybrid energy management",
+                    ],
+                  
+                },
+                {
+                    "heading": "Time-of-Use (TOU) Mode",
+                     "paragraphs": [
+                        "",
+                                    
+                        "In TOU mode:",
+                    ],
+                    "bullets": [
+                        "Charging and discharging occur according to schedules",
+                        "The inverter responds to electricity tariff periods",
+                    ],
+                    "paragraphs_after": [
+                        "Best for:",
+                        "✔commercial systems",
+                        "✔tariff optimisation",
+                        "✔scheduled energy management",
+
+                    ],
+                    
+                    "images":[
+                        {
+                           "src" : "images/the wrong operating mode.png",
+                            "alt" : "",
+                        },
+                    ],
+                },
+                
+            ],   
+                
+        },    
         {
-            "title": "7.10 Reserve SOC & Backup Behaviour",
+            "title": "7.9 Reserve SOC & Backup Behaviour",
             "paragraphs": [
                 "Reserve SOC determines:",
             ],
@@ -6695,22 +7829,26 @@ MODULE_7_SYSTEM_CONFIG = {
                 "how much battery capacity is preserved",
                 "how deeply the battery may discharge",
             ],
-            "paragraphs_after": [
+
+            "subsections": [
+                {
+            "heading": "",
+            "paragraphs": [
                 "If reserve SOC is set to:",
             ],
-            "bullets_after": [
+            "bullets": [
                 "20%",
             ],
-            "paragraphs_extra": [
+            "paragraphs_after": [
                 "the inverter attempts to preserve:",
             ],
-            "bullets_extra": [
+                "bullets_after": [
                 "approximately 20% battery capacity",
             ],
-            "paragraphs_final": [
+            "paragraphs_before": [
                 "for:",
             ],
-            "bullets_final": [
+            "bullets_before": [
                 "backup reserve",
                 "battery protection",
                 "emergency operation",
@@ -6718,12 +7856,15 @@ MODULE_7_SYSTEM_CONFIG = {
             "images" : [
                 {
                     "src" : "images/reserve soc.png",
-                    "alt" : "",
+                    "alt" : "image showing reserve SOC",
                 },
             ],
+                },
+            ],
+            
         },
         {
-            "title": "7.11 Grid Charging & Solar Charging Behaviour",
+            "title": "7.10 Grid Charging & Solar Charging Behaviour",
             "paragraphs": [
                 "Some systems allow:",
             ],
@@ -6767,27 +7908,25 @@ MODULE_7_SYSTEM_CONFIG = {
             ],
         },
         {
-            "title": "7.12 Time, Date & Timezone Settings",
+            "title": "7.11 Time, Date & Timezone Settings",
             "paragraphs": [
                 "This section is extremely important and often overlooked.",
                 "",
                 "Many inverter functions rely heavily on accurate:",
+                 "✔ time",
+                 "✔ date",
+                 "✔ timezone",
             ],
-            "bullets": [
-                "time",
-                "date",
-                "timezone",
-            ],
+            
             "paragraphs_after": [
-                "Incorrect time settings affect:",
-            ],
-            "bullets_after": [
-                "TOU schedules",
-                "grid charging",
-                "backup scheduling",
-                "reporting accuracy",
-                "operating behaviour",
-            ],
+                "❌Incorrect time settings affect:",
+                "❌TOU schedules",
+                "❌grid charging",
+                "❌backup scheduling",
+                "❌reporting accuracy",
+                "❌operating behaviour",
+            ],  
+           
             "images" : [
                 {
                     "src" : "images/if inverter time is incorrect.png",
@@ -6796,7 +7935,7 @@ MODULE_7_SYSTEM_CONFIG = {
             ],
         },
         {
-            "title": "7.13 Monitoring & Connectivity Setup",
+            "title": "7.12 Monitoring & Connectivity Setup",
             "paragraphs": [
                 "Modern systems rely heavily on:",
             ],
@@ -6819,28 +7958,25 @@ MODULE_7_SYSTEM_CONFIG = {
             ],
         },
         {
-            "title": "7.14 Final Configuration Verification",
+            "title": "7.13 Final Configuration Verification",
             "paragraphs": [
                 "Before completing setup, verify:",
+                "✔communication stable",
+                "✔inverter recognises battery correctly",
+                "✔SOC stable and accurate",
+                "✔charge/discharge limits updating correctly",
+                "✔operating mode correct",
+                "✔reserve SOC correct",
+                "✔charging behaviour stable",
+                "✔monitoring online",
+                "✔no active alarms present",
+
             ],
-            "bullets": [
-                "communication stable",
-                "inverter recognises battery correctly",
-                "SOC stable and accurate",
-                "charge/discharge limits updating correctly",
-                "operating mode correct",
-                "reserve SOC correct",
-                "charging behaviour stable",
-                "monitoring online",
-                "no active alarms present",
-            ],
+           
         },
         {
             "title": "SECTION 3 — FIRMWARE & COMPATIBILITY",
-            "paragraphs": [],
-        },
-        {
-            "title": "7.9 What Is Firmware?",
+            "heading": "7.14 What Is Firmware?",
             "paragraphs": [
                 "Firmware is the internal software that controls how a device behaves.",
                 "",
@@ -6866,26 +8002,26 @@ MODULE_7_SYSTEM_CONFIG = {
                 "fault handling",
                 "operating modes",
             ],
+            
         },
         {
-            "title": "7.10 Why Firmware Matters",
+            "title": "7.15 Why Firmware Matters",
             "paragraphs": [
                 "Outdated or incompatible firmware can cause:",
+                "❌ communication failures",
+                "❌ incorrect SOC",
+                "❌ BMS trips",
+                "❌ unstable charging",
+                "❌ inverter instability",
+                "❌ strange system behaviour",
             ],
-            "bullets": [
-                "communication failures",
-                "incorrect SOC",
-                "BMS trips",
-                "unstable charging",
-                "inverter instability",
-                "strange system behaviour",
-            ],
+           
             "paragraphs_after": [
                 "Correct firmware improves:",
             ],
         },
         {
-            "title": "7.11 Firmware Compatibility & Version Matching",
+            "title": "7.16 Firmware Compatibility & Version Matching",
             "paragraphs": [
                 "Not all firmware versions work correctly together.",
                 "",
@@ -6905,200 +8041,267 @@ MODULE_7_SYSTEM_CONFIG = {
             ],
         },
         {
-            "title": "7.12 When to Update Firmware (and When NOT To)",
+            "title": "7.17 When to Update Firmware (and When NOT To)",
             "paragraphs": [
                 "Good Reasons to Update",
-            ],
-            "bullets": [
                 "known communication issue",
                 "manufacturer recommendation",
                 "compatibility issue",
                 "abnormal system behaviour",
                 "new battery/inverter combination",
             ],
+            "bullets": [
+                
+                
+                
+                
+                
+            ],
         },
         {
-            "title": "7.13 Safe Firmware Update Process",
+            "title": "7.18 Safe Firmware Update Process",
+            "heading": "Step 1 — Confirm Need",
             "paragraphs": [
-                "Step 1 — Confirm Need",
                 "Identify:",
-            ],
+            ],  
             "bullets": [
                 "actual problem",
                 "expected improvement",
             ],
-            "paragraphs_after": [
-                "Step 2 — Check Compatibility",
+            "subsections": [
+                {
+            "heading": "Step 2 — Check Compatibility",
+            "paragraphs":[
                 "Verify:",
-            ],
-            "bullets_after": [
+            ], 
+            "bullets": [
                 "supported versions",
                 "compatibility lists",
                 "manufacturer guidance",
             ],
-            "paragraphs_extra": [
-                "Step 3 — Prepare System",
-                "Ensure:",
+           },
+           {"heading": "Step 3 — Prepare System",
+              "paragraphs": [
+                 "Ensure:",
             ],
-            "bullets_extra": [
-                "stable power supply",
-                "correct update tools",
-                "settings backup where possible",
+               "bullets": [
+                  "stable power supply",
+                   "correct update tools",
+                   "settings backup where possible",
             ],
-            "paragraphs_extra2": [
-                "Step 4 — Perform Update",
-                "Use:",
+            },
+
+              {"heading": "Step 4 — Perform Update",
+                "paragraphs": [
+                    "Use:"
+                ],
+                "bullets": [
+                   "approved process ",
+                   "approved software ",
+                   "approved cables ",
+                ],
+                "paragraphs_after": [
+                    "NEVER interrupt the process."
+                ],
+
+            },
+            {"heading":"Step 5 — Verify System",
+                "paragraphs": [
+                    "After updating:",
+                ],
+                "bullets": [
+                    "check communication",
+                    "check charging",
+                    "verify SOC",
+                    "verify operating mode",
+                    "check for faults",
+                ],
+                "paragraphs_critical": [
+                    "Critical Warning",
+                    "Interrupting firmware updates may:",
+                    "❌corrupt devices",
+                    "❌damage communication",
+                    "❌require factory recovery",
+                ],
+               
+            },
+
             ],
-            "bullets_extra2": [
-                "approved process",
-                "approved software",
-                "approved cables",
-            ],
-            "paragraphs_extra3": [
-                "NEVER interrupt the process.",
-                "",
-                "Step 5 — Verify System",
-                "After updating:",
-            ],
-            "bullets_extra3": [
-                "check communication",
-                "check charging",
-                "verify SOC",
-                "verify operating mode",
-                "check for faults",
-            ],
-            "paragraphs_critical": [
-                "Critical Warning",
-                "Interrupting firmware updates may:",
-            ],
-            "bullets_critical": [
-                "❌corrupt devices",
-                "❌damage communication",
-                "❌require factory recovery",
-            ],
+           
+           
+           
         },
         {
             "title": "SECTION 4 — SYSTEM STABILITY & TROUBLESHOOTING",
-            "paragraphs": [],
-        },
-        {
-            "title": "7.14 Common Setup, Communication & Firmware Problems",
-            "paragraphs": [
-                "Communication Problems",
+            "heading": "7.19 Common Setup, Communication & Firmware Problems",
+            "subsections": [
+            {  "heading":"Communication Problems",
+                "paragraphs": [               
+                "Symptoms:",
+                "❌ frozen SOC",
+                "❌ communication alarms",
+                "❌ battery not recognised",
+                "Possible causes:"
+
+                ],
+                "bullets":[
+                    "wrong protocol",
+                    "bad communication cable",
+                    "incorrect firmware",
+                    "wrong port",
+                    "unsupported battery profile"
+                ],
+
+            },
+            {  "heading":  "Charging Problems",
+                "paragraphs": [              
                 "Symptoms:",
             ],
-            "bullets": [
-                "❌frozen SOC",
-                "❌communication alarms",
-                "❌battery not recognised",
-            ],
-            "paragraphs_after": [
-                "Possible causes:",
-            ],
-            "bullets_after": [
-                "wrong protocol",
-                "bad communication cable",
-                "incorrect firmware",
-                "wrong port",
-                "unsupported battery profile",
-            ],
-            "paragraphs_extra": [
-                "Charging Problems",
-                "Symptoms:",
-            ],
-            "bullets_extra": [
+             "bullets": [
                 "❌battery never reaches 100%",
                 "❌poor runtime",
                 "❌balancing issues",
             ],
-            "paragraphs_charging": [
+             "paragraphs_after": [
                 "Possible causes:",
             ],
-            "bullets_charging": [
+            "bullets_after": [
                 "low charge voltage",
                 "incorrect battery type",
                 "communication failure",
                 "insufficient PV",
             ],
-            "paragraphs_soc": [
-                "SOC Problems",
-                "Symptoms:",
+
+            },
+            {  "heading": "SOC Problems", 
+                "paragraphs": [              
+                 "Symptoms:",
             ],
-            "bullets_soc": [
+            "bullets": [
                 "❌SOC jumps suddenly",
                 "❌inaccurate runtime",
                 "❌battery switches off unexpectedly",
             ],
-            "paragraphs_soc_causes": [
+            "paragraphs_after": [
                 "Possible causes:",
             ],
-            "bullets_soc_causes": [
+             "bullets_after": [
                 "no full charges",
                 "poor balancing",
                 "communication issues",
                 "SOC drift",
             ],
-            "paragraphs_firmware": [
-                "Firmware Problems",
-                "Symptoms:",
+
+
+            },
+            {  "heading": "Firmware Problems",
+                "paragraphs": [
+                    "Symptoms:",
             ],
-            "bullets_firmware": [
+             "bullets": [
                 "❌unstable behaviour",
                 "❌random faults",
                 "❌intermittent communication",
             ],
-            "paragraphs_firmware_causes": [
+            "paragraphs_after": [
                 "Possible causes:",
             ],
-            "bullets_firmware_causes": [
+             "bullets_after": [
                 "incompatible versions",
                 "failed update",
                 "unsupported firmware combinations",
             ],
+
+            },
+            
+
+        
+
+            ],     
             
         },
         {
-            "title": "7.15 Practical Installer Examples",
-            "paragraphs": [],
+            "title": "7.20 Practical Installer Examples",
+            "paragraphs": [
+                "By now you have learned how batteries, inverters and the BMS work together as a complete system. ",
+                "In practice, however, many service calls begin with a customer reporting that the battery is faulty, the inverter has stopped working, or the system isn't performing as expected.",
+                "",
+                "In reality, the equipment is often operating exactly as it was designed to. The real cause is frequently incorrect inverter settings, communication problems, firmware mismatches, operating modes, or system configuration errors.",
+                    "",
+                "The following real-world examples demonstrate how to think like a professional installer. Rather than immediately replacing components, you will learn how to identify the actual root cause by ",
+                "understanding how the battery, inverter, BMS and communication system interact.",
+                "",
+                "",
+                 "",
+                "As you work through each example, focus on:",
+            ],
+            "bullets": [
+                "the customer's complaint ",
+                "what is actually happening inside the system ",
+                "why the behaviour occurs ",
+                "the checks you should perform before replacing equipment ",
+                "the corrective action that resolves the problem. "  
+            ],
+            "paragraphs_after": [
+                "",
+                "A good installer does not simply fix symptoms—they identify the underlying cause. Understanding system configuration and communication is often the difference between an unnecessary ",
+                "warranty claim and a correctly diagnosed installation issue.",
+                "",
+                "",
+                "",
+                "",
+                "Remember: Modern lithium battery systems are intelligent systems. When something appears to be 'wrong', it is often the BMS or inverter protecting the battery or responding to the way the ",
+                "professional installer."
+            ],
             "images"  : [
                 {
                     "src" : "images/faulty battery lets look at the real cause.png",
-                    "alt" : "",
+                    "alt" : "images of faulty battery",
                 },
                  {
                     "src" : "images/battery never full.png",
-                    "alt" : "",
+                    "alt" : "image of battery never full",
                 },
                  {
                     "src" : "images/communication fault.png",
-                    "alt" : "",
+                    "alt" : "image of communication fault",
                 },
                  {
                     "src" : "images/bad run time.png",
-                    "alt" : "",
+                    "alt" : "image of bad run time",
                 },
                  {
                     "src" : "images/empty battery.png",
-                    "alt" : "",
+                    "alt" : "image of empty battery",
                 },
             ],
         },
         {
-            "title": "7.16 Installer Rules for Stable Systems",
+            "title": "7.21 Installer Rules for Stable Systems",
             "paragraphs": [],
+            
             "images"  : [
                 {
                     "src" : "images/installer rules for stable.png",
-                    "alt" : "",
+                    "alt" : "image of intaller rules",
                 },
-
-                {
-                    "src" : "images/wrapping up module 7.png",
-                    "alt" : "",
-                },
+       
+                
             ],
             
         },
+        {
+            "title": "Module 7 Wrap Up",
+            "heading": "",
+            "images": [
+                {
+                    "src" : "images/wrapping up module 7.png",
+                    "alt" : "image of ",
+                },
+            ],
+
+     },
+        
     ],
 }
 
@@ -7412,10 +8615,7 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
         },
         {
             "title": "SECTION 1 — MONITORING & UNDERSTANDING SYSTEM BEHAVIOUR",
-            "paragraphs": [],
-        },
-        {
-            "title": "8.2 Why Monitoring Matters",
+            "heading":"8.2 Why Monitoring Matters",
             "paragraphs": [
                 "Modern lithium systems are intelligent energy systems.",
                 "",
@@ -7436,27 +8636,26 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "BMS intelligence",
                 "remote diagnostics",
             ],
-            "paragraphs_extra": [
+            "paragraphs_before": [
                 "Monitoring allows installers to:",
+                "✔understand system behaviour",
+                "✔identify developing problems early",
+                "✔diagnose faults faster",
+                "✔optimise performance",
+                "✔improve customer support",
+                "✔reduce unnecessary call-outs",
+                "",
+                "",
+                "",
+                 "Without monitoring:"
             ],
-            "bullets_extra": [
-                "understand system behaviour",
-                "identify developing problems early",
-                "diagnose faults faster",
-                "optimise performance",
-                "improve customer support",
-                "reduce unnecessary call-outs",
-            ],
-            "paragraphs_extra2": [
-                "Without monitoring:",
-            ],
-            "bullets_extra2": [
+            "bullets_before": [
                 "installers often guess",
                 "faults become harder to diagnose",
                 "customer complaints increase",
                 "hidden problems develop unnoticed",
             ],
-            "paragraphs_final": [
+            "paragraphs_under": [
                 "Good monitoring changes troubleshooting from:",
                 "❌ reacting to failures",
                 "to:",
@@ -7474,26 +8673,27 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
             "paragraphs": [
                 "Monitoring allows installers to see how the system behaves in real-world operation.",
                 "",
-                "Depending on the inverter and battery platform, monitoring may show:",
-            ],
-            "bullets": [
-                "battery SOC",
-                "battery voltage",
-                "battery current",
-                "charging behaviour",
-                "discharge behaviour",
-                "PV production",
-                "grid usage",
-                "load consumption",
-                "battery temperature",
-                "alarms and warnings",
-                "fault history",
-                "historical trends",
             ],
             "paragraphs_after": [
+                "Depending on the inverter and battery platform, monitoring may show:",
+                "✔battery SOC",
+                "✔battery voltage",
+                "✔battery current",
+                "✔charging behaviour",
+                "✔discharge behaviour",
+                "✔PV production",
+                "✔grid usage",
+                "✔load consumption",
+                "✔battery temperature",
+                "✔alarms and warnings",
+                "✔fault history",
+                "✔historical trends",
+            ],
+           
+            "paragraphs_before": [
                 "This information becomes extremely valuable during:",
             ],
-            "bullets_after": [
+            "bullets_before": [
                 "troubleshooting",
                 "optimisation",
                 "maintenance",
@@ -7502,7 +8702,7 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
              "images" :    [
                 {
                     "src"  : "images/monitoring data alone is not.png",
-                    "alt"  : "",
+                    "alt"  : "image of monitoring data alone is not Enough",
                 },
             ],
         },
@@ -7511,9 +8711,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
             "paragraphs": [
                 "Modern REVOV Batteries systems are designed as intelligent lithium systems with integrated communication and monitoring capabilities.",
                 "",
-                "Depending on the system design, REVOV systems may support:",
+                
             ],
-            "bullets": [
+            "paragraphs_after":[
+                    "Depending on the system design, REVOV systems may support:",
+            ],
+            "bullets_after": [
                 "CAN Bus communication",
                 "RS485 communication",
                 "Bluetooth monitoring",
@@ -7521,53 +8724,58 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "cloud monitoring portals",
                 "remote monitoring apps",
             ],
-            "paragraphs_after": [
+            "paragraphs_before": [
                 "This allows installers and users to monitor:",
-            ],
-            "bullets_after": [
-                "battery behaviour",
-                "charging activity",
-                "balancing behaviour",
-                "faults and warnings",
-                "battery health",
-                "system performance trends",
-            ],
-            "paragraphs_extra": [
-                "in real time.",
+                "✔ battery behaviour",
+                "✔ charging activity",
+                "✔ balancing behaviour",
+                "✔ faults and warnings",
+                "✔ battery health",
+                "✔ system performance trends",
+                "in real time."
             ],
         },
         {
             "title": "8.4 Understanding Daily System Behaviour",
             "paragraphs": [
                 "One of the most important troubleshooting skills is understanding what a system should normally do throughout a typical day.",
-                "",
                 "A healthy system follows predictable daily behaviour patterns.",
                 "",
-                "Why Understanding Daily Behaviour Matters",
-                "If installers understand normal behaviour:",
+                
+                "",
+                
+                
             ],
-            "bullets": [
-                "abnormal behaviour becomes easier to identify",
-            ],
-            "paragraphs_after": [
-                "Without understanding normal behaviour:",
-            ],
-            "bullets_after": [
-                "installers often misdiagnose healthy systems",
-            ],
-              "images" :    [
-                {
+             "images" :    [
+                    {
                     "src"  : "images/daily stytem behaviuo.png",
-                    "alt"  : "",
-                },
+                    "alt"  : "image of daily system behaviour",
+                    },
             ],
+            "subsections":[
+                { "heading":"Why Understanding Daily Behaviour Matters",
+                   "paragraphs":[
+                       "If installers understand normal behaviour:",
+                   ],
+                   "bullets": [
+                        "abnormal behaviour becomes easier to identify",
+                 ],
+                   "paragraphs_after": [
+                        "Without understanding normal behaviour:",
+                ],
+                 "bullets_after": [
+                        "installers often misdiagnose healthy systems",
+                 ], 
+
+                },               
+                             
+            ],
+            
         },
         {
             "title": "8.5 What \"Normal\" Looks Like",
             "paragraphs": [
                 "A healthy lithium system should normally show:",
-            ],
-            "bullets": [
                 "stable SOC movement",
                 "predictable charging behaviour",
                 "smooth battery discharge",
@@ -7576,6 +8784,7 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "balanced battery behaviour",
                 "consistent operating patterns",
             ],
+            
             "paragraphs_after": [
                 "Normal systems:",
             ],
@@ -7585,53 +8794,44 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "respond predictably",
             ],
             "paragraphs_extra": [
-                "Examples of Normal Behaviour",
-            ],
-            "bullets_extra": [
-                "SOC decreasing at night",
-                "lower winter solar production",
-                "battery charging slower during cloudy weather",
-                "increased grid usage during poor solar conditions",
-            ],
-            "paragraphs_final": [
+                "✔Examples of Normal Behaviour",
+                "✔SOC decreasing at night",
+                "✔lower winter solar production",
+                "✔battery charging slower during cloudy weather",
+                "✔increased grid usage during poor solar conditions",
                 "These are not faults.",
-            ],
+            ], 
         },
         {
             "title": "SECTION 2 — MONITORING-LED TROUBLESHOOTING",
-            "paragraphs": [],
-        },
-        {
-            "title": "8.6 Using Monitoring to Diagnose Problems",
+            "heading": "8.6 Using Monitoring to Diagnose Problems",
             "paragraphs": [
                 "Monitoring should always be the installer's first troubleshooting tool.",
                 "",
                 "Before:",
-            ],
-            "bullets": [
                 "❌replacing equipment",
                 "❌changing settings randomly",
                 "❌disconnecting components",
             ],
+           
             "paragraphs_after": [
                 "first:",
-            ],
-            "bullets_after": [
                 "✔ review system behaviour",
                 "✔ check historical trends",
                 "✔ analyse charging behaviour",
                 "✔ review fault history",
             ],
-            "paragraphs_extra": [
+            
+            "paragraphs_before": [
                 "Good monitoring often reveals:",
             ],
-            "bullets_extra": [
+            "bullets_before": [
                 "the actual cause quickly",
             ],
              "images" :    [
                 {
                     "src"  : "images/using monitoring to diag.png",
-                    "alt"  : "",
+                    "alt"  : "image of using monitoring to diagonose",
                 },
             ],
         },
@@ -7639,13 +8839,12 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
             "title": "8.7 The Installer Mindset — Stop Guessing, Start Diagnosing",
             "paragraphs": [
                 "Professional troubleshooting follows logic.",
+                "✔follows evidence",
+                "✔checks data first",
+                "✔isolates sections logically",
+                "✔verifies before acting",
             ],
-            "bullets": [
-                "follows evidence",
-                "checks data first",
-                "isolates sections logically",
-                "verifies before acting",
-            ],
+            
              "images" :    [
                 {
                     "src"  : "images/most system failure are.png",
@@ -7681,104 +8880,123 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
         },
         {
             "title": "SECTION 3 — PRACTICAL FAULT FINDING",
-            "paragraphs": [],
-        },
-        {
-            "title": "8.10 Using Symptoms to Read the System",
+            
+            "heading": "8.10 Using Symptoms to Read the System",
             "paragraphs": [
-                "Symptoms provide clues.  Professional installers learn to \"read\" the system.",
+                "The following practical troubleshooting guides are designed to help you think systematically when diagnosing faults. Each guide focuses on a specific group of common problems and follows the ",
+                "same logical process:"
+            ],
+            "bullets":[
+                "Identify the fault or symptom observed by the customer or installer. ",
+                "Consider the most likely causes before making assumptions. ",
+                "Perform the recommended checks in a logical order, starting with the simplest and most common causes. ",
+                "Confirm the root cause before replacing any equipment or changing system settings. ",
+                "Apply the appropriate corrective action and verify that the system operates normally. ",
+
+            ],
+            "paragraphs_after": [
+                "As you work through these examples, pay attention to the relationship between the symptom and the underlying cause. You will notice that many different faults can produce similar symptoms, ",
+                "while one incorrect setting or installation error can lead to multiple system alarms.",
+                "",
+                "Developing a logical troubleshooting approach will save time, reduce unnecessary warranty claims, improve first-time fix rates, and build customer confidence. The goal is not simply to clear ",
+                "alarms—it is to understand why the alarm occurred and ensure the problem does not happen again.",
+                "",
+                "Remember: The best troubleshooters don't guess—they observe, measure, verify, and confirm. ",
+                "Always follow a logical diagnostic process, eliminate the simple causes first, and let the evidence guide your decisions."
             ],
             "images" :    [
                 {
                     "src"  : "images/charging and soc faults.png",
-                    "alt"  : "",
+                    "alt"  : "image of charging and soc faults",
                 },
                   {
                     "src"  : "images/load and run time.png",
-                    "alt"  : "",
+                    "alt"  : "image of load and run time",
                 },
                  {
                     "src"  : "images/communication and firmware fault.png",
-                    "alt"  : "",
+                    "alt"  : "image of communication and firmware fault",
                 },
                  {
                     "src"  : "images/installation and electrical faults.png",
-                    "alt"  : "",
+                    "alt"  : "image of installation and electrical faults",
                 },
                  {
                     "src"  : "images/behavior and logic problems.png",
-                    "alt"  : "",
+                    "alt"  : "image of behavior and logic problems",
                 },
                  {
                     "src"  : "images/bms and protection faults.png",
-                    "alt"  : "",
+                    "alt"  : "image of bms and protection faults",
                 },
                  {
                     "src"  : "images/pv and solar problems.png",
-                    "alt"  : "",
+                    "alt"  : "image of pv and solar problems",
                 },
                  {
                     "src"  : "images/firmware update problems.png",
-                    "alt"  : "",
+                    "alt"  : "image of firmware update problems",
                 },
                  {
                     "src"  : "images/parallel system problem.png",
-                    "alt"  : "",
+                    "alt"  : "image of parallel system problem",
                 },
                  {
                     "src"  : "images/environmental problems.png",
-                    "alt"  : "",
+                    "alt"  : "image of environmental problems",
                 },
                  {
                     "src"  : "images/environmental problems.png",
-                    "alt"  : "",
+                    "alt"  : "image of environmental problems",
                 },
                  {
                     "src"  : "images/monitoring problems and pos.png",
-                    "alt"  : "",
+                    "alt"  : "image of monitoring problems and possible causes",
                 },
                  {
                     "src"  : "images/mechanical and installation problems.png",
-                    "alt"  : "",
+                    "alt"  : "image of mechanical and installation problems",
                 },
             ],
         },
         {
             "title": "SECTION 4 — MAINTENANCE & OPTIMISATION",
-            "paragraphs": [],
-        },
-        {
-            "title": "8.13 Routine Maintenance",
+            "heading": "8.13 Routine Maintenance",
             "paragraphs": [
                 "Even high-quality systems require periodic inspection.",
                 "",
-                "Routine maintenance should include:",
-            ],
-            "bullets": [
-                "cable inspections",
-                "checking lugs and torque",
-                "ventilation inspection",
-                "dust removal",
-                "checking for overheating",
-                "monitoring review",
-                "firmware review",
-                "communication verification",
+               
             ],
             "paragraphs_after": [
-                "Why Maintenance Matters",
-                "Small problems become large problems if ignored.",
-                "",
-                "Routine inspections help identify:",
+                "Routine maintenance should include:",
+                "✔cable inspections",
+                "✔checking lugs and torque",
+                "✔ventilation inspection",
+                "✔dust removal",
+                "✔checking for overheating",
+                "✔monitoring review",
+                "✔firmware review",
+                "✔communication verification",
             ],
-            "bullets_after": [
-                "loose connections",
-                "overheating",
-                "abnormal behaviour",
-                "declining performance",
+            "subsections":[
+                { "heading":"Why Maintenance Matters",  
+                  "paragraphs": [
+                      "Small problems become large problems if ignored.",
+                            "",
+                     "Routine inspections help identify:",
+             ],
+              "paragraphs_after": [
+                    "✔ loose connections",
+                    "✔ overheating",
+                    "✔ abnormal behaviour",
+                    "✔ declining performance",
+                    "✔ before major failures occur.",
             ],
-            "paragraphs_extra": [
-                "before major failures occur.",
+
+            },
             ],
+           
+           
         },
         {
             "title": "8.14 Battery Health & Lifespan Optimisation",
@@ -7794,19 +9012,18 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
             ],
             "paragraphs_after": [
                 "Optimisation Best Practices",
+                "✔maintain proper ventilation",
+                "✔allow periodic full charges",
+                "✔maintain stable communication",
+                "✔avoid excessive discharge",
+                "✔use correct operating modes",
+                "✔avoid excessive heat",
             ],
-            "bullets_after": [
-                "maintain proper ventilation",
-                "allow periodic full charges",
-                "maintain stable communication",
-                "avoid excessive discharge",
-                "use correct operating modes",
-                "avoid excessive heat",
-            ],
+           
             "images"  : [
                 {
                   "src"  : "images/bms can only balance.png",
-                  "alt"  :  "",
+                  "alt"  : "image of BMS balancing capabilities",
                 },
             ],
         },
@@ -7822,15 +9039,14 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "solar usage",
                 "customer experience",
             ],
+            
             "paragraphs_after": [
-                "Optimisation Examples",
-            ],
-            "bullets_after": [
-                "adjusting reserve SOC",
-                "improving operating modes",
-                "changing charging schedules",
-                "reducing unnecessary grid usage",
-                "improving solar utilisation",
+                "✔Optimisation Examples",
+                "✔adjusting reserve SOC",
+                "✔improving operating modes",
+                "✔changing charging schedules",
+                "✔reducing unnecessary grid usage",
+                "✔improving solar utilisation",
             ],
         },
         {
@@ -7839,29 +9055,28 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "System behaviour changes throughout the year.",
                 "",
                 "Winter may cause:",
-            ],
-            "bullets": [
-                "lower solar production",
-                "increased battery cycling",
-                "more grid support",
-            ],
+                "❄lower solar production",
+                "❄increased battery cycling",
+                "❄more grid support",
+                "summer may cause:",
+                "☀ higher solar production",
+                "☀ earlier full charging"
+            ],  
             "paragraphs_after": [
-                "Summer may cause:",
+                "Customer Behaviour Also Matters",
+                "Customers may:"
             ],
-            "bullets_after": [
-                "higher solar production",
-                "earlier full charging",
-            ],
-            "paragraphs_extra": [
+            
+            "paragraphs_before": [
                 "Customer Behaviour Also Matters",
                 "Customers may:",
             ],
-            "bullets_extra": [
+            "bullets_before": [
                 "add appliances",
                 "change usage patterns",
                 "increase nighttime loads",
             ],
-            "paragraphs_final": [
+            "paragraphs_footer": [
                 "Monitoring helps installers identify these changes.",
             ],
         },
@@ -7871,20 +9086,25 @@ MODULE_8_MONITORING_TROUBLESHOOTING = {
                 "Professional installers increasingly use remote monitoring before visiting site.",
                 "",
                 "Remote monitoring allows:",
-            ],
-            "bullets": [
                 "reviewing fault history",
                 "analysing charging behaviour",
                 "checking system trends",
                 "identifying abnormal patterns",
                 "reducing unnecessary call-outs",
             ],
-              "images"  : [
+            
+             
+        },
+        { "title": "Wrapping Up Module 8",
+            "paragraphs": [],
+             "images"  : [
                 {
-                  "src"  : "images/wrapping up module 8.png",
-                  "alt"  :  "",
+                   "src"  : "images/wrapping up module 8.png",
+                    "alt"  :  "image of wrapping up module 8",
                 },
-            ]
+            ],
+
+
         },
     ],
 }
@@ -8180,10 +9400,20 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
             "paragraphs": [
                 "South Africa's energy landscape has changed dramatically over the last decade. Loadshedding, rising electricity costs, unstable grid supply, and increasing energy demands have forced homes and businesses to rethink how they use and store power.",
                 "REVOV was built in response to this challenge. REVOV Batteries is a South African energy storage company focused on reliable, practical, and intelligent lithium battery solutions for residential, commercial, and industrial applications.",
-                "The company was founded with a clear purpose: to help people and businesses take control of their energy future.",
-                "From the beginning, REVOV focused on energy storage systems designed for real-world African conditions — systems capable of handling unstable grids, demanding environments, and the growing need for dependable backup and solar energy storage solutions.",
+                
+            ],
+            "paragraphs_after": ["The company was founded with a clear purpose: ",],
+            "subsections":[
+                { "heading":"to help people and businesses take control of their energy future.",
+                     "paragraphs":[
+                         "From the beginning, REVOV focused on energy storage systems designed for real-world African conditions — systems capable of handling unstable grids, demanding environments, and the growing need for dependable backup and solar energy storage solutions.",
+                  
+                     ],
+
+                },
             ],
         },
+
         {
             "title": "9.2 Built Around Energy Independence",
             "paragraphs": [
@@ -8211,7 +9441,7 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "reduce long-term energy costs",
                 "support off-grid and hybrid energy solutions",
             ],
-            "paragraphs_final": [
+            "paragraphs_footer": [
                 "The goal is not simply to store energy. The goal is to create reliable, intelligent, and scalable energy systems that allow customers to continue operating with confidence.",
             ],
         },
@@ -8240,7 +9470,7 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "commercial buildings",
                 "industrial applications",
             ],
-            "paragraphs_final": [
+            "paragraphs_footer": [
                 "Many REVOV systems use automotive-grade lithium cells designed to withstand demanding operating conditions, vibration, temperature fluctuations, and continuous cycling.",
             ],
         },
@@ -8270,7 +9500,7 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "technical support teams",
                 "renewable energy professionals",
             ],
-            "paragraphs_final": [
+            "paragraphs_footer": [
                 "The focus is not only on selling batteries, but on helping create stable, safe, and professionally designed energy systems.",
             ],
         },
@@ -8298,7 +9528,7 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "troubleshooting methodology",
                 "and safe installation practices",
             ],
-            "paragraphs_final": [
+            "paragraphs_footer": [
                 "The goal is not simply to create installers who can connect equipment. The goal is to help develop installers who can design, commission, troubleshoot, and support reliable energy systems professionally.",
             ],
         },
@@ -8306,27 +9536,38 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
             "title": "9.6 The REVOV Philosophy",
             "paragraphs": [
                 "At its core, REVOV is built around a simple idea: Reliable energy creates progress.",
-                "Reliable energy allows:",
+                
             ],
-            "bullets": [
-                "businesses to operate,",
-                "families to feel secure,",
-                "installers to build professionally,",
-                "and customers to become less dependent on an unstable grid.",
+            "subsections":[
+                {
+                    "heading": "Reliable energy allows:",
+                    "bullets": [
+                    "businesses to operate,",
+                    "families to feel secure,",
+                    "installers to build professionally,",
+                    "and customers to become less dependent on an unstable grid.",
+                ],
+                  "paragraphs_after": [
+                    "As the energy industry continues to evolve, REVOV continues focusing on:",
+                ],
+                 "bullets_after": [
+                    "practical innovation,",
+                    "reliable storage,",
+                    "professional support,",
+                    "installer partnerships,",
+                    "and long-term energy resilience.",
+                ],
+                "paragraphs_footer": [
+                    "REVOV is not only part of the backup power industry. It is part of the transition toward smarter, more independent energy systems across South Africa and beyond.",
+                        ],
+
+
+                },
             ],
-            "paragraphs_after": [
-                "As the energy industry continues to evolve, REVOV continues focusing on:",
-            ],
-            "bullets_after": [
-                "practical innovation,",
-                "reliable storage,",
-                "professional support,",
-                "installer partnerships,",
-                "and long-term energy resilience.",
-            ],
-            "paragraphs_final": [
-                "REVOV is not only part of the backup power industry. It is part of the transition toward smarter, more independent energy systems across South Africa and beyond.",
-            ],
+            
+          
+           
+            
         },
         {
             "title": "9.7 REVOV Product Range Overview",
@@ -8343,7 +9584,7 @@ MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE = {
                 "installation space,",
                 "and customer expectations.",
             ],
-            "paragraphs_final": [
+            "paragraphs_footer": [
                 "REVOV's product ecosystem ranges from compact residential backup batteries to large-scale commercial and high-voltage energy storage systems.",
             ],
         },
@@ -8460,34 +9701,95 @@ MODULE_10_INSTALLER_GUIDES_AND_RESOURCES = {
                 "easy to maintain,",
                 "and trusted by customers for years to come.",
             ],
-             "images" : [
-                {
-                   "src" : "images/installer design guid.png",
+            "images":[
+                 {
+                     "src" : "images/installer design guid.png",
                     "alt" : "image of a installation guid for the installers",
                 },
-                  {
-                   "src" : "images/how to read revov batter.png",
-                    "alt" : "image of how to read revov spec sheets.",
-                },
-            
-                {
-                   "src" : "images/revov e100 fault.png",
-                    "alt" : "image of a REVOV E100 BATTERY",
-                },
-                  {
-                   "src" : "images/revov e300 fault.png",
-                    "alt" : "image of a REVOV E300 BATTERY fault finding",
-                },
-            
-                {
-                   "src" : "images/cfe 61.44 fault.png",
-                    "alt" : "image of a REVOV CFE 61.44 BATTERY fault finding",
-                },
-                  {
-                   "src" : "images/energy core 51,2 fault.png",
-                    "alt" : "image of a REVOV energy core 51.2 fault finding.",
-                },
             ],
+            "subsections":[
+                { "heading": "Installer Guide: Reading Battery Specification Sheets",
+                        "paragraphs":[
+                            "A battery specification sheet is one of the most important documents an installer will use. It contains the technical information needed to correctly size, configure, install and commission a ",
+                            "battery system safely and within the manufacturer's requirements.",
+                            "",
+                            "Many installation problems occur because important specifications such as voltage, current limits, temperature ranges or communication requirements are overlooked or misunderstood. Learning ",
+
+                            "how to interpret a specification sheet is therefore an essential skill for every installer.",
+                            "",
+                            "The following guide uses a REVOV battery as an example to explain the purpose of each specification, what it means in practical terms, and why it matters during system design and installation. ",
+                            "",
+                            "Although the values may differ between manufacturers and battery models, the principles for reading and interpreting a specification sheet remain the same.",
+                            "",
+                            "As you work through this guide, focus on understanding not only what each specification is, but also how it influences equipment selection, system configuration, battery performance, safety, and long-term reliability.",
+                            "",
+                            "",
+                            "Remember: A specification sheet is more than a list of numbers—it is the manufacturer's guide to installing and operating the battery correctly. Learning to interpret it properly is one of the most valuable skills an installer can develop.",
+                        ],
+                          "images" : [
+                                       
+                                          {
+                                           "src" : "images/how to read revov batter.png",
+                                            "alt" : "image of how to read revov spec sheets.",
+                                        },  
+                                       
+                    ],
+
+                },
+                {"heading": "Product Fault-Finding & Quick Reference Guides",
+                    "paragraphs":[
+                        "Every battery system has its own operating characteristics, recommended settings, alarm codes and troubleshooting procedures. While the fault-finding process follows the same logical ",
+                        "approach, the specific values, operating limits and diagnostic information will vary between products.",
+                        "",
+                        "",
+                        "The following quick reference guides have been developed to provide installers with practical, product-specific troubleshooting resources that can be used during commissioning, maintenance, servicing and fault finding. ",
+                        "",
+                        "Each guide summarises the most common symptoms, likely causes, recommended checks and corrective actions for a particular battery or energy storage product.",
+                        "",
+                        "These guides are intended as quick field references to help installers diagnose problems efficiently before consulting the manufacturer's detailed service documentation where required. As ",
+                        "new products are introduced or existing models are updated, these guides can easily be added, replaced or removed without affecting the rest of the training material.",
+                        "",
+
+                    ],
+                    "paragraphs_after":[
+                        "When using these guides, always follow a structured troubleshooting process:"
+                    ],
+                    "bullets_after":[
+                        "Identify the symptom. ",
+                        "Confirm the actual root cause. ",
+                        "Perform the recommended checks. ",
+                        "Apply the appropriate corrective action. ",
+                        "Verify that the fault has been resolved before returning the system to service. ",
+                    ],
+                    "paragraphs_before":[
+                            "Remember: Quick reference guides support the troubleshooting process—they do not replace the manufacturer's installation manuals, service documentation or safety procedures. Always confirm ",
+                            "your findings before replacing components or making configuration changes."
+                    ],
+                    "images":[
+                        {
+                            "src": "images/Revov E100 FAULT.png",
+                            "alt": "IMAGE OF REVOV E100 FAULT FINDING GUIDE",
+                        },
+                         {
+                            "src": "images/E300 fault.png",
+                            "alt": "IMAGE OF REVOV E300 FAULT FINDING GUIDE",
+                        },
+                        {
+                            "src": "images/cfe 61.44 fault.png",
+                            "alt": "IMAGE OF REVOV CFE 61.44 FAULT FINDING GUIDE",
+                        },
+                        {
+                            "src": "images/energy core fault.png",
+                            "alt": "IMAGE OF REVOV ENERGY CORE FAULT FINDING GUIDE",
+                        },
+                    ],
+                     
+                  
+                
+
+                 },
+            ],
+           
         },
     ],
 }

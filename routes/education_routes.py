@@ -9,6 +9,7 @@ from __future__ import annotations
 
 
 from dataclasses import dataclass
+import importlib
 from datetime import datetime,timedelta,timezone
 from functools import wraps
 from io import BytesIO
@@ -70,6 +71,7 @@ from modules.lithium_education import (
     MODULE_9_ECOSYSTEM_AND_PRODUCT_RANGE,
     MODULE_10_INSTALLER_GUIDES_AND_RESOURCES,
 )
+import modules.lithium_education as lithium_education_module
 from modules.interactive_tools import (
     CellSimulator,
     PackSimulator,
@@ -2125,7 +2127,9 @@ def fundamentals_module2():
 @education_bp.route('/fundamentals/module-3')
 def fundamentals_module3():
     """Fundamentals Module 3: Battery Fundamentals"""
-    content = MODULE_3_BATTERY_FUNDAMENTALS
+    # Reload in-process module so template always reflects latest content edits
+    # without requiring a server restart during content authoring.
+    content = importlib.reload(lithium_education_module).MODULE_3_BATTERY_FUNDAMENTALS
 
     continue_card = {
         "step_title": "Continue Learning",

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ title }}</title>
+    {% include '_favicon.html' %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      
+      body {
+        background: var(--primary-gradient);
+        min-height: 100vh;
+        padding: 40px 20px !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      
+      h1 {
+        color: white;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        margin-bottom: 30px !important;
+      }
+      
+      .result-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        background: white;
+      }
+      
+      .card-body {
+        padding: 30px;
+      }
+      
+      pre {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      
+      .btn-group-result {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      
+      .btn-secondary {
+        background: #6c757d;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        color: white;
+      }
+      
+      .btn-success {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        color: white;
+      }
+      
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+      }
+      
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+        .btn-group-result {
+          display: none;
+        }
+      }
+
+      .site-footer {
+        width: 100%;
+        margin-top: 30px;
+        background: transparent;
+        color: rgba(255,255,255,0.85);
+        text-align: center;
+        padding: 28px 20px 20px;
+        font-size: 0.85em;
+        line-height: 1.6;
+      }
+
+      .site-footer .footer-brand {
+        font-weight: 700;
+        font-size: 1.05em;
+        margin-bottom: 4px;
+        color: #fff;
+      }
+
+      .site-footer-links {
+        margin-top: 6px;
+      }
+
+      .site-footer a,
+      .site-footer-link {
+        color: rgba(255,255,255,0.95);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .site-footer a:hover,
+      .site-footer-link:hover {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .site-footer-copy {
+        margin-top: 8px;
+        font-size: 0.9em;
+        color: rgba(255,255,255,0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mb-4">{{ title }}</h1>
+      <div class="card result-card" id="result-content">
+        <div class="card-body">
+          <pre style="white-space: pre-wrap;">{{ result['summary_text'] }}</pre>
+          <hr>
+          <div class="btn-group-result">
+            <button id="exportPdfBtn" class="btn btn-success">
+              <i class="fas fa-file-pdf"></i> Export as PDF
+            </button>
+              <a class="btn btn-secondary" href="{{ url_for('calculator_page') }}">
+              <i class="fas fa-arrow-left"></i> Back to Calculator
+            </a>
+          </div>
+          <div id="pdfStatus" style="margin-top:12px; display:none;">
+            <small id="pdfMessage">Preparing PDF…</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script>
+  async function pollStatus(jobId) {
+    const statusEl = document.getElementById('pdfMessage');
+    try {
+      const res = await fetch(`/pdf-status/${jobId}`);
+      const text = await res.text();
+      if (res.ok) {
+        // Replace the body with returned HTML (status/download link)
+        document.open();
+        document.write(text);
+        document.close();
+      } else {
+        statusEl.textContent = 'Error checking status';
+      }
+    } catch (err) {
+      statusEl.textContent = 'Network error while checking PDF status';
+      console.error(err);
+    }
+  }
+
+  const exportBtn = document.getElementById('exportPdfBtn');
+  if (exportBtn) {
+  exportBtn.addEventListener('click', async function (e) {
+    e.preventDefault();
+
+    const statusWrap = document.getElementById('pdfStatus');
+    statusWrap.style.display = 'block';
+
+    const msg = document.getElementById('pdfMessage');
+    msg.textContent = 'Submitting PDF job…';
+
+    try {
+      // Embed the current result text into the request so the server doesn't rely
+      // on in-memory state (works with multiple gunicorn workers).
+      let resultText;
+      try {
+        resultText = {{ result['summary_text']|tojson }};
+      } catch (e) {
+        // If template rendering failed for some reason, fallback to reading the
+        // displayed text from the page.
+        console.warn('Failed to parse inlined result JSON, falling back to DOM text', e);
+        const pre = document.querySelector('#result-content pre');
+        resultText = pre ? pre.innerText : '';
+      }
+      if (typeof resultText !== 'string') resultText = String(resultText);
+      const payload = new FormData();
+      payload.append('result_text', resultText);
+      payload.append('title', {{ title|tojson }});
+
+      const resp = await fetch("{{ url_for('export_pdf') }}", {
+        method: 'POST',
+        body: payload
+      });
+
+      if (!resp.ok) {
+        // show server error message if available
+        let body = '';
+        try { body = await resp.text(); } catch (e) {}
+        msg.textContent = 'Unexpected response from server';
+        console.log('Export error:', resp.status, body);
+        return;
+      }
+
+      const data = await resp.json();
+      if (data && data.job_id) {
+        msg.textContent = 'Job submitted, redirecting to status…';
+        // go to the polling/status page which will auto-download
+        window.location = `/pdf-status/${data.job_id}`;
+      } else {
+        msg.textContent = 'Unexpected response from server';
+        console.log('Missing job_id in response', data);
+      }
+    } catch (err) {
+      msg.textContent = 'Failed to submit PDF job';
+      console.error("Export failed:", err);
+    }
+  });
+  } else {
+    console.warn('Export button not found on page');
+  }
+  </script>
+
+  {% include '_site_footer.html' %}
+  </body>
+</html>

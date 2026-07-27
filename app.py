@@ -2,14 +2,17 @@ from flask import Flask, Response, render_template,abort, request,stream_with_co
 import calculator
 #import re
 import json
+import re
 import time
 from io import BytesIO
 import uuid
 import tempfile
 import os
 from concurrent.futures import ProcessPoolExecutor
+from markupsafe import Markup
 import threading
 from datetime import datetime
+from dotenv import load_dotenv
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -18,8 +21,35 @@ from reportlab.lib import colors
 from routes.education_routes import education_bp
 from modules import education_store
 
+# Load environment variables from .env file
+load_dotenv()
+
 
 app = Flask(__name__)
+
+
+def markdown_to_html(value):
+    if value is None:
+        return ""
+    if not isinstance(value, str):
+        value = str(value)
+
+    value = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", value)
+
+    exact_matches = {
+        "Summary:",
+        "Remember:",
+        "Power (kW) = what is happening right now",
+        "Energy (kWh) = what happens over time",
+    }
+    if value.strip() in exact_matches:
+        value = f"<strong>{value}</strong>"
+
+    return Markup(value)
+
+
+app.jinja_env.filters["markdown_to_html"] = markdown_to_html
+
 # Never hard-code production secrets. On Render (and other hosts), set SECRET_KEY
 # as an environment variable. Local dev can fall back to "dev".
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev")

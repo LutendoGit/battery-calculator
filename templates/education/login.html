@@ -6,12 +6,28 @@
     <title>Welcome — to Revov WattWorks</title>
     {% include '_favicon.html' %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+      :root {
+        --color-primary: #7f3636;
+        --color-indigo: #7f3636;
+        --color-accent: #A3E635;
+        --color-light: #7f3636;
+        --color-dark: #2E2E2E;
+        --color-white: #FFFFFF;
+      }
+
       body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background:
+          radial-gradient(circle at top left, #CBCBCB, transparent 25%),
+          radial-gradient(circle at top right, #CBCBCB, transparent 32%),
+          linear-gradient(180deg, #CBCBCB 0%, #CBCBCB 42%,#CBCBCB 100%);
         min-height: 100vh;
         padding: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Roboto', sans-serif;
+        color: var(--color-dark);
         overflow-x: hidden;
       }
 
@@ -22,9 +38,10 @@
       }
 
       header {
-        padding: 34px 20px 14px;
-        background: rgba(255, 255, 255, 0.08);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        padding: 34px 20px 22px;
+        background: linear-gradient(135deg, #454849, #CBCBCB);
+        border-bottom: 1px solid #CBCBCB;
+        color: var(--color-white);
       }
 
       @supports ((-webkit-backdrop-filter: blur(6px)) or (backdrop-filter: blur(6px))) {
@@ -37,10 +54,11 @@
       .header-inner {
         max-width: 1200px;
         margin: 0 auto;
-        color: rgba(255,255,255,0.95);
+        color: rgba(255,255,255,0.96);
       }
 
       .header-inner h1 {
+        font-family: 'Montserrat', sans-serif;
         font-weight: 900;
         letter-spacing: -0.03em;
         margin: 0 0 10px;
@@ -52,7 +70,7 @@
 
       .header-inner p {
         margin: 0 0 8px;
-        font-size: 1.1rem;
+        font-size: 1rem;
         color: rgba(255,255,255,0.90);
         text-align: center;
       }
@@ -65,15 +83,14 @@
         margin: 16px auto 0;
         padding-left: 18px;
         line-height: 1.8;
-        color: rgba(255,255,255,0.92);
-        columns: 2;
+        color: var(--color-white);
+        columns: 1;
         column-gap: 36px;
-        max-width: 980px;
+        max-width: 3000px;
       }
 
       .bullets li {
         break-inside: avoid;
-        -webkit-column-break-inside: avoid;
         page-break-inside: avoid;
       }
 
@@ -85,7 +102,7 @@
       }
 
       main {
-        padding: 14px 20px 28px;
+        padding: 24px 20px 42px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -105,43 +122,50 @@
       }
 
       .login-card {
-        border: none;
-        border-radius: 14px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+        border: 10px  #7f3636;
+        border-radius: 20px;
+        box-shadow: 0 20px 44px rgba(16,24,40,0.14);
+        overflow: hidden;
       }
 
       .login-card .card-header {
-        background: white;
-        border-bottom: 1px solid rgba(0,0,0,0.06);
-        border-top-left-radius: 14px;
-        border-top-right-radius: 14px;
+        background: var(--color-white);
+        border-bottom: 1px  #7f3636;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
       }
 
       .login-card .card-body {
-        background: white;
-        border-bottom-left-radius: 14px;
-        border-bottom-right-radius: 14px;
+        background: var(--color-white);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
       }
 
       .login-title {
         font-weight: 800;
-        color: #111827;
+        font-family: 'Montserrat', sans-serif;
+        color: #7f3636;
       }
 
       .muted {
-        color: #6b7280;
+        color: #000;
         font-size: 0.95rem;
       }
 
       .btn-primary {
-        background: #667eea;
-        border-color: #667eea;
+        background-color: #7f3636;
+        border-color: #7f3636;
         font-weight: 700;
+        border-radius: 8px;
+        padding: 12px 24px;
+        transition: all 0.3s ease;
       }
 
       .btn-primary:hover {
-        background: #764ba2;
-        border-color: #764ba2;
+        background-color: #7f3636;
+        border-color: #7f3636;
+        color: #7f3636;
+        transform: scale(1.02);
       }
 
       .pw-toggle-btn {
@@ -152,14 +176,14 @@
         background: transparent;
         border: 0;
         padding: 0 10px;
-        color: #6c757d;
+        color: #7f3636;
         text-decoration: none;
         box-shadow: none;
       }
 
       .pw-toggle-btn:hover,
       .pw-toggle-btn:focus {
-        color: #495057;
+        color: #7f3636;
         text-decoration: none;
         box-shadow: none;
       }
@@ -189,7 +213,7 @@
         padding: 0;
         background: transparent;
         border: none;
-        color: #6c757d;
+        color: #7f3636;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -198,7 +222,7 @@
 
       .password-input-container .pw-toggle-btn:hover,
       .password-input-container .pw-toggle-btn:focus {
-        color: #495057;
+        color: #7f3636;
         background: transparent;
         outline: none;
       }
@@ -206,6 +230,94 @@
       .password-input-container .pw-toggle-btn svg {
         width: 16px;
         height: 16px;
+      }
+
+      .quick-links {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .quick-links .btn-link {
+        color: var(--color-indigo);
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .quick-links .btn-link:hover {
+        color: var(--color-primary);
+        text-decoration: underline;
+      }
+
+      .auth-card-wrap {
+        width: 100%;
+        max-width: 520px;
+      }
+
+      .form-control {
+        border-radius: 8px;
+        border-color: #7f3636;
+      }
+
+      .form-control:focus {
+        border-color: #7f3636;
+        box-shadow: 0 0 0 0.2rem #7f3636;
+      }
+
+      @media (min-width: 768px) {
+        .hero h1 {
+          font-size: 40px;
+        }
+
+        .hero p {
+          font-size: 18px;
+        }
+
+        .footer {
+          text-align: left;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 32px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .hero {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          text-align: left;
+          padding: 120px 40px;
+        }
+
+        .hero h1 {
+          font-size: 48px;
+        }
+
+        .hero p {
+          font-size: 20px;
+        }
+
+        .footer {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      @media (min-width: 1440px) {
+        .container {
+          max-width: 1400px;
+        }
+
+        .hero h1 {
+          font-size: 56px;
+        }
+
+        .hero p {
+          font-size: 22px;
+        }
       }
     </style>
   </head>
@@ -228,7 +340,7 @@
       </header>
 
       <main aria-label="Login">
-        <div class="card login-card" style="width: 100%; max-width: 520px;">
+        <div class="card login-card auth-card-wrap">
           <div class="card-header p-4">
             <div class="login-title">Installer Login</div>
             <div class="muted">Enter your WattWorks account details.</div>
@@ -251,12 +363,12 @@
               <div class="form-group">
                 <label>Password</label>
                 <div class="password-input-container">
-                  <input id="password" class="form-control" name="password" type="password" autocomplete="current-password" required>
+                  <input id="password" class="form-control" name="password" type="password" placeholder="Enter your password" title="Password" autocomplete="current-password" required>
                   <button class="pw-toggle-btn" type="button" data-toggle-password="#password" aria-label="Show password" title="Show password"></button>
                 </div>
               </div>
 
-              <div class="d-flex justify-content-between align-items-center" style="gap: 12px; flex-wrap: wrap;">
+              <div class="quick-links">
                 <a class="btn btn-link p-0" href="{{ url_for('education.forgot_password') }}">Forgot password?</a>
                 <a class="btn btn-link p-0" href="{{ url_for('education.register') }}">Create account</a>
               </div>
@@ -304,5 +416,7 @@
         });
       })();
     </script>
+
+    {% include '_site_footer.html' %}
   </body>
 </html>
