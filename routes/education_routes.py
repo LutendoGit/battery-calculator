@@ -556,12 +556,22 @@ def _enforce_inactivity_timeout():
         except Exception:
             pass
 
-        _clear_auth_session()
+        # Preserve minimal identity for easier re-login without losing progress.
+        # Move current user id into a temporary key and keep username/avatar to
+        # allow the login page to pre-fill or show context. Do NOT fully clear
+        # the session here so users can return and sign in again without losing
+        # non-auth data stored in their session.
+        expired_user = session.pop("edu_user_id", None)
+        if expired_user is not None:
+            session["edu_expired_user_id"] = expired_user
+        # Keep username/avatar for convenience but remove last-activity to force re-auth.
+        session["edu_session_expired_at"] = now.isoformat()
 
         if _is_api_request():
+            # For API clients, indicate expiry but keep session data for manual recovery.
             return jsonify({"error": "session_expired_inactive"}), 401
 
-        flash("You were logged out due to 24 hours of inactivity.", "warning")
+        flash("Your session expired due to inactivity — please sign in again.", "warning")
         return redirect(url_for("education.login", next=request.path))
 
     # Session still active -> refresh activity timestamp.
