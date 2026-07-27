@@ -26,6 +26,7 @@
         font-size: 16px;
         color: var(--muted);
         background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+        border: #7f3636;
         min-height: 100vh;
         line-height: 1.6;
         margin: 0;
@@ -49,29 +50,32 @@
 
       .main-card { background: transparent; border: none; padding: 0; }
 
-      .topbar { position: relative; z-index: 1; display:flex; justify-content:flex-end; align-items:center; gap:12px; margin-bottom:20px; }
+      .topbar { position: relative; z-index: 1; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:20px; }
 
-      .topbar-user { display:inline-flex; align-items:center; gap:10px; color: #fff; background: rgba(0,0,0,0.12); border-radius:999px; padding:6px 12px; }
+      .topbar-brand { display:inline-flex; align-items:center; gap:10px; }
+      .topbar-brand img { display:block; height:40px; width:auto; border-radius: 8px; box-shadow: 0 8px 18px rgba(0,0,0,0.18); }
+
+      .topbar-user { display:inline-flex; align-items:center; gap:10px; color: #fff; background: #7f3636; border-radius:999px; padding:6px 12px; }
 
       .hero-copy, .hero-panel { position: relative; z-index:1; }
       .hero-copy { margin-bottom: 18px; }
 
-      .hero-kicker { display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background: rgba(255,255,255,0.06); color: #fff; font-size:0.82rem; text-transform:uppercase; margin-bottom:14px; }
+      .hero-kicker { display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background: #7f3636; color: white; font-size:0.82rem; text-transform:uppercase; margin-bottom:14px; }
 
       h1 { color: #fff; font-size: 34px; line-height:1.12; margin-bottom:12px; text-shadow:0 6px 26px rgba(0,0,0,0.38); }
       .lead, .hero-intro { color: rgba(255,255,255,0.92); }
 
-      .info-box { background: var(--bg-light); border: 1px solid rgba(0,0,0,0.06); border-radius: 16px; padding: 20px; box-shadow: 0 10px 28px rgba(0,0,0,0.18); }
-      .muted-small { color: var(--bg-dark); }
+      .info-box { background: var(--bg-light); border: 1px solid #7f3636; border-radius: 16px; padding: 20px; box-shadow: 0 10px 28px rgba(0,0,0,0.18); }
+      .muted-small { color: #7f3636; }
 
-      .section-heading { margin:0 0 10px; font-weight:800; font-size:1.6rem; color: var(--bg-dark); }
-      .subheading { font-weight:800; margin:0 0 10px; font-size:1.25rem; color: var(--bg-dark); }
+      .section-heading { margin:0 0 10px; font-weight:800; font-size:1.6rem; color: #7f3636; }
+      .subheading { font-weight:800; margin:0 0 10px; font-size:1.25rem; color: #7f3636; }
       .section { padding: 24px 0 0; }
-      .section-copy { color: var(--bg-dark); max-width:760px; margin-bottom:18px; }
+      .section-copy { color: black; max-width:760px; margin-bottom:18px; }
 
       .programs-grid, .features-grid, .story-grid { display:grid; gap:20px; }
 
-      .card { background-color: var(--bg-light); border-radius: 16px; box-shadow: 0 12px 28px rgba(0,0,0,0.18); padding: 18px; transition: transform .22s ease, box-shadow .22s ease; border: 1px solid rgba(0,0,0,0.06); }
+      .card { background-color: var(--bg-light); border-radius: 16px; box-shadow: 0 12px 28px rgba(0,0,0,0.18); padding: 18px; transition: transform .22s ease, box-shadow .22s ease; border: 1px solid #7f3636; }
       .card:hover { transform: translateY(-6px); box-shadow: 0 20px 44px rgba(0,0,0,0.22); }
 
       .program-card { display:block; text-decoration:none; color:inherit; height:100%; }
@@ -98,15 +102,18 @@
       .cta-row .btn i { margin-right:8px; }
 
       .btn-primary { background-color: var(--accent-red) !important; color: #fff !important; border: none; }
-      .btn-primary:hover, .btn-primary:focus { background-color: #662e2e !important; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(127,54,54,0.22); }
+      .btn-primary:hover, .btn-primary:focus { background-color: #7f3636 !important; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(127,54,54,0.22); }
 
       .btn-outline-primary, .btn-outline-secondary, .btn-outline-danger { background-color: var(--surface); color: var(--accent-red); border: 2px solid var(--accent-red); }
       .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-secondary:hover, .btn-outline-secondary:focus, .btn-outline-danger:hover, .btn-outline-danger:focus { background-color: var(--accent-red); color: #fff; border-color: var(--accent-red); }
 
       .hero-panel { display:grid; gap:14px; }
-      .hero-stat { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); border-radius:14px; padding:14px; }
-      .hero-stat-label { display:block; font-size:0.78rem; text-transform:uppercase; color: rgba(255,255,255,0.85); margin-bottom:6px; }
-      .hero-stat strong { display:block; font-family:'Montserrat',sans-serif; font-size:1rem; color:#fff; margin-bottom:4px; }
+      .hero-account { display:flex; align-items:right; justify-content:flex-end; gap:10px; flex-wrap:nowrap; margin-bottom:8px; padding:10px 12px; border-radius:12px; background: transparent; border: 1px solid transparent; }
+      .hero-account .topbar-user { display:inline-flex; align-items:center; background: transparent; padding: 0; color: #fff; font-weight:600; white-space:nowrap; }
+      .hero-account .account-actions { display:flex; align-items:center; gap:8px; flex-wrap:nowrap; }
+      .hero-stat { background:Transparent; border: 1px solid rgba(255,255,255,0.06); border-radius:14px; padding:14px; }
+      .hero-stat-label { display:block; font-size:18px; text-transform:uppercase; color: #7f3636; margin-bottom:6px; }
+      .hero-stat strong { display:block;font-size: 10px; font-family:'Montserrat',sans-serif; color:white; margin-bottom:4px; }
 
       .alert { border:none; border-radius:14px; padding:14px 16px; box-shadow: 0 8px 18px rgba(0,0,0,0.08); }
       .alert-info { background: var(--bg-light); color: var(--bg-dark); }
@@ -132,31 +139,37 @@
         <div class="hero">
           <div class="main-card">
             <div class="topbar">
-              {% if is_logged_in %}
-                <span class="topbar-user">User: <strong>{{ session.get('edu_username') }}</strong></span>
-                <div class="account-actions">
-                  <details class="avatar-menu">
-                    <summary class="avatar" aria-label="Profile">
-                      {% if session.get('edu_avatar') %}
-                        <img src="{{ url_for('static', filename='avatars/' ~ session.get('edu_avatar')) }}" alt="Profile picture">
-                      {% else %}
-                        {{ (session.get('edu_username', '?')[:1] | upper) }}
-                      {% endif %}
-                    </summary>
-                    <div class="avatar-panel">
-                      <form method="post" enctype="multipart/form-data" action="{{ url_for('education.update_avatar') }}">
-                        <label>Update profile picture</label>
-                        <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp" required>
-                        <div class="hint">PNG/JPG/WEBP. Uploading replaces your current photo.</div>
-                        <div class="btn-row">
-                          <button class="btn-save" type="submit">Save</button>
-                        </div>
-                      </form>
-                    </div>
-                  </details>
-                  <a class="btn btn-sm btn-outline-danger" href="{{ url_for('education.logout') }}">Logout</a>
-                </div>
-              {% else %}
+          <div class="topbar-brand">
+            <img src="{{ url_for('static', filename='images/revov Energy Projects logo.webp') }}" alt="REVOV Energy Projects logo">
+            <span class="text-white">REVOV WattWorks</span>
+          </div>
+          {% if is_logged_in %}
+            <div class="hero-account">
+              <span class="topbar-user">User: {{ session.get('edu_username') }}</span>
+              <div class="account-actions">
+                <details class="avatar-menu">
+                  <summary class="avatar" aria-label="Profile">
+                    {% if session.get('edu_avatar') %}
+                      <img src="{{ url_for('static', filename='avatars/' ~ session.get('edu_avatar')) }}" alt="Profile picture">
+                    {% else %}
+                      {{ (session.get('edu_username', '?')[:1] | upper) }}
+                    {% endif %}
+                  </summary>
+                  <div class="avatar-panel">
+                    <form method="post" enctype="multipart/form-data" action="{{ url_for('education.update_avatar') }}">
+                      <label>Update profile picture</label>
+                      <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp" required>
+                      <div class="hint">PNG/JPG/WEBP. Uploading replaces your current photo.</div>
+                      <div class="btn-row">
+                        <button class="btn-save" type="submit">Save</button>
+                      </div>
+                    </form>
+                  </div>
+                </details>
+                <a class="btn btn-sm btn-outline-danger" href="{{ url_for('education.logout') }}">Logout</a>
+              </div>
+            </div>
+          {% else %}
                 <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.login') }}">Login</a>
                 <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('education.register') }}">Create account</a>
               {% endif %}
