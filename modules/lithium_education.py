@@ -15,23 +15,7 @@ class LithiumBatteryFundamentals:
     MODULE_1_FUNDAMENTALS = {
         "module_title": "MODULE 1 - Introduction to Energy Storage & Modern Energy Systems",
         "module_subtitle": "Core concepts installers need before tools, cables, or settings.",
-        "sections": [
-            {
-                "title": "Contents",
-                "bullets": [
-                    "1.1 Module 1 Learning Outcomes",
-                    "1.2 Why Energy Storage Matters in South Africa",
-                    "1.3 Power vs Energy — The Most Important Concept",
-                    "1.4 How to Calculate Backup Requirements",
-                    "1.5 AC vs DC — How Electricity Moves Through the System",
-                    "1.6 Core Components of a Modern Energy System",
-                    "1.7 How Lithium Batteries Fit into the System",
-                    "1.8 The Four Main System Types",
-                    "1.9 Energy Flow and System Operation",
-                    "1.10 Efficiency and System Losses",
-                    "1.11 Where REVOV Fits into these Systems",
-                ],
-            },
+        
             {
                 "title": "1.1 Module 1 Learning Outcomes",
                 "paragraphs": [
