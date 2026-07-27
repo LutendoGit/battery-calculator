@@ -9504,6 +9504,31 @@ MODULE_10_INSTALLER_GUIDES_AND_RESOURCES = {
     ],
 }
 
+class CellChemistry(Enum):
+    """Battery cell chemistry identifiers"""
+    LI_ION = "LI_ION"
+    LIFEPO4 = "LIFEPO4"
+    LI_POLYMER = "LI_POLYMER"
+    NCA = "NCA"
+    NCM = "NCM"
+
+@dataclass
+class CellSpecifications:
+    """Minimal cell specification model used by the interactive tools."""
+    nominal_voltage_v: float
+    capacity_mah: float
+    chemistry: CellChemistry
+    min_voltage_v: float
+    max_voltage_v: float
+
+    def energy_wh(self) -> float:
+        """Return the nominal stored energy in watt-hours."""
+        return self.nominal_voltage_v * (self.capacity_mah / 1000.0)
+
+    def voltage_range(self) -> float:
+        """Return the usable voltage window from min to max."""
+        return max(0.0, self.max_voltage_v - self.min_voltage_v)
+
 class CapacityAndDOD:
     """Educational module about Capacity and Depth of Discharge"""
     
