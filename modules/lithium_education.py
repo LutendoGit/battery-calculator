@@ -32,108 +32,59 @@ class CellSpecifications:
         """Total usable voltage range"""
         return self.max_voltage_v - self.min_voltage_v
     
-    def energy_wh(self) -> float:
-        """Cell energy in watt-hours"""
-        return (self.capacity_mah / 1000) * self.nominal_voltage_v
-
-
-@dataclass
-class CellHealthMetrics:
-    """Metrics to assess cell health during operation"""
-    voltage_v: float
-    capacity_mah: float
-    internal_resistance_ohms: float
-    cycle_count: int
-    temperature_celsius: float
-    
-    def state_of_charge(self, nominal_min: float, nominal_max: float) -> float:
-        """Calculate SOC based on voltage"""
-        if self.voltage_v <= nominal_min:
-            return 0.0
-        elif self.voltage_v >= nominal_max:
-            return 100.0
-        else:
-            soc = ((self.voltage_v - nominal_min) / (nominal_max - nominal_min)) * 100
-            return max(0, min(100, soc))
-    
-    def is_healthy(self, nominal_capacity: float) -> bool:
-        """Determine if cell is healthy"""
-        capacity_retention = (self.capacity_mah / nominal_capacity) * 100
-        return capacity_retention >= 80 and self.internal_resistance_ohms < 150
-
-
-class LithiumBatteryFundamentals:
-    """Educational content about lithium batteries"""
-
-    # NOTE (2026-02): Fundamentals content has been updated to Module 1
-    # "Introduction to Energy Storage & Modern Energy Systems".
-    # The previous cell-behavior fundamentals were removed to avoid content mixups.
-    MODULE_1_FUNDAMENTALS = {
-        "module_title": "MODULE 1 - Introduction to Energy Storage & Modern Energy Systems",
-        "module_subtitle": "Core concepts installers need before tools, cables, or settings.",
-        "sections": [
             {
-                "title": "Contents",
-                "bullets": [
-                    "1.1 Module 1 Learning Outcomes",
-                    "1.2 Why Energy Storage Matters in South Africa",
-                    "1.3 Power vs Energy — The Most Important Concept",
-                    "1.4 How to Calculate Backup Requirements",
-                    "1.5 AC vs DC — How Electricity Moves Through the System",
-                    "1.6 Core Components of a Modern Energy System",
-                    "1.7 How Lithium Batteries Fit into the System",
-                    "1.8 The Four Main System Types",
-                    "1.9 Energy Flow and System Operation",
-                    "1.10 Efficiency and System Losses",
-                    "1.11 Where REVOV Fits into these Systems",
-                ],
-            },
-            {
-                "title": "1.1 Module 1 Learning Outcomes",
+                "title": "1.5 AC vs DC — How Electricity Moves Through the System",
                 "paragraphs": [
-                    "Before you start working with systems, it's important to understand the \"language\" of energy storage. This module lays the foundation for everything that follows — from system design to installation and troubleshooting.",
-                    "Think of this as your baseline knowledge. If you understand this module well, the rest of the training becomes much easier and far more practical.",
-                    "<br><strong>By the end of this module, you will be able to:</strong>",
+                    "Every system you install will contain both AC and DC electricity. Understanding how these interact is essential for installation, configuration, and troubleshooting.",
+                    "These are not just technical terms — they represent two different electrical environments.",
                 ],
-                "bullets": [
-                    "Explain why energy storage is critical in South Africa",
-                    "Clearly differentiate between power (kW) and energy (kWh)",
-                    "Understand AC vs DC and how conversion happens",
-                    "Identify the core system components and what each one does",
-                    "Understand where batteries fit into the system",
-                    "Describe the four main system types",
-                    "Perform a basic backup sizing calculation",
-                    "Recognise how energy flows through a modern system",
-                    "Understand where system losses happen and how to reduce them",
-                ],
-            },
-            {
-                "title": "1.2 Why Energy Storage Matters in South Africa",
-                "paragraphs": [
-                    "To understand why battery systems are growing so fast, you need to look at the real conditions on the ground. In South Africa, electricity supply is not always stable or predictable, and this directly affects daily life and business operations.",
-                    "Loadshedding, voltage instability, and rising electricity costs have changed the way people think about power. Energy is no longer something you simply \"use\" — it's something you need to manage, control, and protect.",
-                    "",
-                    "Battery storage solves real problems:",
-                ],
-               
-                "bullets": [
-                    "It keeps essential systems running during outages",
-                    "It protects equipment from unstable supply",
-                    "It reduces reliance on the grid",
-                    "It allows solar energy to be used when it's actually needed",
-                    "It provides seamless, automatic backup without user intervention",
+                "subsections": [
+                    {
+                        "heading": "🔌 AC (Alternating Current)",
+                        "paragraphs": [
+                            "AC is the form of electricity used by most homes, businesses, and electrical appliances.",
+                            "It is the electricity supplied by Eskom, municipalities, and generators, and it's the output side of the inverter.",
+                            "Key Characteristics:",
+                        ],
+                        "bullets": [
+                            "Supplied by Eskom/grid",
+                            "Powers household plugs, lighting, and appliances",
+                            "Operates at 230V/50Hz in most South African installations",
+                            "Must comply with electrical standards",
+                        ]
+                    },
+                    {
+                        "heading": "🔋 DC (Direct Current)",
+                        "paragraphs": [
+                            "DC is the form of electricity generated, stored, and managed within the energy storage system.",
+                            "It is the electricity used by solar panels and batteries before being converted into usable AC power.",
+                            "Key Characteristics:",
+                        ],
+                        "bullets": [
+                            "Generated by solar panels",
+                            "Is stored in batteries",
+                            "Is used internally by inverters during charging and discharging processes",
+                            "Requires specialised protection devices and careful attention to polarity.",
+                        ],
+                        "images": [
+                            {
+                                "src": "images/Tip,so in simple terms, homes run on AC.png",
+                                "alt": "images/Tip,so in simple terms, homes run on AC.png",
+                            }
+                        ]
+                    }
                 ],
                 "paragraphs_after": [
-                    "When a business loses power, it doesn't just lose electricity — it loses productivity, revenue, and sometimes customer trust.",
+                    "This is why the inverter is essential. The inverter connects these two worlds. It doesn't just convert power — it manages energy flow, charging/discharging, protection, and grid interaction.",
+                    "Without the inverter, the system cannot function as a complete unit.",
                 ],
                 "images": [
                     {
-                        "src": "images/Example A small shop loses +- R2000 per hour when fridge shut down, card machines go offline, secu.png",
-                        "alt": "Example of a small shop losing money during a power outage because the fridge shuts down, card machines go offline, and security systems are compromised."
-                    },
-                    {
-                        "src": "images/Tip battery storage is nolonger Luxury it is a core infras.png",
-                        "alt": "Tip battery storage is nolonger Luxury it is a core infras.png"
+                        "src": "images/most of the faults.png",
+                        "alt": "images/most of the faults.png",
+                    }
+                ]
+            },
                     }
                 ]
             },
@@ -283,30 +234,25 @@ class LithiumBatteryFundamentals:
                 "paragraphs": [
                     "Every system you install will contain both AC and DC electricity. Understanding how these interact is essential for installation, configuration, and troubleshooting.",
                     "These are not just technical terms — they represent two completely different electrical environments.",
+                    "🔌 AC (Alternating Current) - AC is the electricity used by most homes and businesses. It",
                 ],
+                "bullets": [
+                    "Comes from Eskom/grid",
+                    "Powers household plugs and appliances",
+                    "Must comply with electrical standards",
+                ],
+                
                 "subsections": [
-                    {
-                        "heading": "🔌 AC (Alternating Current)",
-                        "paragraphs": [
-                            "AC is the electricity used by most homes and businesses. It",
-                            "Key Characteristics:",
-                        ],
-                        "bullets": [
-                            "Supplied by Eskom/grid",
-                            "Powers household plugs, lighting, and appliances",
-                            "Operates at 230V/50Hz in most South African installations",
-                            "Must comply with electrical standards",
-                        ],
-                    },
                     {
                         "heading": "🔋 DC (Direct Current)",
                         "paragraphs": [
                             "DC is the electricity produced and stored inside the energy system. It",
                         ],
                         "bullets": [
-                            "Produced by solar panels",
+                            "Generated by solar panels",
                             "Is stored in batteries",
-                            "Is used internally by inverters before converting to AC",
+                            "Is used internally by inverters during charging and discharging processes",
+                            "Requires specialised protection devices and careful attention to polarity.",
                         ],
                         "images": [
                             {
@@ -316,6 +262,7 @@ class LithiumBatteryFundamentals:
                         ],
                     },
                     {
+                        
                         "paragraphs": [
                             "This is why the inverter is essential. The inverter connects these two worlds. It doesn't just convert power — it manages:",
                         ],
@@ -457,9 +404,6 @@ class LithiumBatteryFundamentals:
                 "subsections": [
                     {
                         "heading": "Backup System (No Solar)",
-                        "paragraphs": [
-                            "A backup system stores energy in batteries and uses an inverter to supply power during outages or when needed.",
-                        ],
                         "images": [
                             {
                                 "src": "images/Backup System.png",
@@ -469,9 +413,6 @@ class LithiumBatteryFundamentals:
                     },
                     {
                         "heading": "Grid-Tied Solar (No Batteries)",
-                        "paragraphs": [
-                            "A grid-tied solar system generates electricity from solar panels and feeds it directly to the grid to power your home or business.",
-                        ],
                         "images": [
                             {
                                 "src": "images/Grid-tied solar Sytem.png",  
@@ -481,9 +422,6 @@ class LithiumBatteryFundamentals:
                     },
                     {
                         "heading": "Hybrid System (Solar + Battery + Grid)",
-                        "paragraphs": [
-                            "A hybrid system uses solar panels, batteries, and the grid together to provide reliable, efficient power day and night.",
-                        ],
                         "images": [
                             {
                                 "src": "images/Hybrid Solar System.png",
@@ -493,13 +431,13 @@ class LithiumBatteryFundamentals:
                     },
                     {
                         "heading": "Fully Off-Grid System",
-                        "paragraphs": [
-                            "A fully off-grid solar system generates and stores all the energy you need, completely independent of the utility grid.",
-                        ],
                         "images": [
                             {
                                 "src": "images/Fully OFF-GRID.png",
                                 "alt": "Fully Off-Grid System",
+                                  "paragraphs" : [
+                                       "A fully off-grid solar system generates and stores all the energy you need, completely independent of the utility grid.",
+                             ],
                             },
                         ],
                     },
@@ -562,9 +500,12 @@ class LithiumBatteryFundamentals:
                 "subsections": [
                     {
                         "heading": "How to Minimise Losses",
-                        "paragraphs": [
-                            "<br>While some system losses are unavoidable, a well-designed and professionally installed system can significantly reduce unnecessary energy losses. As an installer, many of the factors that affect efficiency are within your control. Correct cable sizing, quality workmanship, appropriate component selection, and ongoing maintenance all contribute to improved system performance, greater reliability, and better long-term energy yield.",
-                            "The following best practices will help minimise losses and ensure the system operates as efficiently as possible.",
+                        "numbered": [
+                            "Correct Cable Sizing",
+                            "Shorter Cable Runs",
+                            "High-Quality Components",
+                            "System Design Optimisation",
+                            "Regular Maintenance",
                         ],
                         "subsections": [
                             {
@@ -637,18 +578,11 @@ class LithiumBatteryFundamentals:
                         "src": "images/Revov batteries Benefits.png",
                         "alt": "images/Revov batteries Benefits.png",
                     },
-                   
-                ],
-            },
-            {
-              "title": "Wrapping Up Module 1",
-              "page_break": True,
-              "images": [
-                   {
+                    {
                         "src": "images/wrapping up module 1.png",
                         "alt": "images/wrapping up module 1.png",
                     },
-              ],
+                ],
             },
 
            
