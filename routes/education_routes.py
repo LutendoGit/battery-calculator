@@ -713,6 +713,8 @@ def login():
         session["edu_username"] = user.username
         session["edu_avatar"] = user.avatar_filename
         session["edu_last_activity_at"] = _utc_now().isoformat()
+        session.pop("edu_expired_user_id", None)
+        session.pop("edu_session_expired_at", None)
         
         # Track login
         session_id = str(uuid.uuid4())
@@ -733,7 +735,11 @@ def login():
             return redirect(url_for("education.progress"))
         return redirect(url_for("education.learn_index"))
 
-    return render_template("education/login.html")
+    return render_template(
+        "education/login.html",
+        username=session.get("edu_username"),
+        session_expired=bool(session.get("edu_expired_user_id")),
+    )
 
 
 @education_bp.route("/register", methods=["GET", "POST"])
