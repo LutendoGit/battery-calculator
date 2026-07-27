@@ -15,7 +15,7 @@ class LithiumBatteryFundamentals:
     MODULE_1_FUNDAMENTALS = {
         "module_title": "MODULE 1 - Introduction to Energy Storage & Modern Energy Systems",
         "module_subtitle": "Core concepts installers need before tools, cables, or settings.",
-        
+        "sections": [
             {
                 "title": "1.1 Module 1 Learning Outcomes",
                 "paragraphs": [
