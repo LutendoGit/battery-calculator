@@ -94,6 +94,34 @@
         page-break-inside: avoid;
       }
 
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 18px;
+        margin-bottom: 24px;
+        border-radius: 20px;
+        background: Transparent;
+        box-shadow: 0 14px 30px Transparent;
+      }
+
+      .topbar-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .topbar-brand img {
+        height: 40px;
+        width: auto;
+        border-radius: 10px;
+      }
+
+      .topbar-brand .text-white {
+        color: #fff;
+        font-weight: 700;
+      }
+
       @media (max-width: 768px) {
         .bullets {
           columns: 1;
@@ -324,6 +352,12 @@
   <body>
     <div class="page">
       <header>
+        <div class="topbar">
+          <div class="topbar-brand">
+            <img src="{{ url_for('static', filename='images/revov Energy Projects logo.webp') }}" alt="REVOV Energy Projects logo">
+            <span class="text-white">REVOV WattWorks</span>
+          </div>
+        </div>
         <div class="header-inner">
           <h1>Welcome to Revov WattWorks</h1>
           <p>Revov’s official online installer training platform, built for real-world performance.</p>

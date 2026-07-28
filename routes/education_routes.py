@@ -960,8 +960,33 @@ def progress():
     lessons_completed_count = sum(1 for item in _LESSON_ITEMS if item.key in completed_lessons)
     quizzes_completed_count = len(unlock_state.get("completed") or [])
 
-    # Always start/continue users at Module 1 (Fundamentals).
-    continue_url = url_for("education.fundamentals")
+    # Choose continue URL: the next uncompleted lesson in the ordered lesson list.
+    # If no lessons have been completed, this will naturally point to Module 1.
+    try:
+        continue_url = None
+        # Find the next lesson the user hasn't fully completed and resume at the last visited step.
+        for item in _LESSON_ITEMS:
+            if item.key in completed_lessons:
+                continue
+
+            expected_steps = _TRACKED_LESSON_STEP_COUNTS.get(item.key)
+            last_step = 0
+            if expected_steps:
+                # find highest visited step for this lesson
+                for s in range(expected_steps, 0, -1):
+                    if _lesson_step_progress_key(item.key, s) in completed_items:
+                        last_step = s
+                        break
+
+            step_to_open = last_step if last_step > 0 else 1
+            continue_url = url_for(item.endpoint, step=step_to_open)
+            break
+
+        # Fallbacks
+        if not continue_url:
+            continue_url = url_for("education.progress")
+    except Exception:
+        continue_url = url_for("education.fundamentals")
 
     return render_template(
         "education/progress.html",

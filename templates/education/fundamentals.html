@@ -41,7 +41,7 @@
         }
         
         h1 {
-            color: white;
+            color: whitesmoke;
             margin-bottom: 10px;
         }
         
@@ -333,9 +333,16 @@
         }
 
         .pager a {
-            color: #ffffff;
+            color: white;
             text-decoration: none;
             font-weight: 600;
+            font-size: 0.95em;
+            border: none;
+            background: #7f3636;
+            border-radius: 6px;
+            padding: 10px 16px;
+            min-width: 90px;
+            cursor: pointer;
         }
 
         .pager a:hover {
@@ -370,6 +377,35 @@
             text-decoration: none;
             font-weight: 700;
             font-size: 0.95em;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
+            border-radius: 18px;
+            background: transparent;
+            border: none;
+        }
+
+        .topbar-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topbar-brand img {
+            height: 40px;
+            width: auto;
+            border-radius: 10px;
+        }
+
+        .topbar-brand .text-white {
+            color: #fff;
+            font-weight: 700;
         }
 
         .header-actions a:hover {
@@ -547,7 +583,7 @@
         .site-footer {
             width: 100%;
             margin-top: 30px;
-            background: #666868;
+            background: #7f3636;
             color: rgba(255,255,255,0.95);
             text-align: center;
             padding: 28px 20px 20px;
@@ -591,16 +627,10 @@
 <body>
     <div class="container">
         <header>
-            <div class="header-row">
-                <div>
-                    <h1>{{ content.module_title|replace('🔋','')|replace('⚡','')|replace('💡','')|replace('🔌','')|trim }}</h1>
-                    {% if content.module_title and ('MODULE 4' in content.module_title or 'MODULE 5' in content.module_title) %}
-                        {% if content.module_subtitle %}
-                            <div style="margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95em; font-weight: 500;">
-                                {{ content.module_subtitle }}
-                            </div>
-                        {% endif %}
-                    {% endif %}
+            <div class="topbar">
+                <div class="topbar-brand">
+                    <img src="{{ url_for('static', filename='images/revov Energy Projects logo.webp') }}" alt="REVOV Energy Projects logo">
+                    <span class="text-white">REVOV WattWorks</span>
                 </div>
                 {% if session.get('edu_user_id') %}
                 <div class="header-actions">
@@ -614,6 +644,18 @@
                     <a href="{{ url_for('education.logout') }}">Logout</a>
                 </div>
                 {% endif %}
+            </div>
+            <div class="header-row">
+                <div>
+                    <h1>{{ content.module_title|replace('🔋','')|replace('⚡','')|replace('💡','')|replace('🔌','')|trim }}</h1>
+                    {% if content.module_title and ('MODULE 4' in content.module_title or 'MODULE 5' in content.module_title) %}
+                        {% if content.module_subtitle %}
+                            <div style="margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95em; font-weight: 500;">
+                                {{ content.module_subtitle }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
         </header>
 
