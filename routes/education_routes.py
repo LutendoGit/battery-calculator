@@ -200,6 +200,7 @@ def _require_admin_token():
 
 
 def _connect_education_db() -> sqlite3.Connection:
+    education_store.ensure_db()
     path = education_store.db_path()
     conn = sqlite3.connect(path)
     conn.row_factory = sqlite3.Row
@@ -225,15 +226,24 @@ def _demo_certificate_context() -> dict[str, object]:
     completed_lessons = [{"key": item.key, "title": item.title} for item in _LESSON_ITEMS]
     total_attempts = 3  # Demo with C rating (>2 attempts)
     attempt_rating = "C" if total_attempts > 2 else "B" if total_attempts == 2 else "A"
+    overall_pct = 88.0
+    if overall_pct >= 90.0:
+        grade = "A"
+    elif overall_pct >= 80.0:
+        grade = "B"
+    else:
+        grade = "C"
     return {
         "user": {"username": "Demo Reviewer"},
         "issued_date": issued_date,
         "certificate_id": certificate_id,
         "completed_lessons": completed_lessons,
         "quiz_count": 7,
+        "total_quizzes": len(_QUIZZES),
         "total_attempts": total_attempts,
         "attempt_rating": attempt_rating,
-        "overall_pct": 88.0,
+        "grade": grade,
+        "overall_pct": overall_pct,
     }
 
 
@@ -670,9 +680,22 @@ def _is_certificate_eligible(user_id: int) -> bool:
     overall_pct = _overall_quiz_percentage(user_id)
     quiz_best = get_quiz_best(user_id)
     attempted_count = len(quiz_best)
-    all_quizzes_attempted = attempted_count >= len(_QUIZZES)
 
-    return bool(has_required_lessons and all_quizzes_attempted and overall_pct >= 75.0)
+    # New eligibility rule (per latest requirement):
+    # - User must have attempted at least two quizzes
+    # - Average across attempted quizzes must be >= 75%
+    # - Each attempted quiz should have its prerequisite lesson completed
+    if attempted_count < 2:
+        return False
+
+    # Ensure prerequisites for attempted quizzes are satisfied
+    completed_lessons = _completed_active_lessons(completed_items)
+    for qid in quiz_best.keys():
+        prereq = _QUIZ_PREREQ_LESSONS.get(str(qid))
+        if prereq and prereq not in completed_lessons:
+            return False
+
+    return overall_pct >= 75.0
 
 
 def _overall_quiz_percentage(user_id: int) -> float:
@@ -1111,18 +1134,17 @@ def certificate():
 
     completed = get_completed_items(user.id)
     quiz_best = get_quiz_best(user.id)
-    total_attempts = get_total_quiz_attempts(user.id)
     overall_pct = _overall_quiz_percentage(user.id)
     issued_date = datetime.now().strftime("%Y-%m-%d")
     certificate_id = f"EDU-{user.id}-{datetime.now().strftime('%Y%m%d')}"
 
-    # Calculate letter grade based on total quiz attempts
-    if total_attempts == 1:
-        attempt_rating = "A"
-    elif total_attempts == 2:
-        attempt_rating = "B"
-    else:  # > 2 attempts
-        attempt_rating = "C"
+    # Calculate letter grade from the average quiz percentage
+    if overall_pct >= 90.0:
+        grade = "A"
+    elif overall_pct >= 80.0:
+        grade = "B"
+    else:
+        grade = "C"
 
     completed_lessons = [
         {"key": item.key, "title": item.title}
@@ -1137,8 +1159,8 @@ def certificate():
         certificate_id=certificate_id,
         completed_lessons=completed_lessons,
         quiz_count=len(quiz_best),
-        total_attempts=total_attempts,
-        attempt_rating=attempt_rating,
+        total_quizzes=len(_QUIZZES),
+        grade=grade,
         overall_pct=overall_pct,
     )
 
@@ -1156,6 +1178,15 @@ def certificate_pdf():
 
     issued_date = datetime.now().strftime("%Y-%m-%d")
     certificate_id = f"EDU-{user.id}-{datetime.now().strftime('%Y%m%d')}"
+    quiz_best = get_quiz_best(user.id)
+    overall_pct = _overall_quiz_percentage(user.id)
+
+    if overall_pct >= 90.0:
+        grade = "A"
+    elif overall_pct >= 80.0:
+        grade = "B"
+    else:
+        grade = "C"
 
     buf = BytesIO()
     c = canvas.Canvas(buf, pagesize=letter)
@@ -1187,7 +1218,14 @@ def certificate_pdf():
     c.drawCentredString(
         width / 2,
         height - 4.35 * inch,
-        "has completed the required learning modules and assessments.",
+        "has completed the required learning modules and assessments as part of REVOV WattWorks Installer Training.",
+    )
+
+    c.setFont("Helvetica-Bold", 12)
+    c.drawCentredString(
+        width / 2,
+        height - 5.05 * inch,
+        f"Grade: {grade} · Score: {overall_pct:.0f}% · Quizzes: {len(quiz_best)} / {len(_QUIZZES)}",
     )
 
     # Footer metadata
@@ -1299,6 +1337,18 @@ def certificate_demo_pdf():
     buf.seek(0)
     filename = "certificate_demo.pdf"
     return send_file(buf, mimetype="application/pdf", as_attachment=True, download_name=filename)
+
+
+@education_bp.get("/certificate/preview")
+def certificate_preview():
+    """Render the actual certificate template with demo data for backend preview."""
+    return render_template("education/certificate.html", **_demo_certificate_context())
+
+
+@education_bp.get("/certificate/preview/data")
+def certificate_preview_data():
+    """Return demo certificate overview data as JSON for backend validation."""
+    return jsonify(_demo_certificate_context())
 
 
 @education_bp.post("/certificate/demo/review")

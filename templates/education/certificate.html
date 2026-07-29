@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <style>
       body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #666868 0%, #7f3636 100%);
         min-height: 100vh;
         padding: 20px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,22 +18,22 @@
         margin: 20px auto;
         background: white;
         border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        box-shadow: 0 10px 30px #7f3636;
         padding: 40px;
       }
       .title {
-        color: #667eea;
+        color: #7f3636;
         font-weight: 800;
         letter-spacing: 0.5px;
       }
       .name {
         font-size: 2rem;
         font-weight: 800;
-        color: #111827;
+        color: #7f3636;
       }
       .muted { color: #555; }
       .frame {
-        border: 3px solid #667eea;
+        border: 3px solid #7f3636;
         border-radius: 12px;
         padding: 30px;
       }
@@ -63,7 +63,7 @@
         <div class="my-4">
           <div class="muted">This certifies that</div>
           <div class="name">{{ user.username }}</div>
-          <div class="muted mt-2">has completed the required learning modules and assessments.</div>
+          <div class="muted mt-2">has completed the required learning modules and assessments as part of REVOV WattWorks Installer Training.</div>
         </div>
 
         <div class="row mt-4">
@@ -86,9 +86,11 @@
               <li>{{ item.title }}</li>
             {% endfor %}
           </ul>
-          <div class="muted mb-2">Quiz attempts recorded:</div>
-          <div><strong> (Rating: {{ attempt_rating }})</strong></div>
-          <div class="muted mb-2 mt-2">Overall quiz score (avg of attempted quizzes):</div>
+          <div class="muted mb-2">Quizzes completed:</div>
+          <div><strong>{{ quiz_count }} / {{ total_quizzes }}</strong></div>
+          <div class="muted mb-2 mt-2">Grade:</div>
+          <div><strong>{{ grade }}</strong></div>
+          <div class="muted mb-2 mt-2">Overall quiz score (average):</div>
           <div><strong>{{ '%.0f'|format(overall_pct) }}%</strong></div>
         </div>
       </div>

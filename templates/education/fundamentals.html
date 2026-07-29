@@ -186,31 +186,19 @@
             object-fit: auto;
         }
 
-        .content-image {
-            width: auto;
-            max-width: auto;
-            height: auto;
-            display: block;
-            margin: 12px auto;
-            border-radius: 8px;
-            border: none;
-            background: transparent;
-            box-shadow: none;
-            object-fit: auto;
-        }
-
-        /* Native size images - no scaling for better quality */
+        .content-image,
         .content-image-native {
+            display: block;
             width: auto;
             height: auto;
-            max-width: auto;
-            display: block;
+            max-width: none;
+            image-rendering: auto;
+            object-fit: contain;
             margin: 12px auto;
             border-radius: 8px;
             border: none;
             background: transparent;
             box-shadow: none;
-            object-fit: auto;
         }
 
         .text-block p {
@@ -436,14 +424,28 @@
 
         /* Image Zoom Modal Styles */
         .example-image,
-        .content-image {
+        .content-image,
+        .content-image-native {
             cursor: zoom-in;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease, transform 0.12s ease;
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: none;
+            object-fit: contain;
+            image-rendering: auto;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            will-change: transform, opacity;
         }
 
         .example-image:hover,
-        .content-image:hover {
-            opacity: 0.9;
+        .content-image:hover,
+        .content-image-native:hover {
+            opacity: 0.98;
+            transform: translateY(-1px);
         }
 
         .image-viewer-modal {

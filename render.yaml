@@ -14,9 +14,7 @@ services:
     
     # Release command runs after build but before web service starts
     # This ensures database is initialized on deployment
-    preDeployCommand: python scripts/init_db_render.py
-    
-    # Python version
+    releaseCommand: python scripts/init_db_render.py
     pythonVersion: 3.11
     
     # Persistent volume for SQLite database
