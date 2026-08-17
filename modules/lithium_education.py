@@ -587,7 +587,7 @@ class LithiumBatteryFundamentals:
         "title": "Module 1 Assessment",
         "questions": [
             {
-                "question": "1. Why has energy storage become so important in South Africa?",
+                "question": " Why has energy storage become so important in South Africa?",
                 "options": [
                     "A) Because solar panels only work at night",
                     "B) Because the grid is stable and predictable",
@@ -597,7 +597,7 @@ class LithiumBatteryFundamentals:
                 "answer": "C"
             },
             {
-                "question": "2. Which of the following is a major benefit of battery storage?",
+                "question": " Which of the following is a major benefit of battery storage?",
                 "options": [
                     "A) It increases grid frequency",
                     "B) It provides automatic backup during outages",
@@ -607,7 +607,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "3. In practical terms, battery storage helps customers by:",
+                "question": " In practical terms, battery storage helps customers by:",
                 "options": [
                     "A) Making all appliances use less power instantly",
                     "B) Saving energy for later use",
@@ -617,7 +617,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "4. Power (kW) refers to:",
+                "question": " Power (kW) refers to:",
                 "options": [
                     "A) Total electricity used over time",
                     "B) Electrical pressure",
@@ -627,7 +627,7 @@ class LithiumBatteryFundamentals:
                 "answer": "C"
             },
             {
-                "question": "5. Energy (kWh) refers to:",
+                "question": "Energy (kWh) refers to:",
                 "options": [
                     "A) The speed of current flow",
                     "B) Total stored or used electricity over time",
@@ -637,7 +637,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "6. Power mainly determines the size of the:",
+                "question": "Power mainly determines the size of the:",
                 "options": [
                     "A) Battery bank",
                     "B) Inverter",
@@ -647,7 +647,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "7. Energy mainly determines the size of the:",
+                "question": "Energy mainly determines the size of the:",
                 "options": [
                     "A) Battery bank",
                     "B) AC breaker only",
@@ -657,7 +657,7 @@ class LithiumBatteryFundamentals:
                 "answer": "A"
             },
             {
-                "question": "8. If a house runs a 1 kW essential load for 5 hours, how much energy is needed?",
+                "question": "If a house runs a 1 kW essential load for 5 hours, how much energy is needed?",
                 "options": [
                     "A) 1 kWh",
                     "B) 5 kWh",
@@ -667,7 +667,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "9. Why should battery systems not usually be sized around 100% discharge?",
+                "question": "Why should battery systems not usually be sized around 100% discharge?",
                 "options": [
                     "A) Because voltage becomes AC",
                     "B) Because it improves cable size",
@@ -677,7 +677,7 @@ class LithiumBatteryFundamentals:
                 "answer": "C"
             },
             {
-                "question": "10. The basic formula for battery energy needed is:",
+                "question": "The basic formula for battery energy needed is:",
                 "options": [
                     "A) Battery size = Voltage × Current",
                     "B) Battery size = Load (kW) × Time (hours)",
@@ -687,7 +687,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "11. What is the first step when calculating backup requirements?",
+                "question": "What is the first step when calculating backup requirements?",
                 "options": [
                     "A) Choose the inverter brand",
                     "B) Identify the essential loads",
@@ -697,7 +697,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "12. If essential loads total 1 kW and the outage duration is 4 hours, the minimum energy needed is:",
+                "question": "If essential loads total 1 kW and the outage duration is 4 hours, the minimum energy needed is:",
                 "options": [
                     "A) 1 kWh",
                     "B) 2 kWh",
@@ -707,7 +707,7 @@ class LithiumBatteryFundamentals:
                 "answer": "C"
             },
             {
-                "question": "13. In South Africa, typical household AC supply operates at:",
+                "question": "In South Africa, typical household AC supply operates at:",
                 "options": [
                     "A) 110 V / 60 Hz",
                     "B) 48 V DC",
@@ -717,7 +717,7 @@ class LithiumBatteryFundamentals:
                 "answer": "C"
             },
             {
-                "question": "14. Solar panels and batteries mainly operate in:",
+                "question": "Solar panels and batteries mainly operate in:",
                 "options": [
                     "A) AC",
                     "B) DC",
@@ -727,7 +727,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "15. Household plugs and most appliances use:",
+                "question": "Household plugs and most appliances use:",
                 "options": [
                     "A) DC only",
                     "B) AC",
@@ -737,7 +737,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "16. The inverter is essential because it:",
+                "question": "The inverter is essential because it:",
                 "options": [
                     "A) Stores solar energy directly in the DB board",
                     "B) Converts between AC and DC and manages power flow",
@@ -747,7 +747,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "17. A useful installer reminder is that most wiring faults happen on the:",
+                "question": "A useful installer reminder is that most wiring faults happen on the:",
                 "options": [
                     "A) AC side",
                     "B) DC side",
@@ -757,7 +757,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "18. Which of the following correctly matches the component with its function?",
+                "question": "Which of the following correctly matches the component with its function?",
                 "options": [
                     "A) Battery bank — generates AC power",
                     "B) Inverter — stores energy chemically",
@@ -767,7 +767,7 @@ class LithiumBatteryFundamentals:
                 "answer": "C"
             },
             {
-                "question": "19. The main job of the battery bank in a modern energy system is to:",
+                "question": "The main job of the battery bank in a modern energy system is to:",
                 "options": [
                     "A) Change frequency",
                     "B) Store energy for later use",
@@ -777,7 +777,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "20. The inverter is best described as the system's:",
+                "question": "The inverter is best described as the system's:",
                 "options": [
                     "A) Mounting frame",
                     "B) Control and conversion hub",
@@ -787,7 +787,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "21. Loads in an energy system are:",
+                "question": "Loads in an energy system are:",
                 "options": [
                     "A) Devices and appliances that consume power",
                     "B) Only the battery chargers",
@@ -797,7 +797,7 @@ class LithiumBatteryFundamentals:
                 "answer": "A"
             },
             {
-                "question": "22. A backup system with no solar includes:",
+                "question": "A backup system with no solar includes:",
                 "options": [
                     "A) Solar + battery only",
                     "B) Inverter + battery only",
@@ -807,7 +807,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "23. A hybrid system typically includes:",
+                "question": "A hybrid system typically includes:",
                 "options": [
                     "A) Solar, battery and grid",
                     "B) Battery only",
@@ -817,7 +817,7 @@ class LithiumBatteryFundamentals:
                 "answer": "A"
             },
             {
-                "question": "24. In a hybrid system, if PV output drops and the load still needs power, the next source is usually the:",
+                "question": "In a hybrid system, if PV output drops and the load still needs power, the next source is usually the:",
                 "options": [
                     "A) Earth conductor",
                     "B) Battery",
@@ -827,7 +827,7 @@ class LithiumBatteryFundamentals:
                 "answer": "B"
             },
             {
-                "question": "25. In a well-designed system, roughly how much of the generated energy is effectively used after typical losses?",
+                "question": "In a well-designed system, roughly how much of the generated energy is effectively used after typical losses?",
                 "options": [
                     "A) 50–60%",
                     "B) 65–75%",
@@ -1887,7 +1887,7 @@ MODULE_2_ASSESSMENT = {
     "subtitle": "Electrical Fundamentals",
     "questions": [
         {
-            "question": "1. Voltage (V) is best described as:",
+            "question": "Voltage (V) is best described as:",
             "options": [
                 "A) The amount of energy stored",
                 "B) The flow of electricity",
@@ -1898,7 +1898,7 @@ MODULE_2_ASSESSMENT = {
             "explanation": "Voltage is the electrical potential difference or pressure that drives current flow through a circuit.",
         },
         {
-            "question": "2. Current (A) refers to:",
+            "question": "Current (A) refers to:",
             "options": [
                 "A) Electrical pressure",
                 "B) The amount of electricity flowing",
@@ -1909,7 +1909,7 @@ MODULE_2_ASSESSMENT = {
             "explanation": "Current is the flow of electricity through a conductor, measured in amperes (A).",
         },
         {
-            "question": "3. Resistance (Ω) causes:",
+            "question": "Resistance (Ω) causes:",
             "options": [
                 "A) Increased voltage",
                 "B) Reduced cable size",
@@ -1920,7 +1920,7 @@ MODULE_2_ASSESSMENT = {
             "explanation": "Resistance opposes current flow and creates heat, causing voltage drop and energy loss in conductors.",
         },
         {
-            "question": "4. If voltage increases for the same power demand, current will:",
+            "question": "If voltage increases for the same power demand, current will:",
             "options": [
                 "A) Increase",
                 "B) Stay the same",
@@ -1931,7 +1931,7 @@ MODULE_2_ASSESSMENT = {
             "explanation": "Current is inversely proportional to voltage when power is constant (P = V × I).",
         },
         {
-            "question": "5. Why do higher voltage systems improve efficiency?",
+            "question": "Why do higher voltage systems improve efficiency?",
             "options": [
                 "A) They increase resistance",
                 "B) They reduce current and heat losses",
@@ -1942,7 +1942,7 @@ MODULE_2_ASSESSMENT = {
             "explanation": "Higher voltage reduces current flow for the same power, which means less heat loss in cables (P = I²R).",
         },
             {
-                "question": "6. Power (kW) refers to:",
+                "question": "Power (kW) refers to:",
                 "options": [
                     "A) Total stored electricity",
                     "B) The rate at which energy is used",
@@ -1952,7 +1952,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "7. The formula for power is:",
+                "question": "The formula for power is:",
                 "options": [
                   "A) Power = Current ÷ Voltage",
                   "B) Power = Voltage × Current",
@@ -1962,7 +1962,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "8. Energy (kWh) refers to?",
+                "question": "Energy (kWh) refers to?",
                 "options": [
                     "A) Instantaneous load",
                     "B) Voltage level",
@@ -1972,7 +1972,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "C"
             },
             {
-                "question": "9. If a system runs at 2 kW for 3 hours, how much energy is used?",
+                "question": "If a system runs at 2 kW for 3 hours, how much energy is used?",
                 "options": [
                     "A) 2 kWh",
                     "B) 3 kWh",
@@ -1982,7 +1982,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "D"
             },
             {
-                "question": "10. DC (Direct Current) flows:",
+                "question": "DC (Direct Current) flows:",
                 "options": [
                     "A) In both directions",
                     "B) In one direction only",
@@ -1992,7 +1992,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "11. One key risk of DC systems is that:",
+                "question": "One key risk of DC systems is that:",
                 "options": [
                   "A) Voltage is always low",
                   "B) DC arcs can sustain and not easily extinguish",
@@ -2002,7 +2002,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "12. AC (Alternating Current) in South Africa operates at:",
+                "question": "AC (Alternating Current) in South Africa operates at:",
                 "options": [
                  "A) 110 V / 60 Hz",
                  "B) 48 V DC",
@@ -2012,7 +2012,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "C"
             },
             {
-                "question": "13. In South Africa, typical household AC supply operates at:",
+                "question": "In South Africa, typical household AC supply operates at:",
                 "options": [
                  "A) DC side",
                  "B) AC side",
@@ -2022,7 +2022,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "14. The inverter’s role is best described as:",
+                "question": "The inverter’s role is best described as:",
                 "options": [
                 "A) Only converting DC to AC",
                 "B) Only storing energy",
@@ -2034,7 +2034,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "C"
             },
             {
-                "question": "15. In a series connection, what happens?",
+                "question": "In a series connection, what happens?",
                 "options": [
                   "A) Voltage stays the same, capacity increases",
                   "B) Voltage increases, capacity stays the same",
@@ -2044,7 +2044,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "16. In a parallel connection, what happens?",
+                "question": "In a parallel connection, what happens?",
                 "options": [
                    "A) Voltage increases",
                    "B) Capacity decreases",
@@ -2054,7 +2054,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "C"
             },
             {
-                "question": "17. Two 48 V batteries connected in series will result in:",
+                "question": "Two 48 V batteries connected in series will result in:",
                 "options": [
                    "A) 48 V",
                    "B) 96 V",
@@ -2064,7 +2064,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "18. Why must manufacturers’ rules be followed when connecting batteries?",
+                "question": "Why must manufacturers’ rules be followed when connecting batteries?",
                 "options": [
                     "A) To improve aesthetics",
                     "B) To avoid warranty issues and system damage",
@@ -2074,7 +2074,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "19. If a cable is undersized for the current, what is most likely to happen?",
+                "question": "If a cable is undersized for the current, what is most likely to happen?",
                 "options": [
                   "A) Voltage increases",
                   "B) Cable cools down",
@@ -2084,7 +2084,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "C"
             },
             {
-                "question": "20. Proper crimping and torque are important because they:",
+                "question": "Proper crimping and torque are important because they:",
                 "options": [
                     "A) Reduce voltage",
                     "B) Improve cable colour",
@@ -2094,7 +2094,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "C"
             },
             {
-                "question": "21. A DC breaker or fuse is mainly used to:",
+                "question": "A DC breaker or fuse is mainly used to:",
                 "options": [
                     "A) Increase voltage",
                     "B) Protect cables and equipment",
@@ -2104,7 +2104,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "22. Where should battery protection devices ideally be installed?",
+                "question": "Where should battery protection devices ideally be installed?",
                 "options": [
                    "A) At the DB board only",
                    "B) Close to the battery",
@@ -2114,7 +2114,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "B"
             },
             {
-                "question": "23. Earthing is used to:",
+                "question": "Earthing is used to:",
                 "options": [
                     "A) Increase system voltage",
                     "B) Store energy",
@@ -2124,7 +2124,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "C"
             },
             {
-                "question": "24. One of the most important safety steps before working on a system is to:",
+                "question": "One of the most important safety steps before working on a system is to:",
                 "options": [
                     "A) Increase load",
                     "B) Turn on all breakers",
@@ -2134,7 +2134,7 @@ MODULE_2_ASSESSMENT = {
                 "answer": "C"
             },
             {
-                "question": "25. In a parallel battery system, unequal cable lengths can cause:",
+                "question": "In a parallel battery system, unequal cable lengths can cause:",
                 "options": [
                    "A) Equal current sharing",
                    "B) No effect",
@@ -2866,7 +2866,7 @@ MODULE_3_ASSESSMENT = {
     "title": "Module 3 Assessment",
     "questions": [
         {
-            "question": "1. What is the main job of a battery in an energy system?",
+            "question": "What is the main job of a battery in an energy system?",
             "options": [
                 "A) To generate AC power",
                 "B) To store energy for later use",
@@ -2877,7 +2877,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "The battery stores energy and releases it when the system needs it.",
         },
         {
-            "question": "2. Why do REVOV systems use LiFePO4 battery chemistry?",
+            "question": "Why do REVOV systems use LiFePO4 battery chemistry?",
             "options": [
                 "A) It is the cheapest battery chemistry available",
                 "B) It offers a balance of safety, stability, long life, and efficiency",
@@ -2888,7 +2888,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "LiFePO4 is chosen for safety, stability, long life and efficiency in REVOV systems.",
         },
         {
-            "question": "3. What does a Battery Management System (BMS) do?",
+            "question": "What does a Battery Management System (BMS) do?",
             "options": [
                 "A) It charges the solar panels",
                 "B) It manages and protects the battery cells",
@@ -2899,7 +2899,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "The BMS monitors, protects and balances the battery cells.",
         },
         {
-            "question": "4. What is the primary reason for using a lithium battery instead of a lead-acid battery in modern systems?",
+            "question": "What is the primary reason for using a lithium battery instead of a lead-acid battery in modern systems?",
             "options": [
                 "A) Lithium batteries are heavier",
                 "B) Lithium batteries have better cycle life and efficiency",
@@ -2910,7 +2910,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "Lithium batteries offer better cycle life and efficiency compared to lead-acid.",
         },
         {
-            "question": "5. What does the term 'C-rate' describe?",
+            "question": "What does the term 'C-rate' describe?",
             "options": [
                 "A) The size of the battery",
                 "B) How quickly a battery charges or discharges relative to its capacity",
@@ -2921,7 +2921,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "C-rate describes charge/discharge speed relative to battery capacity.",
         },
         {
-            "question": "6. What happens to battery life if you discharge it more deeply (higher DoD)?",
+            "question": "What happens to battery life if you discharge it more deeply (higher DoD)?",
             "options": [
                 "A) Battery life improves",
                 "B) Battery life decreases",
@@ -2932,7 +2932,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "Deeper discharge generally reduces battery cycle life.",
         },
         {
-            "question": "7. Which of the following is a common reason to avoid charging batteries in very low temperatures?",
+            "question": "Which of the following is a common reason to avoid charging batteries in very low temperatures?",
             "options": [
                 "A) Charging is faster in low temperatures",
                 "B) Low temperatures can cause lithium plating",
@@ -2943,7 +2943,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "Low-temperature charging can cause lithium plating, damaging the battery.",
         },
         {
-            "question": "8. What is SOC?",
+            "question": "What is SOC?",
             "options": [
                 "A) State of Charge",
                 "B) Standard Output Current",
@@ -2954,7 +2954,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "SOC stands for State of Charge.",
         },
         {
-            "question": "9. What is DoD?",
+            "question": "What is DoD?",
             "options": [
                 "A) Depth of Discharge",
                 "B) Degree of Difference",
@@ -2965,7 +2965,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "DoD means Depth of Discharge.",
         },
         {
-            "question": "10. Which value tells you how much stored energy a battery can deliver over time?",
+            "question": "Which value tells you how much stored energy a battery can deliver over time?",
             "options": [
                 "A) Voltage",
                 "B) Capacity",
@@ -2976,7 +2976,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "Energy (kWh) tells you how much stored energy is available over time.",
         },
         {
-            "question": "11. What term describes the amount of electrical pressure in a battery?",
+            "question": "What term describes the amount of electrical pressure in a battery?",
             "options": [
                 "A) Capacity",
                 "B) Energy",
@@ -2987,7 +2987,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "Voltage is the electrical pressure in a battery.",
         },
         {
-            "question": "12. What does the BMS do when it detects an unsafe battery temperature?",
+            "question": "What does the BMS do when it detects an unsafe battery temperature?",
             "options": [
                 "A) It ignores the temperature",
                 "B) It may reduce charge/discharge current or disconnect the battery",
@@ -2998,7 +2998,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "The BMS protects the battery by reducing current or disconnecting it.",
         },
         {
-            "question": "13. Which of these is not a component usually found inside a battery enclosure?",
+            "question": "Which of these is not a component usually found inside a battery enclosure?",
             "options": [
                 "A) Cells",
                 "B) BMS",
@@ -3009,7 +3009,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "Solar panels are not inside the battery enclosure.",
         },
         {
-            "question": "14. Which best describes why REVOV selects LiFePO4 chemistry?",
+            "question": "Which best describes why REVOV selects LiFePO4 chemistry?",
                 "options": [
                 "A) It is most compact",
                 "B) It balances safety, lifespan, efficiency, and reliability",
@@ -3020,7 +3020,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "REVOV selects LiFePO4 for safety, lifespan, efficiency and reliability.",
         },
         {
-            "question": "15. Why is internal resistance important?",
+            "question": "Why is internal resistance important?",
             "options": [
                 "A) It makes the battery lighter",
                 "B) It affects heat generation and efficiency",
@@ -3031,7 +3031,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "Internal resistance affects heat, efficiency, and performance.",
         },
         {
-            "question": "16. What is one effect of using a battery at too high a discharge current?",
+            "question": "What is one effect of using a battery at too high a discharge current?",
             "options": [
                 "A) The battery becomes safer",
                 "B) The battery may overheat and age faster",
@@ -3042,7 +3042,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "High discharge current can overheat the battery and shorten its life.",
         },
         {
-            "question": "17. Which of the following is true about series connections?",
+            "question": "Which of the following is true about series connections?",
             "options": [
                 "A) Voltage adds and capacity stays the same",
                 "B) Capacity adds and voltage stays the same",
@@ -3053,7 +3053,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "In series connections, voltage adds while capacity remains the same.",
         },
         {
-            "question": "18. Which of the following is true about parallel connections?",
+            "question": "Which of the following is true about parallel connections?",
             "options": [
                 "A) Voltage adds and capacity stays the same",
                 "B) Capacity adds and voltage stays the same",
@@ -3064,7 +3064,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "In parallel connections, capacity adds and voltage stays the same.",
         },
         {
-            "question": "19. Which factor is most likely to reduce battery cycle life?",
+            "question": "Which factor is most likely to reduce battery cycle life?",
             "options": [
                 "A) Shallow discharge",
                 "B) Moderate temperature",
@@ -3075,7 +3075,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "High temperature and deep discharge reduce cycle life.",
         },
         {
-            "question": "20. What is a safe approach for charging batteries in hot conditions?",
+            "question": "What is a safe approach for charging batteries in hot conditions?",
             "options": [
                 "A) Charge faster to finish quickly",
                 "B) Allow cooling and reduce charge current if needed",
@@ -3086,7 +3086,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "In hot conditions, allow cooling and reduce charge current when necessary.",
         },
         {
-            "question": "21. What does a battery do when there is no solar and the load still needs power?",
+            "question": "What does a battery do when there is no solar and the load still needs power?",
             "options": [
                 "A) It powers the load from stored energy",
                 "B) It generates solar energy",
@@ -3097,7 +3097,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "The battery supplies stored energy when solar is unavailable.",
         },
         {
-            "question": "22. A backup system with no solar includes:",
+            "question": "A backup system with no solar includes:",
             "options": [
                 "A) Solar + battery only",
                 "B) Inverter + battery only",
@@ -3108,7 +3108,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "A backup system without solar still needs an inverter and battery.",
         },
         {
-            "question": "23. A hybrid system typically includes:",
+            "question": "A hybrid system typically includes:",
             "options": [
                 "A) Solar, battery and grid",
                 "B) Battery only",
@@ -3119,7 +3119,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "Hybrid systems usually include solar, battery and grid.",
         },
         {
-            "question": "24. In a hybrid system, if PV output drops and the load still needs power, the next source is usually the:",
+            "question": "In a hybrid system, if PV output drops and the load still needs power, the next source is usually the:",
             "options": [
                 "A) Earth conductor",
                 "B) Battery",
@@ -3130,7 +3130,7 @@ MODULE_3_ASSESSMENT = {
             "explanation": "When solar drops, the battery is usually the next power source.",
         },
         {
-            "question": "25. In a well-designed system, roughly how much of the generated energy is effectively used after typical losses?",
+            "question": "In a well-designed system, roughly how much of the generated energy is effectively used after typical losses?",
             "options": [
                 "A) 50–60%",
                 "B) 65–75%",
@@ -3927,7 +3927,7 @@ MODULE_4_ASSESSMENT = {
     "title": "Module 4 Assessment",
     "questions": [
         {
-            "question": "1. The BMS is best described as:",
+            "question": "The BMS is best described as:",
             "options": [
                 "A) A backup power source",
                 "B) The brain and control system of the battery",
@@ -3938,7 +3938,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "The BMS is the brain and control system that manages the battery.",
         },
         {
-            "question": "2. Without a BMS, a lithium battery would be:",
+            "question": "Without a BMS, a lithium battery would be:",
             "options": [
                 "A) More efficient",
                 "B) Safer",
@@ -3949,7 +3949,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "A BMS is essential for safety and reliability in lithium batteries.",
         },
         {
-            "question": "3. The BMS is responsible for:",
+            "question": "The BMS is responsible for:",
             "options": [
                 "A) Generating AC power",
                 "B) Monitoring, protecting and controlling the battery",
@@ -3960,7 +3960,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "The BMS monitors, protects and controls the battery system.",
         },
         {
-            "question": "4. Which of the following does the BMS monitor?",
+            "question": "Which of the following does the BMS monitor?",
             "options": [
                 "A) Cell voltage only",
                 "B) Grid frequency only",
@@ -3971,7 +3971,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "The BMS monitors voltage, temperature, current and SOC among other things.",
         },
         {
-            "question": "5. If one cell voltage becomes too high or too low, the BMS will:",
+            "question": "If one cell voltage becomes too high or too low, the BMS will:",
             "options": [
                 "A) Ignore it",
                 "B) Increase current",
@@ -3982,7 +3982,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "The BMS will protect the battery by stopping charge or discharge when a cell is outside safe limits.",
         },
         {
-            "question": "6. Why is temperature monitoring important?",
+            "question": "Why is temperature monitoring important?",
             "options": [
                 "A) It improves cable colour",
                 "B) Lithium batteries must operate within safe temperature limits",
@@ -3993,7 +3993,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Lithium batteries must operate within safe temperatures to remain safe and reliable.",
         },
         {
-            "question": "7. Internal resistance in a battery can indicate:",
+            "question": "Internal resistance in a battery can indicate:",
             "options": [
                 "A) Improved performance",
                 "B) Battery aging or connection issues",
@@ -4004,7 +4004,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "High internal resistance is often a sign of aging or connection issues.",
         },
         {
-            "question": "8. The BMS protects the battery from:",
+            "question": "The BMS protects the battery from:",
             "options": [
                 "A) Only overcharging",
                 "B) Only undervoltage",
@@ -4015,7 +4015,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "The BMS protects against multiple conditions including overcurrent, temperature and voltage problems.",
         },
         {
-            "question": "9. If inverter settings push voltage too high during charging, the BMS will trigger:",
+            "question": "If inverter settings push voltage too high during charging, the BMS will trigger:",
             "options": [
                 "A) Overcurrent",
                 "B) Overvoltage protection",
@@ -4026,7 +4026,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "The BMS will activate overvoltage protection if charging voltage becomes too high.",
         },
         {
-            "question": "10. If the battery is drained too far, the BMS will trigger:",
+            "question": "If the battery is drained too far, the BMS will trigger:",
             "options": [
                 "A) Overvoltage",
                 "B) Undervoltage protection",
@@ -4037,7 +4037,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "The BMS protects the battery by triggering undervoltage protection when it is drained too far.",
         },
         {
-            "question": "11. The BMS will always prioritise:",
+            "question": "The BMS will always prioritise:",
             "options": [
                 "A) Customer convenience",
                 "B) Maximum output",
@@ -4048,7 +4048,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "The BMS always prioritises safety above all else.",
         },
         {
-            "question": "12. Cell balancing ensures that:",
+            "question": "Cell balancing ensures that:",
             "options": [
                 "A) All batteries charge faster",
                 "B) All cells stay at the same voltage",
@@ -4059,7 +4059,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Cell balancing keeps all cells at similar voltages.",
         },
         {
-            "question": "13. Poor balancing can lead to:",
+            "question": "Poor balancing can lead to:",
             "options": [
                 "A) Improved efficiency",
                 "B) Longer lifespan",
@@ -4070,7 +4070,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Poor balancing can reduce capacity and make SOC estimates inaccurate.",
         },
         {
-            "question": "14. When does balancing usually occur?",
+            "question": "When does balancing usually occur?",
             "options": [
                 "A) At low SOC",
                 "B) During system shutdown",
@@ -4081,7 +4081,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Cell balancing normally happens near full charge.",
         },
         {
-            "question": "15. Why is reaching 100% charge important occasionally?",
+            "question": "Why is reaching 100% charge important occasionally?",
             "options": [
                 "A) To increase voltage",
                 "B) To allow proper cell balancing and SOC calibration",
@@ -4092,7 +4092,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Occasional full charges help with cell balancing and SOC calibration.",
         },
         {
-            "question": "16. Communication between battery and inverter typically uses:",
+            "question": "Communication between battery and inverter typically uses:",
             "options": [
                 "A) Ethernet only",
                 "B) CAN, RS485 or Modbus",
@@ -4103,7 +4103,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Battery-to-inverter communication commonly uses CAN, RS485 or Modbus.",
         },
         {
-            "question": "17. If communication is incorrect or missing, one likely issue is:",
+            "question": "If communication is incorrect or missing, one likely issue is:",
             "options": [
                 "A) Improved efficiency",
                 "B) Accurate SOC",
@@ -4114,7 +4114,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Missing or incorrect communication can cause SOC drift and wrong behaviour.",
         },
         {
-            "question": "18. The most accurate method the BMS uses to calculate SOC is:",
+            "question": "The most accurate method the BMS uses to calculate SOC is:",
             "options": [
                 "A) Voltage reading only",
                 "B) Coulomb counting",
@@ -4125,7 +4125,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Coulomb counting is the most accurate SOC estimation method used by the BMS.",
         },
         {
-            "question": "19. Voltage-based SOC estimation is mainly used:",
+            "question": "Voltage-based SOC estimation is mainly used:",
             "options": [
                 "A) At full or empty states",
                 "B) During charging only",
@@ -4136,7 +4136,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Voltage-based SOC estimation is mainly reliable at full or empty states.",
         },
         {
-            "question": "20. A battery shutting down under load is often:",
+            "question": "A battery shutting down under load is often:",
             "options": [
                 "A) A manufacturing defect",
                 "B) The BMS protecting the battery",
@@ -4147,7 +4147,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "A shutdown under load is often the BMS protecting the battery.",
         },
         {
-            "question": "21. If a battery never reaches 100% SOC over long periods, a likely issue is:",
+            "question": "If a battery never reaches 100% SOC over long periods, a likely issue is:",
             "options": [
                 "A) Too much balancing",
                 "B) Poor balancing and SOC inaccuracy",
@@ -4158,7 +4158,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "A battery that never reaches full SOC likely has poor balancing and inaccurate SOC estimates.",
         },
         {
-            "question": "22. High temperatures around the battery can cause:",
+            "question": "High temperatures around the battery can cause:",
             "options": [
                 "A) Improved performance",
                 "B) Faster charging",
@@ -4169,7 +4169,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "High temperatures can force the BMS to limit current or shut down for protection.",
         },
         {
-            "question": "23. Before resetting a BMS fault, you should:",
+            "question": "Before resetting a BMS fault, you should:",
             "options": [
                 "A) Immediately restart the inverter",
                 "B) Ignore the fault",
@@ -4180,7 +4180,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "You should identify and resolve the cause before resetting a BMS fault.",
         },
         {
-            "question": "24. Mixing different battery brands in one system can cause:",
+            "question": "Mixing different battery brands in one system can cause:",
             "options": [
                 "A) Better performance",
                 "B) No effect",
@@ -4191,7 +4191,7 @@ MODULE_4_ASSESSMENT = {
             "explanation": "Mixing brands can cause compatibility issues and unstable BMS logic.",
         },
         {
-            "question": "25. Exceeding the battery’s C-rate can result in:",
+            "question": "Exceeding the battery’s C-rate can result in:",
             "options": [
                 "A) Higher capacity",
                 "B) BMS limiting or shutting down output",
@@ -5801,7 +5801,7 @@ MODULE_5_ASSESSMENT = {
     "title": "Module 5 Assessment",
     "questions": [
         {
-            "question": "1. The most important starting point when designing a system is:",
+            "question": "The most important starting point when designing a system is:",
             "options": [
                 "A) Choosing the inverter",
                 "B) Selecting the battery brand",
@@ -5812,7 +5812,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "The first and most important step is to assess the loads the system must support.",
         },
         {
-            "question": "2. Poor system design typically leads to:",
+            "question": "Poor system design typically leads to:",
             "options": [
                 "A) Better efficiency",
                 "B) Longer battery life",
@@ -5823,7 +5823,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Poor design often causes protection trips, unstable performance and unhappy customers.",
         },
         {
-            "question": "3. The correct design order is:",
+            "question": "The correct design order is:",
             "options": [
                 "A) Solar → Inverter → Battery → Loads",
                 "B) Inverter → Battery → Solar → Loads",
@@ -5834,7 +5834,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Design should begin with loads, then size the battery, inverter, and solar.",
         },
         {
-            "question": "4. Essential loads are defined as:",
+            "question": "Essential loads are defined as:",
             "options": [
                 "A) All loads in the house",
                 "B) Loads that must run during load shedding",
@@ -5845,7 +5845,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Essential loads are those that must remain powered during outages or load shedding.",
         },
         {
-            "question": "5. Which of the following is an essential load?",
+            "question": "Which of the following is an essential load?",
             "options": [
                 "A) Geyser",
                 "B) Oven",
@@ -5856,7 +5856,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "A WiFi router is typically essential for communication and smart system control.",
         },
         {
-            "question": "6. Which of the following is NOT an essential load?",
+            "question": "Which of the following is NOT an essential load?",
             "options": [
                 "A) Fridge",
                 "B) Lights",
@@ -5867,7 +5867,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "A pool pump is usually non-essential during backup or load-shedding conditions.",
         },
         {
-            "question": "7. Why must essential and non-essential loads be separated?",
+            "question": "Why must essential and non-essential loads be separated?",
             "options": [
                 "A) To increase voltage",
                 "B) To reduce inverter size",
@@ -5878,7 +5878,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Separating loads preserves battery runtime and keeps the system reliable.",
         },
         {
-            "question": "8. Battery size is calculated using:",
+            "question": "Battery size is calculated using:",
             "options": [
                 "A) Voltage × Current",
                 "B) Load (kW) × Time (hours)",
@@ -5889,7 +5889,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Battery energy is found by multiplying load power by required runtime.",
         },
         {
-            "question": "9. A 1 kW load running for 5 hours requires:",
+            "question": "A 1 kW load running for 5 hours requires:",
             "options": [
                 "A) 1 kWh",
                 "B) 3 kWh",
@@ -5900,7 +5900,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Energy = 1 kW × 5 hours = 5 kWh.",
         },
         {
-            "question": "10. Why should batteries not be sized exactly to calculated demand?",
+            "question": "Why should batteries not be sized exactly to calculated demand?",
             "options": [
                 "A) To reduce voltage",
                 "B) Because batteries must be oversized for safety margin and lifespan",
@@ -5911,7 +5911,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Batteries need extra capacity for margin, lifespan and reliable performance.",
         },
         {
-            "question": "11. Typical usable battery capacity is approximately:",
+            "question": "Typical usable battery capacity is approximately:",
             "options": [
                 "A) 50%",
                 "B) 70%",
@@ -5922,7 +5922,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Usable capacity is usually around 90%, not the full rated capacity.",
         },
         {
-            "question": "12. The inverter must be sized based on:",
+            "question": "The inverter must be sized based on:",
             "options": [
                 "A) Battery size",
                 "B) Solar size",
@@ -5933,7 +5933,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Inverter size depends on the peak load it must supply.",
         },
         {
-            "question": "13. If the inverter is undersized, what happens?",
+            "question": "If the inverter is undersized, what happens?",
             "options": [
                 "A) Better efficiency",
                 "B) System instability and overload trips",
@@ -5944,7 +5944,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "An undersized inverter causes instability and can trip under overload.",
         },
         {
-            "question": "14. A typical inverter size for a medium home is:",
+            "question": "A typical inverter size for a medium home is:",
             "options": [
                 "A) 1–2 kW",
                 "B) 3–5 kW",
@@ -5955,7 +5955,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Medium homes commonly use inverters in the 5–8 kW range.",
         },
         {
-            "question": "15. In South Africa, 1 kWp of solar typically produces:",
+            "question": "In South Africa, 1 kWp of solar typically produces:",
             "options": [
                 "A) 1–2 kWh/day",
                 "B) 2–3 kWh/day",
@@ -5966,7 +5966,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "A realistic South African yield is around 4–6 kWh per day per kWp.",
         },
         {
-            "question": "16. The main purpose of solar in a hybrid system is to:",
+            "question": "The main purpose of solar in a hybrid system is to:",
             "options": [
                 "A) Replace the inverter",
                 "B) Charge batteries and run daytime loads",
@@ -5977,7 +5977,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Solar is used to charge batteries and supply daytime loads.",
         },
         {
-            "question": "17. What happens if solar is undersized?",
+            "question": "What happens if solar is undersized?",
             "options": [
                 "A) Faster charging",
                 "B) Battery never fully charges and system performs poorly",
@@ -5988,7 +5988,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Insufficient solar means the battery may never fully charge and performance suffers.",
         },
         {
-            "question": "18. Why is inverter-to-battery communication important?",
+            "question": "Why is inverter-to-battery communication important?",
             "options": [
                 "A) It increases voltage",
                 "B) It ensures proper control and prevents instability",
@@ -5999,7 +5999,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Communication is needed for correct control and stable system operation.",
         },
         {
-            "question": "19. Recommended maximum voltage drop in a system is:",
+            "question": "Recommended maximum voltage drop in a system is:",
             "options": [
                 "A) 10%",
                 "B) 5%",
@@ -6010,7 +6010,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "A 3% maximum voltage drop is commonly recommended for battery systems.",
         },
         {
-            "question": "20. Undersized DC cables can cause:",
+            "question": "Undersized DC cables can cause:",
             "options": [
                 "A) Improved efficiency",
                 "B) Voltage drop, heat and BMS trips",
@@ -6021,7 +6021,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Undersized cables cause voltage drop, overheating and protection trips.",
         },
         {
-            "question": "21. A system with frequent shutdowns is most likely caused by:",
+            "question": "A system with frequent shutdowns is most likely caused by:",
             "options": [
                 "A) Customer usage",
                 "B) Product defects",
@@ -6032,7 +6032,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Frequent shutdowns are usually the result of poor system design.",
         },
         {
-            "question": "22. Running batteries below 20% SOC regularly will:",
+            "question": "Running batteries below 20% SOC regularly will:",
             "options": [
                 "A) Improve lifespan",
                 "B) Increase efficiency",
@@ -6043,7 +6043,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Deep discharging below 20% SOC regularly shortens battery life.",
         },
         {
-            "question": "23. Installing batteries in a hot environment can cause:",
+            "question": "Installing batteries in a hot environment can cause:",
             "options": [
                 "A) Better performance",
                 "B) Increased capacity",
@@ -6054,7 +6054,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Heat leads to protection trips and reduces battery lifespan.",
         },
         {
-            "question": "24. Mixing battery brands in one system will likely result in:",
+            "question": "Mixing battery brands in one system will likely result in:",
             "options": [
                 "A) Improved performance",
                 "B) No change",
@@ -6065,7 +6065,7 @@ MODULE_5_ASSESSMENT = {
             "explanation": "Mixed brands often cause instability and control/communication problems.",
         },
         {
-            "question": "25. The most common cause of customer complaints is:",
+            "question": "The most common cause of customer complaints is:",
             "options": [
                 "A) Solar panel colour",
                 "B) Cable routing",
@@ -6801,7 +6801,7 @@ MODULE_6_ASSESSMENT = {
     "subtitle": "Energy System Design & Sizing",
     "questions": [
         {
-            "question": "1. The most important starting point when designing a system is:",
+            "question": "The most important starting point when designing a system is:",
             "options": [
                 "A) Choosing the inverter",
                 "B) Selecting the battery brand",
@@ -6812,7 +6812,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "The first and most important step is to assess the loads the system must support.",
         },
         {
-            "question": "2. Poor system design typically leads to:",
+            "question": "Poor system design typically leads to:",
             "options": [
                 "A) Better efficiency",
                 "B) Longer battery life",
@@ -6823,7 +6823,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Poor design often causes protection trips, unstable performance and unhappy customers.",
         },
         {
-            "question": "3. The correct design order is:",
+            "question": "The correct design order is:",
             "options": [
                 "A) Solar → Inverter → Battery → Loads",
                 "B) Inverter → Battery → Solar → Loads",
@@ -6834,7 +6834,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Design should begin with loads, then size the battery, inverter, and solar.",
         },
         {
-            "question": "4. Essential loads are defined as:",
+            "question": "Essential loads are defined as:",
             "options": [
                 "A) All loads in the house",
                 "B) Loads that must run during load shedding",
@@ -6845,7 +6845,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Essential loads are those that must remain powered during outages or load shedding.",
         },
         {
-            "question": "5. Which of the following is an essential load?",
+            "question": "Which of the following is an essential load?",
             "options": [
                 "A) Geyser",
                 "B) Oven",
@@ -6856,7 +6856,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "A WiFi router is typically essential for communication and smart system control.",
         },
         {
-            "question": "6. Which of the following is NOT an essential load?",
+            "question": "Which of the following is NOT an essential load?",
             "options": [
                 "A) Fridge",
                 "B) Lights",
@@ -6867,7 +6867,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "A pool pump is usually non-essential during backup or load-shedding conditions.",
         },
         {
-            "question": "7. Why must essential and non-essential loads be separated?",
+            "question": "Why must essential and non-essential loads be separated?",
             "options": [
                 "A) To increase voltage",
                 "B) To reduce inverter size",
@@ -6878,7 +6878,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Separating loads preserves battery runtime and keeps the system reliable.",
         },
         {
-            "question": "8. Battery size is calculated using:",
+            "question": "Battery size is calculated using:",
             "options": [
                 "A) Voltage × Current",
                 "B) Load (kW) × Time (hours)",
@@ -6889,7 +6889,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Battery energy is found by multiplying load power by required runtime.",
         },
         {
-            "question": "9. A 1 kW load running for 5 hours requires:",
+            "question": "A 1 kW load running for 5 hours requires:",
             "options": [
                 "A) 1 kWh",
                 "B) 3 kWh",
@@ -6900,7 +6900,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Energy = 1 kW × 5 hours = 5 kWh.",
         },
         {
-            "question": "10. Why should batteries not be sized exactly to calculated demand?",
+            "question": "Why should batteries not be sized exactly to calculated demand?",
             "options": [
                 "A) To reduce voltage",
                 "B) Because batteries must be oversized for safety margin and lifespan",
@@ -6911,7 +6911,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Batteries need extra capacity for margin, lifespan and reliable performance.",
         },
         {
-            "question": "11. Typical usable battery capacity is approximately:",
+            "question": "Typical usable battery capacity is approximately:",
             "options": [
                 "A) 50%",
                 "B) 70%",
@@ -6922,7 +6922,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Usable capacity is usually around 90%, not the full rated capacity.",
         },
         {
-            "question": "12. The inverter must be sized based on:",
+            "question": "The inverter must be sized based on:",
             "options": [
                 "A) Battery size",
                 "B) Solar size",
@@ -6933,7 +6933,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Inverter size depends on the peak load it must supply.",
         },
         {
-            "question": "13. If the inverter is undersized, what happens?",
+            "question": "If the inverter is undersized, what happens?",
             "options": [
                 "A) Better efficiency",
                 "B) System instability and overload trips",
@@ -6944,7 +6944,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "An undersized inverter causes instability and can trip under overload.",
         },
         {
-            "question": "14. A typical inverter size for a medium home is:",
+            "question": "A typical inverter size for a medium home is:",
             "options": [
                 "A) 1–2 kW",
                 "B) 3–5 kW",
@@ -6955,7 +6955,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Medium homes commonly use inverters in the 5–8 kW range.",
         },
         {
-            "question": "15. In South Africa, 1 kWp of solar typically produces:",
+            "question": "In South Africa, 1 kWp of solar typically produces:",
             "options": [
                 "A) 1–2 kWh/day",
                 "B) 2–3 kWh/day",
@@ -6966,7 +6966,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "A realistic South African yield is around 4–6 kWh per day per kWp.",
         },
         {
-            "question": "16. The main purpose of solar in a hybrid system is to:",
+            "question": "The main purpose of solar in a hybrid system is to:",
             "options": [
                 "A) Replace the inverter",
                 "B) Charge batteries and run daytime loads",
@@ -6977,7 +6977,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Solar is used to charge batteries and supply daytime loads.",
         },
         {
-            "question": "17. What happens if solar is undersized?",
+            "question": "What happens if solar is undersized?",
             "options": [
                 "A) Faster charging",
                 "B) Battery never fully charges and system performs poorly",
@@ -6988,7 +6988,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Insufficient solar means the battery may never fully charge and performance suffers.",
         },
         {
-            "question": "18. Why is inverter-to-battery communication important?",
+            "question": "Why is inverter-to-battery communication important?",
             "options": [
                 "A) It increases voltage",
                 "B) It ensures proper control and prevents instability",
@@ -6999,7 +6999,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Communication is needed for correct control and stable system operation.",
         },
         {
-            "question": "19. Recommended maximum voltage drop in a system is:",
+            "question": "Recommended maximum voltage drop in a system is:",
             "options": [
                 "A) 10%",
                 "B) 5%",
@@ -7010,7 +7010,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "A 3% maximum voltage drop is commonly recommended for battery systems.",
         },
         {
-            "question": "20. Undersized DC cables can cause:",
+            "question": "Undersized DC cables can cause:",
             "options": [
                 "A) Improved efficiency",
                 "B) Voltage drop, heat and BMS trips",
@@ -7021,7 +7021,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Undersized cables cause voltage drop, overheating and protection trips.",
         },
         {
-            "question": "21. A system with frequent shutdowns is most likely caused by:",
+            "question": "A system with frequent shutdowns is most likely caused by:",
             "options": [
                 "A) Customer usage",
                 "B) Product defects",
@@ -7032,7 +7032,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Frequent shutdowns are usually the result of poor system design.",
         },
         {
-            "question": "22. Running batteries below 20% SOC regularly will:",
+            "question": "Running batteries below 20% SOC regularly will:",
             "options": [
                 "A) Improve lifespan",
                 "B) Increase efficiency",
@@ -7043,7 +7043,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Deep discharging below 20% SOC regularly shortens battery life.",
         },
         {
-            "question": "23. Installing batteries in a hot environment can cause:",
+            "question": "Installing batteries in a hot environment can cause:",
             "options": [
                 "A) Better performance",
                 "B) Increased capacity",
@@ -7054,7 +7054,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Heat leads to protection trips and reduces battery lifespan.",
         },
         {
-            "question": "24. Mixing battery brands in one system will likely result in:",
+            "question": "Mixing battery brands in one system will likely result in:",
             "options": [
                 "A) Improved performance",
                 "B) No change",
@@ -7065,7 +7065,7 @@ MODULE_6_ASSESSMENT = {
             "explanation": "Mixed brands often cause instability and control/communication problems.",
         },
         {
-            "question": "25. The most common cause of customer complaints is:",
+            "question": "The most common cause of customer complaints is:",
             "options": [
                 "A) Solar panel colour",
                 "B) Cable routing",
@@ -8236,7 +8236,7 @@ MODULE_7_ASSESSMENT = {
     "subtitle": "System Installation, Wiring & Integration",
     "questions": [
         {
-            "question": "1. The primary goal of a professional installation is to:",
+            "question": "The primary goal of a professional installation is to:",
             "options": [
                 "A) Reduce inverter weight",
                 "B) Create a safe, reliable and serviceable system",
@@ -8247,7 +8247,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Professional installations prioritize safety, reliability, and the ability to service the system.",
         },
         {
-            "question": "2. Before starting any installation, the installer should first:",
+            "question": "Before starting any installation, the installer should first:",
             "options": [
                 "A) Power on the inverter",
                 "B) Connect the batteries",
@@ -8258,7 +8258,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Always review the design and plan before beginning any physical installation work.",
         },
         {
-            "question": "3. One of the biggest causes of system failures is:",
+            "question": "One of the biggest causes of system failures is:",
             "options": [
                 "A) Battery colour",
                 "B) Poor workmanship and loose connections",
@@ -8269,7 +8269,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Loose connections and poor workmanship are major causes of system failures and overheating.",
         },
         {
-            "question": "4. Batteries should ideally be installed in:",
+            "question": "Batteries should ideally be installed in:",
             "options": [
                 "A) Direct sunlight",
                 "B) Hot roof spaces",
@@ -8280,7 +8280,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Cool, dry, well-ventilated areas protect battery performance and lifespan.",
         },
         {
-            "question": "5. Poor battery ventilation can lead to:",
+            "question": "Poor battery ventilation can lead to:",
             "options": [
                 "A) Increased efficiency",
                 "B) Reduced cable size",
@@ -8291,7 +8291,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Poor ventilation causes overheating, BMS trips, and shortened battery lifespan.",
         },
         {
-            "question": "6. Why is neat cable routing important?",
+            "question": "Why is neat cable routing important?",
             "options": [
                 "A) It improves WiFi connection",
                 "B) It reduces installation professionalism",
@@ -8302,7 +8302,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Neat cable routing improves safety, cooling, and makes future maintenance easier.",
         },
         {
-            "question": "7. DC cables should always be:",
+            "question": "DC cables should always be:",
             "options": [
                 "A) Mixed randomly with AC cables",
                 "B) Routed separately where possible",
@@ -8313,7 +8313,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "DC and AC cables should be routed separately to avoid interference and safety issues.",
         },
         {
-            "question": "8. Incorrect cable sizing can cause:",
+            "question": "Incorrect cable sizing can cause:",
             "options": [
                 "A) Better efficiency",
                 "B) Voltage drop and excessive heat",
@@ -8324,7 +8324,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Undersized cables cause voltage drop, overheating, and fire risks.",
         },
         {
-            "question": "9. All battery terminations should be:",
+            "question": "All battery terminations should be:",
             "options": [
                 "A) Hand-tightened only",
                 "B) Properly crimped and torqued",
@@ -8335,7 +8335,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Proper crimping and torque settings ensure secure, low-resistance connections.",
         },
         {
-            "question": "10. The purpose of a DC breaker or fuse is to:",
+            "question": "The purpose of a DC breaker or fuse is to:",
             "options": [
                 "A) Increase battery capacity",
                 "B) Protect the system from overcurrent and faults",
@@ -8346,7 +8346,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "DC breakers and fuses protect the system from overcurrent and fault conditions.",
         },
         {
-            "question": "11. What is one major danger of reverse polarity?",
+            "question": "What is one major danger of reverse polarity?",
             "options": [
                 "A) Reduced solar generation",
                 "B) Immediate equipment damage",
@@ -8357,7 +8357,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Reverse polarity causes immediate, catastrophic damage to inverter and BMS.",
         },
         {
-            "question": "12. Before connecting batteries, installers should always:",
+            "question": "Before connecting batteries, installers should always:",
             "options": [
                 "A) Assume polarity is correct",
                 "B) Check voltage and polarity using a meter",
@@ -8368,7 +8368,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Always verify voltage and polarity with a meter before making any connections.",
         },
         {
-            "question": "13. Why are communication cables important in lithium systems?",
+            "question": "Why are communication cables important in lithium systems?",
             "options": [
                 "A) They increase voltage",
                 "B) They allow intelligent control between battery and inverter",
@@ -8379,7 +8379,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Communication enables the inverter and battery to work as an intelligent system.",
         },
         {
-            "question": "14. CAN Bus and RS485 are examples of:",
+            "question": "CAN Bus and RS485 are examples of:",
             "options": [
                 "A) Cooling systems",
                 "B) Communication protocols",
@@ -8390,7 +8390,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "CAN Bus and RS485 are communication protocols used for system integration.",
         },
         {
-            "question": "15. Incorrect battery communication setup can result in:",
+            "question": "Incorrect battery communication setup can result in:",
             "options": [
                 "A) Better charging",
                 "B) System instability and charging problems",
@@ -8401,7 +8401,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Poor communication causes system instability, incorrect SOC, and charging problems.",
         },
         {
-            "question": "16. Earthing and bonding are important because they:",
+            "question": "Earthing and bonding are important because they:",
             "options": [
                 "A) Increase battery runtime",
                 "B) Improve solar irradiance",
@@ -8412,7 +8412,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Proper earthing and bonding protect people and equipment from electrical hazards.",
         },
         {
-            "question": "17. AC and DC isolators are installed to:",
+            "question": "AC and DC isolators are installed to:",
             "options": [
                 "A) Increase voltage",
                 "B) Safely isolate parts of the system",
@@ -8423,7 +8423,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Isolators allow safe disconnection of system components for maintenance and safety.",
         },
         {
-            "question": "18. Which of the following is considered good installer practice?",
+            "question": "Which of the following is considered good installer practice?",
             "options": [
                 "A) Leaving cables unsupported",
                 "B) Mixing communication and power cables randomly",
@@ -8434,7 +8434,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Clear labelling improves safety, understanding, and future maintenance.",
         },
         {
-            "question": "19. Before powering up a system for the first time, installers should:",
+            "question": "Before powering up a system for the first time, installers should:",
             "options": [
                 "A) Disconnect all protection devices",
                 "B) Perform a full commissioning inspection",
@@ -8445,7 +8445,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "A full commissioning inspection ensures everything is correct before operation.",
         },
         {
-            "question": "20. A system should NEVER be energised if:",
+            "question": "A system should NEVER be energised if:",
             "options": [
                 "A) Labels are installed",
                 "B) Torque checks are complete",
@@ -8456,7 +8456,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Never power up a system until all wiring and polarity have been verified.",
         },
         {
-            "question": "21. Why is torque important on battery terminals?",
+            "question": "Why is torque important on battery terminals?",
             "options": [
                 "A) Loose connections can create heat and failures",
                 "B) It improves solar production",
@@ -8467,7 +8467,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Proper torque ensures secure connections and prevents heat-related failures.",
         },
         {
-            "question": "22. One common cause of nuisance tripping is:",
+            "question": "One common cause of nuisance tripping is:",
             "options": [
                 "A) Proper earthing",
                 "B) Correct cable sizing",
@@ -8478,7 +8478,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Incorrect neutral-earth configuration causes nuisance earth leakage trips.",
         },
         {
-            "question": "23. Professional installers build systems that are:",
+            "question": "Professional installers build systems that are:",
             "options": [
                 "A) Difficult to service",
                 "B) Easy to understand, maintain and troubleshoot",
@@ -8489,7 +8489,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Professional systems are designed for easy understanding, maintenance, and troubleshooting.",
         },
         {
-            "question": "24. What should installers do after completing installation?",
+            "question": "What should installers do after completing installation?",
             "options": [
                 "A) Leave without testing",
                 "B) Immediately disconnect the batteries",
@@ -8500,7 +8500,7 @@ MODULE_7_ASSESSMENT = {
             "explanation": "Test and verify system operation before handing over to the customer.",
         },
         {
-            "question": "25. A professional installation reflects on:",
+            "question": "A professional installation reflects on:",
             "options": [
                 "A) Only the inverter brand",
                 "B) Only the customer",
@@ -9040,7 +9040,7 @@ MODULE_8_ASSESSMENT = {
     "subtitle": "Configuration, Monitoring, Maintenance & Troubleshooting",
     "questions": [
         {
-            "question": "1. The main purpose of system configuration is to:",
+            "question": "The main purpose of system configuration is to:",
             "options": [
                 "A) Increase solar panel size",
                 "B) Ensure all system components operate together correctly",
@@ -9051,7 +9051,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Configuration ensures all components operate together as an intelligent integrated system.",
         },
         {
-            "question": "2. Incorrect inverter settings can result in:",
+            "question": "Incorrect inverter settings can result in:",
             "options": [
                 "A) Better battery life",
                 "B) Charging problems and system instability",
@@ -9062,7 +9062,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Wrong settings cause charging problems, instability, and poor system performance.",
         },
         {
-            "question": "3. Battery communication allows the inverter to:",
+            "question": "Battery communication allows the inverter to:",
             "options": [
                 "A) Increase PV voltage",
                 "B) Monitor and control battery operation intelligently",
@@ -9073,7 +9073,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Communication enables intelligent monitoring and control of battery operation.",
         },
         {
-            "question": "4. CAN Bus and RS485 are used for:",
+            "question": "CAN Bus and RS485 are used for:",
             "options": [
                 "A) Cooling systems",
                 "B) Communication between devices",
@@ -9084,7 +9084,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "CAN Bus and RS485 are communication protocols for device integration.",
         },
         {
-            "question": "5. If inverter-to-battery communication is lost, the system may:",
+            "question": "If inverter-to-battery communication is lost, the system may:",
             "options": [
                 "A) Operate normally with full functionality",
                 "B) Shut down or operate with limited control",
@@ -9095,7 +9095,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Lost communication causes system shutdown or limited operation with reduced functionality.",
         },
         {
-            "question": "6. The first thing installers should check when troubleshooting a fault is:",
+            "question": "The first thing installers should check when troubleshooting a fault is:",
             "options": [
                 "A) Battery colour",
                 "B) What changed in the system",
@@ -9106,7 +9106,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Understanding what changed helps identify the actual cause of the problem.",
         },
         {
-            "question": "7. One of the most common causes of communication problems is:",
+            "question": "One of the most common causes of communication problems is:",
             "options": [
                 "A) Correct DIP switch settings",
                 "B) Incorrect communication cables or settings",
@@ -9117,7 +9117,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Incorrect communication cables and settings are major causes of communication failures.",
         },
         {
-            "question": "8. DIP switches are commonly used to:",
+            "question": "DIP switches are commonly used to:",
             "options": [
                 "A) Increase battery voltage",
                 "B) Configure communication and battery addressing",
@@ -9128,7 +9128,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "DIP switches configure communication protocols and battery addressing in the system.",
         },
         {
-            "question": "9. Why is battery addressing important in parallel systems?",
+            "question": "Why is battery addressing important in parallel systems?",
             "options": [
                 "A) It increases solar output",
                 "B) It allows batteries to communicate correctly within the system",
@@ -9139,7 +9139,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Battery addressing ensures correct communication and coordination in parallel systems.",
         },
         {
-            "question": "10. Firmware updates are important because they can:",
+            "question": "Firmware updates are important because they can:",
             "options": [
                 "A) Increase battery weight",
                 "B) Improve system stability and compatibility",
@@ -9150,7 +9150,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Firmware updates improve stability, fix bugs, and enhance compatibility.",
         },
         {
-            "question": "11. A battery operating at very high temperatures may:",
+            "question": "A battery operating at very high temperatures may:",
             "options": [
                 "A) Improve lifespan",
                 "B) Increase efficiency permanently",
@@ -9161,7 +9161,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "High temperatures trigger BMS protection and accelerate battery degradation.",
         },
         {
-            "question": "12. State of Charge (SOC) refers to:",
+            "question": "State of Charge (SOC) refers to:",
             "options": [
                 "A) Battery temperature",
                 "B) Available battery energy remaining",
@@ -9172,7 +9172,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "SOC is the percentage of energy remaining in the battery.",
         },
         {
-            "question": "13. State of Health (SOH) refers to:",
+            "question": "State of Health (SOH) refers to:",
             "options": [
                 "A) Battery communication speed",
                 "B) Overall battery condition and aging",
@@ -9183,7 +9183,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "SOH indicates the overall condition and remaining lifespan of the battery.",
         },
         {
-            "question": "14. Which of the following is considered good maintenance practice?",
+            "question": "Which of the following is considered good maintenance practice?",
             "options": [
                 "A) Ignoring warning alarms",
                 "B) Regular inspection of cables and terminations",
@@ -9194,7 +9194,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Regular inspections help identify loose connections and potential problems early.",
         },
         {
-            "question": "15. Thermal inspections are important because they help identify:",
+            "question": "Thermal inspections are important because they help identify:",
             "options": [
                 "A) Internet issues",
                 "B) Hot spots and loose connections",
@@ -9205,7 +9205,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Thermal imaging detects hot spots caused by loose connections and resistance.",
         },
         {
-            "question": "16. One major cause of voltage drop is:",
+            "question": "One major cause of voltage drop is:",
             "options": [
                 "A) Oversized cables",
                 "B) Undersized or loose connections",
@@ -9216,7 +9216,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Undersized cables and loose connections create resistance and cause voltage drop.",
         },
         {
-            "question": "17. If a battery is not charging properly, installers should check:",
+            "question": "If a battery is not charging properly, installers should check:",
             "options": [
                 "A) Communication, settings and available charging sources",
                 "B) Roof paint colour",
@@ -9227,7 +9227,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Check communication, settings, and available charging sources (solar, grid) first.",
         },
         {
-            "question": "18. Monitoring platforms allow installers to:",
+            "question": "Monitoring platforms allow installers to:",
             "options": [
                 "A) Increase inverter voltage remotely",
                 "B) View system performance and diagnose faults",
@@ -9238,7 +9238,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Monitoring platforms provide visibility into system performance and help diagnose issues.",
         },
         {
-            "question": "19. Why are event logs useful during troubleshooting?",
+            "question": "Why are event logs useful during troubleshooting?",
             "options": [
                 "A) They improve battery lifespan",
                 "B) They help identify when and why faults occurred",
@@ -9249,7 +9249,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Event logs provide a timeline of system events and help identify root causes.",
         },
         {
-            "question": "20. Frequent inverter overload alarms usually indicate:",
+            "question": "Frequent inverter overload alarms usually indicate:",
             "options": [
                 "A) Proper sizing",
                 "B) Excessive load demand or poor system design",
@@ -9260,7 +9260,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Overload alarms suggest loads exceed inverter capacity or poor system sizing.",
         },
         {
-            "question": "21. A professional troubleshooting process should be:",
+            "question": "A professional troubleshooting process should be:",
             "options": [
                 "A) Random and based on guessing",
                 "B) Logical and systematic",
@@ -9271,7 +9271,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Professional troubleshooting follows a logical, systematic approach with evidence.",
         },
         {
-            "question": "22. One major advantage of remote monitoring is:",
+            "question": "One major advantage of remote monitoring is:",
             "options": [
                 "A) Reduced battery voltage",
                 "B) Faster fault identification and support",
@@ -9282,7 +9282,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Remote monitoring enables faster identification and support without visiting site first.",
         },
         {
-            "question": "23. If battery SOC suddenly drops under load, this may indicate:",
+            "question": "If battery SOC suddenly drops under load, this may indicate:",
             "options": [
                 "A) Normal operation only",
                 "B) Voltage sag, excessive load or battery issues",
@@ -9293,7 +9293,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "SOC drop under load indicates voltage sag, overload, or battery degradation.",
         },
         {
-            "question": "24. Preventative maintenance helps to:",
+            "question": "Preventative maintenance helps to:",
             "options": [
                 "A) Increase fault frequency",
                 "B) Reduce long-term system reliability",
@@ -9304,7 +9304,7 @@ MODULE_8_ASSESSMENT = {
             "explanation": "Preventative maintenance catches problems early and prevents major failures.",
         },
         {
-            "question": "25. Professional installers understand that troubleshooting starts with:",
+            "question": "Professional installers understand that troubleshooting starts with:",
             "options": [
                 "A) Replacing equipment immediately",
                 "B) Understanding system behaviour and operating conditions",

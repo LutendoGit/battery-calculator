@@ -805,7 +805,7 @@ class EducationalQuizzes:
         """Module 2 assessment: Electrical Fundamentals."""
         return [
             {
-                "question": "1. Voltage (V) is best described as:",
+                "question": "Voltage (V) is best described as:",
                 "options": [
                     "A) The amount of energy stored",
                     "B) The flow of electricity",
@@ -816,7 +816,7 @@ class EducationalQuizzes:
                 "explanation": "Voltage is the electrical pressure that pushes current through a conductor.",
             },
             {
-                "question": "2. Current (A) refers to:",
+                "question": "Current (A) refers to:",
                 "options": [
                     "A) Electrical pressure",
                     "B) The amount of electricity flowing",
@@ -827,7 +827,7 @@ class EducationalQuizzes:
                 "explanation": "Current is the rate of flow of electric charge in a circuit.",
             },
             {
-                "question": "3. Resistance (Ω) causes:",
+                "question": "Resistance (Ω) causes:",
                 "options": [
                     "A) Increased voltage",
                     "B) Reduced cable size",
@@ -838,7 +838,7 @@ class EducationalQuizzes:
                 "explanation": "Resistance turns electrical energy into heat and causes voltage drop along conductors.",
             },
             {
-                "question": "4. If voltage increases for the same power demand, current will:",
+                "question": "If voltage increases for the same power demand, current will:",
                 "options": [
                     "A) Increase",
                     "B) Stay the same",
@@ -849,7 +849,7 @@ class EducationalQuizzes:
                 "explanation": "For constant power, increasing voltage lowers the required current.",
             },
             {
-                "question": "5. Why do higher voltage systems improve efficiency?",
+                "question": "Why do higher voltage systems improve efficiency?",
                 "options": [
                     "A) They increase resistance",
                     "B) They reduce current and heat losses",
@@ -860,7 +860,7 @@ class EducationalQuizzes:
                 "explanation": "Higher voltage means lower current for the same power, which reduces resistive losses.",
             },
             {
-                "question": "6. Power (kW) refers to:",
+                "question": "Power (kW) refers to:",
                 "options": [
                     "A) Total stored electricity",
                     "B) The rate at which energy is used",
@@ -871,7 +871,7 @@ class EducationalQuizzes:
                 "explanation": "Power is the rate of energy consumption or delivery at a moment in time.",
             },
             {
-                "question": "7. The formula for power is:",
+                "question": "The formula for power is:",
                 "options": [
                     "A) Power = Current ÷ Voltage",
                     "B) Power = Voltage × Current",
@@ -882,7 +882,7 @@ class EducationalQuizzes:
                 "explanation": "Electrical power equals voltage multiplied by current.",
             },
             {
-                "question": "8. Energy (kWh) refers to:",
+                "question": "Energy (kWh) refers to:",
                 "options": [
                     "A) Instantaneous load",
                     "B) Voltage level",
@@ -893,7 +893,7 @@ class EducationalQuizzes:
                 "explanation": "Energy is the cumulative amount of power used over a period of time.",
             },
             {
-                "question": "9. If a system runs at 2 kW for 3 hours, how much energy is used?",
+                "question": "If a system runs at 2 kW for 3 hours, how much energy is used?",
                 "options": [
                     "A) 2 kWh",
                     "B) 3 kWh",
@@ -904,7 +904,7 @@ class EducationalQuizzes:
                 "explanation": "Energy = power × time, so 2 kW × 3 h = 6 kWh.",
             },
             {
-                "question": "10. DC (Direct Current) flows:",
+                "question": "DC (Direct Current) flows:",
                 "options": [
                     "A) In both directions",
                     "B) In one direction only",
@@ -915,7 +915,7 @@ class EducationalQuizzes:
                 "explanation": "DC current flows in a single direction, unlike AC.",
             },
             {
-                "question": "11. One key risk of DC systems is that:",
+                "question": "One key risk of DC systems is that:",
                 "options": [
                     "A) Voltage is always low",
                     "B) DC arcs can sustain and not easily extinguish",
@@ -926,7 +926,7 @@ class EducationalQuizzes:
                 "explanation": "DC arcs can sustain and are harder to interrupt, making safety critical.",
             },
             {
-                "question": "12. AC (Alternating Current) in South Africa operates at:",
+                "question": "AC (Alternating Current) in South Africa operates at:",
                 "options": [
                     "A) 110 V / 60 Hz",
                     "B) 48 V DC",
@@ -937,7 +937,7 @@ class EducationalQuizzes:
                 "explanation": "South African mains AC is approximately 230 V at 50 Hz.",
             },
             {
-                "question": "13. Which side is most associated with compliance, earthing and protection rules?",
+                "question": "Which side is most associated with compliance, earthing and protection rules?",
                 "options": [
                     "A) DC side",
                     "B) AC side",
@@ -948,7 +948,7 @@ class EducationalQuizzes:
                 "explanation": "The AC side is usually most closely regulated for earthing and protection systems.",
             },
             {
-                "question": "14. The inverter’s role is best described as:",
+                "question": "The inverter’s role is best described as:",
                 "options": [
                     "A) Only converting DC to AC",
                     "B) Only storing energy",
@@ -959,7 +959,7 @@ class EducationalQuizzes:
                 "explanation": "A hybrid inverter manages power flow between DC and AC circuits and may also handle charging and protection.",
             },
             {
-                "question": "15. In a series connection, what happens?",
+                "question": "In a series connection, what happens?",
                 "options": [
                     "A) Voltage stays the same, capacity increases",
                     "B) Voltage increases, capacity stays the same",
@@ -970,7 +970,7 @@ class EducationalQuizzes:
                 "explanation": "Series connection adds voltages while the capacity (Ah) stays the same.",
             },
             {
-                "question": "16. In a parallel connection, what happens?",
+                "question": "In a parallel connection, what happens?",
                 "options": [
                     "A) Voltage increases",
                     "B) Capacity decreases",
@@ -981,7 +981,7 @@ class EducationalQuizzes:
                 "explanation": "Parallel connection keeps voltage the same and increases available capacity.",
             },
             {
-                "question": "17. Two 48 V batteries connected in series will result in:",
+                "question": "Two 48 V batteries connected in series will result in:",
                 "options": [
                     "A) 48 V",
                     "B) 96 V",
@@ -992,7 +992,7 @@ class EducationalQuizzes:
                 "explanation": "Two 48 V batteries in series add to 96 V total.",
             },
             {
-                "question": "18. Why must manufacturers’ rules be followed when connecting batteries?",
+                "question": "Why must manufacturers’ rules be followed when connecting batteries?",
                 "options": [
                     "A) To improve aesthetics",
                     "B) To avoid warranty issues and system damage",
@@ -1003,7 +1003,7 @@ class EducationalQuizzes:
                 "explanation": "Manufacturers’ rules protect equipment, safety, and warranty coverage.",
             },
             {
-                "question": "19. If a cable is undersized for the current, what is most likely to happen?",
+                "question": "If a cable is undersized for the current, what is most likely to happen?",
                 "options": [
                     "A) Voltage increases",
                     "B) Cable cools down",
@@ -1014,7 +1014,7 @@ class EducationalQuizzes:
                 "explanation": "Undersized cables heat up due to resistance and cause voltage drop under load.",
             },
             {
-                "question": "20. Proper crimping and torque are important because they:",
+                "question": "Proper crimping and torque are important because they:",
                 "options": [
                     "A) Reduce voltage",
                     "B) Improve cable colour",
@@ -1025,7 +1025,7 @@ class EducationalQuizzes:
                 "explanation": "Correct terminations minimise resistance and the risk of overheating.",
             },
             {
-                "question": "21. A DC breaker or fuse is mainly used to:",
+                "question": "A DC breaker or fuse is mainly used to:",
                 "options": [
                     "A) Increase voltage",
                     "B) Protect cables and equipment",
@@ -1036,7 +1036,7 @@ class EducationalQuizzes:
                 "explanation": "DC breakers and fuses protect conductors and equipment from fault currents.",
             },
             {
-                "question": "22. Where should battery protection devices ideally be installed?",
+                "question": "Where should battery protection devices ideally be installed?",
                 "options": [
                     "A) At the DB board only",
                     "B) Close to the battery",
@@ -1047,7 +1047,7 @@ class EducationalQuizzes:
                 "explanation": "Battery protection devices should be installed close to the battery to protect the source conductors.",
             },
             {
-                "question": "23. Earthing is used to:",
+                "question": "Earthing is used to:",
                 "options": [
                     "A) Increase system voltage",
                     "B) Store energy",
@@ -1058,7 +1058,7 @@ class EducationalQuizzes:
                 "explanation": "Earthing provides a safe path for fault currents and helps control electrical faults.",
             },
             {
-                "question": "24. One of the most important safety steps before working on a system is to:",
+                "question": "One of the most important safety steps before working on a system is to:",
                 "options": [
                     "A) Increase load",
                     "B) Turn on all breakers",
@@ -1069,7 +1069,7 @@ class EducationalQuizzes:
                 "explanation": "Isolation and testing for dead are essential before working on electrical equipment.",
             },
             {
-                "question": "25. In a parallel battery system, unequal cable lengths can cause:",
+                "question": "In a parallel battery system, unequal cable lengths can cause:",
                 "options": [
                     "A) Equal current sharing",
                     "B) No effect",
