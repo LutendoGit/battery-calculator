@@ -1472,7 +1472,7 @@ class LithiumBatteryFundamentals:
                        ],
                        "images":[
                            {
-                              "src": "images/PARALLEL CONNECTION IN BATTERIES.png",
+                              "src": "images/Parallel connection in battery.png",
                               "alt":  "image of parallel connection",
 
                            },
@@ -1482,7 +1482,9 @@ class LithiumBatteryFundamentals:
                            ""
                        ],
                         },
-                        {
+
+                        { "heading":"",
+
                        "images":[
                            {
                              "src":"images/TIP WHEN CONNECTING BATTERIES ALWAYS FOLLOW PRODUCT RULES.png",

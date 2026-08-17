@@ -522,6 +522,7 @@
                 const quizResults = details.quiz_results || [];
                 const certificates = details.certificates || [];
                 const hasCerts = details.has_certificates || false;
+                const certificateEligible = details.certificate_eligible || false;
 
                 const formatList = (items) => (items.length ? items.join('<br>') : '-');
 
@@ -554,6 +555,9 @@
                         <tr><td><strong>Certificates Awarded:</strong></td><td>${hasCerts
                             ? '<span class="status-badge status-active">Yes</span>'
                             : 'No'}</td></tr>
+                        <tr><td><strong>Eligible for Certificate:</strong></td><td>${certificateEligible
+                            ? '<span class="status-badge status-active">Yes</span>'
+                            : '<span class="status-badge status-inactive">No</span>'}</td></tr>
                     </table>`;
 
                 if (quizResults.length > 0) {

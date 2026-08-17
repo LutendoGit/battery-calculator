@@ -88,6 +88,73 @@ class AdminUserManagementApiTests(unittest.TestCase):
         self.assertGreaterEqual(payload["quizzes_taken"], 1)
         self.assertGreaterEqual(payload["total_events"], 1)
 
+    def test_user_full_details_include_certificate_eligibility(self) -> None:
+        from routes.education_routes import _is_certificate_eligible
+
+        for lesson_key in [
+            "lesson:fundamentals",
+            "lesson:fundamentals-2",
+            "lesson:fundamentals-3",
+            "lesson:fundamentals-4",
+            "lesson:fundamentals-5",
+            "lesson:fundamentals-6",
+            "lesson:fundamentals-7",
+            "lesson:fundamentals-8",
+        ]:
+            education_store.mark_progress(self.user1.id, lesson_key)
+
+        for quiz_id in [
+            "capacity-dod",
+            "module-2-assessment",
+            "module-3-assessment",
+            "module-4-assessment",
+            "module-5-assessment",
+            "module-6-assessment",
+            "module-7-assessment",
+            "module-8-assessment",
+        ]:
+            education_store.record_quiz_attempt(self.user1.id, quiz_id, 8, 10)
+            education_store.mark_progress(self.user1.id, f"quiz:{quiz_id}")
+
+        response = self.client.get(self._url(f"/learn/admin/api/users/{self.user1.id}/full-details"))
+        self.assertEqual(response.status_code, 200)
+        payload = response.get_json()
+
+        self.assertIn("certificate_eligible", payload)
+        self.assertTrue(payload["certificate_eligible"])
+        self.assertIn("passed_quizzes", payload)
+        self.assertGreaterEqual(len(payload["passed_quizzes"]), 8)
+        self.assertTrue(_is_certificate_eligible(self.user1.id))
+
+    def test_certificate_requires_all_lessons_and_all_quizzes_passed(self) -> None:
+        from routes.education_routes import _is_certificate_eligible
+
+        for lesson_key in [
+            "lesson:fundamentals",
+            "lesson:fundamentals-2",
+            "lesson:fundamentals-3",
+            "lesson:fundamentals-4",
+            "lesson:fundamentals-5",
+            "lesson:fundamentals-6",
+            "lesson:fundamentals-7",
+            "lesson:fundamentals-8",
+        ]:
+            education_store.mark_progress(self.user1.id, lesson_key)
+
+        for quiz_id in [
+            "capacity-dod",
+            "module-2-assessment",
+            "module-3-assessment",
+            "module-4-assessment",
+            "module-5-assessment",
+            "module-6-assessment",
+            "module-7-assessment",
+        ]:
+            education_store.record_quiz_attempt(self.user1.id, quiz_id, 8, 10)
+            education_store.mark_progress(self.user1.id, f"quiz:{quiz_id}")
+
+        self.assertFalse(_is_certificate_eligible(self.user1.id))
+
     def test_user_login_history_endpoint_respects_limit(self) -> None:
         response = self.client.get(
             self._url(f"/learn/admin/api/users/{self.user1.id}/logins?limit=1")

@@ -18,6 +18,10 @@ from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib import colors
+try:
+    from playwright.sync_api import sync_playwright
+except Exception:  # pragma: no cover - optional in some environments
+    sync_playwright = None
 from routes.education_routes import education_bp
 from modules import education_store
 
@@ -219,10 +223,58 @@ def admin_events_stream():
     return resp
 
 
+def _playwright_browser_executable_path():
+    local_appdata = os.environ.get("LOCALAPPDATA") or os.path.expanduser(r"~\AppData\Local")
+    candidates = [
+        os.path.join(local_appdata, "ms-playwright", "chromium-1234", "chrome-win64", "chrome.exe"),
+        os.path.join(local_appdata, "ms-playwright", "chromium_headless_shell-1234", "chrome-headless-shell-win64", "chrome-headless-shell.exe"),
+    ]
+    for candidate in candidates:
+        if candidate and os.path.exists(candidate):
+            return candidate
+    return None
+
+
 def build_pdf_to_file(result_text, title, chemistry, dod, out_path):
-    """Builds the PDF using ReportLab and writes it to out_path (path string).
-    This function is executed in a separate process so it must be self-contained.
+    """Render the calculator result as a PDF using the real HTML/CSS when possible.
+
+    This keeps the generated PDF visually aligned with the page instead of a separate
+    ReportLab layout that can drift away from the live design.
     """
+    try:
+        if sync_playwright is not None:
+            with app.test_request_context('/'):
+                html = render_template(
+                    'result.html',
+                    title=title,
+                    result={'summary_text': result_text},
+                    for_pdf=True,
+                )
+            with sync_playwright() as p:
+                launch_kwargs = {"headless": True}
+                executable_path = _playwright_browser_executable_path()
+                if executable_path:
+                    launch_kwargs["executable_path"] = executable_path
+                browser = p.chromium.launch(**launch_kwargs)
+                page = browser.new_page(viewport={"width": 1400, "height": 2000}, device_scale_factor=1)
+                page.set_content(html, wait_until="networkidle")
+                pdf_bytes = page.pdf(
+                    format="A4",
+                    print_background=True,
+                    prefer_css_page_size=True,
+                    margin={"top": "10mm", "right": "10mm", "bottom": "10mm", "left": "10mm"},
+                )
+                browser.close()
+                with open(out_path, 'wb') as fh:
+                    fh.write(pdf_bytes)
+                return out_path
+    except Exception:
+        try:
+            if os.path.exists(out_path):
+                os.remove(out_path)
+        except Exception:
+            pass
+
     try:
         # Strip HTML tags and convert <br> to newlines
         plain_text = result_text.replace('<br>', '\n')

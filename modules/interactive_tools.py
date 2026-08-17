@@ -168,20 +168,49 @@ class EducationalQuizzes:
     def quiz_capacity_dod() -> List[Dict]:
         """Module 1 assessment: Introduction to Energy Storage & Modern Energy Systems."""
         from modules.lithium_education import LithiumBatteryFundamentals
-        
+
+        module_1_explanations = {
+            0: "Energy storage matters because loadshedding, poor grid reliability, and rising tariffs make backup and flexibility valuable for homes and businesses.",
+            1: "Battery storage provides backup during outages and helps customers keep essential loads running when the grid is unavailable.",
+            2: "Storage helps customers save energy for later use, especially when solar generation or grid supply is limited.",
+            3: "Power describes the rate of energy use at a moment in time, so it is the key input for sizing an inverter.",
+            4: "Energy is the total amount of electricity used or stored over time, which is why it is used to size a battery.",
+            5: "Power mainly determines inverter size because the inverter must supply the peak load demand at any given moment.",
+            6: "Energy mainly determines battery size because the battery must store enough usable electricity for the required runtime.",
+            7: "A 1 kW load running for 5 hours needs 5 kWh of energy, so the battery must be sized for that amount.",
+            8: "Sizing to 100% discharge leaves no margin for real-world losses, temperature effects, or battery aging.",
+            9: "The basic sizing formula is battery size equals load power multiplied by time, then adjusted for practical margins.",
+            10: "The first step in backup sizing is identifying the essential loads that must stay powered during an outage.",
+            11: "A 1 kW load for 4 hours requires 4 kWh of energy, which is the minimum starting point for sizing.",
+            12: "South African homes normally use AC at about 230 V and 50 Hz, which is the standard supply in the country.",
+            13: "Solar panels and batteries operate with DC, while the household system mostly uses AC for appliances.",
+            14: "Most household appliances and plugs use AC, so the inverter converts battery or solar DC into usable AC.",
+            15: "The inverter is essential because it converts DC from batteries or solar into AC for household loads and manages the power flow.",
+            16: "Many wiring faults occur on the DC side, so installers must pay careful attention to DC cabling and connections.",
+            17: "The PV array generates DC electricity, which is then stored or converted for use by the rest of the system.",
+            18: "The battery bank stores energy for later use, allowing the system to support loads when generation or grid supply is unavailable.",
+            19: "The inverter is the control and conversion hub that connects generation, storage, and loads.",
+            20: "Loads are the appliances and devices that consume power in the system.",
+            21: "A backup system with no solar still uses an inverter plus battery, charged from the grid when available.",
+            22: "A hybrid system commonly includes solar, battery, and grid supply, giving both savings and backup capability.",
+            23: "When solar output drops, the battery is usually the next source of power to support the load.",
+            24: "A well-designed system can use around 90–95% of the generated energy effectively after practical losses.",
+        }
+
         questions = []
-        for q in LithiumBatteryFundamentals.MODULE_1_ASSESSMENT["questions"]:
+        for index, q in enumerate(LithiumBatteryFundamentals.MODULE_1_ASSESSMENT["questions"]):
             # Convert answer letter to index (A=0, B=1, C=2, D=3)
             answer_map = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
             correct_index = answer_map.get(q["answer"], 0)
-            
+            explanation = q.get("explanation") or module_1_explanations.get(index, f"Correct answer: {q['answer']}")
+
             questions.append({
                 "question": q["question"],
                 "options": q["options"],
                 "correct": correct_index,
-                "explanation": f"Correct answer: {q['answer']}"
+                "explanation": explanation
             })
-        
+
         return questions
 
     @staticmethod

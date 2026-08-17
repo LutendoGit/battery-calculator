@@ -27,9 +27,13 @@ import traceback
 from flask import Blueprint, abort, flash, jsonify, redirect, render_template, request, send_file, session, url_for
 from flask import current_app
 from werkzeug.utils import secure_filename
-from reportlab.lib.pagesizes import letter
+from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
+try:
+    from playwright.sync_api import sync_playwright
+except Exception:  # pragma: no cover - dependency may be absent in some environments
+    sync_playwright = None
 
 from modules import education_store
 
@@ -247,6 +251,139 @@ def _demo_certificate_context() -> dict[str, object]:
     }
 
 
+def _draw_certificate_canvas(
+    c,
+    *,
+    username: str,
+    issued_date: str,
+    certificate_id: str,
+    grade: str,
+    overall_pct: float,
+    completed_lessons: list[dict[str, object]],
+    quiz_count: int,
+    total_quizzes: int,
+    subtitle: str = "REVOV WATTWORKS INSTALLER TRAINING",
+) -> None:
+    """Render the certificate PDF to mirror the HTML certificate styling."""
+    width, height = landscape(letter)
+    margin = 0.75 * inch
+    page_bg = (1, 1, 1)
+    primary = (127 / 255, 54 / 255, 54 / 255)
+    dark = (0.13, 0.13, 0.13)
+    muted = (0.38, 0.38, 0.38)
+    panel = (0.985, 0.985, 0.985)
+
+    c.setFillColorRGB(*page_bg)
+    c.rect(0, 0, width, height, stroke=0, fill=1)
+
+    c.setLineWidth(3)
+    c.setStrokeColorRGB(*primary)
+    c.roundRect(margin, margin, width - 2 * margin, height - 2 * margin, 20, stroke=1, fill=0)
+
+    c.setLineWidth(2)
+    c.setStrokeColorRGB(*primary)
+    c.roundRect(margin + 18, margin + 18, width - 2 * margin - 36, height - 2 * margin - 36, 16, stroke=1, fill=0)
+
+    c.setFillColorRGB(*primary)
+    c.setFont("Helvetica-Bold", 26)
+    c.drawCentredString(width / 2, height - 2.1 * inch, "Certificate of Completion")
+
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica", 11)
+    c.drawCentredString(width / 2, height - 2.55 * inch, subtitle)
+
+    c.setFillColorRGB(*muted)
+    c.setFont("Helvetica", 9)
+    c.drawRightString(width - margin - 35, height - 1.1 * inch, "Date")
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica-Bold", 10)
+    c.drawRightString(width - margin - 35, height - 1.45 * inch, issued_date)
+
+    c.setFillColorRGB(*muted)
+    c.setFont("Helvetica", 9)
+    c.drawRightString(width - margin - 35, height - 1.95 * inch, "Certificate ID")
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica-Bold", 10)
+    c.drawRightString(width - margin - 35, height - 2.3 * inch, certificate_id)
+
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica", 12)
+    c.drawCentredString(width / 2, height - 3.35 * inch, "This certifies that")
+
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica-Bold", 26)
+    c.drawCentredString(width / 2, height - 4.0 * inch, username)
+
+    c.setFillColorRGB(*muted)
+    c.setFont("Helvetica", 12)
+    c.drawCentredString(
+        width / 2,
+        height - 4.65 * inch,
+        "has completed the required learning modules and assessments as part of REVOV WattWorks Installer Training.",
+    )
+
+    left_x = margin + 0.7 * inch
+    right_x = width / 2 + 0.6 * inch
+    panel_y = height - 5.4 * inch
+    panel_w = (width - 2 * margin - 1.5 * inch) / 2
+    panel_h = 2.15 * inch
+
+    c.setFillColorRGB(*panel)
+    c.roundRect(left_x, panel_y - panel_h, panel_w, panel_h, 10, stroke=0, fill=1)
+    c.setStrokeColorRGB(*primary)
+    c.setLineWidth(1)
+    c.roundRect(left_x, panel_y - panel_h, panel_w, panel_h, 10, stroke=1, fill=0)
+
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica-Bold", 12)
+    c.drawString(left_x + 18, panel_y - 0.32 * inch, "Completed lessons")
+
+    c.setFillColorRGB(*muted)
+    c.setFont("Helvetica", 10)
+    y = panel_y - 0.7 * inch
+    for idx, item in enumerate(completed_lessons[:7]):
+        title = str((item or {}).get("title") or "").strip()
+        if not title:
+            continue
+        c.drawString(left_x + 18, y - idx * 0.22 * inch, f"• {title}")
+
+    c.setFillColorRGB(*panel)
+    c.roundRect(right_x, panel_y - panel_h, panel_w - 0.6 * inch, panel_h, 10, stroke=0, fill=1)
+    c.setStrokeColorRGB(*primary)
+    c.setLineWidth(1)
+    c.roundRect(right_x, panel_y - panel_h, panel_w - 0.6 * inch, panel_h, 10, stroke=1, fill=0)
+
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica-Bold", 12)
+    c.drawString(right_x + 18, panel_y - 0.32 * inch, "Certificate summary")
+
+    c.setFillColorRGB(*muted)
+    c.setFont("Helvetica", 10)
+    c.drawString(right_x + 18, panel_y - 0.75 * inch, "Quizzes completed")
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica-Bold", 12)
+    c.drawString(right_x + 18, panel_y - 1.1 * inch, f"{quiz_count} / {total_quizzes}")
+
+    c.setFillColorRGB(*muted)
+    c.setFont("Helvetica", 10)
+    c.drawString(right_x + 18, panel_y - 1.55 * inch, "Grade")
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica-Bold", 12)
+    c.drawString(right_x + 18, panel_y - 1.9 * inch, grade)
+
+    c.setFillColorRGB(*muted)
+    c.setFont("Helvetica", 10)
+    c.drawString(right_x + 18, panel_y - 2.35 * inch, "Average score")
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica-Bold", 12)
+    c.drawString(right_x + 18, panel_y - 2.7 * inch, f"{overall_pct:.0f}%")
+
+    c.setFillColorRGB(*dark)
+    c.setFont("Helvetica", 10)
+    c.drawString(margin + 25, margin + 28, f"Date: {issued_date}")
+    c.drawRightString(width - margin - 25, margin + 28, f"Certificate ID: {certificate_id}")
+
+
 _ALLOWED_AVATAR_EXTS = {"png", "jpg", "jpeg", "webp"}
 
 
@@ -283,11 +420,11 @@ class _NavItem:
 
 
 _LESSON_ITEMS = [
-    _NavItem("lesson:fundamentals", "Fundamentals (Module 1)", "education.fundamentals"),
-    _NavItem("lesson:fundamentals-2", "Fundamentals (Module 2)", "education.fundamentals_module2"),
-    _NavItem("lesson:fundamentals-3", "Fundamentals (Module 3)", "education.fundamentals_module3"),
-    _NavItem("lesson:fundamentals-4", "Fundamentals (Module 4)", "education.fundamentals_module4"),
-    _NavItem("lesson:fundamentals-5", "Fundamentals (Module 5)", "education.fundamentals_module5"),
+    _NavItem("lesson:fundamentals", " Introduction to Energy Storage & Modern Energy Systems (Module 1)", "education.fundamentals"),
+    _NavItem("lesson:fundamentals-2", "Electrical Fundamentals (Module 2)", "education.fundamentals_module2"),
+    _NavItem("lesson:fundamentals-3", "Battery Fundamentals (Module 3)", "education.fundamentals_module3"),
+    _NavItem("lesson:fundamentals-4", "The Battery Management System (BMS) (Module 4)", "education.fundamentals_module4"),
+    _NavItem("lesson:fundamentals-5", "Energy System Design & Sizing (Module 5)", "education.fundamentals_module5"),
     _NavItem("lesson:fundamentals-6", "Installation & Wiring (Module 6)", "education.fundamentals_module6"),
     _NavItem("lesson:fundamentals-7", "System Configuration (Module 7)", "education.fundamentals_module7"),
     _NavItem("lesson:fundamentals-8", "Monitoring & Troubleshooting (Module 8)", "education.fundamentals_module8"),
@@ -395,7 +532,14 @@ def _is_lesson_complete(completed_items: set[str], lesson_key: str) -> bool:
     if not required_steps:
         return lesson_key in completed_items
 
-    return all(_lesson_step_progress_key(lesson_key, step_number) in completed_items for step_number in range(1, required_steps + 1))
+    # Support both fully recorded step completion and the aggregated lesson key.
+    if lesson_key in completed_items:
+        return True
+
+    return all(
+        _lesson_step_progress_key(lesson_key, step_number) in completed_items
+        for step_number in range(1, required_steps + 1)
+    )
 
 
 def _completed_active_lessons(completed_items: set[str]) -> set[str]:
@@ -672,30 +816,39 @@ def api_login_required(fn=None, *, message: str = "login_required"):
 def _is_certificate_eligible(user_id: int) -> bool:
     completed_items = get_completed_items(user_id)
     completed_lessons = _completed_active_lessons(completed_items)
-    has_required_lessons = all(item.key in completed_lessons for item in _LESSON_ITEMS)
 
-    # Overall quiz score is defined as:
-    #   overall_pct = (avg of each attempted quiz pct) * 100
-    # Unattempted quizzes are excluded from the average.
-    overall_pct = _overall_quiz_percentage(user_id)
-    quiz_best = get_quiz_best(user_id)
-    attempted_count = len(quiz_best)
-
-    # New eligibility rule (per latest requirement):
-    # - User must have attempted at least two quizzes
-    # - Average across attempted quizzes must be >= 75%
-    # - Each attempted quiz should have its prerequisite lesson completed
-    if attempted_count < 2:
+    required_lesson_keys = {lesson_key for lesson_key in _QUIZ_PREREQ_LESSONS.values() if lesson_key}
+    if not required_lesson_keys.issubset(completed_lessons):
         return False
 
-    # Ensure prerequisites for attempted quizzes are satisfied
-    completed_lessons = _completed_active_lessons(completed_items)
-    for qid in quiz_best.keys():
-        prereq = _QUIZ_PREREQ_LESSONS.get(str(qid))
+    quiz_best = get_quiz_best(user_id)
+    if not quiz_best:
+        return False
+
+    for quiz in _QUIZZES:
+        qid = str(quiz["id"])
+        required = _quiz_pass_mark(qid)
+        if required is None:
+            return False
+
+        entry = quiz_best.get(qid)
+        if not entry:
+            return False
+
+        total = int(entry.get("total", 0) or 0)
+        if total <= 0:
+            return False
+
+        best_score = int(entry.get("best_score", 0) or 0)
+        pct = (float(best_score) / float(total)) * 100.0
+        if pct < float(required):
+            return False
+
+        prereq = _QUIZ_PREREQ_LESSONS.get(qid)
         if prereq and prereq not in completed_lessons:
             return False
 
-    return overall_pct >= 75.0
+    return True
 
 
 def _overall_quiz_percentage(user_id: int) -> float:
@@ -1129,7 +1282,7 @@ def certificate():
         abort(401)
 
     if not _is_certificate_eligible(user.id):
-        flash("Complete the required lessons and at least one quiz to unlock your certificate.", "warning")
+        flash("Complete every module lesson and pass each quiz at 75% or above to unlock your certificate.", "warning")
         return redirect(url_for("education.progress"))
 
     completed = get_completed_items(user.id)
@@ -1165,6 +1318,69 @@ def certificate():
     )
 
 
+def _build_certificate_pdf_response(template_name: str, context: dict[str, object], *, filename: str):
+    """Render the certificate template as a PDF using a browser engine for fidelity to the HTML styling."""
+    if sync_playwright is not None:
+        try:
+            with sync_playwright() as p:
+                local_appdata = os.environ.get("LOCALAPPDATA") or os.path.expanduser("~\AppData\Local")
+                candidate_executables = [
+                    os.path.join(local_appdata, "ms-playwright", "chromium-1234", "chrome-win64", "chrome.exe"),
+                    os.path.join(local_appdata, "ms-playwright", "chromium_headless_shell-1234", "chrome-headless-shell-win64", "chrome-headless-shell.exe"),
+                ]
+                executable_path = next((path for path in candidate_executables if path and os.path.exists(path)), None)
+                launch_kwargs = {"headless": True}
+                if executable_path:
+                    launch_kwargs["executable_path"] = executable_path
+                browser = p.chromium.launch(**launch_kwargs)
+                page = browser.new_page(viewport={"width": 1400, "height": 900}, device_scale_factor=1)
+                html = render_template(template_name, **context)
+                page.set_content(html, wait_until="networkidle")
+                pdf_bytes = page.pdf(
+                    format="A4",
+                    landscape=True,
+                    print_background=True,
+                    prefer_css_page_size=True,
+                    scale=0.9,
+                    margin={"top": "4mm", "right": "6mm", "bottom": "4mm", "left": "6mm"},
+                )
+                browser.close()
+                return send_file(BytesIO(pdf_bytes), mimetype="application/pdf", as_attachment=True, download_name=filename)
+        except Exception:
+            pass
+
+    # Fallback for environments where the browser renderer is unavailable.
+    if template_name == "education/certificate.html":
+        user = context.get("user")
+        issued_date = str(context.get("issued_date") or "")
+        certificate_id = str(context.get("certificate_id") or "")
+        grade = str(context.get("grade") or "C")
+        overall_pct = float(context.get("overall_pct") or 0.0)
+        completed_lessons = list(context.get("completed_lessons") or [])
+        quiz_count = int(context.get("quiz_count") or 0)
+        total_quizzes = int(context.get("total_quizzes") or 0)
+        username = str((user or {}).get("username") or "Certificate Holder")
+        buf = BytesIO()
+        c = canvas.Canvas(buf, pagesize=landscape(letter))
+        _draw_certificate_canvas(
+            c,
+            username=username,
+            issued_date=issued_date,
+            certificate_id=certificate_id,
+            grade=grade,
+            overall_pct=overall_pct,
+            completed_lessons=completed_lessons,
+            quiz_count=quiz_count,
+            total_quizzes=total_quizzes,
+        )
+        c.showPage()
+        c.save()
+        buf.seek(0)
+        return send_file(buf, mimetype="application/pdf", as_attachment=True, download_name=filename)
+
+    raise RuntimeError(f"PDF generation fallback unavailable for {template_name!r}")
+
+
 @education_bp.route("/certificate.pdf")
 @login_required(message="Please log in to download your certificate.")
 def certificate_pdf():
@@ -1173,7 +1389,7 @@ def certificate_pdf():
         abort(401)
 
     if not _is_certificate_eligible(user.id):
-        flash("Complete the required lessons and at least one quiz to unlock your certificate.", "warning")
+        flash("Complete every module lesson and pass each quiz at 75% or above to unlock your certificate.", "warning")
         return redirect(url_for("education.progress"))
 
     issued_date = datetime.now().strftime("%Y-%m-%d")
@@ -1188,57 +1404,26 @@ def certificate_pdf():
     else:
         grade = "C"
 
-    buf = BytesIO()
-    c = canvas.Canvas(buf, pagesize=letter)
-    width, height = letter
+    completed = [
+        {"key": item.key, "title": item.title}
+        for item in _LESSON_ITEMS
+        if item.key in get_completed_items(user.id)
+    ]
 
-    # Frame
-    margin = 0.75 * inch
-    c.setLineWidth(3)
-    c.setStrokeColorRGB(102 / 255, 126 / 255, 234 / 255)
-    c.rect(margin, margin, width - 2 * margin, height - 2 * margin)
-
-    # Title
-    c.setFillColorRGB(102 / 255, 126 / 255, 234 / 255)
-    c.setFont("Helvetica-Bold", 26)
-    c.drawCentredString(width / 2, height - 2.0 * inch, "Certificate of Completion")
-
-    c.setFillColorRGB(0.2, 0.2, 0.2)
-    c.setFont("Helvetica", 12)
-    c.drawCentredString(width / 2, height - 2.45 * inch, " Revov WattWorks Foundation Installer Training ")
-
-    # Body
-    c.setFont("Helvetica", 12)
-    c.drawCentredString(width / 2, height - 3.3 * inch, "This certifies that")
-
-    c.setFont("Helvetica-Bold", 22)
-    c.drawCentredString(width / 2, height - 3.85 * inch, user.username)
-
-    c.setFont("Helvetica", 12)
-    c.drawCentredString(
-        width / 2,
-        height - 4.35 * inch,
-        "has completed the required learning modules and assessments as part of REVOV WattWorks Installer Training.",
+    return _build_certificate_pdf_response(
+        "education/certificate.html",
+        {
+            "user": user,
+            "issued_date": issued_date,
+            "certificate_id": certificate_id,
+            "completed_lessons": completed,
+            "quiz_count": len(quiz_best),
+            "total_quizzes": len(_QUIZZES),
+            "grade": grade,
+            "overall_pct": overall_pct,
+        },
+        filename=f"certificate_{user.username}.pdf",
     )
-
-    c.setFont("Helvetica-Bold", 12)
-    c.drawCentredString(
-        width / 2,
-        height - 5.05 * inch,
-        f"Grade: {grade} · Score: {overall_pct:.0f}% · Quizzes: {len(quiz_best)} / {len(_QUIZZES)}",
-    )
-
-    # Footer metadata
-    c.setFont("Helvetica", 10)
-    c.drawString(margin + 10, margin + 30, f"Date: {issued_date}")
-    c.drawRightString(width - margin - 10, margin + 30, f"Certificate ID: {certificate_id}")
-
-    c.showPage()
-    c.save()
-
-    buf.seek(0)
-    filename = f"certificate_{user.username}.pdf"
-    return send_file(buf, mimetype="application/pdf", as_attachment=True, download_name=filename)
 
 
 @education_bp.get("/certificate/demo")
@@ -1256,87 +1441,24 @@ def certificate_demo_pdf():
     certificate_id = str(ctx.get("certificate_id") or "")
     completed_lessons = ctx.get("completed_lessons") or []
     quiz_count = int(ctx.get("quiz_count") or 0)
+    total_quizzes = int(ctx.get("total_quizzes") or 0)
     overall_pct = float(ctx.get("overall_pct") or 0.0)
+    grade = str(ctx.get("grade") or "C")
 
-    buf = BytesIO()
-    c = canvas.Canvas(buf, pagesize=letter)
-    width, height = letter
-
-    margin = 0.75 * inch
-    frame_color = (102 / 255, 126 / 255, 234 / 255)  # #667eea
-
-    # Background
-    c.setFillColorRGB(1, 1, 1)
-    c.rect(0, 0, width, height, stroke=0, fill=1)
-
-    # Frame
-    c.setLineWidth(3)
-    c.setStrokeColorRGB(*frame_color)
-    c.roundRect(margin, margin, width - 2 * margin, height - 2 * margin, 12, stroke=1, fill=0)
-
-    # Title
-    c.setFillColorRGB(*frame_color)
-    c.setFont("Helvetica-Bold", 26)
-    c.drawCentredString(width / 2, height - 2.0 * inch, "Certificate of Completion")
-
-    c.setFillColorRGB(0.25, 0.25, 0.25)
-    c.setFont("Helvetica", 12)
-    c.drawCentredString(width / 2, height - 2.45 * inch, "Lithium Battery Educational Platform")
-
-    # Body
-    c.setFont("Helvetica", 12)
-    c.drawCentredString(width / 2, height - 3.30 * inch, "This certifies that")
-
-    c.setFont("Helvetica-Bold", 22)
-    c.setFillColorRGB(0.07, 0.09, 0.15)
-    c.drawCentredString(width / 2, height - 3.85 * inch, username)
-
-    c.setFont("Helvetica", 12)
-    c.setFillColorRGB(0.25, 0.25, 0.25)
-    c.drawCentredString(
-        width / 2,
-        height - 4.35 * inch,
-        "has completed the required learning modules and assessments.",
+    return _build_certificate_pdf_response(
+        "education/certificate.html",
+        {
+            "user": {"username": username},
+            "issued_date": issued_date,
+            "certificate_id": certificate_id,
+            "completed_lessons": list(completed_lessons),
+            "quiz_count": quiz_count,
+            "total_quizzes": total_quizzes,
+            "grade": grade,
+            "overall_pct": overall_pct,
+        },
+        filename="certificate_demo.pdf",
     )
-
-    # Left section: lessons
-    c.setFillColorRGB(0.25, 0.25, 0.25)
-    c.setFont("Helvetica", 10)
-    y = height - 5.1 * inch
-    c.drawString(margin + 12, y, "Completed lessons:")
-    y -= 0.22 * inch
-    c.setFont("Helvetica", 9)
-    for item in list(completed_lessons)[:6]:
-        title = str((item or {}).get("title") or "").strip()
-        if not title:
-            continue
-        c.drawString(margin + 20, y, f"• {title}")
-        y -= 0.18 * inch
-
-    # Right section: stats
-    stats_x = width - margin - 220
-    stats_y = height - 5.1 * inch
-    c.setFont("Helvetica", 10)
-    c.drawString(stats_x, stats_y, "Quiz attempts recorded:")
-    c.setFont("Helvetica-Bold", 12)
-    c.drawString(stats_x, stats_y - 0.22 * inch, str(quiz_count))
-    c.setFont("Helvetica", 10)
-    c.drawString(stats_x, stats_y - 0.55 * inch, "Overall quiz score (avg):")
-    c.setFont("Helvetica-Bold", 12)
-    c.drawString(stats_x, stats_y - 0.77 * inch, f"{overall_pct:.0f}%")
-
-    # Footer metadata
-    c.setFillColorRGB(0.2, 0.2, 0.2)
-    c.setFont("Helvetica", 10)
-    c.drawString(margin + 12, margin + 26, f"Date: {issued_date}")
-    c.drawRightString(width - margin - 12, margin + 26, f"Certificate ID: {certificate_id}")
-
-    c.showPage()
-    c.save()
-
-    buf.seek(0)
-    filename = "certificate_demo.pdf"
-    return send_file(buf, mimetype="application/pdf", as_attachment=True, download_name=filename)
 
 
 @education_bp.get("/certificate/preview")
@@ -1873,6 +1995,7 @@ def admin_api_user_stats(user_id):
     """Get user statistics"""
     _require_admin_token()
     stats = education_store.get_user_stats(user_id)
+    stats["certificate_eligible"] = _is_certificate_eligible(int(user_id))
     return jsonify(stats)
 
 @education_bp.get("/admin/api/users/stats/<int:user_id>")
@@ -1972,6 +2095,7 @@ def admin_api_user_full_details(user_id):
         "passed_quizzes": passed_quizzes,
         "certificates": cert_list,
         "has_certificates": len(cert_list) > 0,
+        "certificate_eligible": _is_certificate_eligible(int(user_id)),
     })
 
 
