@@ -1128,6 +1128,7 @@ def progress():
         {
             "key": item.key,
             "title": item.title,
+            "endpoint": item.endpoint,
             "url": url_for(item.endpoint),
         }
         for item in _LESSON_ITEMS

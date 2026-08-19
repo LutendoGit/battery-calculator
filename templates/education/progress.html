@@ -80,6 +80,91 @@
         color: whitesmoke;
       }
 
+      .fundamentals-menu {
+        margin-top: 8px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.035);
+        border: 1px solid rgba(255,255,255,0.08);
+        overflow: hidden;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      }
+
+      .fundamentals-menu summary {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 11px 12px;
+        border-radius: 10px;
+        color: var(--color-white);
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+      }
+
+      .fundamentals-menu summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .fundamentals-menu summary::before {
+        content: '▣';
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      .fundamentals-menu summary::after {
+        content: '▾';
+        font-size: 0.8rem;
+        opacity: 0.9;
+      }
+
+      .fundamentals-menu[open] summary {
+        background: rgba(127, 54, 54, 0.82);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .fundamentals-menu[open] summary::after {
+        content: '▴';
+      }
+
+      .fundamentals-menu summary:hover {
+        background: #7f3636;
+        transform: translateX(1px);
+      }
+
+      .side-submenu {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 10px 8px 12px;
+        background: rgba(15, 23, 42, 0.12);
+      }
+
+      .side-submenu a {
+        font-size: 0.8rem;
+        line-height: 1.45;
+        padding: 8px 10px;
+        color: rgba(255,255,255,0.92);
+        background: rgba(255,255,255,0.02);
+        border-left: 2px solid transparent;
+        border-radius: 7px;
+      }
+
+      .side-submenu a.active {
+        background: rgba(163,230,53,0.16);
+        border-left-color: rgba(163,230,53,0.9);
+        color: #F7FDE8;
+        box-shadow: inset 0 0 0 1px rgba(163,230,53,0.18);
+      }
+
+      .side-submenu a:hover {
+        background: rgba(127, 54, 54, 0.48);
+        border-left-color: rgba(163,230,53,0.9);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+      }
+
       .toggle-dark {
         display: flex;
         align-items: center;
@@ -474,6 +559,18 @@
           <nav class="sidebar-nav mt-3">
             <a href="{{ url_for('education.learn_index', hub=1) }}">Training Hub</a>
             <a href="{{ continue_url }}">Continue Learning</a>
+
+            <details class="fundamentals-menu" {% if request.args.get('fundamentals') == '1' %}open{% endif %}>
+              <summary>Fundamentals</summary>
+              <div class="side-submenu">
+                {% for item in lesson_items %}
+                  <a href="{{ item.url }}" class="{% if request.path == url_for(item.endpoint) %}active{% endif %}">
+                    {{ item.title }}
+                  </a>
+                {% endfor %}
+              </div>
+            </details>
+
             <a href="{{ url_for('education.quiz_index') }}">Quizzes</a>
             <a href="{{ url_for('education.calculators') }}">Tools</a>
           </nav>
@@ -687,6 +784,24 @@
           const circumference = 220;
           const offset = circumference - (pct / 100) * circumference;
           ring.style.strokeDashoffset = String(offset);
+        }
+
+        const activeModule = document.querySelector('.side-submenu a.active');
+        const fundamentalsMenu = document.querySelector('.fundamentals-menu');
+        const shouldOpenFundamentals = new URLSearchParams(window.location.search).get('fundamentals') === '1';
+
+        if (fundamentalsMenu) {
+          if (shouldOpenFundamentals) {
+            fundamentalsMenu.setAttribute('open', 'open');
+          } else {
+            fundamentalsMenu.removeAttribute('open');
+          }
+        }
+
+        if (shouldOpenFundamentals && activeModule) {
+          requestAnimationFrame(() => {
+            activeModule.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          });
         }
       })();
     </script>

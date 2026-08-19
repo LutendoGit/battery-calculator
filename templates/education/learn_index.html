@@ -197,7 +197,7 @@
               {% endif %}
 
               <div class="cta-row">
-                <a class="btn btn-primary" href="{{ url_for('education.fundamentals') }}">
+                <a class="btn btn-primary" href="{{ url_for('education.progress', fundamentals='1') }}">
                   <i class="fas fa-book"></i> Fundamentals
                 </a>
                 {% if is_logged_in %}

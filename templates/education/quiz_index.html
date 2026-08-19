@@ -45,18 +45,26 @@
         }
         header {
             background: linear-gradient(135deg, rgba(95,98,98,0.85), rgba(102,104,104,0.9));
-            padding: 30px 28px 24px;
+            padding: 18px 20px 20px;
             border-radius: 0 0 22px 22px;
             margin-bottom: 20px;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 14px 30px rgba(0,0,0,0.18);
             color: white;
         }
+        .header-account {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            margin-top: -4px;
+        }
         .topbar {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 16px 18px;
-            margin-bottom: 20px;
+            padding: 12px 18px 16px;
+            margin-bottom: 14px;
             border-radius: 18px;
             background: transparent;
             border: 1px solid transparent;
@@ -257,7 +265,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .top-actions .left {
@@ -342,24 +350,36 @@
         .runner-header {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
             gap: 15px;
             flex-wrap: wrap;
-            margin-bottom: 18px;
+            margin-bottom: 10px;
         }
         .runner-title {
-            color: #fff;
+            color: whitesmoke;
             font-size: 1.35em;
             font-weight: 800;
+            font-family: Georgia, 'Times New Roman', Times, serif;
         }
         .runner-meta {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.95em;
+            color: rgba(255,255,255,0.95);
+            font-size: 0.9em;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            background: #666868;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 999px;
+            padding: 8px 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            margin-left: auto;
         }
         .question {
             font-size: 16px;
             font-weight: 700;
-            margin: 16px 0 18px;
+            margin: 0 0 18px;
             color: #1f1f1f;
             line-height: 1.5;
             padding: 18px 20px;
@@ -404,8 +424,8 @@
             border-left: 4px solid rgba(255,255,255,0.9);
             padding: 18px 20px;
             border-radius: 18px;
-            color: black;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            font-family: Georgia, 'Times New Roman', Times, serif;
             font-size: 16px;
             line-height: 1.7;
             display: none;
@@ -465,13 +485,20 @@
             color: white;
         }
         .secondary-btn:hover { background: var(--color-primary); }
-        .ghost-btn {
-            background: transparent;
-            border: 1px solid #cbd5e1;
-            color: #111827;
+        .header-account .ghost-btn {
+            background: #7f3636;
+            border: 1px solid #7f3636;
+            color: #ffffff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
-        .ghost-btn:hover {
-            background: var(--color-surface-soft);
+        .header-account .ghost-btn:hover {
+            background: #9a4545;
+            border-color: #9a4545;
+            color: #ffffff;
         }
 
         #nextQuizBtn {
@@ -580,6 +607,19 @@
 <body>
     <div class="container">
         <header>
+            {% if session.get('edu_user_id') %}
+            <div class="header-account">
+                <span class="avatar" aria-label="Profile">
+                    {% if session.get('edu_avatar') %}
+                        <img src="{{ url_for('static', filename='avatars/' ~ session.get('edu_avatar')) }}" alt="Profile picture">
+                    {% else %}
+                        {{ (session.get('edu_username', '?')[:1] | upper) }}
+                    {% endif %}
+                </span>
+                <a class="ghost-btn" href="{{ url_for('education.logout') }}">Logout</a>
+            </div>
+            {% endif %}
+
             <h1>📝 Assessment Quizzes</h1>
             <p>!.Each quiz unlocks after its matching fundamentals lesson is completed.</p>
 
@@ -593,20 +633,8 @@
             <div class="top-actions">
                 <div class="left">
                     <div class="progress-pill" id="unlockStatus">Unlocking…</div>
-                    <a  href="{{ url_for('education.progress') }}">Dashboard</a>
+                    <a href="{{ url_for('education.progress') }}">Dashboard</a>
                 </div>
-                {% if session.get('edu_user_id') %}
-                <div class="right">
-                    <span class="avatar" aria-label="Profile">
-                        {% if session.get('edu_avatar') %}
-                            <img src="{{ url_for('static', filename='avatars/' ~ session.get('edu_avatar')) }}" alt="Profile picture">
-                        {% else %}
-                            {{ (session.get('edu_username', '?')[:1] | upper) }}
-                        {% endif %}
-                    </span>
-                    <a class="ghost-btn" href="{{ url_for('education.logout') }}">Logout</a>
-                </div>
-                {% endif %}
             </div>
         </header>
 
@@ -712,7 +740,7 @@
     
     <script>
         const QUIZ_TITLES = {
-            'capacity-dod': 'Module 1 Assessment Quiz',
+            'capacity-dod': 'Module 1 Assessment Quiz-Introduction to Energy Storage & Modern Energy Systems',
             'module-2-assessment': 'Module 2 Assessment Quiz',
             'module-3-assessment': 'Module 3 Assessment Quiz',
             'module-4-assessment': 'Module 4 Assessment Quiz',
