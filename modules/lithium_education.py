@@ -1382,7 +1382,7 @@ class LithiumBatteryFundamentals:
                         ],
                         "images":[
                             {
-                                "src":"images/higher voltage does not mean.png",
+                                "src":"images/Higher Voltage Does not mean.png",
                                 "alt": "image of higher voltage does not mean more dangerous only"
                             },
                         ],
