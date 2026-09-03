@@ -4201,8 +4201,8 @@ MODULE_4_ASSESSMENT = {
             "answer": "B",
             "explanation": "Exceeding C-rate often causes the BMS to limit or stop output to protect the battery.",
         },
-    ],
-},
+    ]
+}
 
 MODULE_5_ENERGY_SYSTEM_DESIGN = {
     "module_title": "MODULE 5 — Energy System Design & Sizing",
