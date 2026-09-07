@@ -14,21 +14,52 @@
         --color-primary: #00B5AD;
         --color-indigo: #1E3A8A;
         --color-accent: #A3E635;
-        --color-bg-dark: #0F172A;
+        --color-bg-dark: #0E1117;
+        --color-bg-mid: #181C24;
+        --color-bg-panel: rgba(24, 28, 36, 0.9);
+        --color-bg-panel-soft: rgba(15, 17, 23, 0.78);
         --color-bg-light: #F5F6FA;
         --color-glass: rgba(255, 255, 255, 0.08);
         --color-white: #FFFFFF;
+        --color-border: rgba(255,255,255,0.10);
+        --shadow-soft: 0 12px 28px rgba(0,0,0,0.22);
+        --sidebar-bg:#666868;
+        --sidebar-hover: rgba(127, 54, 54, 0.76);
+        --panel-bg: #666868;
+        --primary: #7f3636;
+        --primary-strong: #7f3636;
+        --light-text: rgba(255,255,255,0.72);
+        --soft-text: rgba(255,255,255,0.82);
+        --page-bg-1: #7f3636;
+        --page-bg-2: #7f3636;
+        --page-bg-3:#7f3636;
+        --page-bg-4: #7f3636;
       }
 
       body {
         margin: 0;
-        background: radial-gradient(circle at top left, #7f3636, transparent 40%),
-                    radial-gradient(circle at bottom right, #7f3636, transparent 40%),
-                    linear-gradient(180deg, #7f3636 0%, #666868 100%);
+        background:
+          radial-gradient(circle at top left, var(--page-bg-1), transparent 32%),
+          radial-gradient(circle at bottom right, var(--page-bg-2), transparent 28%),
+          linear-gradient(180deg, var(--page-bg-3) 0%, var(--page-bg-4) 100%);
         color: var(--color-white);
         font-family: 'Inter', sans-serif;
         min-height: 100vh;
         display: flex;
+      }
+
+      body[data-theme="darkmode"] {
+        --sidebar-bg: linear-gradient(180deg, rgba(8,15,23,0.97), rgba(13,18,29,0.98));
+        --sidebar-hover: rgba(37, 99, 235, 0.4);
+        --panel-bg: linear-gradient(180deg, rgba(15,23,42,0.96), rgba(15,23,42,0.96));
+        --primary: #1d4ed8;
+        --primary-strong: #2563eb;
+        --light-text: rgba(148,163,184,0.8);
+        --soft-text: rgba(226,232,240,0.84);
+        --page-bg-1: rgba(14, 116, 144, 0.25);
+        --page-bg-2: rgba(37, 99, 235, 0.18);
+        --page-bg-3: #020817;
+        --page-bg-4: #0f172a;
       }
 
       .app-shell {
@@ -38,15 +69,161 @@
 
       .sidebar {
         width: 260px;
-        background: #666868;
+        min-width: 260px;
+        background: var(--sidebar-bg);
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
-        border-right: 1px solid rgba(255,255,255,0.1);
+        border-right: 1px solid var(--color-border);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         padding: 24px 16px;
         gap: 20px;
+        box-shadow: inset -1px 0 0 rgba(255,255,255,0.02);
+        transition: width 0.35s ease, min-width 0.35s ease, padding 0.35s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .sidebar.collapsed {
+        width: 90px;
+        min-width: 90px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .sidebar.collapsed .brand,
+      .sidebar.collapsed .sidebar-nav,
+      .sidebar.collapsed .sidebar-bottom,
+      .sidebar.collapsed .sidebar-quick-actions {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        max-height: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin: 0;
+      }
+
+      .sidebar.collapsed .sidebar-nav a,
+      .sidebar.collapsed .sidebar-nav details,
+      .sidebar.collapsed .sidebar-bottom a,
+      .sidebar.collapsed .sidebar-bottom label {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        max-height: 1000px;
+        overflow: visible;
+        font-size: 0;
+        padding: 10px 8px;
+        margin: 0;
+        justify-content: flex-start;
+        min-height: 42px;
+        width: 100%;
+      }
+
+      .sidebar.collapsed .sidebar-nav a::before,
+      .sidebar.collapsed .fundamentals-menu summary::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.8);
+        display: block;
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
+        margin-right: 0;
+      }
+
+      .sidebar.collapsed .sidebar-nav details[open] summary::before,
+      .sidebar.collapsed .sidebar-nav a:hover::before,
+      .sidebar.collapsed .sidebar-nav a.active::before {
+        background: rgba(163,230,53,0.95);
+      }
+
+      .sidebar.collapsed .fundamentals-menu,
+      .sidebar.collapsed .sidebar-collapse-toggle {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      .sidebar.collapsed:hover {
+        width: 260px;
+        min-width: 260px;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .sidebar.collapsed:hover .brand,
+      .sidebar.collapsed:hover .sidebar-nav,
+      .sidebar.collapsed:hover .sidebar-bottom,
+      .sidebar.collapsed:hover .sidebar-quick-actions,
+      .sidebar.collapsed:hover .sidebar-nav a,
+      .sidebar.collapsed:hover .sidebar-nav details,
+      .sidebar.collapsed:hover .sidebar-bottom a,
+      .sidebar.collapsed:hover .sidebar-bottom label {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        max-height: 1000px;
+        overflow: visible;
+        font-size: inherit;
+        padding-top: initial;
+        padding-bottom: initial;
+      }
+
+      .sidebar.collapsed .fundamentals-menu {
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .sidebar.collapsed:hover .fundamentals-menu {
+        opacity: 1;
+        visibility: visible;
+        max-height: 1000px;
+        overflow: visible;
+      }
+
+      .nav-icon,
+      .nav-text {
+        display: none;
+      }
+
+      .sidebar-collapse-toggle {
+        position: absolute;
+        top: 18px;
+        right: 12px;
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 50%;
+        background: rgba(255,255,255,0.04);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 1.1rem;
+        line-height: 1;
+        cursor: pointer;
+        z-index: 2;
+        transition: transform 0.25s ease, background 0.25s ease, opacity 0.25s ease;
+      }
+
+      .sidebar-collapse-toggle:hover {
+        background: var(--sidebar-hover);
+      }
+
+      .sidebar.collapsed .sidebar-collapse-toggle {
+        right: 26px;
+      }
+
+      .sidebar.collapsed .sidebar-collapse-toggle span {
+        transform: rotate(180deg);
       }
 
       .brand {
@@ -71,13 +248,39 @@
         align-items: center;
         gap: 10px;
         padding: 10px 12px;
-        border-radius: 8px;
-        transition: background 0.3s ease, color 0.3s ease;
+        border-radius: 10px;
+        transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease, border-color 0.2s ease;
       }
 
       .sidebar a:hover {
-        background: #7f3636;
+        background: var(--sidebar-hover);
         color: whitesmoke;
+        transform: translateX(1px);
+      }
+
+      .sidebar-quick-actions {
+        display: grid;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .sidebar-quick-action {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 0.82rem;
+        letter-spacing: 0.02em;
+        transition: background 0.25s ease, transform 0.25s ease;
+      }
+
+      .sidebar-quick-action:hover {
+        background: var(--sidebar-hover);
+        transform: translateY(-1px);
+      }
+
+      .sidebar-quick-action.primary {
+        background: linear-gradient(135deg, rgba(127, 54, 54, 0.9), rgba(255,255,255,0.08));
       }
 
       .fundamentals-menu {
@@ -195,11 +398,12 @@
         align-items: flex-start;
         gap: 14px;
         flex-wrap: wrap;
-        margin-bottom: 16px;
+        margin-bottom: 18px;
         padding: 18px 20px;
         border-radius: 20px;
-        background: rgba(127, 54, 54, 0.95);
-        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+        background: linear-gradient(135deg, rgba(17,20,24,0.98), rgba(127, 54, 54, 0.82));
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: var(--shadow-soft);
       }
 
       .topbar-brand {
@@ -279,20 +483,21 @@
 
       .panel,
       .kpi {
-        background: #666868;
+        background: var(--panel-bg);
         -webkit-backdrop-filter: blur(14px);
         backdrop-filter: blur(14px);
-        border: 1px solid rgba(255,255,255,0.15);
+        border: 1px solid var(--color-border);
         border-radius: 16px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        box-shadow: var(--shadow-soft);
         padding: 20px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
 
       .panel:hover,
       .kpi:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 16px 36px rgba(0,0,0,0.26);
+        border-color: rgba(255,255,255,0.12);
       }
 
       .kpi-label {
@@ -311,7 +516,7 @@
 
       .status-ok {
         color: var(--color-accent);
-        text-shadow: 0 0 6px rgba(163,230,53,0.8);
+        text-shadow: 0 0 6px #CBCBCB;
       }
 
       .status-warn {
@@ -369,7 +574,7 @@
       }
 
       .panel + .panel {
-        margin-top: 14px;
+        margin-top: 12px;
       }
 
       .panel-head,
@@ -384,7 +589,7 @@
       }
 
       .text-muted {
-        color: rgba(255,255,255,0.72) !important;
+        color: var(--text-soft) !important;
       }
 
       .table {
@@ -435,7 +640,7 @@
       }
 
       .btn-primary {
-        background: #7f3636;
+        background: var(--primary);
         color: white;
         border: none;
         border-radius: 8px;
@@ -445,24 +650,371 @@
       }
 
       .btn-primary:hover {
-        background: #7f3636;
-        box-shadow: 0 0 12px #666868;
+        background: var(--primary-strong);
+        box-shadow: 0 0 12px rgba(127,54,54,0.45);
         color: white;
       }
 
       .btn-outline-light {
-        border-color: #7f3636;
+        border-color: var(--primary);
         color: white;
       }
 
       .btn-outline-light:hover {
-        background: #7f3636;
+        background: var(--primary);
         color: white;
       }
 
       .quick-actions {
         margin-top: 8px;
-        margin-bottom: 16px;
+        margin-bottom: 14px;
+      }
+
+      .recommended-panel {
+        margin: 0 0 18px;
+      }
+
+      .recommended-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding: 18px 20px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(127, 54, 54, 0.95), rgba(14, 116, 144, 0.48));
+        border: 1px solid rgba(255,255,255,0.12);
+      }
+
+      .recommended-copy {
+        flex: 1;
+        min-width: 220px;
+      }
+
+      .recommended-copy .mini-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.72);
+        margin-bottom: 8px;
+      }
+
+      .recommended-copy .mini-value {
+        font-size: 1.2rem;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .recommended-copy .mini-copy {
+        margin: 8px 0 0;
+        color: rgba(255,255,255,0.82);
+      }
+
+      .milestone-panel {
+        margin: 0 0 18px;
+      }
+
+      .milestone-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .milestone-card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid #7f3636;
+        border-radius: 14px;
+        padding: 16px;
+      }
+
+      .milestone-card .mini-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.72);
+        margin-bottom: 8px;
+      }
+
+      .milestone-card .mini-value {
+        font-size: 1.2rem;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .milestone-card .mini-copy {
+        color: rgba(255,255,255,0.8);
+        margin: 8px 0 0;
+        line-height: 1.5;
+      }
+
+      .momentum-panel {
+        margin: 0 0 18px;
+      }
+
+      .readiness-panel {
+        margin: 0 0 18px;
+      }
+
+      .recent-activity-panel {
+        margin: 0 0 18px;
+      }
+
+      .streak-panel {
+        margin: 0 0 18px;
+      }
+
+      .streak-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 16px 18px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(127, 54, 54, 0.9),#666868);
+        border: 1px  #7f3636;
+      }
+
+      .streak-value {
+        font-family: 'Montserrat', sans-serif;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .streak-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .streak-label {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .streak-copy {
+        color: rgba(255,255,255,0.84);
+        margin: 0;
+      }
+
+      .activity-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .activity-item {
+        display: grid;
+        grid-template-columns: 12px 1fr;
+        gap: 12px;
+        align-items: flex-start;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 12px 14px;
+      }
+
+      .activity-dot {
+        width: 12px;
+        height: 12px;
+        margin-top: 5px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #7f3636, #A3E635);
+        box-shadow: 0 0 10px rgba(163,230,53,0.5);
+      }
+
+      .activity-label {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .activity-title {
+        margin: 4px 0 0;
+        font-weight: 700;
+      }
+
+      .activity-detail {
+        margin: 4px 0 0;
+        color: rgba(255,255,255,0.8);
+      }
+
+      .readiness-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .readiness-badge.ready {
+        background: rgba(72, 187, 120, 0.14);
+        border: 1px solid rgba(72, 187, 120, 0.8);
+        color: #d8f8e5;
+      }
+
+      .readiness-badge.nearly {
+        background: rgba(250, 204, 21, 0.12);
+        border: 1px solid rgba(250, 204, 21, 0.8);
+        color: #fff5d2;
+      }
+
+      .readiness-badge.ontrack {
+        background: rgba(59, 130, 246, 0.12);
+        border: 1px solid rgba(96, 165, 250, 0.8);
+        color: #dfeeff;
+      }
+
+      .readiness-badge.start {
+        background: rgba(148, 163, 184, 0.12);
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        color: #edf2ff;
+      }
+
+      .readiness-meter {
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.08);
+        overflow: hidden;
+        margin-top: 14px;
+      }
+
+      .readiness-fill {
+        height: 100%;
+        border-radius: inherit;
+        transition: width 0.6s ease;
+      }
+
+      .readiness-fill.ready {
+        background: linear-gradient(90deg, #2dd4bf, #4ade80);
+      }
+
+      .readiness-fill.nearly {
+        background: linear-gradient(90deg, #fbbf24, #f59e0b);
+      }
+
+      .readiness-fill.ontrack {
+        background: linear-gradient(90deg, #7f3636, #7f3636);
+      }
+
+      .readiness-fill.start {
+        background: linear-gradient(90deg, #94a3b8, #64748b);
+      }
+
+      .readiness-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+        color: rgba(255,255,255,0.82);
+      }
+
+      .momentum-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .momentum-item {
+        background: rgba(255,255,255,0.035);
+        border: 1px solid #7f3636;
+        border-radius: 14px;
+        padding: 16px;
+      }
+
+      .momentum-item .momentum-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.72);
+        margin-bottom: 8px;
+      }
+
+      .momentum-item .momentum-value {
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .momentum-item .momentum-copy {
+        margin: 8px 0 0;
+        color: rgba(255,255,255,0.8);
+        line-height: 1.5;
+      }
+
+      .focus-panel {
+        margin: 18px 0 20px;
+        background: linear-gradient(135deg, rgba(127, 54, 54, 0.96), #666868);
+        border: 1px solid #7f3636;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+        padding: 20px 22px;
+      }
+
+      .focus-panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+
+      .focus-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.08);
+        color: #f8fafc;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .focus-label {
+        display: block;
+        color: rgba(255,255,255,0.8);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .focus-title {
+        font-size: clamp(1.2rem, 2vw, 1.8rem);
+        font-weight: 800;
+        margin: 0;
+        color: #fff;
+      }
+
+      .focus-description {
+        margin: 10px 0 0;
+        color: rgba(255,255,255,0.82);
+        max-width: 760px;
+      }
+
+      .focus-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
       }
 
       .alert {
@@ -554,10 +1106,13 @@
   <body>
     <div class="app-shell">
       <aside class="sidebar" aria-label="Dashboard navigation">
+        <button class="sidebar-collapse-toggle" type="button" aria-label="Collapse sidebar" title="Collapse sidebar">
+          <span>""</span>
+        </button>
         <div>
           <div class="brand">REVOV WattWorks<br> Dashboard</div>
           <nav class="sidebar-nav mt-3">
-            <a href="{{ url_for('education.learn_index', hub=1) }}">Training Hub</a>
+            <a href="{{ url_for('education.learn_index', hub=1) }}">HOME</a>
             <a href="{{ continue_url }}">Continue Learning</a>
 
             <details class="fundamentals-menu" {% if request.args.get('fundamentals') == '1' %}open{% endif %}>
@@ -573,13 +1128,19 @@
 
             <a href="{{ url_for('education.quiz_index') }}">Quizzes</a>
             <a href="{{ url_for('education.calculators') }}">Tools</a>
+
+            <div class="sidebar-quick-actions" aria-label="Sidebar quick actions">
+              <!-- <a class="sidebar-quick-action primary" href="{{ continue_url }}">Continue</a> -->
+              <!-- <a class="sidebar-quick-action" href="{{ url_for('education.quiz_index') }}">Take quiz</a> -->
+              <!-- <a class="sidebar-quick-action" href="{{ url_for('education.calculators') }}">Open tools</a> -->
+            </div>
           </nav>
         </div>
 
         <div class="sidebar-bottom">
-          <label class="toggle-dark">
-            <input type="checkbox" checked disabled>
-            Tech theme enabled
+          <label class="toggle-dark" for="themeToggle">
+            <input id="themeToggle" type="checkbox">
+            <span>Dark mode</span>
           </label>
           <a href="{{ url_for('education.logout') }}">Logout</a>
         </div>
@@ -648,6 +1209,132 @@
               {% endif %}
               <div class="text-muted mt-2">Requirement: all quizzes and at least 75 percent average.</div>
             </article>
+          </section>
+
+          <section class="focus-panel" aria-label="Current focus">
+            <div class="focus-panel-header">
+              <div>
+                <span class="focus-label">Current focus</span>
+                <h2 class="focus-title">{{ next_focus_item.title if next_focus_item else 'Learning roadmap' }}</h2>
+              </div>
+              <span class="focus-tag">Next up</span>
+            </div>
+            <p class="focus-description">Keep momentum going with the next module in your training path. Use this section as your quick entry point to resume learning or jump into an unlocked quiz.</p>
+            <div class="focus-actions">
+              <a class="btn btn-primary" href="{{ continue_url }}">Continue learning</a>
+              <a class="btn btn-outline-light" href="{{ url_for('education.quiz_index') }}">Take a quiz</a>
+              <!--<a class="btn btn-outline-light" href="{{ url_for('education.calculators') }}">Open tools</a>-->
+            </div>
+          </section>
+
+          <section class="panel recommended-panel" aria-label="Recommended next lesson">
+            <div class="panel-head">
+              <h2 class="section-title mb-0">Recommended next lesson</h2>
+              <a class="text-muted" href="{{ continue_url }}">Resume</a>
+            </div>
+            <div class="recommended-card">
+              <div class="recommended-copy">
+                <div class="mini-label">Suggested</div>
+                <p class="mini-value">{{ next_focus_item.title if next_focus_item else 'Learning roadmap' }}</p>
+                <p class="mini-copy">Pick up from your current learning path and keep moving toward certification.</p>
+              </div>
+              <a class="btn btn-primary" href="{{ continue_url }}">Continue lesson</a>
+            </div>
+          </section>
+
+          <section class="panel milestone-panel" aria-label="Milestone tracker">
+            <div class="panel-head">
+              <h2 class="section-title mb-0">Milestone tracker</h2>
+              <a class="text-muted" href="{{ continue_url }}">View next step</a>
+            </div>
+            <div class="milestone-grid">
+              <div class="milestone-card">
+                <div class="mini-label">Next goal</div>
+                <p class="mini-value">{{ next_goal.title }}</p>
+                <p class="mini-copy">{{ next_goal.subtitle }}</p>
+              </div>
+              <div class="milestone-card">
+                <div class="mini-label">Learning pace</div>
+                <p class="mini-value">{{ lessons_completed_count }} / {{ lessons_total }}</p>
+                <p class="mini-copy">Lessons finished so far in the fundamentals path.</p>
+              </div>
+              <div class="milestone-card">
+                <div class="mini-label">Certificate</div>
+                <p class="mini-value">{% if eligible %}Ready{% else %}In progress{% endif %}</p>
+                <p class="mini-copy">{% if eligible %}Your module progress meets the certificate threshold.{% else %}Complete more quizzes and lessons to qualify.{% endif %}</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel readiness-panel" aria-label="Certification readiness">
+            <div class="panel-head">
+              <h2 class="section-title mb-0">Certification readiness</h2>
+              <span class="readiness-badge {{ readiness_state }}">{{ readiness_label }}</span>
+            </div>
+            <div class="readiness-meter" aria-label="Certification readiness progress">
+              <div class="readiness-fill {{ readiness_state }}" style="width: {{ readiness_score }}%;"></div>
+            </div>
+            <div class="readiness-meta">
+              <strong>{{ readiness_score }}% ready</strong>
+              <span>{% if eligible %}You meet the certificate threshold.{% else %}Keep going to unlock full certification eligibility.{% endif %}</span>
+            </div>
+          </section>
+
+          <section class="panel momentum-panel" aria-label="Momentum summary">
+            <div class="panel-head">
+              <h2 class="section-title mb-0">Momentum</h2>
+              <div class="text-muted">Your recent wins</div>
+            </div>
+            <div class="momentum-list">
+              <div class="momentum-item">
+                <div class="momentum-label">Latest wins</div>
+                <p class="momentum-value">{{ momentum.completed_lessons[0] if momentum.completed_lessons else 'Start with Module 1' }}</p>
+                <p class="momentum-copy">{% if momentum.completed_lessons %}You have already completed {{ momentum.completed_lessons|length }} lesson(s) in the track.{% else %}No lessons completed yet — begin with the first fundamentals module.{% endif %}</p>
+              </div>
+              <div class="momentum-item">
+                <div class="momentum-label">Best quiz</div>
+                <p class="momentum-value">{{ momentum.best_quiz_score }}% {% if momentum.best_quiz_name != 'No quiz attempts yet' %}on {{ momentum.best_quiz_name }}{% endif %}</p>
+                <p class="momentum-copy">{% if momentum.best_quiz_name == 'No quiz attempts yet' %}Take the first assessment to start tracking your score.{% else %}Strong performance keeps you on pace for certification.{% endif %}</p>
+              </div>
+              <div class="momentum-item">
+                <div class="momentum-label">Next quiz</div>
+                <p class="momentum-value">{{ momentum.next_quiz_name }}</p>
+                <p class="momentum-copy">Use this as your immediate next milestone to keep your momentum moving.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel streak-panel" aria-label="Learning streak">
+            <div class="panel-head">
+              <h2 class="section-title mb-0">Learning streak</h2>
+              <div class="text-muted">Keep the momentum</div>
+            </div>
+            <div class="streak-card">
+              <div class="streak-meta">
+                <div class="streak-label">{{ streak_label }}</div>
+                <div class="streak-value">{{ current_streak }} days</div>
+              </div>
+              <p class="streak-copy">{% if current_streak > 0 %}You are building momentum. Keep the rhythm going with your next lesson.{% else %}Start your first lesson to begin your streak and unlock momentum.{% endif %}</p>
+            </div>
+          </section>
+
+          <section class="panel recent-activity-panel" aria-label="Recent activity">
+            <div class="panel-head">
+              <h2 class="section-title mb-0">Recent activity</h2>
+              <div class="text-muted">Latest updates</div>
+            </div>
+            <div class="activity-list">
+              {% for activity in recent_activity %}
+                <div class="activity-item">
+                  <span class="activity-dot" aria-hidden="true"></span>
+                  <div>
+                    <div class="activity-label">{{ activity.label }}</div>
+                    <p class="activity-title">{{ activity.title }}</p>
+                    <p class="activity-detail">{{ activity.detail }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
           </section>
 
           <div class="quick-actions">
@@ -801,6 +1488,53 @@
         if (shouldOpenFundamentals && activeModule) {
           requestAnimationFrame(() => {
             activeModule.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          });
+        }
+
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarToggle = document.querySelector('.sidebar-collapse-toggle');
+        const savedSidebarState = localStorage.getItem('edu_sidebar_collapsed') === '1';
+
+        function applySidebarState(collapsed) {
+          if (!sidebar) return;
+          sidebar.classList.toggle('collapsed', collapsed);
+          if (sidebarToggle) {
+            sidebarToggle.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+            sidebarToggle.title = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
+            sidebarToggle.innerHTML = collapsed ? '<span>›</span>' : '<span>‹</span>';
+          }
+        }
+
+        if (sidebar) {
+          applySidebarState(savedSidebarState);
+          if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', function () {
+              const nextCollapsed = !sidebar.classList.contains('collapsed');
+              applySidebarState(nextCollapsed);
+              localStorage.setItem('edu_sidebar_collapsed', nextCollapsed ? '1' : '0');
+            });
+          }
+        }
+
+        const savedTheme = localStorage.getItem('edu_theme') || 'defaultMode';
+        const body = document.body;
+        const toggle = document.getElementById('themeToggle');
+
+        function applyTheme(theme) {
+          const nextTheme = theme === 'darkmode' ? 'darkmode' : 'defaultMode';
+          body.setAttribute('data-theme', nextTheme);
+          if (toggle) {
+            toggle.checked = nextTheme === 'darkmode';
+          }
+        }
+
+        applyTheme(savedTheme);
+
+        if (toggle) {
+          toggle.addEventListener('change', function () {
+            const nextTheme = this.checked ? 'darkmode' : 'defaultMode';
+            applyTheme(nextTheme);
+            localStorage.setItem('edu_theme', nextTheme);
           });
         }
       })();

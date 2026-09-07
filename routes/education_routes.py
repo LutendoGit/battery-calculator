@@ -426,8 +426,8 @@ _LESSON_ITEMS = [
     _NavItem("lesson:fundamentals-4", "The Battery Management System (BMS) (Module 4)", "education.fundamentals_module4"),
     _NavItem("lesson:fundamentals-5", "Energy System Design & Sizing (Module 5)", "education.fundamentals_module5"),
     _NavItem("lesson:fundamentals-6", "Installation & Wiring (Module 6)", "education.fundamentals_module6"),
-    _NavItem("lesson:fundamentals-7", "System Configuration (Module 7)", "education.fundamentals_module7"),
-    _NavItem("lesson:fundamentals-8", "Monitoring & Troubleshooting (Module 8)", "education.fundamentals_module8"),
+    _NavItem("lesson:fundamentals-7", "System Configuration, Communication & Firmware (Module 7)", "education.fundamentals_module7"),
+    _NavItem("lesson:fundamentals-8", "Monitoring, Optimisation, Troubleshooting & Fault Finding (Module 8)", "education.fundamentals_module8"),
     _NavItem("lesson:fundamentals-9", "REVOV Ecosystem (Module 9)", "education.fundamentals_module9"),
     _NavItem("lesson:fundamentals-10", "Installer Guides (Module 10)", "education.fundamentals_module10"),
     # _NavItem("lesson:chemistry", "Battery Chemistry", "education.chemistry"),
@@ -1137,6 +1137,7 @@ def progress():
     lessons_completed_count = sum(1 for item in _LESSON_ITEMS if item.key in completed_lessons)
     quizzes_completed_count = len(unlock_state.get("completed") or [])
 
+    next_focus_item = None
     # Choose continue URL: the next uncompleted lesson in the ordered lesson list.
     # If no lessons have been completed, this will naturally point to Module 1.
     try:
@@ -1146,6 +1147,7 @@ def progress():
             if item.key in completed_lessons:
                 continue
 
+            next_focus_item = item
             expected_steps = _TRACKED_LESSON_STEP_COUNTS.get(item.key)
             last_step = 0
             if expected_steps:
@@ -1162,8 +1164,100 @@ def progress():
         # Fallbacks
         if not continue_url:
             continue_url = url_for("education.progress")
+            next_focus_item = _LESSON_ITEMS[0] if _LESSON_ITEMS else None
     except Exception:
         continue_url = url_for("education.fundamentals")
+        next_focus_item = _LESSON_ITEMS[0] if _LESSON_ITEMS else None
+
+    remaining_lessons = max(len(_LESSON_ITEMS) - lessons_completed_count, 0)
+    remaining_quizzes = max(len(_QUIZZES) - quizzes_completed_count, 0)
+    readiness_score = 0
+    if _LESSON_ITEMS:
+        lesson_pct = (lessons_completed_count / len(_LESSON_ITEMS)) * 100
+        readiness_score = int(round((lesson_pct * 0.7) + (overall_pct * 0.3)))
+    readiness_score = max(0, min(100, readiness_score))
+    if eligible:
+        readiness_label = "Ready for review"
+        readiness_state = "ready"
+    elif readiness_score >= 75:
+        readiness_label = "Nearly ready"
+        readiness_state = "nearly"
+    elif readiness_score >= 50:
+        readiness_label = "On track"
+        readiness_state = "ontrack"
+    else:
+        readiness_label = "Start here"
+        readiness_state = "start"
+
+    next_goal = {
+        "title": "Finish your next lesson",
+        "subtitle": "Stay in momentum and keep unlocking the next level of training.",
+        "url": continue_url,
+    }
+    if next_focus_item is not None:
+        next_goal["title"] = f"Continue: {next_focus_item.title}"
+        next_goal["subtitle"] = f"{remaining_lessons} lesson(s) left in your active learning path."
+    elif remaining_quizzes:
+        next_goal["title"] = "Complete your next quiz"
+        next_goal["subtitle"] = f"{remaining_quizzes} quiz(es) left before your certificate review."
+    elif eligible:
+        next_goal["title"] = "Certificate ready"
+        next_goal["subtitle"] = "Your progress is complete enough to apply for a certificate review."
+
+    completed_lesson_titles = [item.title for item in _LESSON_ITEMS if item.key in completed_lessons]
+    best_quiz = None
+    best_score = 0
+    for q in _QUIZZES:
+        qid = q["id"]
+        score = 0
+        if qid in quiz_best:
+            score = int((quiz_best[qid] or {}).get("best_score", 0) or 0)
+        if score > best_score:
+            best_score = score
+            best_quiz = q
+
+    unlocked_quizzes = set(unlock_state.get("unlocked") or [])
+    next_quiz = None
+    for q in _QUIZZES:
+        qid = q["id"]
+        if qid not in (unlock_state.get("completed") or []) and qid in unlocked_quizzes:
+            next_quiz = q
+            break
+    if next_quiz is None:
+        for q in _QUIZZES:
+            if q["id"] not in (unlock_state.get("completed") or []):
+                next_quiz = q
+                break
+
+    momentum = {
+        "completed_lessons": completed_lesson_titles[:3],
+        "best_quiz_name": best_quiz["title"] if best_quiz else "No quiz attempts yet",
+        "best_quiz_score": best_score,
+        "next_quiz_name": next_quiz["title"] if next_quiz else "All quizzes complete",
+    }
+
+    recent_activity = []
+    for lesson_title in reversed(completed_lesson_titles[:3]):
+        recent_activity.append({
+            "label": "Lesson completed",
+            "title": lesson_title,
+            "detail": "Progress updated on your fundamentals track.",
+        })
+    if best_quiz:
+        recent_activity.append({
+            "label": "Best quiz score",
+            "title": f"{momentum['best_quiz_name']} • {momentum['best_quiz_score']}%",
+            "detail": "This is your strongest assessment so far.",
+        })
+    if not recent_activity:
+        recent_activity = [{
+            "label": "Start here",
+            "title": "Module 1: Introduction to Energy Storage & Modern Energy Systems",
+            "detail": "Begin your first fundamentals lesson to kick off your journey.",
+        }]
+
+    current_streak = min(7, max(0, lessons_completed_count))
+    streak_label = "Learning streak" if current_streak > 0 else "Get started"
 
     return render_template(
         "education/progress.html",
@@ -1180,6 +1274,15 @@ def progress():
         quizzes_completed_count=quizzes_completed_count,
         quizzes_total=len(_QUIZZES),
         continue_url=continue_url,
+        next_focus_item=next_focus_item,
+        next_goal=next_goal,
+        momentum=momentum,
+        recent_activity=recent_activity,
+        current_streak=current_streak,
+        streak_label=streak_label,
+        readiness_score=readiness_score,
+        readiness_label=readiness_label,
+        readiness_state=readiness_state,
     )
 
 
@@ -2451,7 +2554,7 @@ def fundamentals_module6():
             },
             {
                 "url": url_for("education.fundamentals_module7"),
-                "label": "Start Module 7 (System Configuration)",
+                "label": "Start Module 7 (System Configuration, Communication & Firmware)",
             },
         ],
     }
@@ -2482,7 +2585,7 @@ def fundamentals_module7():
             },
             {
                 "url": url_for("education.fundamentals_module8"),
-                "label": "Start Module 8 (Monitoring & Troubleshooting)",
+                "label": "Start Module 8 (Monitoring, Optimisation, Troubleshooting & Fault Finding)",
             },
         ],
     }
@@ -2502,7 +2605,7 @@ def fundamentals_module8():
 
     continue_card = {
         "step_title": "Continue Learning",
-        "title": "📚 Continue to Module 8 Assessment Quiz (Monitoring, Troubleshooting & Maintenance)",
+        "title": "📚 Continue to Module 8 Assessment Quiz (Monitoring, Optimisation, Troubleshooting & Fault Finding)",
         "paragraphs": [
             "You've reached the end of Module 8 (Monitoring, Optimisation, Troubleshooting & Fault Finding).",
         ],
