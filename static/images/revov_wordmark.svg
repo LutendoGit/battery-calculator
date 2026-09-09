@@ -1,0 +1,13 @@
+<svg width="760" height="220" viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="REVOV WattWorks logo">
+  <defs>
+    <style>
+      .revov { font: 900 128px 'Inter', Arial, sans-serif; letter-spacing: -8px; fill: #3a3a3a; }
+      .wattworks { font: 600 34px 'Inter', Arial, sans-serif; letter-spacing: 9px; fill: #4b4b4b; }
+    </style>
+  </defs>
+  <g>
+    <path d="M112 16 L146 94 L230 102 L170 155 L191 234 L112 190 L33 234 L54 155 L-6 102 L78 94 Z" fill="#9b2b2f"/>
+    <text x="266" y="124" class="revov">REVOV</text>
+    <text x="285" y="175" class="wattworks">WATTWORKS</text>
+  </g>
+</svg>

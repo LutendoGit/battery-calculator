@@ -79,6 +79,14 @@
       .card:hover { transform: translateY(-6px); box-shadow: 0 20px 44px rgba(0,0,0,0.22); }
 
       .program-card { display:block; text-decoration:none; color:inherit; height:100%; }
+      .program-card.is-featured {
+        grid-column: 1 / -1;
+        min-height: 170px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .program-card.is-hidden { display: none; }
 
       .program-card-title { display:flex; align-items:center; gap:12px; font-family:'Montserrat',sans-serif; font-weight:700; color:var(--bg-dark); font-size:1.02rem; margin-bottom:8px; }
 
@@ -128,7 +136,19 @@
       .site-footer-copy { color: rgba(255,255,255,0.78); }
 
       @media (min-width:768px) { .hero h1{ font-size:40px } .programs-grid { grid-template-columns: repeat(2,1fr); gap:28px } .features-grid { grid-template-columns: repeat(2,1fr); gap:24px } }
-      @media (min-width:1024px) { .hero{ display:flex; align-items:center; justify-content:space-between; padding:48px; gap:36px } .hero-copy{ flex:1 1 58% } .hero-panel{ flex:1 1 36% } .hero h1{ font-size:48px } .programs-grid{ grid-template-columns: repeat(4,1fr) } .features-grid{ grid-template-columns: repeat(4,1fr) } .story-grid{ grid-template-columns: 1.15fr 0.85fr } }
+      @media (min-width:1024px) {
+        .hero{ display:flex; align-items:center; justify-content:space-between; padding:48px; gap:36px }
+        .hero-copy{ flex:1 1 58% }
+        .hero-panel{ flex:1 1 36% }
+        .hero h1{ font-size:48px }
+        .programs-grid{ grid-template-columns: 1fr; gap:24px }
+        .program-card.is-featured {
+          grid-column: 1 / -1;
+          min-height: 190px;
+        }
+        .features-grid{ grid-template-columns: repeat(4,1fr) }
+        .story-grid{ grid-template-columns: 1.15fr 0.85fr }
+      }
       @media (min-width:1440px) { .container{ max-width:1400px } .hero h1{ font-size:56px } }
     </style>
   </head>
@@ -197,7 +217,7 @@
               {% endif %}
 
               <div class="cta-row">
-                <a class="btn btn-primary" href="{{ url_for('education.progress', fundamentals='1') }}">
+                <a class="btn btn-primary" href="{{ url_for('education.disclaimer') }}">
                   <i class="fas fa-book"></i> Fundamentals
                 </a>
                 {% if is_logged_in %}
@@ -236,19 +256,20 @@
           <h2 class="section-heading">Programs</h2>
           <p class="section-copy">A modular training ecosystem built to support foundational onboarding, advanced learning, and product-specific technical updates.</p>
           <div class="programs-grid">
-            <a class="card program-card" href="{{ url_for('education.fundamentals') }}">
+            <a class="card program-card is-featured" href="{{ url_for('education.disclaimer') }}">
               <div class="program-card-title"><i class="fas fa-graduation-cap"></i> WattWorks Foundation Installer Training</div>
-              <p>The core entry point for installer readiness, focused on energy-system fundamentals and safe deployment practice.</p>
+              <p><strong>The core entry point for installer readiness, focused on energy-system fundamentals and safe deployment practice.</strong></p>
             </a>
-            <div class="card program-card">
+
+            <div class="card program-card is-hidden">
               <div class="program-card-title"><i class="fas fa-layer-group"></i> WattWorks Advance Training</div>
               <p>Extended learning tracks for deeper technical application, more complex installations, and advanced troubleshooting.</p>
             </div>
-            <div class="card program-card">
+            <div class="card program-card is-hidden">
               <div class="program-card-title"><i class="fas fa-cubes"></i> WattWorks Product Series</div>
               <p>Focused product education for REVOV battery ranges, integration rules, and product-specific field guidance.</p>
             </div>
-            <div class="card program-card">
+            <div class="card program-card is-hidden">
               <div class="program-card-title"><i class="fas fa-satellite-dish"></i> WattWorks Technical Updates</div>
               <p>Ongoing update streams that keep installers aligned with current platform changes, methods, and technical notes.</p>
             </div>
@@ -310,15 +331,9 @@
 
         <section class="section">
           <div class="info-box">
-            <div class="subheading">This is a focused, installer driven training program designed around:</div>
-            <ul>
-              <li>Real system design</li>
-              <li>Safe and compliant installation</li>
-              <li>Revov Lithium-Ion battery integration</li>
-              <li>Commissioning and troubleshooting</li>
-              <li>Product-specific deep dives</li>
-              <li>Ongoing technical updates</li>
-            </ul>
+            <div class="subheading">IMPORTANT TRAINING DISCLAIMER:</div>
+            <P>This manual is provided for training and general technical guidance purposes. Completion of this training does not, on its own, qualify, certify, register or legally authorise a person to perform electrical installation work. All electrical work must be carried out by appropriately qualified, competent and/or registered persons where required, in accordance with applicable legislation, standards, manufacturer specifications and current REVOV technical documentation.</P>
+            <P>Images, diagrams and system illustrations in this manual are provided for training and explanatory purposes and may be simplified. They should not be used as installation drawings or wiring instructions. Always refer to the applicable REVOV product manual, manufacturer documentation, approved system design, and current electrical requirements before installation.</P>
           </div>
         </section>
       </div>

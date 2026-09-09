@@ -76,7 +76,7 @@
 
         <div class="my-4">
           <div class="muted">This certifies that</div>
-          <div class="name">{{ user.username }}</div>
+          <div class="name">{{ (user.full_name if user and user.full_name else user.username) }}</div>
           <div class="muted mt-2">has completed the required learning modules and assessments in introduction to Energy Storage & Modern Energy Systems.</div>
         </div>
 

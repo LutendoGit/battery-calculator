@@ -63,6 +63,7 @@ from modules.lithium_education import (
     CRate,
     BatteryLifeAndCycles,
     CellSpecifications,
+
     MODULE_3_BATTERY_FUNDAMENTALS,
     MODULE_4_BMS,
     MODULE_5_ENERGY_SYSTEM_DESIGN,
@@ -238,7 +239,12 @@ def _demo_certificate_context() -> dict[str, object]:
     else:
         grade = "C"
     return {
-        "user": {"username": "Demo Reviewer"},
+        "user": {
+            "username": "Demo Reviewer",
+            "first_name": "Demo",
+            "last_name": "Reviewer",
+            "full_name": "Demo Reviewer",
+        },
         "issued_date": issued_date,
         "certificate_id": certificate_id,
         "completed_lessons": completed_lessons,
@@ -921,11 +927,23 @@ def login():
 @education_bp.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password", "")
+
+        if not password or len(password) < 6:
+            flash("Password must be at least 6 characters.", "danger")
+            return redirect(url_for("education.register"))
+        if password != confirm_password:
+            flash("Passwords do not match.", "danger")
+            return redirect(url_for("education.register"))
+
         try:
             user = create_user(
                 username=request.form.get("username", ""),
                 email=request.form.get("email", ""),
-                password=request.form.get("password", ""),
+                password=password,
+                first_name=request.form.get("first_name", ""),
+                last_name=request.form.get("last_name", ""),
             )
 
             # Optional avatar upload.
@@ -1514,6 +1532,7 @@ def certificate_pdf():
         if item.key in get_completed_items(user.id)
     ]
 
+    display_name = user.full_name if getattr(user, "full_name", None) else user.username
     return _build_certificate_pdf_response(
         "education/certificate.html",
         {
@@ -1526,7 +1545,7 @@ def certificate_pdf():
             "grade": grade,
             "overall_pct": overall_pct,
         },
-        filename=f"certificate_{user.username}.pdf",
+        filename=f"certificate_{display_name.replace(' ', '_')}.pdf",
     )
 
 
@@ -2383,9 +2402,40 @@ def admin_api_module_progress_statistics():
 
 # ============= FUNDAMENTAL CONCEPTS ROUTES =============
 
+@education_bp.route('/disclaimer')
+def disclaimer():
+    """Standalone disclaimer page shown before Module 1 starts."""
+    content = LithiumBatteryFundamentals.DISCLAIMER
+    return render_template(
+        'education/fundamentals.html',
+        content=content,
+        continue_card={
+            "step_title": "Continue",
+            "title": "Acknowledge and continue",
+            "paragraphs": [
+                "Please read the disclaimer above before continuing."
+            ],
+            "agreement_required": True,
+            "links": [
+                {
+                    "url": url_for("education.fundamentals_module1"),
+                    "label": "I understand and continue"
+                }
+            ],
+        },
+        lesson_key="lesson:fundamentals",
+    )
+
+
 @education_bp.route('/fundamentals')
 def fundamentals():
-    """Main fundamentals page"""
+    """Entry point for Module 1: show the disclaimer before the actual content."""
+    return redirect(url_for("education.disclaimer"))
+
+
+@education_bp.route('/fundamentals/module-1')
+def fundamentals_module1():
+    """Main fundamentals page for Module 1."""
     content = LithiumBatteryFundamentals.MODULE_1_FUNDAMENTALS
 
     continue_card = {

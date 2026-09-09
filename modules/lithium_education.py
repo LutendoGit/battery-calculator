@@ -11,6 +11,27 @@ class LithiumBatteryFundamentals:
     # NOTE (2026-02): Fundamentals content has been updated to Module 1
     # "Introduction to Energy Storage & Modern Energy Systems".
     # The previous cell-behavior fundamentals were removed to avoid content mixups.
+    DISCLAIMER = {
+        "page_title": "Disclaimer",
+        "module_title": "Disclaimer",
+        "sections": [
+            {
+                "title": "DISCLAIMER",
+                "icon": "",
+                "paragraphs": [
+                    "<br><strong>IMPORTANT TRAINING DISCLAIMER🧾</strong>",
+                    "This manual is provided for training and general technical guidance purposes. Completion of this training does not, on its own, qualify, certify, register or legally authorise a person to perform electrical installation work. ",
+                    "⚡All electrical work must be carried out by appropriately qualified, competent and/or registered persons where required, in accordance with applicable legislation, standards, manufacturer specifications and current REVOV technical documentation.",
+                    "<br><strong>Images & Diagrams📐</strong>",
+                    "Images, diagrams and system illustrations in this manual are provided for training and explanatory purposes and may be simplified. ",
+                    "They should not be used as installation drawings or wiring instructions. Always refer to the applicable REVOV product manual, manufacturer documentation, approved system design, and current electrical requirements before installation."
+                ],
+                "highlights": [
+                    "This training supports education only and does not replace professional electrical compliance or site-specific design controls."
+                ],
+            },
+        ],
+    }
     MODULE_1_FUNDAMENTALS = {
         "module_title": "MODULE 1 - Introduction to Energy Storage & Modern Energy Systems",
         "module_subtitle": "Core concepts installers need before tools, cables, or settings.",
@@ -1408,10 +1429,12 @@ class LithiumBatteryFundamentals:
                     },
                     { "heading":"Remember: There are only two ways to connect batteries together—series or parallel. Each changes the electrical characteristics of the battery bank in a different way.",
                        "paragraphs":[
-                           "<br><strong>Series Connection – Voltage Adds</strong>",
+                           "<br><strong>Series Connection – Voltage Adds,Capacity in Ah stays the same!</strong>,",
+                            "<br><span style='color:red;'><strong> E.g. A 12V 100Ah battery bank made by connecting four 3.2V 100Ah cells in series.</strong></span>",
                            "<br>A series connection is used when the system requires a higher operating voltage.",
                            "<br>In a series connection, the batteries are connected:"
                        ],
+                      
                        "bullets":[
                            "positive to negative ",
                            "like a chain "
@@ -1437,7 +1460,8 @@ class LithiumBatteryFundamentals:
                            "After studying the diagram, notice that every additional battery increases the system voltage, while the battery capacity remains the same.",
                            "This allows installers to build battery banks that meet the voltage requirements of different inverter systems without changing the individual battery capacity.",
                            "",
-                           "<strong>Parallel Connection – Capacity Adds</strong>",
+                           "<strong>Parallel Connection – Capacity Adds, Voltage Stays the Same</strong>",
+                           "<br> <span style='color:red;'><strong>E.g. 2x48V 100Ah batteries in parallel = 48V 200Ah = 9.6KWH</strong></span>",
                            "A parallel connection is used when the system already operates at the correct voltage but requires additional energy storage and longer backup time.",
                            "In a parallel connection, all positives connect together and all negatives connect together.",
                            "The voltage stays the same, but the storage capacity increases.",
@@ -2368,11 +2392,11 @@ MODULE_3_BATTERY_FUNDAMENTALS = {
                                     "Examples of REVOV Cell Configuration:",
                             ],
                             "bullets_before": [
-                                "R100 Battery – Approximately 5.12 kWh, consisting of 16 LiFePO₄ cells connected in series ",
-                                           
-                                "R200 Battery – Approximately 10.24 kWh, consisting of two 16-cell battery packs connected in parallel, doubling the available energy while maintaining the same operating voltage. ",
-                                           
-                                "C8 Module – A high-density rack-mounted battery module designed for scalable commercial and BESS installations, allowing multiple modules to be combined into large energy storage systems",
+                                "<strong>R100 Battery</strong> – 51.2 nominal V, 100 Ah, 5.12 kWh, 16-cell configuration ",     
+                                "<strong>R200 Battery</strong> – 51.2 nominal V, 200 Ah, 10.2 kWh, 16-cell configuration. ",    
+                                "<strong>E100 Battery</strong> – 51.2 nominal V, 100 Ah, 5.12 kWh, 16-cell configuration.",
+                                "<strong>E300 Battery</strong> – 51.2 nominal V, 300 Ah, 15.36 kWh,16-cell configuration."
+
                              ],
                             "images": [
                                 {

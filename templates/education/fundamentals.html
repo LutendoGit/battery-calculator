@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education - {{ content.module_title }}</title>
+    {% set page_heading = content.module_title or content.page_title or 'Education' %}
+    <title>Education - {{ page_heading }}</title>
     {% include '_favicon.html' %}
     <style>
         * {
@@ -79,6 +80,62 @@
             font-size: 18px;
             border-bottom: 3px #7f3636 solid;
             padding-bottom: 10px;
+        }
+
+        .disclaimer-section .card {
+            background: linear-gradient(135deg, #fff8f8 0%, #ffffff 100%);
+            border: 1px solid #f3d7d7;
+            box-shadow: 0 10px 24px rgba(127, 54, 54, 0.08);
+        }
+
+        .disclaimer-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto 18px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #7f3636 0%, #c93333 100%);
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            width: fit-content;
+            box-shadow: 0 10px 20px rgba(127, 54, 54, 0.2);
+        }
+
+        .disclaimer-badge-icon {
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        .disclaimer-section h2 {
+            color: #7f3636;
+            border-bottom: 3px solid #d45d5d;
+        }
+
+        .disclaimer-section .text-block p strong {
+            color: #7f3636;
+        }
+
+        .disclaimer-section .text-block p strong {
+            color: #7f3636;
+        }
+
+        .disclaimer-section .text-block p strong:nth-of-type(2) {
+            color: #7f3636;
+        }
+
+        .disclaimer-section .icon {
+            color: #c93333;
+            text-shadow: 0 4px 12px rgba(201, 51, 51, 0.18);
+        }
+
+        .disclaimer-section .highlight-box {
+            border-left-color: #c93333;
+            background: #fff6f6;
+            color: #4a1f1f;
         }
         
         .card ul, .card ol {
@@ -270,7 +327,7 @@
             gap: 10px;
             margin-top: 20px;
         }
-        
+
         .nav-links a {
             display: inline-block;
             background: #7f3636;
@@ -279,6 +336,33 @@
             border-radius: 5px;
             text-decoration: none;
             transition: background 0.3s;
+        }
+        
+        .consent-box {
+            margin: 20px 0 10px;
+            padding: 14px 16px;
+            border: 1px solid #efcaca;
+            border-radius: 8px;
+            background: #fff7f7;
+        }
+
+        .consent-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #4b1d1d;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .consent-check input {
+            width: 18px;
+            height: 18px;
+            accent-color: #7f3636;
+        }
+
+        .disclaimer-continue-link.hidden {
+            display: none;
         }
         
         .nav-links a:hover {
@@ -649,7 +733,7 @@
             </div>
             <div class="header-row">
                 <div>
-                    <h1>{{ content.module_title|replace('🔋','')|replace('⚡','')|replace('💡','')|replace('🔌','')|trim }}</h1>
+                    <h1>{{ page_heading|replace('🔋','')|replace('⚡','')|replace('💡','')|replace('🔌','')|trim }}</h1>
                     {% if content.module_title and ('MODULE 4' in content.module_title or 'MODULE 5' in content.module_title) %}
                         {% if content.module_subtitle %}
                             <div style="margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95em; font-weight: 500;">
@@ -1085,8 +1169,14 @@
 
             {% for section in content.sections %}
             {% if section.title and section.title|trim|lower != 'contents' %}
-            <section data-lesson-step data-step-title="{{ section.title }}" class="{% if section.page_break %}page-break-section {% endif %}{% if section.title and '1.8' in section.title %}section-1-8{% endif %}">
+            <section data-lesson-step data-step-title="{{ section.title }}" class="{% if section.page_break %}page-break-section {% endif %}{% if section.title and '1.8' in section.title %}section-1-8{% endif %}{% if page_heading == 'Disclaimer' %} disclaimer-section{% endif %}">
                 <div class="card step-card">
+                    {% if page_heading == 'Disclaimer' %}
+                        <div class="disclaimer-badge">
+                            <span class="disclaimer-badge-icon">⚠️</span>
+                            <span>Important Notice</span>
+                        </div>
+                    {% endif %}
                     {% if section.icon %}
                         <div class="icon">{{ section.icon }}</div>
                     {% endif %}
@@ -1142,10 +1232,18 @@
                             <p style="margin-bottom: 10px; color: #555;">{{ p }}</p>
                         {% endfor %}
                     {% endif %}
+                    {% if continue_card.get('agreement_required') %}
+                    <div class="consent-box">
+                        <label class="consent-check">
+                            <input type="checkbox" id="disclaimer-acknowledge">
+                            <span>I have read and understood the disclaimer.</span>
+                        </label>
+                    </div>
+                    {% endif %}
                     {% if continue_card.links %}
                     <div class="nav-links">
                         {% for lnk in continue_card.links %}
-                            <a href="{{ lnk.url }}">{{ lnk.label }}</a>
+                            <a class="{% if continue_card.get('agreement_required') %}disclaimer-continue-link hidden{% endif %}" href="{{ lnk.url }}" {% if continue_card.get('agreement_required') %}aria-disabled="true"{% endif %}>{{ lnk.label }}</a>
                         {% endfor %}
                     </div>
                     {% endif %}
@@ -1162,8 +1260,39 @@
                 </div>
             </section>
             {% endif %}
+
+            {% if continue_card and continue_card.get('agreement_required') %}
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const checkbox = document.getElementById('disclaimer-acknowledge');
+                    const links = document.querySelectorAll('.disclaimer-continue-link');
+
+                    function updateLinks() {
+                        links.forEach(function (link) {
+                            const enabled = !!checkbox && checkbox.checked;
+                            link.classList.toggle('hidden', !enabled);
+                            link.setAttribute('aria-disabled', String(!enabled));
+                            if (!enabled) {
+                                link.onclick = function (event) {
+                                    event.preventDefault();
+                                    return false;
+                                };
+                            } else {
+                                link.onclick = null;
+                            }
+                        });
+                    }
+
+                    if (checkbox) {
+                        checkbox.addEventListener('change', updateLinks);
+                    }
+                    updateLinks();
+                });
+            </script>
+            {% endif %}
         </main>
 
+        {% if page_heading != 'Disclaimer' %}
         <footer class="pager">
             <div class="left">
                 <a href="{{ url_for('education.progress', hub=1) }}">Dashboard</a>
@@ -1173,6 +1302,7 @@
                 <button class="btn" type="button" data-lesson-next>Next</button>
             </div>
         </footer>
+        {% endif %}
     </div>
 
     {% include '_site_footer.html' %}

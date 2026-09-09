@@ -159,7 +159,9 @@ def ensure_db() -> None:
                 email TEXT,
                 password_hash TEXT NOT NULL,
                 created_at TEXT NOT NULL,
-                avatar_filename TEXT
+                avatar_filename TEXT,
+                first_name TEXT,
+                last_name TEXT
             )
             """
         )
@@ -167,10 +169,14 @@ def ensure_db() -> None:
         # Migration: older DBs won't have newer columns.
         try:
             cols = [r[1] for r in conn.execute("PRAGMA table_info(users)").fetchall()]
-            if "avatar_filename" not in cols:
-                conn.execute("ALTER TABLE users ADD COLUMN avatar_filename TEXT")
-            if "email" not in cols:
-                conn.execute("ALTER TABLE users ADD COLUMN email TEXT")
+            for col_name, ddl in {
+                "avatar_filename": "ALTER TABLE users ADD COLUMN avatar_filename TEXT",
+                "email": "ALTER TABLE users ADD COLUMN email TEXT",
+                "first_name": "ALTER TABLE users ADD COLUMN first_name TEXT",
+                "last_name": "ALTER TABLE users ADD COLUMN last_name TEXT",
+            }.items():
+                if col_name not in cols:
+                    conn.execute(ddl)
         except Exception:
             # Best-effort migration; schema issues should not crash app startup.
             pass
@@ -397,6 +403,16 @@ class User:
     username: str
     email: Optional[str] = None
     avatar_filename: Optional[str] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+
+    @property
+    def full_name(self) -> str:
+        parts = [(self.first_name or "").strip(), (self.last_name or "").strip()]
+        name = " ".join(part for part in parts if part)
+        if name:
+            return name
+        return str(self.username or "").strip() or "Certificate Holder"
 
 
 def _normalize_email(email: str) -> str:
@@ -431,7 +447,7 @@ def get_user_by_username(username: str) -> Optional[User]:
         return None
     with _connect() as conn:
         row = conn.execute(
-            "SELECT id, username, email, avatar_filename FROM users WHERE username = ?",
+            "SELECT id, username, email, avatar_filename, first_name, last_name FROM users WHERE username = ?",
             (username,),
         ).fetchone()
     if not row:
@@ -441,6 +457,8 @@ def get_user_by_username(username: str) -> Optional[User]:
         username=str(row["username"]),
         email=(str(row["email"]).strip() if row["email"] else None),
         avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
+        first_name=(str(row["first_name"]).strip() if row["first_name"] else None),
+        last_name=(str(row["last_name"]).strip() if row["last_name"] else None),
     )
 
 
@@ -454,7 +472,7 @@ def get_user_by_identifier(identifier: str) -> Optional[User]:
         return None
     with _connect() as conn:
         row = conn.execute(
-            "SELECT id, username, email, avatar_filename FROM users WHERE username = ? OR email = ?",
+            "SELECT id, username, email, avatar_filename, first_name, last_name FROM users WHERE username = ? OR email = ?",
             (identifier, identifier),
         ).fetchone()
     if not row:
@@ -464,6 +482,8 @@ def get_user_by_identifier(identifier: str) -> Optional[User]:
         username=str(row["username"]),
         email=(str(row["email"]).strip() if row["email"] else None),
         avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
+        first_name=(str(row["first_name"]).strip() if row["first_name"] else None),
+        last_name=(str(row["last_name"]).strip() if row["last_name"] else None),
     )
 
 
@@ -473,6 +493,8 @@ def create_user(
     *,
     email: str | None = None,
     avatar_filename: Optional[str] = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
 ) -> User:
     """Create a new user account.
 
@@ -494,6 +516,9 @@ def create_user(
     if not _is_valid_email(email_norm):
         raise ValueError("Please enter a valid email address")
 
+    first_name_norm = (first_name or "").strip() or None
+    last_name_norm = (last_name or "").strip() or None
+
     # Store a salted hash (never the raw password).
     password_hash = generate_password_hash(password)
 
@@ -511,13 +536,15 @@ def create_user(
 
         try:
             cur = conn.execute(
-                "INSERT INTO users (username, email, password_hash, created_at, avatar_filename) VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO users (username, email, password_hash, created_at, avatar_filename, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 (
                     username,
                     email_norm,
                     password_hash,
                     _utc_now_iso(),
                     (str(avatar_filename) if avatar_filename else None),
+                    first_name_norm,
+                    last_name_norm,
                 ),
             )
         except sqlite3.IntegrityError as e:
@@ -531,6 +558,8 @@ def create_user(
         username=username,
         email=email_norm,
         avatar_filename=(str(avatar_filename) if avatar_filename else None),
+        first_name=first_name_norm,
+        last_name=last_name_norm,
     )
 
 
@@ -691,7 +720,7 @@ def get_user(user_id: int) -> Optional[User]:
     """Look up a user by numeric id."""
     with _connect() as conn:
         row = conn.execute(
-            "SELECT id, username, email, avatar_filename FROM users WHERE id = ?",
+            "SELECT id, username, email, avatar_filename, first_name, last_name FROM users WHERE id = ?",
             (int(user_id),),
         ).fetchone()
     if not row:
@@ -701,6 +730,8 @@ def get_user(user_id: int) -> Optional[User]:
         username=str(row["username"]),
         email=(str(row["email"]).strip() if row["email"] else None),
         avatar_filename=(str(row["avatar_filename"]) if row["avatar_filename"] else None),
+        first_name=(str(row["first_name"]).strip() if row["first_name"] else None),
+        last_name=(str(row["last_name"]).strip() if row["last_name"] else None),
     )
 
 

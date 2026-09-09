@@ -29,50 +29,62 @@
     }
 
     .page-shell {
-      min-height: 100vh;
+      position: relative;
+      width: 210mm;
+      min-height: 297mm;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 14px 0 0;
+      padding: 0;
+      background: var(--white);
+      border: 4px solid #7f3636;
+      overflow: visible;
+      margin: 0 auto;
     }
 
     .sheet {
       position: relative;
-      width: 840px;
-      min-height: 1125px;
+      width: calc(100% - 32px);
+      min-height: 297mm;
       background: var(--white);
-      overflow: hidden;
+      overflow: visible;
       box-shadow: inset 0 0 0 0 rgba(0,0,0,0);
-      border: 1px solid var(--line);
+      border: none;
+      z-index: 1;
+      margin: 16px auto;
     }
 
     .sheet::before {
       content: "";
       position: absolute;
       inset: 18px;
-      border: 1px solid var(--line);
+      border: none;
       pointer-events: none;
       z-index: 0;
     }
 
     .ribbon {
       position: absolute;
-      top: -2px;
-      left: -2px;
-      width: 110px;
-      height: 20px;
+      top: 12px;
+      left: -10px;
+      width: 180px;
+      height: 28px;
       background: var(--red);
-      z-index: 3;
+      z-index: 0;
+      pointer-events: none;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+      transform: translate(-28px, 0);
     }
 
     .ribbon::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 20px;
-      height: 110px;
+      top: 0px;
+      left: -30px;
+      width: 28px;
+      height: 180px;
       background: var(--red);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
     }
 
     .certificate {
@@ -83,27 +95,29 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      font-size: 10px;
+      font-size: 8px;
      
     }
 
     .brand-wrap {
-      margin-top: 10px;
+      width: 100%;
+      margin-top: 0px;
       margin-left: 0;
-      text-align: left;
+      margin-right: 0;
+      text-align: center;
     }
 
     .brand-lockup {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      width: fit-content;
+      justify-content: center;
+      width: 100%;
       gap: 0;
     }
 
     .company-mark {
-      width: 220px;
-      height: 140px;
+      width: 250px;
+      height: 160px;
       flex-shrink: 0;
       display: block;
       margin-top: 0;
@@ -119,7 +133,7 @@
     .heading {
       margin: 54px 0 0;
       text-align: center;
-      font-size: 58px;
+      font-size: 30px;
       line-height: 1.08;
       letter-spacing: 0.05em;
       font-weight: 300;
@@ -129,10 +143,10 @@
 
     .completion {
       margin: 0;
-      text-align: left;
-      font-size:100px;
+      text-align: center;
+      font-size: 80px;
       line-height: 0.84;
-      letter-spacing: -0.07em;
+      letter-spacing: 0.12em;
       font-weight: 400;
       text-transform: uppercase;
       color: #7f3636;
@@ -143,7 +157,7 @@
       align-items: center;
       gap: 12px;
       margin: 0;
-      width: 95%;
+      width: 100%;
       min-height: 24px;
     }
 
@@ -164,7 +178,7 @@
       display: block;
       flex: 1 1 auto;
       height: 3px;
-      min-width: 80px;
+      min-width: 99px;
       background: repeating-linear-gradient(
         to right,
         black 0 9px,
@@ -179,7 +193,7 @@
       font-size: 20px;
       line-height: 1.2;
       font-weight: 500;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       color: #7f3636;
       white-space: nowrap;
@@ -189,20 +203,25 @@
 
     .awarded {
       margin-top: 54px;
-      font-size: 32px;
+      font-size: 30px;
       line-height: 1.4;
       color: #3d3d3d;
-      font-weight: 400;
+      font-weight: 300;
+      text-align: center;
+      letter-spacing: 0.10em;
+      margin-left: 45px;
     }
 
     .recipient {
       margin: 12px 0 12px;
-      font-size: 40px;
+      font-size: 25px;
       line-height: 1;
       letter-spacing: -0.06em;
       font-weight: 200;
       text-transform: uppercase;
       color: #7f3636;
+      text-align: center;
+      margin-left: 165px;
     }
 
     .description {
@@ -212,6 +231,7 @@
       line-height: 1.45;
       color: #363636;
       font-weight: 400;
+      margin-top: 45px;
     }
 
     .description strong {
@@ -220,18 +240,51 @@
     }
 
     .date-block {
-      margin-top: 24px;
-      font-size: 25px;
+      position: absolute;
+      right: 72px;
+      bottom: 100px;
+      margin-top: 0;
+      font-size: 18px;
       line-height: 1.2;
       color: #7f3636;
-      font-weight: 700;
+      font-weight: 300;
+      text-align: right;
+      z-index: 2;
     }
 
     .signature-block {
-      margin-top: 62px;
+      position: absolute;
+      left: 72px;
+      bottom: 100px;
       display: flex;
       flex-direction: column;
-      width: 100%;
+      align-items: flex-start;
+      width: auto;
+      max-width: 320px;
+      text-align: left;
+      z-index: 2;
+    }
+
+    .signature-inline {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin: 0;
+      padding: 0;
+    }
+
+    .signature-image {
+      display: block;
+      width: 100px;
+      max-width: 100%;
+      height: auto;
+      margin: 0 0 0;
+      object-fit: contain;
+      margin-left: 500px;
+      margin-bottom: 0px;
+      margin-top: 200px;
+      margin-right: 0px;
+      position: right;
     }
 
     .signature-name {
@@ -242,42 +295,59 @@
       text-transform: uppercase;
       color: #7f3636;
       font-weight: 210;
+      margin-top: 6px;
+      margin-bottom: 0px;
     }
 
     .signature-title {
       margin: 2px 0 0;
-      font-size: 28px;
+      font-size: 15px;
       line-height: 1.3;
       color: #4a4a4a;
       font-style: italic;
       font-weight: 400;
+      margin-bottom: 0px;
     }
 
     .banner {
-      margin-top: 22px;
-      background: var(--red-dark);
+      margin-top: 20px;
+      margin-bottom: 40px;
+      background: #7f3636;
       color: #fff;
       text-align: center;
       padding: 10px 15px;
-      font-size: 34px;
+      font-size: 20px;
       line-height: 1.0;
-      font-weight: 800;
-      letter-spacing: 0.02em;
+      font-weight: 200;
+      letter-spacing: 0.20em;
       text-transform: uppercase;
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      align-self: stretch;
+      position: absolute;
+      bottom: 0;
+      width: 85%;
+      max-width: 95%;
+      align-self: center;
     }
 
     .no-print {
-      position: relative;
+      position: absolute;
+      top: 20px;
+      right: 20px;
       z-index: 10;
-      padding: 12px 16px 4px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+      padding: 8px 10px;
+      background: transparent;
+      border: None;
+      box-shadow: transparent;
+      
+    }
+
+    .no-print .btn {
+      white-space: nowrap;
+      width: 100%;
+      color: #7f3636;
     }
 
     @page {
@@ -291,6 +361,7 @@
       .sheet {
         width: 100%;
         min-height: auto;
+        
       }
       .no-print { display: none !important; }
     }
@@ -298,6 +369,7 @@
 </head>
 <body>
   <div class="page-shell">
+    <!--<div class="ribbon"></div>-->
     <div class="sheet">
       <div class="no-print">
         <a class="btn btn-outline-secondary" href="{{ url_for('education.progress') }}">Back to progress</a>
@@ -307,13 +379,11 @@
         </div>
       </div>
 
-      <div class="ribbon"></div>
-
       <div class="certificate">
         <div class="brand-wrap">
            <div class="brand-lockup">
             <div class="company-mark">
-              <!-- <img src="/static/images/logo.svg" alt="REVOV logo" /> -->
+              <img src="/static/images/revov_wattworks_logo-02.png" alt="REVOV logo" />
             </div>
           </div>
         </div>
@@ -324,22 +394,35 @@
         <div class="training-line">REVOV WattWorks Installer Training</div>
 
         <p class="awarded">This certificate is awarded to</p>
-        <h2 class="recipient">{{ (user.username or 'Certificate Holder')|upper }}</h2>
+        {% set full_name = (user.full_name if user and user.full_name else user.username) or 'Certificate Holder' %}
+        {% set first_name = (user.first_name if user and user.first_name else '') %}
+        {% set last_name = (user.last_name if user and user.last_name else '') %}
+        {% if first_name or last_name %}
+          <h2 class="recipient">
+            <span>{{ first_name|upper if first_name else '' }}</span>
+            <strong>{{ last_name|upper if last_name else '' }}</strong>
+          </h2>
+        {% else %}
+          <h2 class="recipient">{{ full_name|upper }}</h2>
+        {% endif %}
 
         <p class="description">
           for successfully completing the <strong>REVOV Wattworks</strong>
           Installer Training, covering the installation, configuration,
-          operation and best-practice application of <strong>REVOV energy</strong>
+          operation and best-practice application of <strong>REVOV</strong> energy
           storage systems.
         </p>
 
         <div class="date-block"><strong>Date:</strong> {{ issued_date }}</div>
 
         <div class="signature-block">
-          <p class="signature-name">LANCE DICKERSON</p>
-          <p class="signature-title">Managing Director</p>
-          <div class="banner">THE POWER BEHIND YOUR PROGRESS</div>
+          <p class="signature-name">WARREN <strong>MEYERS</strong></p>
+          <p class="signature-title">Technical Manager</p>
         </div>
+         <div class="signature-inline">
+            <img class="signature-image" src="/static/images/Warren Signature.png" alt="Signature" />
+          </div>
+         <div class="banner">THE <strong>POWER</strong> BEHIND YOUR <strong>PROGRESS</strong></div>
       </div>
     </div>
   </div>
