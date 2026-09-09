@@ -16,6 +16,33 @@
     }
   }
 
+  function emitUrlStateChange() {
+    try {
+      window.dispatchEvent(new CustomEvent("urlstatechange"));
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  if (!window.__lessonPagerUrlHookInstalled) {
+    var originalReplaceState = window.history.replaceState;
+    var originalPushState = window.history.pushState;
+
+    window.history.replaceState = function () {
+      var result = originalReplaceState.apply(this, arguments);
+      emitUrlStateChange();
+      return result;
+    };
+
+    window.history.pushState = function () {
+      var result = originalPushState.apply(this, arguments);
+      emitUrlStateChange();
+      return result;
+    };
+
+    window.__lessonPagerUrlHookInstalled = true;
+  }
+
   function writeStepIndex(paramName, index) {
     try {
       var params = new URLSearchParams(window.location.search);
@@ -109,6 +136,14 @@
 
       if (stageEl) stageEl.scrollTop = 0;
       window.scrollTo(0, 0);
+
+      try {
+        window.dispatchEvent(new CustomEvent('lessonpager:render', {
+          detail: { index: index, stepCount: steps.length }
+        }));
+      } catch (e) {
+        // ignore custom event support issues
+      }
     }
 
     function go(toIndex) {

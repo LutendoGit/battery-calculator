@@ -364,6 +364,39 @@
         .disclaimer-continue-link.hidden {
             display: none;
         }
+
+        .disclaimer-floating-continue {
+            position: fixed;
+            right: 28px;
+            bottom: 28px;
+            z-index: 1000;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 22px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #7f3636 0%, #9b3d3d 100%);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 14px 28px rgba(127, 54, 54, 0.35);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .disclaimer-floating-continue:hover {
+            color: #fff;
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+
+        .disclaimer-floating-continue.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
         
         .nav-links a:hover {
             background: #7f3636;
@@ -1224,7 +1257,7 @@
             {% endfor %}
 
             {% if continue_card %}
-            <section data-lesson-step data-step-title="{{ continue_card.step_title or 'Continue Learning' }}">
+            <section id="disclaimer-final-action" data-lesson-step data-step-title="{{ continue_card.step_title or 'Continue Learning' }}">
                 <div class="card step-card">
                     <h2>{{ continue_card.title }}</h2>
                     {% if continue_card.paragraphs %}
@@ -1266,6 +1299,8 @@
                 document.addEventListener('DOMContentLoaded', function () {
                     const checkbox = document.getElementById('disclaimer-acknowledge');
                     const links = document.querySelectorAll('.disclaimer-continue-link');
+                    const floatingButton = document.getElementById('disclaimer-floating-continue');
+                    const finalAction = document.getElementById('disclaimer-final-action');
 
                     function updateLinks() {
                         links.forEach(function (link) {
@@ -1283,14 +1318,64 @@
                         });
                     }
 
+                    function getStepFromUrl() {
+                        const params = new URLSearchParams(window.location.search);
+                        const raw = params.get('step');
+                        const step = Number.parseInt(raw || '1', 10);
+                        return Number.isFinite(step) ? step : 1;
+                    }
+
+                    function updateFloatingButton() {
+                        if (!floatingButton) return;
+                        const currentStep = getStepFromUrl();
+                        const shouldShow = currentStep === 1;
+                        floatingButton.classList.toggle('hidden', !shouldShow);
+                        floatingButton.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
+                        floatingButton.setAttribute('tabindex', shouldShow ? '0' : '-1');
+                        if (shouldShow) {
+                            floatingButton.href = '?step=2';
+                        }
+                    }
+
                     if (checkbox) {
                         checkbox.addEventListener('change', updateLinks);
                     }
+
+                    if (floatingButton) {
+                        floatingButton.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            const pager = window.LessonPager && window.LessonPager.controller;
+                            if (getStepFromUrl() === 1) {
+                                if (pager && typeof pager.goToStep === 'function') {
+                                    pager.goToStep(2);
+                                    return;
+                                }
+                                const url = new URL(window.location.href);
+                                url.searchParams.set('step', '2');
+                                window.history.replaceState({}, '', url);
+                                updateFloatingButton();
+                                return;
+                            }
+                            if (pager && typeof pager.goToStep === 'function') {
+                                pager.goToStep(1);
+                            }
+                        });
+                        window.addEventListener('lessonpager:render', updateFloatingButton);
+                        window.addEventListener('urlstatechange', updateFloatingButton);
+                        window.addEventListener('popstate', updateFloatingButton);
+                        window.addEventListener('hashchange', updateFloatingButton);
+                    }
+
                     updateLinks();
+                    updateFloatingButton();
                 });
             </script>
             {% endif %}
         </main>
+
+        {% if page_heading == 'Disclaimer' and continue_card and continue_card.get('agreement_required') %}
+        <a id="disclaimer-floating-continue" class="disclaimer-floating-continue" href="?step=2">Continue</a>
+        {% endif %}
 
         {% if page_heading != 'Disclaimer' %}
         <footer class="pager">
