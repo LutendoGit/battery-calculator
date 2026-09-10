@@ -24,8 +24,8 @@ import uuid
 import traceback
 
 
-from flask import Blueprint, abort, flash, jsonify, redirect, render_template, request, send_file, session, url_for
-from flask import current_app
+from flask import Blueprint, Response, abort, flash, jsonify, redirect, render_template, request, send_file, session, url_for
+from flask import current_app, has_request_context
 from werkzeug.utils import secure_filename
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.units import inch
@@ -1442,6 +1442,12 @@ def certificate():
 
 def _build_certificate_pdf_response(template_name: str, context: dict[str, object], *, filename: str):
     """Render the certificate template as a PDF using a browser engine for fidelity to the HTML styling."""
+    def _as_pdf_response(pdf_bytes: bytes):
+        headers = {"Content-Disposition": f'attachment; filename="{filename}"'}
+        if has_request_context():
+            return send_file(BytesIO(pdf_bytes), mimetype="application/pdf", as_attachment=True, download_name=filename)
+        return Response(pdf_bytes, mimetype="application/pdf", headers=headers)
+
     if sync_playwright is not None:
         try:
             with sync_playwright() as p:
@@ -1467,7 +1473,7 @@ def _build_certificate_pdf_response(template_name: str, context: dict[str, objec
                     margin={"top": "4mm", "right": "6mm", "bottom": "4mm", "left": "6mm"},
                 )
                 browser.close()
-                return send_file(BytesIO(pdf_bytes), mimetype="application/pdf", as_attachment=True, download_name=filename)
+                return _as_pdf_response(pdf_bytes)
         except Exception:
             pass
 
@@ -1481,7 +1487,19 @@ def _build_certificate_pdf_response(template_name: str, context: dict[str, objec
         completed_lessons = list(context.get("completed_lessons") or [])
         quiz_count = int(context.get("quiz_count") or 0)
         total_quizzes = int(context.get("total_quizzes") or 0)
-        username = str((user or {}).get("username") or "Certificate Holder")
+
+        username = "Certificate Holder"
+        if isinstance(user, dict):
+            username = str(user.get("username") or user.get("full_name") or user.get("first_name") or "Certificate Holder")
+        elif user is not None:
+            for attr_name in ("full_name", "username", "first_name"):
+                value = getattr(user, attr_name, None)
+                if value:
+                    username = str(value)
+                    break
+            if username == "Certificate Holder" and getattr(user, "first_name", None) and getattr(user, "last_name", None):
+                username = f"{user.first_name} {user.last_name}".strip()
+
         buf = BytesIO()
         c = canvas.Canvas(buf, pagesize=landscape(letter))
         _draw_certificate_canvas(
@@ -1498,7 +1516,7 @@ def _build_certificate_pdf_response(template_name: str, context: dict[str, objec
         c.showPage()
         c.save()
         buf.seek(0)
-        return send_file(buf, mimetype="application/pdf", as_attachment=True, download_name=filename)
+        return _as_pdf_response(buf.getvalue())
 
     raise RuntimeError(f"PDF generation fallback unavailable for {template_name!r}")
 

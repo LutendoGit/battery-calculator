@@ -155,6 +155,28 @@ class AdminUserManagementApiTests(unittest.TestCase):
 
         self.assertFalse(_is_certificate_eligible(self.user1.id))
 
+    def test_certificate_pdf_generation_accepts_user_object(self) -> None:
+        from routes.education_routes import _build_certificate_pdf_response
+
+        response = _build_certificate_pdf_response(
+            "education/certificate.html",
+            {
+                "user": self.user1,
+                "issued_date": "2026-09-10",
+                "certificate_id": "EDU-1-20260910",
+                "completed_lessons": [{"key": "lesson:fundamentals", "title": "Fundamentals"}],
+                "quiz_count": 1,
+                "total_quizzes": 2,
+                "grade": "A",
+                "overall_pct": 88.0,
+            },
+            filename="certificate_test.pdf",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.mimetype, "application/pdf")
+        self.assertIn("certificate_test.pdf", response.headers.get("Content-Disposition", ""))
+
     def test_user_login_history_endpoint_respects_limit(self) -> None:
         response = self.client.get(
             self._url(f"/learn/admin/api/users/{self.user1.id}/logins?limit=1")
